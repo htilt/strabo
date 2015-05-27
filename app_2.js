@@ -17,7 +17,6 @@ var main = function() {
   */
   
   $('#interest-point-1').click(function() {
-  	$('.gallery').toggle();
     $('#ip-1').toggle();
   });
   
