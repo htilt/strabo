@@ -11,7 +11,7 @@ javascript in html is not working
 <html>
   <head>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet'>
-    <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="main_2.css" rel="stylesheet">
   </head>
   <body>
@@ -41,41 +41,42 @@ javascript in html is not working
     <div class="jumbotron">
       <div class="container">
         
-        <div id="interest-point-1">
+        <div id="interest-point-1" class="ip-check">
           <img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Yes_Check_Circle.svg">
         </div>
         
-        <div id="interest-point-2">
+        <div id="interest-point-2" class="ip-check">
           <img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Yes_Check_Circle.svg">
         </div>
         
-        <div id="interest-point-3">
+        <div id="interest-point-3" class="ip-check">
           <img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Yes_Check_Circle.svg">
         </div>
         
-        <div id="interest-point-4">
+        <div id="interest-point-4" class="ip-check">
           <img src="http://upload.wikimedia.org/wikipedia/commons/5/50/Yes_Check_Circle.svg">
         </div>
         
         <div class="gallery" align='center'>
+          <div id="exit-gallery" class="glyphicon glyphicon-remove"></div>
             
             <div id="ip-1" class="gallery-child">
               <h3>Crystal Springs</h3>
 	  
     	      <div class="preview" align="center">
-    	        <img name="preview" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt=""/>
+    	        <img name="preview_img" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt=""/>
     	      </div>
 	  
     	      <p>Here, water bubbles up from the ground over an one acre area and begins its journey through the Johnson Creek watershed. Filtered by clayey soils, this water is some of the cleanest in Portland.</p>
 	  
     	      <div class="thumbnails">
-    	        <img onmouseover="preview.src=img1.src" name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
-    		    <img onmouseover="preview.src=img2.src" name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
-    		    <img onmouseover="preview.src=img3.src" name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
-    		    <img onmouseover="preview.src=img4.src" name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
-    		    <img onmouseover="preview.src=img5.src" name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
-    	      </div> 
-            </div>
+              <img name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
+              <img name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
+              <img name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
+              <img name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
+              <img name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
+            </div> 
+          </div>
             
             <div id="ip-2" class="gallery-child">
               <h3>Reed Lake</h3>
@@ -87,11 +88,11 @@ javascript in html is not working
     	      <p>The water that pools in Reed Lake provides a habitat for a variety of native fish, turtles, and water fowl. A layer of loose silt disguises the six-foot depth of the lake bottom.</p> 
     	      
     	      <div class="thumbnails">
-    	        <img onmouseover="preview.src=img1.src" name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
-    		    <img onmouseover="preview.src=img2.src" name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
-    		    <img onmouseover="preview.src=img3.src" name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
-    		    <img onmouseover="preview.src=img4.src" name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
-    		    <img onmouseover="preview.src=img5.src" name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
+    	        <img name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
+      		    <img name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
+      		    <img name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
+      		    <img name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
+      		    <img name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
     	      </div> 
             </div>
 
@@ -105,11 +106,11 @@ javascript in html is not working
     	      <p>Built in 2001, the fish ladder connects Reed Lake with the rest of Crystal Springs. The ladder allows salmon fry, hatched in the stream, to swim up to Reed Lake until they mature.</p>
 	  
     	      <div class="thumbnails">
-    	        <img onmouseover="preview.src=img1.src" name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
-    		    <img onmouseover="preview.src=img2.src" name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
-    		    <img onmouseover="preview.src=img3.src" name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
-    		    <img onmouseover="preview.src=img4.src" name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
-    		    <img onmouseover="preview.src=img5.src" name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
+    	        <img name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
+    		    <img name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
+    		    <img name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
+    		    <img name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
+    		    <img name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
     	      </div> 
             </div>
             
@@ -123,11 +124,11 @@ javascript in html is not working
     	      <p>Acquired in 2007, the former Rivelli farm property now appears undeveloped. The property underwent major restoration under Reed's ownership to eliminate the culvert through which Crystal Springs once ran and to construct a natural creek bottom.</p>
 	  
     	      <div class="thumbnails">
-    	        <img onmouseover="preview.src=img1.src" name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
-    		    <img onmouseover="preview.src=img2.src" name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
-    		    <img onmouseover="preview.src=img3.src" name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
-    		    <img onmouseover="preview.src=img4.src" name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
-    		    <img onmouseover="preview.src=img5.src" name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
+    	        <img name="img1" src="http://theintertwine.org/sites/theintertwine.org/files/adventure_imgs/reed_canyon1.jpg" alt="" />
+    		    <img name="img2" src="http://www.reed.edu/canyon/assets/images/reed-students-canyon-day.jpg" alt="" />
+    		    <img name="img3" src="http://habitatconcepts.net/wp-content/uploads/2012/09/HR-Crystal-Springs-2.jpg" alt="" />
+    		    <img name="img4" src="http://reed.edu/canyon/rest/enhancement/images/zach08.jpg" alt="" />
+    		    <img name="img5" src="http://blog.oregonlive.com/pdxgreen/2008/04/reedperry.jpg" alt="" />
     	      </div> 
             </div>
 
