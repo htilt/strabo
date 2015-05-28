@@ -94,12 +94,13 @@
 
 .jumbotron .container .gallery {
 	display: none;
-    position: absolute;
-    top: 200px;
-    left: 350px;
-    background-color: white;
-    height: 400px;
-    width:  300px;
+  position: absolute;
+  padding: 10px;
+  top: 80px;
+  right: 0px;
+  background-color: white;
+  height: 400px;
+  width:  300px;
 };
 
 .gallery-child {
@@ -142,9 +143,9 @@
     font-weight: 300;
 }
 
-.gallery h3 {
+.gallery h2 {
     color: #898989;
-    font-size: 15px;
+    font-size: 18px;
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
 }

@@ -3,18 +3,11 @@ var main = function() {
     $('.dropdown-menu').toggle();
   });
    
-   
    $('.gallery-child').hide();
 
    $("#exit-gallery").click(function(){
     $('.gallery').hide()
    })
-   
-   /*
-   $('#ip-2').hide();
-   $('#ip-3').hide();
-   $('#ip-4').hide();
-	*/
 
   $('.ip-check').click(function(){
     $(".gallery-child").hide();
@@ -27,7 +20,7 @@ var main = function() {
     var thumbnail_div = $(img).parent()
     var preview_div = $(thumbnail_div).siblings('.preview')
     var newimgsrc = $(img).attr('src')
-    preview_div.children('img').attr('src', newimg)
+    preview_div.children('img').attr('src', newimgsrc)
   })
 
   /*
