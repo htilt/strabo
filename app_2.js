@@ -14,7 +14,7 @@ var main = function() {
     $(".gallery").show()
   })
 
-  //to do: make this so it only selects the children of the interest point that's currently being looked at
+  //to do (maybe): make this so it only selects the children of the interest point that's currently being looked at
   $('.thumbnails').children('img').mouseover(function(){
     var img = this
     var thumbnail_div = $(img).parent()
