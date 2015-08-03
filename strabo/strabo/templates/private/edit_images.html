@@ -1,0 +1,89 @@
+{% extends "/private/base.html" %}
+{% set active_page = "edit_images" %}
+{% block title %}Edit Interest Points{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="static/private_styles/edit_images.css">
+{% endblock %}
+
+{% block content %}
+<div class "row" id="filter-options">
+    <form class="form-inline" method="POST" action="/edit_images/post/" enctype="multipart/form-data">
+        <div class="form-group">
+            <p class="text-muted">Search for images by category:</p>
+        </div>
+        
+        <div class="form-group">
+          <select class="form-control" name='categories'>
+            {% for category in categories %}
+            <option name="categories"> {{ category.0 }} </option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <input class="form-control" type="text" name="search" size="80" placeholder="Add your search term here">
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="btn btn-info" value="Submit">
+        </div>
+    </form>
+</div>
+<p></p>
+<p></p>
+<div>
+    <form method="POST" action="/edit_images/delete/" enctype="multipart/form-data">
+        <div class="table">
+            <table class="table-bordered" margin="10px" id="preview">
+              <tr>
+                <th></th>
+                <th>#</th>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Image Description</th>
+                <th>Creation Date/Time</th> 
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Period</th>
+                <th>Interest Point</th>
+                <th>Notes</th>
+                <th>Filename</th>
+              </tr>
+
+              {% for img in images %}
+                  <tr>
+                    <td>
+                        <input type="checkbox" name='primary_key' value={{ img.0 }}>
+                    </td>
+                    <td class="image_key">{{ img.0 }}</td>
+                    <td><img src="/static/test_thumbnails/{{ img.10 }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                    <td class="image_title">{{ img.1 | default("Untitled") }}</td>
+                    <td class="img_description">{{ img.2 }}</td>
+                    <td class="created_at">{{ img.3 }}</td> 
+                    <td class="latitude">{{ img.4 }}</td>
+                    <td class="longitude">{{ img.5 }}</td>
+                    <td class="period">{{ img.6 }}</td>
+                    <td class="interest_point">{{ img.7 }}</td>
+                    <td class="notes">{{ img.8 }}</td>
+                    <td class="file_name">{{ img.9 }}</td>
+                  </tr>
+              {% endfor %}
+            </table>
+        </div>
+        
+        <div>
+            <input type="submit" class="btn btn-info" value="Delete">
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {{ super () }}
+{% endblock %}
+
+
+
+

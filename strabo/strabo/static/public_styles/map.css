@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -60px;
+  padding: 0 0 60;
+}
+
+#map {
+  height: 100%;
+}
+
+.header {
+  height: 80px;
+}
+
+#img-wrapper {
+  padding-bottom: 10px;
+  padding-left: 60px;
+}
+
+#img-wrapper p {
+  padding-top: 20px;
+}
