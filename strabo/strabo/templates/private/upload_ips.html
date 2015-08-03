@@ -1,0 +1,72 @@
+{% extends "/private/base.html" %}
+{% set active_page = "upload_ips" %}
+{% block title %}Upload Interest Points{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<main class="container">
+  <div class="form">
+    <fieldset>
+      <form id="image-upload"  method="POST" action="/interest_points/post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="form-wrapper col-lg-8">
+            <legend>Add a New Interest Point</legend>
+            
+            <div class="form-group">
+              <label for="name">Location Name:</label><br>
+              <input class="form-control" type="text" name="name" size="15" placeholder="Untitled"><br>
+            </div>
+            
+            <div class="form-group">
+              <label for="latitude">Latitude:</label><br>
+              <input class="form-control" type="text" name="latitude" size="80">
+            </div>
+         
+            <div class="form-group">
+              <label for="longitude">Longitude:</label><br>
+              <input class="form-control" type="text" name="longitude" size="80">
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Additional Notes:</label><br>
+              <input class="form-control" type="text" name="notes" size="80" placeholder="Add any additional notes for private reference.">
+            </div>
+            
+            <p></p>
+            
+            <input type="submit" value="Upload">
+          </div>
+        </div>
+      </form>
+    </fieldset>
+  </div>
+
+  <p></p>
+  <p></p>
+  <div class="table">
+    <table class="table-bordered" margin="10px" id="preview">
+      <tr>
+        <th>Title</th>
+        <th>Latitude</th>
+        <th>Longitude</th> 
+        <th>Additional Notes</th>
+      </tr>
+      
+      {% for ip in interest_points %}
+      <tr>
+        <td class="ip_name">{{ ip.0 | default("Untitled") }}</td>
+        <td class="latitude">{{ ip.1 }}</td>
+        <td class="longitude">{{ ip.2 }}</td> 
+        <td class="notes">{{ ip.3 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+    {{ super () }}
+{% endblock %}

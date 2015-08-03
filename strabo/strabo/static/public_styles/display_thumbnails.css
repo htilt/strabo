@@ -1,0 +1,21 @@
+#gallery {
+  width: 100%; 
+  height: 150px;
+  padding-bottom: 20px;
+}
+
+#link-wrapper {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#link-wrapper a {
+  color: #3399FF;
+}
+
+#gallery img {
+  height:100px;
+  width:100px;
+  padding-bottom: 10px;
+}
+

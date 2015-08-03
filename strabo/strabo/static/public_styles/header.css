@@ -1,0 +1,33 @@
+/* Navbar */
+.navbar {
+  background-color: #F0F0F0  ;
+  border-bottom: 1px solid #ddd;
+  opacity: 1;
+  
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+  
+  font-size: 17px;
+  padding: 15px;
+}
+
+p {
+  z-index: 12;
+}
+
+.navbar-header a {
+  float: left;
+  color: black;
+}
+
+/* Navbar Menu */ 
+.menu > li {
+  display: inline;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: black;
+}
+
+.menu a {
+  color: black;
+}

@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" href="../static/public_styles/display_thumbnails.css" />
+
+<div id="gallery">
+  <div id="link-wrapper">
+    <span class="text-muted">Select another interest point or </span><a href="gallery/images?topic={{ images[0].1 }}" class="text-muted" id="ip_link">see more images of {{ images[0].1 }}</a> 
+  </div>
+  <div class="container">
+    <div class="img-wrap">
+        {% for img in images %}
+        <img src="../../static/test_thumbnails/{{ img.0 }}" alt="thumbnail" style="width:100px;height:100px;"></img>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#ip_link').click(function () {
+    console.log('click-time')
+
+  });
+
+</script>
