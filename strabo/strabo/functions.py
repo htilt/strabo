@@ -51,74 +51,115 @@ def handler_helper(field, variable):
   with closing(get_db()) as db:
         # Query db for the first five images for the selected interest_point.
         images = db.execute(
-          "SELECT filename, title FROM images WHERE %s = '%s' ORDER by id DESC LIMIT 12" % (field, variable)
-        ).fetchall()
-    # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
+          """SELECT filename, title FROM images WHERE %s = '%s' 
+          ORDER by id DESC LIMIT 12""" % (field, variable)).fetchall()
+    # Passes values from each image to template as tuple 
+    # (containing only one element), stored in list-array 'images'
   return images
 
 def get_images(ip_value):
   with closing(get_db()) as db:
         # Query db for the first five images for the selected interest_point.
         images = db.execute(
-          "SELECT thumbnail_name, interest_point FROM images WHERE interest_point = '%s' ORDER by id DESC LIMIT 5" % ip_value
+          """SELECT thumbnail_name, interest_point FROM images 
+          WHERE interest_point = '%s' ORDER by id DESC LIMIT 5""" % ip_value
         ).fetchall()
-    # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
+    # Passes values from each image to template as tuple 
+    # (containing only one element), stored in list-array 'images'
   return images
 
 def get_12_images(ip_value=None):
   if ip_value:
     with closing(get_db()) as db:
       # Query db for the images.
-      images = db.execute("SELECT filename, title, created_at FROM images WHERE interest_point = '%s' ORDER by id DESC LIMIT 12" % ip_value
-        ).fetchall()
+      images = db.execute("""SELECT filename, title, created_at FROM images 
+        WHERE interest_point = '%s' ORDER by id DESC LIMIT 12""" % ip_value).fetchall()
   else:
     with closing(get_db()) as db:
       # Query db for the images.
-      images = db.execute("SELECT filename, title, created_at FROM images ORDER by id LIMIT 12").fetchall()
-  # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
+      images = db.execute("""SELECT filename, title, created_at 
+        FROM images ORDER by id LIMIT 12""").fetchall()
+  # Passes values from each image to template as tuple 
+  # (containing only one element), stored in list-array 'images'
   return images
 
 def get_events():
   with closing(get_db()) as db:
-    events = db.execute("SELECT title, event_description, year, notes FROM events ORDER by id").fetchall()
+    events = db.execute("""SELECT title, event_description, 
+      year, notes FROM events ORDER by id""").fetchall()
     print(events)
   return events
 
 def get_interest_points():
   with closing(get_db()) as db:
-    interest_points = db.execute("SELECT name, latitude, longitude, notes FROM interest_points ORDER by id DESC"
+    interest_points = db.execute("""SELECT name, latitude, longitude, 
+      notes FROM interest_points ORDER by id DESC"""
       ).fetchall()
   return interest_points
 
 def get_images_flex():
   with closing(get_db()) as db:
     images = db.execute(
-        "SELECT title, img_description, created_at, latitude, longitude, period, interest_point, notes, filename, thumbnail_name FROM images ORDER by id DESC LIMIT 10"
-      ).fetchall()
+        """SELECT title, img_description, created_at, latitude, longitude, period, 
+        interest_point, notes, filename, thumbnail_name FROM images 
+        ORDER by id DESC LIMIT 10""").fetchall()
     return images
 
 def get_column_names(table_name):
   with closing(get_db()) as db:
     c = db.cursor()
-    c.execute('SELECT * FROM images')
+    c.execute('SELECT * FROM {table}'.format(table=table_name))
     column_names = c.description
-    # column_names = db.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'images' AND type = 'table'")
   return column_names
   
-def search_images(column, search_term):
+def search(table_name, column, search_term):
   with closing(get_db()) as db:
-    images = db.execute("SELECT * FROM images WHERE %s = '%s' ORDER by id DESC" % (column, search_term)
+    data = db.execute("""SELECT * FROM {table} WHERE %s = '%s' 
+      ORDER by id DESC""".format(table=table_name) % (column, search_term)
       ).fetchall()
-  return images
+  return data
 
-def delete(keys):
+def get_all(table_name):
+  with closing(get_db()) as db:
+    data = db.execute("SELECT * FROM {table} ORDER by id".format(table=table_name)).fetchall()
+  return data
+
+### Make table name variable in second to last line. ###
+def delete(keys, table_name):
   with closing(get_db()) as db:
     c = db.cursor()
-    # keys = [map(int, x) for x in keys]
-    print(keys)
-    # for key in keys:
-    #   print(type(key))
-    #   integer = int(key)
-    #   print(type(integer))
-    #   c.execute('DELETE FROM images WHERE id =' + key)
+    for key in keys:
+      # if images is the table to be modified, delete the image from /uploads
+      if table_name == "images":
+        file_name = c.execute("SELECT filename FROM images WHERE id=" + key).fetchall()
+        file_name = (file_name[0][0])
+        path = app.config['UPLOAD_FOLDER']
+        fullpath = os.path.join(path, file_name)
+        os.remove(fullpath)
+      # then delete the db row
+      query = "DELETE FROM {table} WHERE id = ?".format(table=table_name)
+      print(query, key)
+      db.execute(query, (key,))
+      db.commit()
   return
+
+def insert_images(params):
+  # Create a tuple 'params' containing all of the variables from above.
+  # Pass it to the cursor and commit changes.
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO images(title, img_description, 
+      latitude, longitude, period, interest_point, notes, filename, 
+      thumbnail_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    db.commit()
+
+def insert_ips(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO interest_points
+      (name, latitude, longitude, notes) VALUES(?, ?, ?, ?)""", params)
+    db.commit()
+
+def insert_events(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO events
+      (title, event_description, year, notes) VALUES(?, ?, ?, ?)""", params)
+    db.commit()
