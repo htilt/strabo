@@ -100,19 +100,17 @@ def event_post():
 ###
 ###
 ### Views to search for and delete images ###
-@app.route("/edit_images/")
+@app.route("/edit_images/", methods=["GET"])
 def edit_images():
-  categories = get_column_names('images')
-  return render_template("private/edit_images.html", categories=categories)
-
-@app.route("/edit_images/post/", methods=["POST"])
-def edit_images_post():
   table_name = 'images'
-  column = request.form['categories']
-  search_term = request.form['search']
-  images = search(table_name, column, search_term)
   categories = get_column_names('images')
-  return render_template("private/edit_images.html", images=images, categories=categories)
+  search_term = request.args.get('search')
+  if search_term is None:
+    images = get_all(table_name)
+  else:
+    column = request.args.get('categories')
+    images = search(table_name, column, search_term)
+  return render_template("private/edit_images.html", categories=categories, images=images)
 
 @app.route("/edit_images/delete/", methods=["POST"])
 def edit_images_delete():
@@ -124,19 +122,17 @@ def edit_images_delete():
 ###
 ###
 ### Views to search for and delete interest points ###
-@app.route("/edit_ips/")
+@app.route("/edit_ips/", methods=["GET"])
 def edit_ips():
-  categories = get_column_names('interest_points')
-  return render_template("private/edit_ips.html", categories=categories)
-
-@app.route("/edit_ips/post/", methods=["POST"])
-def edit_ips_post():
   table_name = 'interest_points'
-  column = request.form['categories']
-  search_term = request.form['search']
-  interest_points = search(table_name, column, search_term)
   categories = get_column_names('interest_points')
-  return render_template("private/edit_ips.html", interest_points=interest_points, categories=categories)
+  search_term = request.args.get('search')
+  if search_term is None:
+    interest_points = get_all(table_name)
+  else:
+    column = request.args.get('categories')
+    interest_points = search(table_name, column, search_term)
+  return render_template("private/edit_ips.html", categories=categories, interest_points=interest_points)
 
 @app.route("/edit_ips/delete/", methods=["POST"])
 def edit_ips_delete():
@@ -148,19 +144,17 @@ def edit_ips_delete():
 ###
 ###
 ### Views to search for and delete events ###
-@app.route("/edit_events/")
+@app.route("/edit_events/", methods=["GET"])
 def edit_events():
-  categories = get_column_names('events')
-  return render_template("private/edit_events.html", categories=categories)
-
-@app.route("/edit_events/post/", methods=["POST"])
-def edit_events_post():
   table_name = 'events'
-  column = request.form['categories']
-  search_term = request.form['search']
-  events = search(table_name, column, search_term)
   categories = get_column_names('events')
-  return render_template("private/edit_events.html", events=events, categories=categories)
+  search_term = request.args.get('search')
+  if search_term is None:
+    events = get_all(table_name)
+  else:
+    column = request.args.get('categories')
+    events = search(table_name, column, search_term)
+  return render_template("private/edit_events.html", categories=categories, events=events)
 
 @app.route("/edit_events/delete/", methods=["POST"])
 def edit_events_delete():
@@ -168,4 +162,3 @@ def edit_events_delete():
   keys = request.form.getlist('primary_key')
   delete(keys, table_name)
   return redirect(url_for('index'))
-
