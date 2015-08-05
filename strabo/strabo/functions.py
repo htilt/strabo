@@ -30,95 +30,122 @@ def make_thumbnail(filename):
   size = 300, 300
   img.thumbnail(size)
   # save the image under a new filename in thumbnails directory
-  imagename = filename.split(".")
-  # functional version: imagename = filename.rsplit(".", 1)[0]
-  newfilename = imagename[0] + "_thumbnail.jpeg"
+  imagename = filename.rsplit(".", 1)[0]
+  newfilename = imagename + "_thumbnail.jpeg"
   path = app.config['NEW_DATA_DIRECTORY']
   fullpath = os.path.join(path, newfilename)
   img.save(fullpath)
   # return the filename for the thumbnail
   return newfilename
 
-def image_handler(year=None, event=None, location=None):
+# This function ensures that handler_helper will receive a safe 
+# column name.
+def get_images(year=None, event=None, location=None):
   if year is not None:
-    return handler_helper('year', year)
+    return get_images_helper('year', year, 12)
   if event is not None:
-    return handler_helper('event', event)
+    return get_images_helper('event', event, 12)
   else:
-    return handler_helper('interest_point', location)
+    return get_images_helper('interest_point', location, 12)
 
-def handler_helper(field, variable):
+# Gets 12 images from db for which a given column matches the user input.
+def get_images_helper(column, variable, count):
   with closing(get_db()) as db:
-        # Query db for the first five images for the selected interest_point.
-        images = db.execute(
-          "SELECT filename, title FROM images WHERE %s = '%s' ORDER by id DESC LIMIT 12" % (field, variable)
-        ).fetchall()
-    # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    query = """SELECT * FROM images WHERE {column} = ? 
+      ORDER by id LIMIT ?""".format(column = column)
+    images = cur.execute(query, (variable, count)).fetchall()
   return images
 
-def get_images(ip_value):
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+# Gets 10 images with select metadata
+def get_flex(table_name, count=None):
   with closing(get_db()) as db:
-        # Query db for the first five images for the selected interest_point.
-        images = db.execute(
-          "SELECT thumbnail_name, interest_point FROM images WHERE interest_point = '%s' ORDER by id DESC LIMIT 5" % ip_value
-        ).fetchall()
-    # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
-  return images
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    if count:
+      query = """SELECT * FROM {table} ORDER BY id DESC LIMIT ?""".format(table=table_name)
+      data = cur.execute(query, (count,)).fetchall()
+    else: #count=None
+      data = cur.execute("""SELECT * FROM {table} 
+        ORDER by id DESC""".format(table=table_name)).fetchall()
+    return data
 
-def get_12_images(ip_value=None):
-  if ip_value:
-    with closing(get_db()) as db:
-      # Query db for the images.
-      images = db.execute("SELECT filename, title, created_at FROM images WHERE interest_point = '%s' ORDER by id DESC LIMIT 12" % ip_value
-        ).fetchall()
-  else:
-    with closing(get_db()) as db:
-      # Query db for the images.
-      images = db.execute("SELECT filename, title, created_at FROM images ORDER by id LIMIT 12").fetchall()
-  # Passes values from each image to template as tuple (containing only one element), stored in list-array 'images'
-  return images
-
-def get_events():
-  with closing(get_db()) as db:
-    events = db.execute("SELECT title, event_description, year, notes FROM events ORDER by id").fetchall()
-    print(events)
-  return events
-
-def get_interest_points():
-  with closing(get_db()) as db:
-    interest_points = db.execute("SELECT name, latitude, longitude, notes FROM interest_points ORDER by id DESC"
-      ).fetchall()
-  return interest_points
-
-def get_images_flex():
-  with closing(get_db()) as db:
-    images = db.execute(
-        "SELECT title, img_description, created_at, latitude, longitude, period, interest_point, notes, filename, thumbnail_name FROM images ORDER by id DESC LIMIT 10"
-      ).fetchall()
-    return images
-
+# Gets column names from a given table
 def get_column_names(table_name):
   with closing(get_db()) as db:
     c = db.cursor()
-    c.execute('SELECT * FROM images')
+    c.execute('SELECT * FROM {table}'.format(table=table_name))
     column_names = c.description
-    # column_names = db.execute("SELECT sql FROM sqlite_master WHERE tbl_name = 'images' AND type = 'table'")
   return column_names
-  
-def search_images(column, search_term):
-  with closing(get_db()) as db:
-    images = db.execute("SELECT * FROM images WHERE %s = '%s' ORDER by id DESC" % (column, search_term)
-      ).fetchall()
-  return images
 
-def delete(keys):
+SCHEMA = {
+  'images': [c[0] for c in get_column_names('images')],
+  'events': [c[0] for c in get_column_names('events')],
+  'interest_points': [c[0] for c in get_column_names('interest_points')]
+}
+
+### Although table name is secure (sent to the function by the server, and not prone to SQL
+### injection), column name is not secure, and could be subject to SQL injection via 
+### a $.POST() request.
+def search(table_name, column, search_term):
+  if not table_name in SCHEMA:
+    return []
+  if not column in SCHEMA[table_name]:
+    return []
+
+  with closing(get_db()) as db:
+    if column in ("title", "img_description", "event_description", "name"):
+      query = """SELECT * FROM {table} WHERE {column} LIKE ?
+        ORDER BY id DESC""".format(table=table_name, column=column)
+      search_term = '%{}%'.format(search_term)
+    else:
+      query = """SELECT * FROM {table} WHERE {column} = ?
+        ORDER by id DESC""".format(table=table_name, column=column)
+    data = db.execute(query, (search_term,)).fetchall()
+  return data
+
+# SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
+
+def delete(keys, table_name):
   with closing(get_db()) as db:
     c = db.cursor()
-    # keys = [map(int, x) for x in keys]
-    print(keys)
-    # for key in keys:
-    #   print(type(key))
-    #   integer = int(key)
-    #   print(type(integer))
-    #   c.execute('DELETE FROM images WHERE id =' + key)
+    for key in keys:
+      # if images is the table to be modified, delete the image from /uploads
+      if table_name == "images":
+        query = """SELECT filename FROM images WHERE id = ?"""
+        file_name = c.execute(query, (key,)).fetchall()
+        file_name = (file_name[0][0])
+        path = app.config['UPLOAD_FOLDER']
+        fullpath = os.path.join(path, file_name)
+        os.remove(fullpath)
+      # then delete the db row
+      query = """DELETE FROM {table} WHERE id = ?""".format(table=table_name)
+      db.execute(query, (key,))
+    db.commit()
   return
+
+def insert_images(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO images(title, img_description, 
+      latitude, longitude, period, interest_point, notes, filename, 
+      thumbnail_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    db.commit()
+
+def insert_ips(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO interest_points
+      (name, latitude, longitude, notes) VALUES(?, ?, ?, ?)""", params)
+    db.commit()
+
+def insert_events(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""INSERT INTO events
+      (title, event_description, year, notes) VALUES(?, ?, ?, ?)""", params)
+    db.commit()

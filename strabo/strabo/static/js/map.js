@@ -85,6 +85,14 @@ function onEachFeature(feature, layer) {
   });
 }
 
+/*
+$.get("/interest_points", function(data)) {
+  geojson = L.geoJson(data, {
+    onEachFeature: onEachFeature
+  }).addTo(map);
+}
+*/
+
 geojson = L.geoJson(interest_points, {
   onEachFeature: onEachFeature
 }).addTo(map);

@@ -1,26 +1,9 @@
-{% extends "/private/base.html" %}
-{% set active_page = "upload_ips" %}
-{% block head %}
-
-    {{ super() }}
-{% endblock %}
-
-{% block content %}
-<main class="container">
   <div class="form">
     <fieldset>
       <form id="image-upload"  method="POST" action="/interest_points/post" enctype="multipart/form-data">
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Interest Point</legend>
-
-
-            
-              <div id="drawMap" style="width: 100%; height: 400px">
-      <div class="container"></div>
-    </div> 
-
-            
             
             <div class="form-group">
               <label for="name">Location Name:</label><br>
@@ -50,31 +33,3 @@
       </form>
     </fieldset>
   </div>
-
-  <p></p>
-  <p></p>
-  <div class="table">
-    <table class="table-bordered" margin="10px" id="preview">
-      <tr>
-        <th>Title</th>
-        <th>Latitude</th>
-        <th>Longitude</th> 
-        <th>Additional Notes</th>
-      </tr>
-      
-      {% for ip in interest_points %}
-      <tr>
-        <td class="ip_name">{{ ip['name'] | default("Untitled") }}</td>
-        <td class="latitude">{{ ip['latitude'] }}</td>
-        <td class="longitude">{{ ip['longitude'] }}</td> 
-        <td class="notes">{{ ip['notes'] }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-</main>
-{% endblock %}
-
-{% block footer %}
-    {{ super () }}
-{% endblock %}

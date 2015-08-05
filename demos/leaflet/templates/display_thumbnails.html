@@ -1,0 +1,12 @@
+<div id="gallery">
+  <div id="link-wrapper">
+    <span class="text-muted">Select another interest point or </span><a href="#" class="text-muted">see more images of {{ images[0].1 }}</a> 
+  </div>
+  <div class="container">
+    <div class="img-wrap">
+        {% for img in images %}
+        <img src="/static/test_thumbnails/{{ img.0 }}" alt="thumbnail" style="width:100px;height:100px;"></img>
+        {% endfor %}
+    </div>
+  </div>
+</div>
