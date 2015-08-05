@@ -1,6 +1,7 @@
 {% extends "/private/base.html" %}
 {% set active_page = "upload_ips" %}
 {% block head %}
+
     {{ super() }}
 {% endblock %}
 
@@ -12,6 +13,14 @@
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Interest Point</legend>
+
+
+            
+              <div id="drawMap" style="width: 100%; height: 400px">
+      <div class="container"></div>
+    </div> 
+
+            
             
             <div class="form-group">
               <label for="name">Location Name:</label><br>
