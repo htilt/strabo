@@ -1,11 +1,3 @@
-{% extends "/private/base.html" %}
-{% set active_page = "upload_events" %}
-{% block head %}
-    {{ super() }}
-{% endblock %}
-
-{% block content %}
-<main class="container">
   <div class="form">
     <fieldset>
       <form id="image-upload"  method="POST" action="/events/post" enctype="multipart/form-data">
@@ -41,31 +33,3 @@
       </form>
     </fieldset>
   </div>
-
-  <p></p>
-  <p></p>
-  <div class="table">
-    <table class="table-bordered" margin="10px" id="preview">
-      <tr>
-        <th>Title</th>
-        <th>Event Description</th>
-        <th>Event Year</th> 
-        <th>Additional Notes</th>
-      </tr>
-      
-      {% for event in events %}
-      <tr>
-        <td class="event_title">{{ event['title'] | default("Untitled") }}</td>
-        <td class="event_description">{{ event['event_description'] }}</td>
-        <td class="event_year">{{ event['year'] }}</td> 
-        <td class="notes">{{ event['notes'] }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-</main>
-{% endblock %}
-
-{% block footer %}
-    {{ super () }}
-{% endblock %}

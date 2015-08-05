@@ -4,8 +4,8 @@
     {% block head %}
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="static/private_styles/upload_navbar.css">
-    <title>{% block title %}{% endblock %}Canyon Mapper</title>
+    <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_navbar.css">
+    <title>{% block title %}Canyon Mapper{% endblock %}</title>
     {% endblock head %}
 </head>
 <body>
@@ -28,7 +28,7 @@
         {% endfor %}
     </ul>
 
-    <div id="content" class="body-wrapper">
+    <div class="body-wrapper">
         {% block content %}
         <div class="temp">
             <h2 class="text-muted">Select a tab to begin adding content to the Reed Canyon Mapper.</h2>

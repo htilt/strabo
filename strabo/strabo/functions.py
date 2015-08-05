@@ -40,73 +40,42 @@ def make_thumbnail(filename):
 
 # This function ensures that handler_helper will receive a safe 
 # column name.
-def image_handler(year=None, event=None, location=None):
+def get_images(year=None, event=None, location=None):
   if year is not None:
-    return handler_helper('year', year)
+    return get_images_helper('year', year, 12)
   if event is not None:
-    return handler_helper('event', event)
+    return get_images_helper('event', event, 12)
   else:
-    return handler_helper('interest_point', location)
+    return get_images_helper('interest_point', location, 12)
 
-# Gets 12 images from db for which a given column mathes the user input.
-def handler_helper(column, variable):
+# Gets 12 images from db for which a given column matches the user input.
+def get_images_helper(column, variable, count):
   with closing(get_db()) as db:
-    query = """SELECT filename, title FROM images WHERE {column} = ? 
-      ORDER by id LIMIT 12""".format(column = column)
-    images = db.execute(query, (variable,)).fetchall()
-    # Passes values from each image to template as tuple 
-    # (containing only one element), stored in list-array 'images'
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    query = """SELECT * FROM images WHERE {column} = ? 
+      ORDER by id LIMIT ?""".format(column = column)
+    images = cur.execute(query, (variable, count)).fetchall()
   return images
 
-# Gets 5 images from db for which the interest_point column matches the user input.
-def get_images(ip_value):
-  with closing(get_db()) as db:
-    query = """SELECT thumbnail_name, interest_point FROM images 
-      WHERE interest_point = ? ORDER by id DESC LIMIT 5"""
-    images = db.execute(query, (ip_value,)).fetchall()
-    # Passes values from each image to template as tuple 
-    # (containing only one element), stored in list-array 'images'
-  return images
-
-# Gets 12 images whether or not an interest point is supplied as a variable.
-def get_12_images(ip_value=None):
-  if ip_value:
-    with closing(get_db()) as db:
-      query = """SELECT filename, title, created_at FROM images 
-        WHERE interest_point = ? ORDER by id DESC LIMIT 12"""
-      images = db.execute(query, (ip_value,)).fetchall()
-  else:
-    with closing(get_db()) as db:
-      query = """SELECT filename, title, created_at 
-        FROM images ORDER by id LIMIT 12"""
-      images = db.execute(query).fetchall()
-  # Passes values from each image to template as tuple 
-  # (containing only one element), stored in list-array 'images'
-  return images
-
-# Gets all events from events table
-def get_events():
-  with closing(get_db()) as db:
-    events = db.execute("""SELECT title, event_description, 
-      year, notes FROM events ORDER by id""").fetchall()
-  return events
-
-# Gets all interest points from interest_points table
-def get_interest_points():
-  with closing(get_db()) as db:
-    interest_points = db.execute("""SELECT name, latitude, longitude, 
-      notes FROM interest_points ORDER by id DESC"""
-      ).fetchall()
-  return interest_points
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
 
 # Gets 10 images with select metadata
-def get_images_flex():
+def get_flex(table_name, count=None):
   with closing(get_db()) as db:
-    images = db.execute(
-        """SELECT title, img_description, created_at, latitude, longitude, period, 
-        interest_point, notes, filename, thumbnail_name FROM images 
-        ORDER by id DESC LIMIT 10""").fetchall()
-    return images
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    if count:
+      query = """SELECT * FROM {table} ORDER BY id DESC LIMIT ?""".format(table=table_name)
+      data = cur.execute(query, (count,)).fetchall()
+    else: #count=None
+      data = cur.execute("""SELECT * FROM {table} 
+        ORDER by id DESC""".format(table=table_name)).fetchall()
+    return data
 
 # Gets column names from a given table
 def get_column_names(table_name):
@@ -144,11 +113,6 @@ def search(table_name, column, search_term):
 
 # SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
 
-def get_all(table_name):
-  with closing(get_db()) as db:
-    data = db.execute("SELECT * FROM {table} ORDER by id".format(table=table_name)).fetchall()
-  return data
-
 def delete(keys, table_name):
   with closing(get_db()) as db:
     c = db.cursor()
@@ -168,8 +132,6 @@ def delete(keys, table_name):
   return
 
 def insert_images(params):
-  # Create a tuple 'params' containing all of the variables from above.
-  # Pass it to the cursor and commit changes.
   with closing(get_db()) as db:
     db.cursor().execute("""INSERT INTO images(title, img_description, 
       latitude, longitude, period, interest_point, notes, filename, 
