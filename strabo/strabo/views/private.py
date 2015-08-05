@@ -5,8 +5,9 @@ from flask import request, render_template, redirect, url_for
 from werkzeug import secure_filename
 
 from strabo import app
-from strabo.functions import allowed_file, migrate_db, make_thumbnail, \
-get_flex, get_column_names, search, delete, insert_images, insert_ips, insert_events
+from strabo.database import migrate_db, get_flex, get_column_names, search, \
+delete, insert_images, insert_ips, insert_events
+from strabo.image_processing import make_thumbnail, allowed_file
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])

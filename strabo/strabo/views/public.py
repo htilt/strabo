@@ -1,8 +1,7 @@
 from flask import request, render_template, url_for, redirect
 
 from strabo import app
-from strabo.functions import get_images, get_images_helper, get_flex
-
+from strabo.database import get_images, get_images_helper, get_flex
 
 @app.route("/map")
 def map():
