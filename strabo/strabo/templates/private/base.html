@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% block head %}
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-          rel="stylesheet">
-<<<<<<< HEAD
-    <link rel="stylesheet" type="text/css" href="static/private_styles/upload_navbar.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+{% block head %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+      rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="static/private_styles/upload_navbar.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+<title>{% block title %}Canyon Mapper{% endblock %}</title>
+{% endblock head %}
 
-    <title>{% block title %}{% endblock %}Canyon Mapper</title>
-=======
-    <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_navbar.css">
-    <title>{% block title %}Canyon Mapper{% endblock %}</title>
->>>>>>> d588c46f967770a7f5ec84416cb3795d8e63c58a
-    {% endblock head %}
-</head>
 <body>
     {% set navigation_bar = [
     ('/upload_images/', 'upload_images', 'Upload Images'),
