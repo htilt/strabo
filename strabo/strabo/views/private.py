@@ -6,8 +6,7 @@ from werkzeug import secure_filename
 
 from strabo import app
 from strabo.functions import allowed_file, migrate_db, make_thumbnail, \
-get_interest_points, get_events, get_images_flex, get_column_names, search, \
-delete, get_all, insert_images, insert_ips, insert_events
+get_flex, get_column_names, search, delete, insert_images, insert_ips, insert_events
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
@@ -26,9 +25,11 @@ def index():
 ### Views to upload images to db
 @app.route("/upload_images/")
 def upload_images():
-  images = get_images_flex()
-  events = get_events()
-  interest_points = get_interest_points()
+  table_name = 'images'
+  images = get_flex(table_name, 10)
+  events = get_flex('events')
+  interest_points = get_flex('interest_points')
+  print(interest_points)
   return render_template("private/upload_images.html", images= images,
     interest_points=interest_points, events=events)
 
@@ -66,7 +67,7 @@ def post():
 ### Views to add interest points to the db
 @app.route("/upload_ips/")
 def upload_ips():
-  interest_points = get_interest_points()
+  interest_points = get_flex('interest_points')
   return render_template("private/upload_ips.html", interest_points=interest_points)
 
 @app.route("/interest_points/post", methods=["POST"])
@@ -84,7 +85,7 @@ def interest_points_post():
 ### Views to add events to the db
 @app.route("/upload_events/")
 def upload_events():
-  events = get_events()
+  events = get_flex('events')
   return render_template("private/upload_events.html", events=events)
 
 @app.route("/events/post", methods=["POST"])
@@ -106,7 +107,7 @@ def edit_images():
   categories = get_column_names('images')
   search_term = request.args.get('search')
   if search_term is None:
-    images = get_all(table_name)
+    images = get_flex(table_name)
   else:
     column = request.args.get('categories')
     images = search(table_name, column, search_term)
@@ -128,7 +129,7 @@ def edit_ips():
   categories = get_column_names('interest_points')
   search_term = request.args.get('search')
   if search_term is None:
-    interest_points = get_all(table_name)
+    interest_points = get_flex(table_name)
   else:
     column = request.args.get('categories')
     interest_points = search(table_name, column, search_term)
@@ -150,7 +151,7 @@ def edit_events():
   categories = get_column_names('events')
   search_term = request.args.get('search')
   if search_term is None:
-    events = get_all(table_name)
+    events = get_flex(table_name)
   else:
     column = request.args.get('categories')
     events = search(table_name, column, search_term)

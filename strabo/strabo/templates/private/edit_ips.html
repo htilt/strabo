@@ -1,6 +1,5 @@
 {% extends "/private/base.html" %}
 {% set active_page = "edit_ips" %}
-{% block title %}Edit Interest Points{% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -49,14 +48,14 @@
                 {% for ip in interest_points %}
                     <tr>
                       <td>
-                          <input type="checkbox" name='primary_key' value={{ ip.0 }}>
+                          <input type="checkbox" name='primary_key' value={{ ip['id'] }}>
                       </td>
-                      <td class="image_key">{{ ip.0 }}</td>
-                      <td class="name">{{ ip.1 | default("Untitled") }}</td>
-                      <td class="created_at">{{ ip.2 }}</td> 
-                      <td class="latitude">{{ ip.3 }}</td>
-                      <td class="longitude">{{ ip.4 }}</td>
-                      <td class="notes">{{ ip.5 }}</td>
+                      <td class="image_key">{{ ip['id'] }}</td>
+                      <td class="name">{{ ip['name'] | default("Untitled") }}</td>
+                      <td class="created_at">{{ ip['created_at'] }}</td> 
+                      <td class="latitude">{{ ip['latitude'] }}</td>
+                      <td class="longitude">{{ ip['longitude'] }}</td>
+                      <td class="notes">{{ ip['notes'] }}</td>
                     </tr>
                 {% endfor %}
               </table>

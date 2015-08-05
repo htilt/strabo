@@ -91,7 +91,7 @@
         <!-- Projects Row -->
         {% for img in images %}
             <div class="col-md-3 portfolio-item" data-toggle="modal" data-target="#lightbox">
-                <p><a class="hovertext" href="#" metadata="{{ img.1 }}"><img class="img-responsive" src="../../static/uploads/{{ img.0 }}" width="500" height="309" border="0" alt=""></a></p>
+                <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="../../static/uploads/{{ img['filename'] }}" width="500" height="309" border="0" alt=""></a></p>
             </div>
         {% endfor %}
         <!-- /.row -->
