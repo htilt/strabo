@@ -1,4 +1,4 @@
-import os
+import os, ast
 from contextlib import closing
 
 from flask import request, render_template, redirect, url_for
@@ -7,7 +7,7 @@ from werkzeug import secure_filename
 from strabo import app
 from strabo.database import migrate_db, get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id
-from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
+from strabo.image_processing import make_thumbnail, allowed_file, DMS_to_Dec #, getEXIF
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
@@ -32,6 +32,27 @@ def upload_images():
   interest_points = get_flex('interest_points')
   return render_template("private/upload_images.html", images= images,
     interest_points=interest_points, events=events)
+
+@app.route("/upload_images/exif/", methods=['POST', 'GET'])
+def getEXIF():
+  tags = request.form.get('key')
+  dicty = ast.literal_eval(tags)
+  if 'DateTimeOriginal' in dicty:
+    dateTimeOriginal = dicty['DateTimeOriginal']
+  else: dateTimeOriginal = None
+  if 'GPSLatitude' in dicty: 
+    latitude = dicty['GPSLatitude']
+    latitude = DMS_to_Dec(latitude)
+  else: latitude = None
+  if 'GPSLongitude' in dicty:
+    longitude = dicty['GPSLongitude']
+    longitude = DMS_to_Dec(longitude)
+  else: longitude = None
+  print(dateTimeOriginal)
+  print(latitude)
+  print(longitude)
+  return render_template("private/form_images.html", longitude=longitude,
+    latitude=latitude, dateTimeOriginal=dateTimeOriginal)
 
 @app.route("/upload_images/post", methods=["POST"])
 def post():
