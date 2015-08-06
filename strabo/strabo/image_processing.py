@@ -2,6 +2,7 @@ import os, os.path
 from contextlib import closing
 
 from PIL import Image
+from PIL.ExifTags import TAGS
 
 from strabo import app
 
@@ -11,7 +12,7 @@ def allowed_file(filename):
     filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 # This helper function uses PIL to make a new thumbnail of a given image
-def make_thumbnail(filename):
+def make_thumbnail(filename, this_id):
   # import desired image from /uploads folder
   img = Image.open(app.config['UPLOAD_FOLDER'] + '/' + filename)
   # create a thumbnail from desired image
@@ -25,3 +26,13 @@ def make_thumbnail(filename):
   img.save(fullpath)
   # return the filename for the thumbnail
   return newfilename
+
+# This would be the desired implementation for server-side EXIF
+# extraction. Currently, tags are extracted in javascript.
+# def getEXIF(pathname, filename):
+#   # Get path to file
+#   total_pathname = os.path.join(pathname, filename)
+#   # Extract EXIF data
+#   date_created = Image.open(total_pathname)._getexif()[0x0132]
+#   print(date_created)
+#   return(date_created)
