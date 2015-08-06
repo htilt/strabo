@@ -6,8 +6,8 @@ from werkzeug import secure_filename
 
 from strabo import app
 from strabo.database import migrate_db, get_flex, get_column_names, search, \
-delete, insert_images, insert_ips, insert_events
-from strabo.image_processing import make_thumbnail, allowed_file
+delete, insert_images, insert_ips, insert_events, get_max_id
+from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
@@ -30,7 +30,6 @@ def upload_images():
   images = get_flex(table_name, 10)
   events = get_flex('events')
   interest_points = get_flex('interest_points')
-  print(interest_points)
   return render_template("private/upload_images.html", images= images,
     interest_points=interest_points, events=events)
 
@@ -44,23 +43,31 @@ def post():
   period = request.form['period']
   notes = request.form['notes']
   file = request.files['file']
-  file_name = file.filename
   if not request.form['interest_point'] == 'Select One':
     interest_point = request.form['interest_point']
   else: interest_point = ''
+
+  # Get primary key for saving filename and thumbnailname
+  max_id = get_max_id()
+  this_id = max_id + 1
 
   # Check if the file is one of the allowed types/extensions
   if file and allowed_file(file.filename):
     # If so, make the filename safe by removing unsupported characters
     filename = secure_filename(file.filename)
-    # Move the file form the temporary folder to the upload folder
+    # prepend unique id to ensure an unique filename
+    filename = str(this_id) + '_' + filename
+    # Move the file from the temporary folder to the upload folder
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # # Call function to extract EXIF data
+    # date_created = getEXIF(app.config['UPLOAD_FOLDER'], filename)
     # Make a thumbnail and store it in the thumbnails directory
-    thumbnail_name = make_thumbnail(filename)
+    thumbnail_name = make_thumbnail(filename, this_id)
 
   params = (title, img_description, latitude, longitude, period, 
-      interest_point, notes, file_name, thumbnail_name)
+      interest_point, notes, filename, thumbnail_name)
   insert_images(params)
+  
   return redirect(url_for('index'))
 
 ###

@@ -14,33 +14,30 @@ def map_post():
   images = get_images_helper('interest_point', ip_value, 5)
   return render_template("public/display_thumbnails.html", images=images)
 
-@app.route("/gallery")
+@app.route("/gallery", methods=["GET"])
 def gallery():
-  # events = get_events()
-  # years = get_years()
-  # locations = get_locations()
-  images = get_flex('images', 12)
-  return render_template("public/gallery.html", images=images)
-
-@app.route("/gallery/images")
-def gallery_redirect():
-  location = request.args.get('topic')
-  images = get_images(None, None, location)
-  return render_template("public/gallery.html", images=images)
-
-@app.route('/gallery/post', methods=["POST", "GET"])
-def gallery_post():
-  year = request.form['year']
-  event = request.form['event']
-  location = request.form['location']
-  if year != 'Year':
+  events = get_flex('events')
+  interest_points = get_flex('interest_points')
+  year = request.args.get('year')
+  event = request.args.get('event')
+  interest_point = request.args.get('interest_point')
+  # if no search has been performed
+  if year is None:
+    images = get_flex('images', 12)
+  # elif someone has searched for year
+  elif year != 'Year':
     images = get_images(year, None, None)
+  # elif someone has searched for event
   elif event != 'Event':
     images = get_images(None, event, None)
-  else: # if location is not 'Location'
-    images = get_images(None, None, location)
-  
-  return render_template("public/gallery.html", images=images)
+  # elif someone has searched for location
+  elif interest_point != 'Location':
+    images = get_images(None, None, interest_point)
+  # else someone has hit the submit button and should see all
+  else:
+    images = get_flex('images')
+  return render_template("public/gallery.html", images=images, events=events, 
+    interest_points=interest_points)
 
 @app.route("/timeline")
 def timeline():

@@ -51,12 +51,12 @@
         <!-- /.row -->
 
         <div class "row" id="filter-options">
-            <form class="form-inline" method="POST" action="/gallery/post" enctype="multipart/form-data">
+            <form class="form-inline" method="GET" action="/gallery" enctype="multipart/form-data">
                 <div class="form-group">
                     <p class="text-muted">Filter images by:</p>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" name='year' id="Year">
+                    <select class="form-control" name='year'>
                         <option selected label="Year">Year</option>
                         <option name=2015> 2015 </option>
                         <option name=2014> 2014 </option>
@@ -64,22 +64,19 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" name='event' id="Event">
-                        <option selected label="Event">Event</option>
-                        <option name=Building the Fish Ladder> Building the Fish Ladder </option>
-                        <option name=Removing the Pool> Removing the Pool </option>
-                        <option name=Canyon Day> Canyon Day </option>
-                        <option name=Early Days of the Restoration> Early Days of the Restoration </option>
-                        <option name=Before the Restoration> Before the Restoration </option>
+                    <select class="form-control" name='event'>
+                      <option selected label="Event">Event</option>
+                      {% for event in events %}
+                      <option>{{ event['title'] }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" name='location' id="Location">
-                        <option selected label="Location">Location</option>
-                        <option name=Fish Ladder> Fish Ladder </option>
-                        <option name=The Springs> The Springs </option>
-                        <option name=Reed Lake> Reed Lake </option>
-                        <option name=The Farm> The Farm </option>
+                    <select class="form-control" name='interest_point'>
+                      <option selected label="Location">Location</option>
+                      {% for interest_point in interest_points %}
+                      <option>{{ interest_point['name'] }}</option>
+                      {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">

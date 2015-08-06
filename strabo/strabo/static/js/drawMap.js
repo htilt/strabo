@@ -26,13 +26,13 @@ drawMap.on('draw:created', function (e) {
     var latLngs;
 
     if (type === 'circle') {
-       latLngs = layer.getLatLng();
-       drawMap.addLayer(layer)
+      latLngs = layer.getLatLng();
+      drawMap.addLayer(layer)
     }
     else
-       latLngs = layer.getLatLngs();
+      latLngs = layer.getLatLngs();
    		drawMap.addLayer(layer);
-       console.log(latLngs); // Returns an array of the points in the path.u75y76yy
+      console.log(latLngs); // Returns an array of the points in the path.u75y76yy
 
     // process latLngs as you see fit and then save
 })
