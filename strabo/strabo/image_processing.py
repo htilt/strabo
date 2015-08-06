@@ -27,6 +27,14 @@ def make_thumbnail(filename, this_id):
   # return the filename for the thumbnail
   return newfilename
 
+# Compatible with multiple phone types?
+def DMS_to_Dec(lst):
+  degrees = lst[0]
+  minutes = lst[1]
+  seconds = lst[2]
+  dec = (seconds/3600) + (minutes/60) + degrees
+  return(dec)
+
 # This would be the desired implementation for server-side EXIF
 # extraction. Currently, tags are extracted in javascript.
 # def getEXIF(pathname, filename):

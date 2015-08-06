@@ -15,21 +15,42 @@
                 <input class="form-control" type="text" name="img_description" size="80" placeholder="Describe the view unique to this image">
               </div>
            
+              {% if latitude %}
               <div class="form-group">
                 <label for="latitude">Latitude:</label><br>
-                <input class="form-control" type="text" name="latitude" size="80" placeholder="If no value is supplied, defaults to any relevant geotags">
+                <input class="form-control" type="text" name="latitude" size="80" value= {{ latitude }}>
               </div>
-  
+              {% else %}
+              <div class="form-group">
+                <label for="latitude">Latitude:</label><br>
+                <input class="form-control" type="text" name="latitude" size="80">
+              </div>
+              {% endif %}
+              
+              {% if longitude %}
               <div class="form-group">
                 <label for="longitude">Longitude:</label><br>
-                <input class="form-control" type="text" name="longitude" size="80" placeholder="If no value is supplied, defaults to any relevant geotags">
+                <input class="form-control" type="text" name="longitude" size="80" value= {{ longitude }}>
               </div>
-  
+              {% else %}
               <div class="form-group">
-                <label for="period">Period:</label><br>
-                <input class="form-control" type="text" name="period" size="80" placeholder="Post-Restoration, Pre-Restoration">
+                <label for="longitude">Longitude:</label><br>
+                <input class="form-control" type="text" name="longitude" size="80">
               </div>
-  
+              {% endif %}
+
+              {% if dateTimeOriginal %}
+              <div class="form-group">
+                <label for="period">Date Created:</label><br>
+                <input class="form-control" type="text" name="period" size="80" value= {{ dateTimeOriginal }}>
+              </div>
+              {% else %}
+              <div class="form-group">
+                <label for="period">Date Created:</label><br>
+                <input class="form-control" type="text" name="period" size="80" placeholder="Input date and time created"/>
+              </div>
+              {% endif %}
+
               <div class="form-group">
                 <label for="interest_point">Interest Point:</label><br>
                 <select class="form-control" name='interest_point'>
@@ -46,14 +67,14 @@
               </div>
               
               <p></p>
+
               
+              
+              <div class="upload-wrapper col-lg-4">
+                <input type="file" id="img-input" type="file" name="file" /><br /><br />
+                <img id="img-preview" src="#" alt="your image"></img>
+              </div>
               <input type="submit" value="Upload">
-            </div>
-  
-  
-            <div class="upload-wrapper col-lg-4">
-              <input type="file" id="img-input" name="file"><br /><br />
-              <img id="img-preview" src="#" alt="your image"></img>
             </div>
           
           </div>

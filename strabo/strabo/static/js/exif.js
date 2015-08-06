@@ -34,9 +34,9 @@
         0x9101 : "ComponentsConfiguration", // Information about channels
         0x9102 : "CompressedBitsPerPixel",  // Compressed bits per pixel
 
-        // user information
-        0x927C : "MakerNote",               // Any desired information written by the manufacturer
-        0x9286 : "UserComment",             // Comments by user
+        // // user information
+        // 0x927C : "MakerNote",               // Any desired information written by the manufacturer
+        // 0x9286 : "UserComment",             // Comments by user
 
         // related file
         0xA004 : "RelatedSoundFile",        // Name of related sound file
