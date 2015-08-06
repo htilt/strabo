@@ -10,7 +10,7 @@ document.getElementById("img-input").onchange = function(e) {
             "/upload_images/exif/", 
             {key: JSONtags},
             function(data) {
-              $("#form-wrapper").html(data)
+              $("#exif-autoComplete").html(data)
             }
         );
         // $.ajax({
