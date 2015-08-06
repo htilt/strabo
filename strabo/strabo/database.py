@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, os
 from contextlib import closing
 
 from strabo import app
@@ -14,6 +14,13 @@ def migrate_db():
     with app.open_resource('schema.sql', mode='r') as fh:
       db.cursor().executescript(fh.read())
       db.commit()
+
+def get_max_id():
+  with closing(get_db()) as db:
+    cur = db.cursor()
+    cur = cur.execute('SELECT max(id) FROM images')
+    max_id = cur.fetchone()[0]
+  return max_id
 
 # This function ensures that handler_helper will receive a safe 
 # column name.
