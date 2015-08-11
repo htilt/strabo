@@ -22,57 +22,100 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);
+var editableLayers = new L.FeatureGroup();
+drawMap.addLayer(editableLayers);
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
+// Removes some toolbar things and also sets colors
+
 var drawControl = new L.Control.Draw({
     
     draw : {
       polygon: {
         shapeOptions: {
-          color: 'blue'
+          color: '#2397EB'
         }
       },
-      rect: false,
+      circle: {
+        shapeOptions: {
+          color: '#2397EB'
+        } 
+      },
+      rectangle: false,
       polyline: false
     },
 
 
     edit: {
-        featureGroup: drawnItems,
-        edit: {
-          selectedPathOptions: {
-            color: 'red'
+      featureGroup: editableLayers,
+      featureGroup: drawnItems,
+      edit: {
+        selectedPathOptions: {
+          color: 'red'
         }
       }
     }
 });
+
 drawMap.addControl(drawControl);
 
-var zoneLatLngs;
+//this grabs the HTML elements that get injected with lat and lng
+var latCoordDump = document.getElementById('latitude');
+var longCoordDump = document.getElementById('longitude');
 
 
-// this is what grabs the coordinate data
+
+// this is what grabs the coordinate data when a shape is drawn
 drawMap.on('draw:created', function (e) {
+  //layer type just means what kind of shape
   var type = e.layerType;
+  //every drawn items gets its own layer
   var layer = e.layer;
   var latLngs;
 
+  //if the layer type is a circle, then we only have one set of latlngs to deal with, therefore different formula
   if (type === 'circle') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
+    //this is what injects the values into the HTML
+    latCoordDump.value = latLngs.lat.toString();
+    longCoordDump.value = latLngs.lng.toString();
   }
   else if (type === 'marker') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
+    latCoordDump.value = latLngs.lat.toString();
+    longCoordDump.value = latLngs.lng.toString();
+    
   }
-  else
-    latLngs = layer.getLatLngs();
+  else if (type === 'polygon') {
+    latLngs = layer.getLatLngs(); // THIS IS THE ARRAY YOU WANT TO HARVEST  <<<<<<<<<<<<<<<<
     zoneLatLngs = latLngs;
    	drawnItems.addLayer(layer);
-    console.log(latLngs);
-  })
+    //console.log(latLngs);
 
-  drawMap.on('draw:edited', function (e) {
+    for(i = 0; i < latLngs.length; i++) {
+
+      var lats = [];
+      var lngs = []; 
+      lats.push(latLngs[i].lat);
+      lngs.push(latLngs[i].lng);
+      latCoordDump.value += lats + "  ";
+      longCoordDump.value += lngs + "  ";
+      }
+  }
+  drawControl.setDrawingOptions({
+    draw: {
+      draw: false
+    },
+    edit: {
+      featureGroup: editableLayers
+    }
+  })
+})
+
+
+drawMap.on('draw:edited', function (e) {
 
   var editLayers = e.layers;
   var type = e.layerType;
@@ -80,12 +123,12 @@ drawMap.on('draw:created', function (e) {
   editLayers.eachLayer(function (layer) {
     var editCoords = layer.getLatLngs();
     zoneLatLngs = editCoords;
-    console.log(zoneLatLngs);
-    console.log(zoneLatLngs[0].lat);
-        //do whatever you want, most likely save back to db
+    console.log(zoneLatLngs);   //do whatever you want, most likely save back to db
     });
-
 })
+
+
+
   // Returns an array of the points in the path.
 
 
