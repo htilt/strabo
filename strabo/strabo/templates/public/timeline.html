@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html>
 <head>
   <title>Timeline Example</title>
@@ -22,14 +22,11 @@
               <div class="timeline-badge info"><i class="glyphicon glyphicon-hand-left"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Bootstrap released</h4>
+                  <h4 class="timeline-title"></h4>
                   <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> August 2011</small></p>
                 </div>
                 <div class="timeline-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-                  Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-                  dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-                  Aliquam in felis sit amet augue.</p>
+                  <p></p>
                 </div>
               </div>
             </li>
@@ -37,13 +34,10 @@
               <div class="timeline-badge warning"><i class="glyphicon glyphicon-chevron-right"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Bootstrap 2</h4>
+                  <h4 class="timeline-title"></h4>
                 </div>
                 <div class="timeline-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-                  Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-                  dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-                  Aliquam in felis sit amet augue.</p>
+                  <p></p>
                 </div>
               </div>
             </li>
@@ -51,11 +45,11 @@
               <div class="timeline-badge danger"><i class="glyphicon glyphicon-eye-open"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Left Event</h4>
+                  <h4 class="timeline-title"></h4>
                   <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 years ago</small></p>
                 </div>
                 <div class="timeline-body">
-                  <p>Add more progress events and milestones to the left or right side of the timeline. Each event can be tagged with a date and given a beautiful icon to symbolize it's spectacular meaning.</p>
+                  <p></p>
                 </div>
               </div>
             </li>
@@ -63,10 +57,9 @@
               <div class="timeline-badge default"><i class="glyphicon glyphicon-home"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Right Event</h4>
+                  <h4 class="timeline-title"></h4>
                 </div>
-                <div class="timeline-body">
-                  <p>Add more progress events and milestones to the left or right side of the timeline. Each event can be tagged with a date and given a beautiful icon to symbolize it's spectacular meaning.</p>
+                <div> <p> </p>
                 </div>
               </div>
             </li>
@@ -74,10 +67,10 @@
               <div class="timeline-badge default"><i class="glyphicon glyphicon-home"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Left Event</h4>
+                  <h4 class="timeline-title"></h4>
                 </div>
                 <div class="timeline-body">
-                  <p>Add more progress events and milestones to the left or right side of the timeline. Each event can be tagged with a date and given a beautiful icon to symbolize it's spectacular meaning.</p>
+                  <p></p>
                 
                   <hr>
                   <div class="btn-group">
@@ -99,10 +92,10 @@
                <div class="timeline-badge default"><i class="glyphicon glyphicon-arrow-left"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Left Event</h4>
+                  <h4 class="timeline-title"></h4>
                 </div>
                 <div class="timeline-body">
-                  <p>Add more progress events and milestones to the left or right side of the timeline. Each event can be tagged with a date and given a beautiful icon to symbolize it's spectacular meaning.</p>
+                  <p></p>
                 </div>
               </div>
             </li>
@@ -110,17 +103,28 @@
               <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="timeline-title">Oldest event</h4>
+                  <h4 class="timeline-title"></h4>
                 </div>
                 <div class="timeline-body">
-                  <p>Add more progress events and milestones to the left or right side of the timeline. Each event can be tagged with a date and given a beautiful icon to symbolize it's spectacular meaning.</p>
+                  <p></p>
                 </div>
               </div>
             </li>
         </ul>
     </div>
 
-    {% include "public/footer.html" %}
+    {% for event in events %}
+      <tr>
+        <td class="event_year">{{ event.year }}</td>
+        <td class="event_title">{{ event.title }}</td>
+        <td class="event_description">{{ event.event_description }}</td> 
+      </tr>
+    {% endfor %}
+    
+        {% include "public/footer.html" %}
 
 </body>
-</html>
+</html>                
+
+
+                
