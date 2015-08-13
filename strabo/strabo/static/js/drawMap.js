@@ -22,8 +22,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);
-var editableLayers = new L.FeatureGroup();
-drawMap.addLayer(editableLayers);
+
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors
@@ -47,7 +46,6 @@ var drawControl = new L.Control.Draw({
 
 
     edit: {
-      featureGroup: editableLayers,
       featureGroup: drawnItems,
       edit: {
         selectedPathOptions: {
@@ -77,6 +75,8 @@ drawMap.on('draw:created', function (e) {
   if (type === 'circle') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
+    var circleJSON = layer.toGeoJSON();
+    console.log(circleJSON);
     //this is what injects the values into the HTML
     latCoordDump.value = latLngs.lat.toString();
     longCoordDump.value = latLngs.lng.toString();
@@ -84,15 +84,17 @@ drawMap.on('draw:created', function (e) {
   else if (type === 'marker') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
+    var markerJSON = layer.toGeoJSON()
+    console.log(markerJSON)
     latCoordDump.value = latLngs.lat.toString();
     longCoordDump.value = latLngs.lng.toString();
     
   }
   else if (type === 'polygon') {
     latLngs = layer.getLatLngs(); // THIS IS THE ARRAY YOU WANT TO HARVEST  <<<<<<<<<<<<<<<<
-    zoneLatLngs = latLngs;
+    var polyJSON = layer.toGeoJSON();
+    console.log(polyJSON);
    	drawnItems.addLayer(layer);
-    //console.log(latLngs);
 
     for(i = 0; i < latLngs.length; i++) {
 
@@ -100,18 +102,8 @@ drawMap.on('draw:created', function (e) {
       var lngs = []; 
       lats.push(latLngs[i].lat);
       lngs.push(latLngs[i].lng);
-      latCoordDump.value += lats + "  ";
-      longCoordDump.value += lngs + "  ";
-      }
-  }
-  drawControl.setDrawingOptions({
-    draw: {
-      draw: false
-    },
-    edit: {
-      featureGroup: editableLayers
     }
-  })
+  }
 })
 
 

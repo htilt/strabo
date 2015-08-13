@@ -3,9 +3,10 @@
 {% block head %}
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
       rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="static/private_styles/upload_navbar.css">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+<link rel="stylesheet" type="text/css" href="../static/private_styles/upload_navbar.css">
+
 <title>{% block title %}Canyon Mapper{% endblock %}</title>
 {% endblock head %}
 
@@ -24,7 +25,7 @@
     <ul id="navigation" class="nav nav-tabs">
         {% for href, id, caption in navigation_bar %}
         <li role="presentation" {% if id == active_page %} class="tab active" {% else %} class="tab"{% endif
-  %}><a href="{{ href|e }}">{{ caption|e }}</a>
+            %}><a href="{{ href|e }}">{{ caption|e }}</a>
         </li>
         {% endfor %}
     </ul>
@@ -42,8 +43,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
-    <script src="../static/js/drawMap.js"></script>
-
         {% endblock  footer %}
     </div>
 
