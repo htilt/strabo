@@ -1,5 +1,5 @@
 {% extends "/private/base.html" %}
-{% set active_page = "edit_images" %}
+{% set active_page = "delete_images" %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -7,7 +7,7 @@
 {% block content %}
 <main>
     <div class "row" id="filter-options">
-        <form class="form-inline" method="GET" action="/edit_images/" enctype="multipart/form-data">
+        <form class="form-inline" method="GET" action="/delete_images/" enctype="multipart/form-data">
             <div class="form-group">
                 <p class="text-muted">Search for images by category:</p>
             </div>
@@ -31,8 +31,8 @@
     </div>
     <p></p>
     <p></p>
-    <div id="form-field">
-        <form method="GET" action="/edit_images/" enctype="multipart/form-data">
+    <div>
+        <form method="POST" action="/delete_images/delete/" enctype="multipart/form-data">
             <div class="table">
                 <table class="table-bordered" margin="10px" id="preview">
                   <tr>
@@ -53,7 +53,7 @@
                   {% for img in images %}
                       <tr>
                         <td>
-                            <button type="submit" name="edit-btn" value={{ img['id'] }}>Edit</button>
+                            <input type="checkbox" name='primary_key' value={{ img['id'] }}>
                         </td>
                         <td class="image_key">{{ img['id'] }}</td>
                         <td><img src="/static/test_thumbnails/{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
@@ -70,6 +70,11 @@
                   {% endfor %}
                 </table>
             </div>
+            
+            <div>
+                <input type="submit" class="btn btn-info" value="Delete">
+            </div>
+
         </form>
     </div>
 </main>
