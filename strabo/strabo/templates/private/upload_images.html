@@ -10,14 +10,14 @@
 
   <div class="form">
       <fieldset>
-        <form id="image-upload"  method="POST" action="/upload_images/post" enctype="multipart/form-data">
+        <form id="image-upload" name="upload-form" method="POST" action="/upload_images/post" enctype="multipart/form-data">
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Upload a New Image</legend>
               
-              <div class="form-group">
+              <div class="form-group" >
                 <label for="title">Image Title:</label><br>
-                <input class="form-control" type="text" name="title" size="15" placeholder="Untitled"><br>
+                <input class="form-control" type="text" name="title" required size="15" placeholder="Untitled"><br>
               </div>
               
               <div class="form-group">
@@ -51,7 +51,11 @@
   
   
             <div class="upload-wrapper col-lg-4">
+<<<<<<< HEAD
+              <input type="file" id="img-input" name="file" required><br /><br />
+=======
               <input type="file" id="img-input" name="file"><br /><br />
+>>>>>>> 7a4eecb054240a90507626a3249b22a50aa184d7
               <img id="img-preview" src="#" alt="your image"></img>
             </div>
           
@@ -114,5 +118,15 @@
       $("#img-input").change(function(){
         readURL(this);
       });
+
+      // Function to ensure form validation. Seemingly redundant with 'required' tag.
+      // Add 'onsubmit="return validateForm()"' to <form> div to use function.
+      // function validateForm() {
+      //   var x = document.forms["upload-form"]["title"].value;
+      //   if (x == null || x == "") {
+      //       alert("Title must be filled out");
+      //       return false;
+      //     }
+      // }
     </script>
 {% endblock %}

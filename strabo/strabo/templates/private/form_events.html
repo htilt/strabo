@@ -1,35 +1,35 @@
-  <div class="form">
-    <fieldset>
-      <form id="image-upload"  method="POST" action="/events/post" enctype="multipart/form-data">
-        <div class="row">
-          <div class="form-wrapper col-lg-8">
-            <legend>Add a New Event</legend>
-            
-            <div class="form-group">
-              <label for="title">Event Title:</label><br>
-              <input class="form-control" type="text" name="title" size="15" placeholder="Untitled"><br>
-            </div>
-            
-            <div class="form-group">
-              <label for="event_description">Event Description:</label><br>
-              <input class="form-control" type="text" name="event_description" size="80" placeholder="Provide a description to be displayed on the website.">
-            </div>
-         
-            <div class="form-group">
-              <label for="year">Event Year:</label><br>
-              <input class="form-control" type="text" name="year" size="80">
-            </div>
-
-            <div class="form-group">
-              <label for="notes">Additional Notes:</label><br>
-              <input class="form-control" type="text" name="notes" size="80" placeholder="Add any additional notes for private reference.">
-            </div>
-            
-            <p></p>
-            
-            <input type="submit" value="Upload">
+<div class="form">
+  <fieldset>
+    <form id="image-upload" name="upload-form" method="POST" action="/events/post" onsubmit="return validateForm()"enctype="multipart/form-data">
+      <div class="row">
+        <div class="form-wrapper col-lg-8">
+          <legend>Add a New Event</legend>
+          
+          <div class="form-group">
+            <label for="title">Event Title:</label><br>
+            <input class="form-control" type="text" name="title" required size="15" placeholder="Untitled"><br>
           </div>
+          
+          <div class="form-group">
+            <label for="event_description">Event Description:</label><br>
+            <input class="form-control" type="text" name="event_description" size="80" placeholder="Provide a description to be displayed on the website.">
+          </div>
+       
+          <div class="form-group">
+            <label for="year">Event Year:</label><br>
+            <input class="form-control" type="text" name="year" size="80">
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Additional Notes:</label><br>
+            <input class="form-control" type="text" name="notes" size="80" placeholder="Add any additional notes for private reference.">
+          </div>
+          
+          <p></p>
+          
+          <input type="submit" value="Upload">
         </div>
-      </form>
-    </fieldset>
-  </div>
+      </div>
+    </form>
+  </fieldset>
+</div>
