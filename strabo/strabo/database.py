@@ -85,6 +85,9 @@ def search(table_name, column, search_term):
     return []
 
   with closing(get_db()) as db:
+    db.row_factory = dict_factory
+    cur = db.cursor()
+
     if column in ("title", "img_description", "event_description", "name"):
       query = """SELECT * FROM {table} WHERE {column} LIKE ?
         ORDER BY id DESC""".format(table=table_name, column=column)
@@ -92,7 +95,8 @@ def search(table_name, column, search_term):
     else:
       query = """SELECT * FROM {table} WHERE {column} = ?
         ORDER by id DESC""".format(table=table_name, column=column)
-    data = db.execute(query, (search_term,)).fetchall()
+    data = cur.execute(query, (search_term,)).fetchall()
+
   return data
 
 # SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
@@ -132,4 +136,19 @@ def insert_events(params):
   with closing(get_db()) as db:
     db.cursor().execute("""INSERT INTO events
       (title, event_description, year, notes) VALUES(?, ?, ?, ?)""", params)
+    db.commit()
+
+def edit_image(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""REPLACE INTO images VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    db.commit()
+
+def edit_ip(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, ?)""", params)
+    db.commit()
+
+def edit_event(params):
+  with closing(get_db()) as db:
+    db.cursor().execute("""REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?)""", params)
     db.commit()

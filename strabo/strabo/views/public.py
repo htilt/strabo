@@ -41,4 +41,6 @@ def gallery():
 
 @app.route("/timeline")
 def timeline():
-  return render_template("public/timeline.html")
+  table_name = 'events'
+  events = get_flex(table_name, 100)
+  return render_template("public/timeline.html", events=events)
