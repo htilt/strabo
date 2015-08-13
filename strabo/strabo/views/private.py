@@ -296,7 +296,7 @@ def edit_events():
     key = request.args.get('edit-btn')
     column = 'id'
     event = search(table_name, column, key)
-    return render_template("private/form_ips.html", 
+    return render_template("private/form_events.html", 
       event=event)
   elif search_term is None:
     events = get_flex(table_name)
