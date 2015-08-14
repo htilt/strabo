@@ -27,21 +27,23 @@ drawMap.addLayer(drawnItems);
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors
 
+var shapeColor = '#2397EB';
+
 var drawControl = new L.Control.Draw({
     
     draw : {
-      polygon: {
+      polyline: {
         shapeOptions: {
-          color: '#2397EB'
+          color: shapeColor
         }
       },
-      circle: {
+      polygon: {
         shapeOptions: {
-          color: '#2397EB'
-        } 
+          color: shapeColor
+        }
       },
-      rectangle: false,
-      polyline: false
+      circle: false,
+      rectangle: false
     },
 
 
@@ -57,10 +59,8 @@ var drawControl = new L.Control.Draw({
 
 drawMap.addControl(drawControl);
 
-//this grabs the HTML elements that get injected with lat and lng
-var latCoordDump = document.getElementById('latitude');
-var longCoordDump = document.getElementById('longitude');
 
+var obJSON;
 
 
 // this is what grabs the coordinate data when a shape is drawn
@@ -75,25 +75,21 @@ drawMap.on('draw:created', function (e) {
   if (type === 'circle') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
-    var circleJSON = layer.toGeoJSON();
-    console.log(circleJSON);
+    obJSON = layer.toGeoJSON();
+    console.log(obJSON);
     //this is what injects the values into the HTML
-    latCoordDump.value = latLngs.lat.toString();
-    longCoordDump.value = latLngs.lng.toString();
   }
   else if (type === 'marker') {
     latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
-    var markerJSON = layer.toGeoJSON()
-    console.log(markerJSON)
-    latCoordDump.value = latLngs.lat.toString();
-    longCoordDump.value = latLngs.lng.toString();
+    obJSON = layer.toGeoJSON()
+    console.log(obJSON)
     
   }
   else if (type === 'polygon') {
     latLngs = layer.getLatLngs(); // THIS IS THE ARRAY YOU WANT TO HARVEST  <<<<<<<<<<<<<<<<
-    var polyJSON = layer.toGeoJSON();
-    console.log(polyJSON);
+    obJSON = layer.toGeoJSON();
+    console.log(obJSON);
    	drawnItems.addLayer(layer);
 
     for(i = 0; i < latLngs.length; i++) {
@@ -118,6 +114,61 @@ drawMap.on('draw:edited', function (e) {
     console.log(zoneLatLngs);   //do whatever you want, most likely save back to db
     });
 })
+
+$(function()
+{
+  var $dropDown = $('li');
+
+  $dropDown.on("click", function(event) {
+    var menuNum = $(this).attr('id');
+
+    switch(menuNum) {
+      case 'menuItemOne' :
+        console.log('ya!!!!!!');
+        L.geoJson(obJSON, {
+          style: {
+            "color": '#ECD078'
+          }
+        }).addTo(drawMap);
+        console.log(obJSON);
+        break;
+      case 'menuItemTwo' :
+        L.geoJson(obJSON, {
+          style: {
+            "color": '#D95B43'
+          }
+        }).addTo(drawMap);
+        console.log('yessss');
+        break;
+      case 'menuItemThree' :
+        console.log('omGGGGGG');
+        L.geoJson(obJSON, {
+          style: {
+            "color": '#C02942'
+          }
+        }).addTo(drawMap);
+        break;
+      case 'menuItemFour' :
+        console.log('YESSSSS');
+        L.geoJson(obJSON, {
+          style: {
+            "color": '#542437'
+          }
+        }).addTo(drawMap);
+        break;
+      case 'menuItemFive' :
+        console.log('OMGGGGG');
+        L.geoJson(obJSON, {
+          style: {
+            "color": '#53777A'
+          }
+        }).addTo(drawMap);
+        break
+      default:
+        break;
+    }
+  });
+});
 
 
 

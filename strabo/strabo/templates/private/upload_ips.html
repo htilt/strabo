@@ -14,28 +14,33 @@
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Interest Point</legend> 
 
+            
+            
+            <div id="drawMap" style="width: 100%; height: 400px">
+              <div class="container"></div>
+            </div>
+
             <div class="form-group">
               <label for="name">Location Name:</label><br>
-              <input class="form-control" type="text" name="name" required size="15" placeholder="Untitled"><br>
+              <input class="form-control" type="text" name="name" required size="15" placeholder="Untitled" id = "name"><br>
             </div>
-            
-            <div id="drawMap" style="width: 100%; height: 400px">
-              <div class="container"></div>
-            </div>
-            
-            <div id="drawMap" style="width: 100%; height: 400px">
-              <div class="container"></div>
-            </div>
-            
-            <div class="form-group">
-              <label for="latitude">Latitude:</label><br>
-              <input class="form-control" type="text" name="latitude" size="80" placeholder= '' id='latitude'>
-            </div>
-         
-            <div class="form-group">
-              <label for="longitude">Longitude:</label><br>
-              <input class="form-control" type="text" name="longitude" size="80" id='longitude'>
-            </div>
+
+
+            <div class="dropdown">
+              <label for="color">Color:</label><br>
+              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Select a Color
+              <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li id="menuItemOne" role="presentation"><a role="menuitem" tabindex="-1" href="#">Crepuscular Orange</a></li>
+                      <li id="menuItemTwo" role="presentation"><a role="menuitem" tabindex="-1" href="#">Lapus Lazulian Purple</a></li>
+                      <li id="menuItemThree" role="presentation"><a role="menuitem" tabindex="-1" href="#">Father's Rage Red</a></li>
+                      <li id="menuItemFour" role="presentation"><a role="menuitem" tabindex="-1" href="#">Gangrenous Green</a></li>
+                      <li id="menuItemFive" role="presentation"><a role="menuitem" tabindex="-1" href="#">Gangrenous Green</a></li>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+                    </ul>
+              </div>
+
 
             <div class="form-group">
               <label for="notes">Additional Notes:</label><br>
