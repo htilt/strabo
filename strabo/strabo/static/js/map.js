@@ -86,11 +86,51 @@ function onEachFeature(feature, layer) {
 }
 
 /*
-$.get("/interest_points", function(data)) {
-  geojson = L.geoJson(data, {
-    onEachFeature: onEachFeature
-  }).addTo(map);
-}
+// add points, zones, and lines to map
+var point_features = L.geoJson(points, {
+  onEachFeature: onEachFeature
+}).addTo(map);
+
+var zone_features = L.geoJson(zones, {
+  onEachFeature: onEachFeature
+}).addTo(map);
+
+var line_features = L.geoJson(lines, {
+  onEachFeature: onEachFeature
+}).addTo(map);
+
+//groups points into a group
+var interest_points = L.layerGroup(point_features);
+
+//creates the overlay object
+var overlayMaps_points = {
+    "Points": interest_points
+};
+
+//uses the overlay object to make the little clicky selector in the top right 
+L.control.layers(null, overlayMaps_points).addTo(map);
+
+//groups zones into a group
+var interest_zones = L.layerGroup(zone_features);
+
+//creates the overlay object
+var overlayMaps_zones = {
+    "Zones": interest_zones
+};
+
+//uses the overlay object to make the little clicky selector in the top right 
+L.control.layers(null, overlayMaps_zones).addTo(map);
+
+//groups lines into a group
+var interest_lines = L.layerGroup(line_features);
+
+//creates the overlay object
+var overlayMaps_lines = {
+    "Lines": interest_lines
+};
+
+//uses the overlay object to make the little clicky selector in the top right 
+L.control.layers(null, overlayMap_lines).addTo(map);
 */
 
 geojson = L.geoJson(interest_points, {

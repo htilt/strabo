@@ -1,4 +1,4 @@
-import os, os.path
+import os, os.path, re
 from contextlib import closing
 
 from PIL import Image
@@ -34,6 +34,11 @@ def DMS_to_Dec(lst):
   seconds = lst[2]
   dec = (seconds/3600) + (minutes/60) + degrees
   return(dec)
+
+def clean_date(date_string):
+  date_string = re.findall(r"[\w']+", date_string)
+  print(date_string)
+  return date_string
 
 # This would be the desired implementation for server-side EXIF
 # extraction. Currently, tags are extracted in javascript.

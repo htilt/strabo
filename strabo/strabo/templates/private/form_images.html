@@ -22,14 +22,38 @@
 </div>
 {% endif %}
 
-{% if dateTimeOriginal %}
+{% if year %}
 <div class="form-group">
-  <label for="period">Date Created:</label><br>
-  <input class="form-control" type="text" name="period" size="80" value= {{ dateTimeOriginal }}>
+<label for="year">Event Date:</label><br>
+  <div class="form-inline">
+    <div class="form-group">
+      <input type="number" name="month" class="form-control" min="1" max="12" value="{{ month }}">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="day" class="form-control" min="1" max="31" value="{{ day }}">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+    </div>
+  </div>
 </div>
 {% else %}
 <div class="form-group">
-  <label for="period">Date Created:</label><br>
-  <input class="form-control" type="text" name="period" size="80" placeholder="Input date and time created"/>
+<label for="year">Event Date:</label><br>
+  <div class="form-inline">
+    <div class="form-group">
+      <input type="number" name="month" class="form-control" min="1" max="12" placeholder="mm">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="day" class="form-control" min="1" max="31" placeholder="dd">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="year" class="form-control" min="1900" max="2050" placeholder="yyyy"=>
+    </div>
+  </div>
 </div>
 {% endif %}
