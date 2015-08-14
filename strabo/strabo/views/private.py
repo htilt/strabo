@@ -131,7 +131,6 @@ def interest_points_post():
 
   geojson_object = ''
   coordinates = 'coooooordinates'
-  feature_type = 'POOOOOint'
   geojson_feature_type = "LIIIIne"
   # geojson_raw = request.form.get('geojson')
   # coordinates = get_coords(geojson_raw)
@@ -249,10 +248,16 @@ def edit_images():
     key = request.args.get('edit-btn')
     column = 'id'
     image = search(table_name, column, key)
+    date_created = image[0]['date_created']
+    date_created = clean_date(date_created)
+    print(date_created)
+    year = date_created[0]
+    month = date_created[1]
+    day = date_created[2]
     events = get_flex('events')
     interest_points = get_flex('interest_points')
     return render_template("private/complete_form_images.html", image=image,
-      events=events, interest_points=interest_points)
+      events=events, interest_points=interest_points, year=year, month=month, day=day)
   elif search_term is None:
     images = get_flex(table_name)
   else:
@@ -267,12 +272,22 @@ def edit_images_edit():
   img_description = request.form['img_description']
   latitude = request.form['latitude']
   longitude = request.form['longitude']
-  date_created = request.form['date_created']
+  
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_created = make_date(month, day, year)
   notes = request.form['notes']
   tags = request.form['tags']
-  interest_point = request.form['interest_point']
-  event = request.form['event']
   edited_by = ''
+
+  if not request.form['interest_point'] == 'Select One':
+    interest_point = request.form['interest_point']
+  else: interest_point = ''
+  if not request.form['event'] == 'Select One':
+    event = request.form['event']
+  else: event = ''
+
   key = request.form['edit-btn']
   
   table_name = 'images'
@@ -320,6 +335,14 @@ def edit_ips_edit():
   edited_by = ''
   key = request.form['edit-btn']
 
+  geojson_object = ''
+  coordinates = 'coooooordinates'
+  geojson_feature_type = "LIIIIne"
+  # geojson_raw = request.form.get('geojson')
+  # coordinates = get_coords(geojson_raw)
+  # geojson_feature_type = get_type(geojson_raw)
+  # geojson_object = add_name(geojson_raw, name)
+
   table_name = 'interest_points'
   column = 'id'
   ip = search(table_name, column, key)
@@ -347,8 +370,13 @@ def edit_events():
     key = request.args.get('edit-btn')
     column = 'id'
     event = search(table_name, column, key)
+    date_of_event = event[0]['date_of_event']
+    date_of_event = clean_date(date_of_event)
+    year = date_of_event[0]
+    month = date_of_event[1]
+    day = date_of_event[2]
     return render_template("private/form_events.html", 
-      event=event)
+      event=event, year=year, month=month, day=day)
   elif search_term is None:
     events = get_flex(table_name)
   else:
@@ -363,8 +391,13 @@ def edit_events_edit():
   event_description = request.form['event_description']
   notes = request.form['notes']
   tags = request.form['tags']
-  date_of_event = request.form['date_of_event']
   edited_by = ''
+
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_of_event = make_date(month, day, year)
+
   key = request.form['edit-btn']
   
   table_name = 'events'

@@ -43,6 +43,7 @@
                     <th>Creation Date</th>
                     <th>Year</th> 
                     <th>Additional Notes</th>
+                    <th>Tags</th>
                   </tr>
 
                   {% for event in events %}
@@ -56,6 +57,7 @@
                         <td class="created_at">{{ event['created_at'] }}</td> 
                         <td class="year">{{ event['year'] }}</td>
                         <td class="notes">{{ event['notes'] }}</td>
+                        <td class="tags">{{ event['tags'] }}</td>
                       </tr>
                   {% endfor %}
                 </table>

@@ -21,17 +21,32 @@
               </div>
               <div class="form-group">
                 <label for="event_description">Event Description:</label><br>
-                <input class="form-control" type="text" name="event_description" size="80" value={{ evnt['event_description'] }}>
+                <input class="form-control" type="text" name="event_description" size="80" value="{{ evnt['event_description'] }}">
               </div>
               <div class="form-group">
-                <label for="date_of_event">Event Date (yyyy/mm/dd):</label><br>
-                <input class="form-control" type="text" name="date_of_event" size="80" value={{ evnt['date_of_event'] }}>
+                <label for="year">Event Date:</label><br>
+                <div class="form-inline">
+                  <div class="form-group">
+                    <input type="number" name="month" class="form-control" min="1" max="12" value="{{ month }}">
+                  </div>
+                  <span> - </span>
+                  <div class="form-group">
+                    <input type="number" name="day" class="form-control" min="1" max="31" value="{{ day }}">
+                  </div>
+                  <span> - </span>
+                  <div class="form-group">
+                    <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
                 <input class="form-control" type="text" name="notes" size="80" value="{{ evnt['notes'] }}">
               </div>
-              
+              <div class="form-group">
+                <label for="tags">Tags:</label><br>
+                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+              </div>
               <p></p>
               
               <button type="submit" name="edit-btn" value={{ evnt['id'] }}>Edit</button>
