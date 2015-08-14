@@ -27,19 +27,19 @@ drawMap.addLayer(drawnItems);
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors
 
-var shapeColor = '#2397EB';
+var shapeColorInit = '#2397EB';
 
 var drawControl = new L.Control.Draw({
     
     draw : {
       polyline: {
         shapeOptions: {
-          color: shapeColor
+          color: shapeColorInit
         }
       },
       polygon: {
         shapeOptions: {
-          color: shapeColor
+          color: shapeColorInit
         }
       },
       circle: false,
@@ -60,7 +60,7 @@ var drawControl = new L.Control.Draw({
 drawMap.addControl(drawControl);
 
 
-var obJSON;
+var obJSON; ////// THIS IS THE OBJECT U WANT
 var layer;
 
 
@@ -84,7 +84,6 @@ drawMap.on('draw:created', function (e) {
     
   }
   else if (type === 'polygon') {
-    latLngs = layer.getLatLngs(); // THIS IS THE ARRAY YOU WANT TO HARVEST  <<<<<<<<<<<<<<<<
     obJSON = layer.toGeoJSON();
     console.log(obJSON);
    	drawnItems.addLayer(layer);
@@ -96,12 +95,15 @@ drawMap.on('draw:edited', function (e) {
 
   var editLayers = e.layers;
   var type = e.layerType;
+  layer.setStyle({color:'#2397EB'});
 
-  editLayers.eachLayer(function (layer) {
-    var editCoords = layer.getLatLngs();
-    zoneLatLngs = editCoords;
-    console.log(zoneLatLngs);   //do whatever you want, most likely save back to db
+  editLayers.eachLayer(function (layerShapes) {
+    obJSON = editLayers.toGeoJSON();
+    layerShapes.setStyle({color:'#2397EB'});
+    console.log(obJSON);  //do whatever you want, most likely save back to db
     });
+
+
 })
 
 $(function()
@@ -115,42 +117,42 @@ $(function()
       case 'menuItemOne' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#556270'
+            "color": '#00A0B0'
           }
         });
-        layer.setStyle({color:'#556270'});
+        layer.setStyle({color:'#00A0B0'});
         break;
       case 'menuItemTwo' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#4ECDC4'
+            "color": '#6A4A3C'
           }
         });
-        layer.setStyle({color:'#4ECDC4'});
+        layer.setStyle({color:'#6A4A3C'});
         break;
       case 'menuItemThree' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#C7F464'
+            "color": '#CC333F'
           }
         });
-        layer.setStyle({color:'#C7F464'});
+        layer.setStyle({color:'#CC333F'});
         break;
       case 'menuItemFour' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#FF6B6B'
+            "color": '#EB6841'
           }
         });
-        layer.setStyle({color:'#FF6B6B'});
+        layer.setStyle({color:'#EB6841'});
         break;
       case 'menuItemFive' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#C44D58'
+            "color": '#8A9B0F'
           }
         });
-        layer.setStyle({color:'#C44D58'});
+        layer.setStyle({color:'#8A9B0F'});
         break
       default:
         break;
