@@ -61,6 +61,7 @@ drawMap.addControl(drawControl);
 
 
 var obJSON;
+var layer;
 
 
 // this is what grabs the coordinate data when a shape is drawn
@@ -68,22 +69,18 @@ drawMap.on('draw:created', function (e) {
   //layer type just means what kind of shape
   var type = e.layerType;
   //every drawn items gets its own layer
-  var layer = e.layer;
-  var latLngs;
-
+  layer = e.layer;
   //if the layer type is a circle, then we only have one set of latlngs to deal with, therefore different formula
-  if (type === 'circle') {
-    latLngs = layer.getLatLng();
+  if (type === 'polyline') {
     drawnItems.addLayer(layer);
     obJSON = layer.toGeoJSON();
     console.log(obJSON);
     //this is what injects the values into the HTML
   }
   else if (type === 'marker') {
-    latLngs = layer.getLatLng();
     drawnItems.addLayer(layer);
-    obJSON = layer.toGeoJSON()
-    console.log(obJSON)
+    obJSON = layer.toGeoJSON();
+    console.log(obJSON);
     
   }
   else if (type === 'polygon') {
@@ -91,14 +88,6 @@ drawMap.on('draw:created', function (e) {
     obJSON = layer.toGeoJSON();
     console.log(obJSON);
    	drawnItems.addLayer(layer);
-
-    for(i = 0; i < latLngs.length; i++) {
-
-      var lats = [];
-      var lngs = []; 
-      lats.push(latLngs[i].lat);
-      lngs.push(latLngs[i].lng);
-    }
   }
 })
 
@@ -124,45 +113,44 @@ $(function()
 
     switch(menuNum) {
       case 'menuItemOne' :
-        console.log('ya!!!!!!');
         L.geoJson(obJSON, {
           style: {
-            "color": '#ECD078'
+            "color": '#556270'
           }
-        }).addTo(drawMap);
-        console.log(obJSON);
+        });
+        layer.setStyle({color:'#556270'});
         break;
       case 'menuItemTwo' :
         L.geoJson(obJSON, {
           style: {
-            "color": '#D95B43'
+            "color": '#4ECDC4'
           }
-        }).addTo(drawMap);
-        console.log('yessss');
+        });
+        layer.setStyle({color:'#4ECDC4'});
         break;
       case 'menuItemThree' :
-        console.log('omGGGGGG');
         L.geoJson(obJSON, {
           style: {
-            "color": '#C02942'
+            "color": '#C7F464'
           }
-        }).addTo(drawMap);
+        });
+        layer.setStyle({color:'#C7F464'});
         break;
       case 'menuItemFour' :
-        console.log('YESSSSS');
         L.geoJson(obJSON, {
           style: {
-            "color": '#542437'
+            "color": '#FF6B6B'
           }
-        }).addTo(drawMap);
+        });
+        layer.setStyle({color:'#FF6B6B'});
         break;
       case 'menuItemFive' :
-        console.log('OMGGGGG');
         L.geoJson(obJSON, {
           style: {
-            "color": '#53777A'
+            "color": '#C44D58'
           }
-        }).addTo(drawMap);
+        });
+        layer.setStyle({color:'#C44D58'});
         break
       default:
         break;
