@@ -39,10 +39,11 @@
                     <th></th>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Creation Date</th>
+                    <th>Creation Date/Time</th>
                     <th>Latitude</th>
                     <th>Longitude</th> 
                     <th>Additional Notes</th>
+                    <th>Tags</th>
                   </tr>
 
                   {% for ip in interest_points %}
@@ -56,6 +57,7 @@
                         <td class="latitude">{{ ip['latitude'] }}</td>
                         <td class="longitude">{{ ip['longitude'] }}</td>
                         <td class="notes">{{ ip['notes'] }}</td>
+                        <td class="tags">{{ ip['tags'] }}</td>
                       </tr>
                   {% endfor %}
                 </table>

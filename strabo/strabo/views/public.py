@@ -2,9 +2,20 @@ from flask import request, render_template, url_for, redirect
 
 from strabo import app
 from strabo.database import get_images, get_images_helper, get_flex
+from strabo.geojson import make_featureCollection
 
 @app.route("/map")
 def map():
+  # # Query db for geojson objects
+  # points = get_geojson('Point')
+  # zones = get_geojson('Polygon')
+  # lines = get_geojson('LineString')
+  # # Convert geojson objects to feature collections
+  # points = make_FeatureCollection(points)
+  # zones = make_FeatureCollection(zones)
+  # lines = make_FeatureCollection(lines)
+  # return render_template("public/map.html", points=points, zones=zones, lines=lines)
+  
   return render_template("public/map.html")
 
 @app.route('/map/post', methods=["POST", "GET"])

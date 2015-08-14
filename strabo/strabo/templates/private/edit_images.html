@@ -41,12 +41,13 @@
                     <th>Thumbnail</th>
                     <th>Title</th>
                     <th>Image Description</th>
-                    <th>Creation Date/Time</th> 
+                    <th>Creation Date/Time</th>
+                    <th>Upload Date</th> 
                     <th>Latitude</th>
                     <th>Longitude</th>
-                    <th>Period</th>
                     <th>Interest Point</th>
                     <th>Notes</th>
+                    <th>Tags</th>
                     <th>Filename</th>
                   </tr>
 
@@ -59,12 +60,13 @@
                         <td><img src="/static/test_thumbnails/{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                         <td class="image_title">{{ img['title'] | default("Untitled") }}</td>
                         <td class="img_description">{{ img['img_description'] }}</td>
+                        <td class="date_created">{{ img['date_created'] }}</td> 
                         <td class="created_at">{{ img['created_at'] }}</td> 
                         <td class="latitude">{{ img['latitude'] }}</td>
                         <td class="longitude">{{ img['longitude'] }}</td>
-                        <td class="period">{{ img['period'] }}</td>
                         <td class="interest_point">{{ img['interest_point'] }}</td>
                         <td class="notes">{{ img['notes'] }}</td>
+                        <td class="tags">{{ img['tags'] }}</td>
                         <td class="file_name">{{ img['filename'] }}</td>
                       </tr>
                   {% endfor %}

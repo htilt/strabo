@@ -20,18 +20,21 @@
                 <input class="form-control" type="text" name="name" required size="15" value="{{ ip['name'] }}"><br>
               </div>
               <div class="form-group">
-                <label for="latitude">Latitude:</label><br>
-                <input class="form-control" type="text" name="latitude" size="80" value={{ ip['latitude'] }}>
+                <label for="coordinates">Coordinates:</label><br>
+                <input class="form-control" type="text" name="coordinates" size="80" value="{{ ip['coordinates'] }}">
               </div>
               <div class="form-group">
-                <label for="longitude">Longitude:</label><br>
-                <input class="form-control" type="text" name="longitude" size="80" value={{ ip['longitude'] }}>
+                <label for="feature_type">Feature Type:</label><br>
+                <input class="form-control" type="text" name="feature_type" size="80" value="{{ ip['feature_type'] }}">
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
                 <input class="form-control" type="text" name="notes" size="80" value="{{ ip['notes'] }}">
               </div>
-              
+              <div class="form-group">
+                <label for="tags">Tags:</label><br>
+                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+              </div>
               <p></p>
               
               <button type="submit" name="edit-btn" value={{ ip['id'] }}>Edit</button>
