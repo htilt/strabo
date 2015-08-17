@@ -13,42 +13,40 @@
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Interest Point</legend> 
-
-            <div id="drawMap" style="width: 100%; height: 400px">
-              <div class="container"></div>
-            </div>
             
-            <!-- <div class="form-group">
-              <label for="latitude">Latitude:</label><br>
-              <input class="form-control" type="text" name="latitude" size="80">
-            </div>
-         
-            <div class="form-group">
-              <label for="longitude">Longitude:</label><br>
-              <input class="form-control" type="text" name="longitude" size="80">
-            </div> -->
-
             <div class="form-group">
               <label for="name">Location Name:</label><br>
               <input class="form-control" type="text" name="name" required size="15" placeholder="Untitled" id = "name"><br>
             </div>
 
+            <div id="drawMap" style="width: 100%; height: 400px">
+              <div class="container"></div>
+            </div><br>
+
             <div class="dropdown">
               <label for="color">Color:</label><br>
               <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Select a Color
               <span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li id="menuItemOne" role="presentation"><a role="menuitem" tabindex="-1" href="#">Crepuscular Orange</a></li>
-                      <li id="menuItemTwo" role="presentation"><a role="menuitem" tabindex="-1" href="#">Lapus Lazulian Purple</a></li>
-                      <li id="menuItemThree" role="presentation"><a role="menuitem" tabindex="-1" href="#">Father's Rage Red</a></li>
-                      <li id="menuItemFour" role="presentation"><a role="menuitem" tabindex="-1" href="#">Gangrenous Green</a></li>
-                      <li id="menuItemFive" role="presentation"><a role="menuitem" tabindex="-1" href="#">Mystery ball</a></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
-                    </ul>
-              </div>
-
-
+              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li id="menuItemOne" role="presentation"><a role="menuitem" tabindex="-1" href="#">Crepuscular Orange</a></li>
+                <li id="menuItemTwo" role="presentation"><a role="menuitem" tabindex="-1" href="#">Lapus Lazulian Purple</a></li>
+                <li id="menuItemThree" role="presentation"><a role="menuitem" tabindex="-1" href="#">Father's Rage Red</a></li>
+                <li id="menuItemFour" role="presentation"><a role="menuitem" tabindex="-1" href="#">Gangrenous Green</a></li>
+                <li id="menuItemFive" role="presentation"><a role="menuitem" tabindex="-1" href="#">Mystery ball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+              </ul>
+            </div><br>
+            <div class="form-group">
+                <label for="feature_type">Feature Type:</label><br>
+                <select class="form-control" name='feature_type'>
+                  <option selected name="ip_auto"> Select One </option>
+                  <option name="Landmark">Landmark</option>
+                  <option name="Zone">Zone</option>
+                  <option name="Building">Building</option>
+                  <option name="Heritage Tree">Heritage Tree</option>
+                </select>
+            </div>
             <div class="form-group">
               <label for="notes">Additional Notes:</label><br>
               <input class="form-control" type="text" name="notes" size="80" placeholder="Add any additional notes for private reference.">
@@ -59,14 +57,15 @@
               <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
             </div>
 
+            
+
             <div class="form-group">
-              <label for="feature_type">Feature Type:</label><br>
-              <input class="form-control" type="text" name="feature_type" maxlength="400" placeholder="Add a feature type.">
+              <input id="geojson-field" type="hidden" name="geojson" value="">
             </div>
 
             <p></p>
             
-            <input type="submit" value="Upload">
+            <input id="upload-btn" type="submit" value="Upload">
           </div>
         </div>
       </form>
@@ -83,6 +82,7 @@
         <th>Feature Type</th>
         <th>GeoJSON Feature Type</th>
         <th>Additional Notes</th>
+        <th>Tags</th>
       </tr>
       
       {% for ip in interest_points %}
@@ -92,6 +92,7 @@
         <td class="feature_type">{{ ip['feature_type'] }}</td>
         <td class="geojson_feature_type">{{ ip['geojson_feature_type'] }}</td>
         <td class="notes">{{ ip['notes'] }}</td>
+        <td class="notes">{{ ip['tags'] }}</td>
       </tr>
       {% endfor %}
     </table>
@@ -101,5 +102,6 @@
 
 {% block footer %}
     {{ super () }}
+    <script src="../static/js/interest_points.js"></script>
     <script src="../static/js/drawMap.js"></script>
 {% endblock %}

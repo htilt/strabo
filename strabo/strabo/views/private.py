@@ -1,4 +1,4 @@
-import os, ast
+import os, ast, sys
 from contextlib import closing
 
 from flask import request, render_template, redirect, url_for
@@ -7,10 +7,11 @@ from werkzeug import secure_filename
 from strabo import app
 from strabo.database import migrate_db, get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
-edit_ip, edit_event, make_date
+edit_ip, edit_event, make_date, get_geojson
 from strabo.image_processing import make_thumbnail, allowed_file, DMS_to_Dec, clean_date #, getEXIF
 from strabo.geojson import get_coords, get_type, add_name_and_color, \
 make_featureCollection
+from strabo.filewriting import write_to, rewrite_geojson
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
@@ -126,20 +127,21 @@ def interest_points_post():
   name = request.form['name']
   notes = request.form['notes']
   tags = request.form['tags']
-  feature_type = request.form['feature_type']
+  if not request.form['feature_type'] == 'Select One':
+    feature_type = request.form['feature_type']
+  else: feature_type = ''
   edited_by = ''
-
-  geojson_object = ''
-  coordinates = 'coooooordinates'
-  geojson_feature_type = "LIIIIne"
-  # geojson_raw = request.form.get('geojson')
-  # coordinates = get_coords(geojson_raw)
-  # geojson_feature_type = get_type(geojson_raw)
-  # geojson_object = add_name(geojson_raw, name)
-
+  
+  geojson_object = request.form['geojson']
+  coordinates = str(get_coords(geojson_object))
+  geojson_feature_type = str(get_type(geojson_object))
+  geojson_object = add_name_and_color(geojson_object, name)
   params = (name, coordinates, geojson_object, feature_type, 
     geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
+
+  # Rewrite geoJSON file according to changes
+  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -155,6 +157,7 @@ def event_post():
   title = request.form['title']
   event_description = request.form['event_description']
   notes = request.form['notes']
+  
   tags = request.form['tags']
   edited_by = ''
 
@@ -211,6 +214,7 @@ def delete_ips_delete():
   table_name = 'interest_points'
   keys = request.form.getlist('primary_key')
   delete(keys, table_name)
+  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -250,7 +254,6 @@ def edit_images():
     image = search(table_name, column, key)
     date_created = image[0]['date_created']
     date_created = clean_date(date_created)
-    print(date_created)
     year = date_created[0]
     month = date_created[1]
     day = date_created[2]
@@ -323,6 +326,7 @@ def edit_ips():
   else:
     column = request.args.get('categories')
     interest_points = search(table_name, column, search_term)
+
   return render_template("private/edit_ips.html", categories=categories, 
     interest_points=interest_points)
 
@@ -356,6 +360,9 @@ def edit_ips_edit():
     geojson_object, feature_type, geojson_feature_type, 
     notes, tags, edited_by)
   edit_ip(params)
+
+  rewrite_geojson()
+
   return redirect(url_for('index'))
 
 ###

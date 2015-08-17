@@ -7,7 +7,6 @@ var map = L.map('map', {
   ],
 }).setView([45.48174, -122.631], 17 );
 
-
 //var user_location = map.locate({setView:true, maxZoom:16});
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -19,50 +18,18 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 }).addTo(map);
 
+// add points, zones, and lines to map
+var point_features = L.geoJson(interest_points, {
+  onEachFeature: onEachFeature
+}).addTo(map);
 
-//defines zones 1 and 2
-var zone1 = L.polygon([
-    [45.48227, -122.63248],
-    [45.48207, -122.6321],
-    [45.48192, -122.63188],
-    [45.48183, -122.63188],
-    [45.48168, -122.63167],
-    [45.48163, -122.63124],
-    [45.48145, -122.63126],
-    [45.48145, -122.6321],
-    [45.48162, -122.63212],
-    [45.48189, -122.63268],
-],
-  {
-    //fillOpacity: 0.0,
-  }
-).addTo(map);
+var zone_features = L.geoJson(interest_zones, {
+  onEachFeature: onEachFeature
+}).addTo(map);
 
-zone1.bindPopup("I love you.");
-
-var zone2 = L.polygon([
-    [45.48161, -122.63119],
-    [45.48166, -122.63037],
-    [45.48146, -122.63038],
-    [45.48146, -122.63122],
-],
-  {
-    //fillOpacity: 0.0,
-  }
-).addTo(map);
-
-
-//groups zones into a group
-var zones = L.layerGroup([zone1, zone2]);
-
-//creates the overlay object
-var overlayMaps = {
-    "Zonez": zones
-};
-//uses the overaly object to make the little clicky selector in the top right 
-L.control.layers(null, overlayMaps).addTo(map);
-
-
+var line_features = L.geoJson(interest_lines, {
+  onEachFeature: onEachFeature
+}).addTo(map);
 
 function whenClicked(e) {
   // e = event
@@ -85,58 +52,6 @@ function onEachFeature(feature, layer) {
   });
 }
 
-/*
-// add points, zones, and lines to map
-var point_features = L.geoJson(points, {
-  onEachFeature: onEachFeature
-}).addTo(map);
-
-var zone_features = L.geoJson(zones, {
-  onEachFeature: onEachFeature
-}).addTo(map);
-
-var line_features = L.geoJson(lines, {
-  onEachFeature: onEachFeature
-}).addTo(map);
-
-//groups points into a group
-var interest_points = L.layerGroup(point_features);
-
-//creates the overlay object
-var overlayMaps_points = {
-    "Points": interest_points
-};
-
-//uses the overlay object to make the little clicky selector in the top right 
-L.control.layers(null, overlayMaps_points).addTo(map);
-
-//groups zones into a group
-var interest_zones = L.layerGroup(zone_features);
-
-//creates the overlay object
-var overlayMaps_zones = {
-    "Zones": interest_zones
-};
-
-//uses the overlay object to make the little clicky selector in the top right 
-L.control.layers(null, overlayMaps_zones).addTo(map);
-
-//groups lines into a group
-var interest_lines = L.layerGroup(line_features);
-
-//creates the overlay object
-var overlayMaps_lines = {
-    "Lines": interest_lines
-};
-
-//uses the overlay object to make the little clicky selector in the top right 
-L.control.layers(null, overlayMap_lines).addTo(map);
-*/
-
-geojson = L.geoJson(interest_points, {
-  onEachFeature: onEachFeature
-}).addTo(map);
-
 var popup = L.popup();
 
 function onMapClick(e) {
@@ -147,5 +62,3 @@ function onMapClick(e) {
 }
 
 map.on('click', onMapClick);
-
-

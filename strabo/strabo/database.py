@@ -131,9 +131,9 @@ def insert_images(params):
 
 def insert_ips(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""INSERT INTO interest_points(name, coordinates, 
-      geojson_object, feature_type, geojson_feature_type, 
-      notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    db.cursor().execute("""INSERT INTO interest_points
+      (name, coordinates, geojson_object, feature_type, geojson_feature_type, 
+        notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", params)
     db.commit()
 
 def insert_events(params):
@@ -176,3 +176,11 @@ def make_date(month, day, year):
     date = ''
   date = str(year) + '-' + str(month) + '-' + str(day)
   return date
+
+def get_geojson(geojson_feature_type):
+  with closing(get_db()) as db:
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
+    geojson = cur.execute(query, (geojson_feature_type,)).fetchall()
+  return geojson

@@ -17,7 +17,50 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 }).addTo(drawMap);
 
+// add pre-existing points, zones, and lines to map
+var point_features = L.geoJson(interest_points, {
+  onEachFeature: onEachFeature
+}).addTo(drawMap);
 
+var zone_features = L.geoJson(interest_zones, {
+  onEachFeature: onEachFeature
+}).addTo(drawMap);
+
+var line_features = L.geoJson(interest_lines, {
+  onEachFeature: onEachFeature
+}).addTo(drawMap);
+
+function whenClicked(e) {
+  // e = event
+  console.log(e.target.feature.geometry.name);
+  var name=e.target.feature.geometry.name;
+  $.post(
+    "/map/post", 
+    {key:name},
+    function(data) {
+      $("#img-wrapper").html(data)
+    }
+    );
+}
+
+function onEachFeature(feature, layer) {
+  layer.bindPopup(feature.geometry.name)
+  //bind click
+  layer.on({
+      click: whenClicked
+  });
+}
+
+var popup = L.popup();
+
+// function onMapClick(e) {
+//   popup
+//     .setLatLng(e.latlng)
+//     .setContent(e.latlng.toString())
+//     .openOn(drawMap);
+// }
+
+// drawMap.on('click', onMapClick);
 
 
 var drawnItems = new L.FeatureGroup();
@@ -74,18 +117,14 @@ drawMap.on('draw:created', function (e) {
   if (type === 'polyline') {
     drawnItems.addLayer(layer);
     obJSON = layer.toGeoJSON();
-    console.log(obJSON);
     //this is what injects the values into the HTML
   }
   else if (type === 'marker') {
     drawnItems.addLayer(layer);
-    obJSON = layer.toGeoJSON();
-    console.log(obJSON);
-    
+    obJSON = layer.toGeoJSON();    
   }
   else if (type === 'polygon') {
     obJSON = layer.toGeoJSON();
-    console.log(obJSON);
    	drawnItems.addLayer(layer);
   }
 })
@@ -100,7 +139,6 @@ drawMap.on('draw:edited', function (e) {
   editLayers.eachLayer(function (layerShapes) {
     obJSON = editLayers.toGeoJSON();
     layerShapes.setStyle({color:'#2397EB'});
-    console.log(obJSON);  //do whatever you want, most likely save back to db
     });
 
 
@@ -160,6 +198,12 @@ $(function()
   });
 });
 
+$('#upload-btn').click(function (e) {
+  console.log(obJSON);
+  var JSONobject = JSON.stringify(obJSON);
+  console.log(JSONobject);
+  $('#geojson-field').attr("value", JSONobject);
+}); 
 
 
   // Returns an array of the points in the path.
