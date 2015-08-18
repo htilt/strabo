@@ -1,11 +1,14 @@
 from flask import request, render_template, url_for, redirect
 
 from strabo import app
-from strabo.database import get_images, get_images_helper, get_flex
+from strabo.database import get_images, get_images_helper, get_flex, get_geojson
+from strabo.geojson import make_featureCollection
 
 @app.route("/map")
 def map():
   return render_template("public/map.html")
+  
+  # return render_template("public/map.html")
 
 @app.route('/map/post', methods=["POST", "GET"])
 def map_post():

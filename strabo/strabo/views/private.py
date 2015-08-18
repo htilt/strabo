@@ -1,4 +1,4 @@
-import os, ast
+import os, ast, sys
 from contextlib import closing
 
 from flask import request, render_template, redirect, url_for
@@ -7,8 +7,11 @@ from werkzeug import secure_filename
 from strabo import app
 from strabo.database import migrate_db, get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
-edit_ip, edit_event 
-from strabo.image_processing import make_thumbnail, allowed_file, DMS_to_Dec #, getEXIF
+edit_ip, edit_event, make_date, get_geojson
+from strabo.image_processing import make_thumbnail, allowed_file, DMS_to_Dec, clean_date #, getEXIF
+from strabo.geojson import get_coords, get_type, add_name_and_color, \
+make_featureCollection
+from strabo.filewriting import write_to, rewrite_geojson
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
@@ -40,7 +43,15 @@ def getEXIF():
   dicty = ast.literal_eval(tags)
   if 'DateTimeOriginal' in dicty:
     dateTimeOriginal = dicty['DateTimeOriginal']
-  else: dateTimeOriginal = None
+    # returns a list of split year, month, day
+    dateTimeOriginal = clean_date(dateTimeOriginal)
+    year = dateTimeOriginal[0]
+    month = dateTimeOriginal[1]
+    day = dateTimeOriginal[2]
+  else: 
+    year = None
+    month = None
+    day = None
   if 'GPSLatitude' in dicty: 
     latitude = dicty['GPSLatitude']
     latitude = DMS_to_Dec(latitude)
@@ -49,25 +60,34 @@ def getEXIF():
     longitude = dicty['GPSLongitude']
     longitude = DMS_to_Dec(longitude)
   else: longitude = None
-  print(dateTimeOriginal)
-  print(latitude)
-  print(longitude)
   return render_template("private/form_images.html", longitude=longitude,
-    latitude=latitude, dateTimeOriginal=dateTimeOriginal)
+    latitude=latitude, month=month, year=year, day=day)
 
 @app.route("/upload_images/post", methods=["POST"])
 def post():
-  # get input from user according to field. Save those values under similar variable names.
+  # get input from user according to field. Save those values under 
+  # similar variable names.
   title = request.form.get('title', None)
   img_description = request.form['img_description']
   latitude = request.form['latitude']
   longitude = request.form['longitude']
-  period = request.form['period']
+  
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_created = make_date(month, day, year)
+
   notes = request.form['notes']
+  tags = request.form['tags']
+  edited_by = ''
   file = request.files['file']
+
   if not request.form['interest_point'] == 'Select One':
     interest_point = request.form['interest_point']
   else: interest_point = ''
+  if not request.form['event'] == 'Select One':
+    event = request.form['event']
+  else: event = ''
 
   # Get primary key for saving filename and thumbnailname
   max_id = get_max_id()
@@ -86,8 +106,9 @@ def post():
     # Make a thumbnail and store it in the thumbnails directory
     thumbnail_name = make_thumbnail(filename, this_id)
 
-  params = (title, img_description, latitude, longitude, period, 
-      interest_point, notes, filename, thumbnail_name)
+  params = (title, img_description, latitude, longitude, 
+    date_created, interest_point, event, notes, tags, 
+    edited_by, filename, thumbnail_name)
   insert_images(params)
   
   return redirect(url_for('index'))
@@ -98,16 +119,29 @@ def post():
 @app.route("/upload_ips/")
 def upload_ips():
   interest_points = get_flex('interest_points')
-  return render_template("private/upload_ips.html", interest_points=interest_points)
+  return render_template("private/upload_ips.html", 
+    interest_points=interest_points)
 
 @app.route("/interest_points/post", methods=["POST"])
 def interest_points_post():
   name = request.form['name']
-  latitude = request.form['latitude']
-  longitude = request.form['longitude']
   notes = request.form['notes']
-  params = (name, latitude, longitude, notes)
+  tags = request.form['tags']
+  if not request.form['feature_type'] == 'Select One':
+    feature_type = request.form['feature_type']
+  else: feature_type = ''
+  edited_by = ''
+  
+  geojson_object = request.form['geojson']
+  coordinates = str(get_coords(geojson_object))
+  geojson_feature_type = str(get_type(geojson_object))
+  geojson_object = add_name_and_color(geojson_object, name)
+  params = (name, coordinates, geojson_object, feature_type, 
+    geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
+
+  # Rewrite geoJSON file according to changes
+  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -122,9 +156,17 @@ def upload_events():
 def event_post():
   title = request.form['title']
   event_description = request.form['event_description']
-  year = request.form['year']
   notes = request.form['notes']
-  params = (title, event_description, year, notes)
+  
+  tags = request.form['tags']
+  edited_by = ''
+
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_of_event = make_date(month, day, year)
+
+  params = (title, event_description, date_of_event, notes, tags, edited_by)
   insert_events(params)
   return redirect(url_for('index'))
 
@@ -141,7 +183,8 @@ def delete_images():
   else:
     column = request.args.get('categories')
     images = search(table_name, column, search_term)
-  return render_template("private/delete_images.html", categories=categories, images=images)
+  return render_template("private/delete_images.html", categories=categories, 
+    images=images)
 
 @app.route("/delete_images/delete/", methods=["POST"])
 def delete_images_delete():
@@ -163,13 +206,15 @@ def delete_ips():
   else:
     column = request.args.get('categories')
     interest_points = search(table_name, column, search_term)
-  return render_template("private/delete_ips.html", categories=categories, interest_points=interest_points)
+  return render_template("private/delete_ips.html", categories=categories, 
+    interest_points=interest_points)
 
 @app.route("/delete_ips/delete/", methods=["POST"])
 def delete_ips_delete():
   table_name = 'interest_points'
   keys = request.form.getlist('primary_key')
   delete(keys, table_name)
+  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -185,8 +230,8 @@ def delete_events():
   else:
     column = request.args.get('categories')
     events = search(table_name, column, search_term)
-    print(events)
-  return render_template("private/delete_events.html", categories=categories, events=events)
+  return render_template("private/delete_events.html", categories=categories, 
+    events=events)
 
 @app.route("/delete_events/delete/", methods=["POST"])
 def delete_events_delete():
@@ -207,26 +252,45 @@ def edit_images():
     key = request.args.get('edit-btn')
     column = 'id'
     image = search(table_name, column, key)
+    date_created = image[0]['date_created']
+    date_created = clean_date(date_created)
+    year = date_created[0]
+    month = date_created[1]
+    day = date_created[2]
     events = get_flex('events')
     interest_points = get_flex('interest_points')
     return render_template("private/complete_form_images.html", image=image,
-      events=events, interest_points=interest_points)
+      events=events, interest_points=interest_points, year=year, month=month, day=day)
   elif search_term is None:
     images = get_flex(table_name)
   else:
     column = request.args.get('categories')
     images = search(table_name, column, search_term)
-  return render_template("private/edit_images.html", categories=categories, images=images)
+  return render_template("private/edit_images.html", categories=categories, 
+    images=images)
 
 @app.route("/edit_images/edit/", methods=["POST"])
 def edit_images_edit():
-  title = request.form['title']
+  title = request.form.get('title', None)
   img_description = request.form['img_description']
   latitude = request.form['latitude']
   longitude = request.form['longitude']
-  period = request.form['period']
-  interest_point = request.form['interest_point']
+  
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_created = make_date(month, day, year)
   notes = request.form['notes']
+  tags = request.form['tags']
+  edited_by = ''
+
+  if not request.form['interest_point'] == 'Select One':
+    interest_point = request.form['interest_point']
+  else: interest_point = ''
+  if not request.form['event'] == 'Select One':
+    event = request.form['event']
+  else: event = ''
+
   key = request.form['edit-btn']
   
   table_name = 'images'
@@ -237,9 +301,9 @@ def edit_images_edit():
   thumbnail_name = image[0]['thumbnail_name']
   filename = image[0]['filename']  
 
-  params = (key, title, img_description, created_at, latitude, longitude, 
-    period, interest_point, notes, filename, thumbnail_name)
-  print(params)
+  params = (key, created_at, title, img_description, latitude, longitude, 
+    date_created, interest_point, event, notes, tags, edited_by, 
+    filename, thumbnail_name)
   edit_image(params)
   return redirect(url_for('index'))
 
@@ -262,26 +326,43 @@ def edit_ips():
   else:
     column = request.args.get('categories')
     interest_points = search(table_name, column, search_term)
+
   return render_template("private/edit_ips.html", categories=categories, 
     interest_points=interest_points)
 
 @app.route("/edit_ips/edit/", methods=["POST"])
 def edit_ips_edit():
   name = request.form['name']
-  latitude = request.form['latitude']
-  longitude = request.form['longitude']
   notes = request.form['notes']
+  tags = request.form['tags']
+  feature_type = request.form['feature_type']
+  edited_by = ''
   key = request.form['edit-btn']
-  
+
+  geojson_object = ''
+  coordinates = 'coooooordinates'
+  geojson_feature_type = "LIIIIne"
+  # geojson_raw = request.form.get('geojson')
+  # coordinates = get_coords(geojson_raw)
+  # geojson_feature_type = get_type(geojson_raw)
+  # geojson_object = add_name(geojson_raw, name)
+
   table_name = 'interest_points'
   column = 'id'
   ip = search(table_name, column, key)
   
   created_at = ip[0]['created_at']
+  coordinates = ip[0]['coordinates']
+  geojson_feature_type = ip[0]['geojson_feature_type']
+  geojson_object = ip[0]['geojson_object']
 
-  params = (key, name, latitude, longitude, created_at, notes)
-
+  params = (key, created_at, name, coordinates, 
+    geojson_object, feature_type, geojson_feature_type, 
+    notes, tags, edited_by)
   edit_ip(params)
+
+  rewrite_geojson()
+
   return redirect(url_for('index'))
 
 ###
@@ -296,8 +377,13 @@ def edit_events():
     key = request.args.get('edit-btn')
     column = 'id'
     event = search(table_name, column, key)
+    date_of_event = event[0]['date_of_event']
+    date_of_event = clean_date(date_of_event)
+    year = date_of_event[0]
+    month = date_of_event[1]
+    day = date_of_event[2]
     return render_template("private/form_events.html", 
-      event=event)
+      event=event, year=year, month=month, day=day)
   elif search_term is None:
     events = get_flex(table_name)
   else:
@@ -310,8 +396,15 @@ def edit_events():
 def edit_events_edit():
   title = request.form['title']
   event_description = request.form['event_description']
-  year = request.form['year']
   notes = request.form['notes']
+  tags = request.form['tags']
+  edited_by = ''
+
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
+  date_of_event = make_date(month, day, year)
+
   key = request.form['edit-btn']
   
   table_name = 'events'
@@ -320,7 +413,8 @@ def edit_events_edit():
   
   created_at = ip[0]['created_at']
 
-  params = (key, title, event_description, year, created_at, notes)
+  params = (key, created_at, title, event_description, date_of_event, notes, 
+    tags, edited_by)
 
   edit_event(params)
   return redirect(url_for('index'))

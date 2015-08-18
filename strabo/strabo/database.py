@@ -20,6 +20,8 @@ def get_max_id():
     cur = db.cursor()
     cur = cur.execute('SELECT max(id) FROM images')
     max_id = cur.fetchone()[0]
+    if max_id == None:
+      max_id = 0
   return max_id
 
 # This function ensures that handler_helper will receive a safe 
@@ -122,33 +124,63 @@ def delete(keys, table_name):
 def insert_images(params):
   with closing(get_db()) as db:
     db.cursor().execute("""INSERT INTO images(title, img_description, 
-      latitude, longitude, period, interest_point, notes, filename, 
-      thumbnail_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""", params)
+      latitude, longitude, date_created, interest_point, event, notes, 
+      tags, edited_by, filename, thumbnail_name) VALUES(?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?)""", params)
     db.commit()
 
 def insert_ips(params):
   with closing(get_db()) as db:
     db.cursor().execute("""INSERT INTO interest_points
-      (name, latitude, longitude, notes) VALUES(?, ?, ?, ?)""", params)
+      (name, coordinates, geojson_object, feature_type, geojson_feature_type, 
+        notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", params)
     db.commit()
 
 def insert_events(params):
   with closing(get_db()) as db:
     db.cursor().execute("""INSERT INTO events
-      (title, event_description, year, notes) VALUES(?, ?, ?, ?)""", params)
+      (title, event_description, date_of_event, notes, tags, edited_by) 
+      VALUES(?, ?, ?, ?, ?, ?)""", params)
     db.commit()
 
+# insert into all 14 columns in images to replace
 def edit_image(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO images VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    db.cursor().execute("""REPLACE INTO images VALUES(?, ?, ?, ?, ?, ?, ?, 
+      ?, ?, ?, ?, ?, ?, ?)""", params)
     db.commit()
 
+# insert into all 10 columns in images to replace
 def edit_ip(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, ?)""", params)
+    db.cursor().execute("""REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, 
+      ?, ?, ?, ?, ?)""", params)
     db.commit()
 
+# insert into all 8 columns in images to replace
 def edit_event(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?)""", params)
+    db.cursor().execute("""REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
+      ?, ?)""", params)
     db.commit()
+
+# SELECT * FROM events ORDER BY date(created_at) DESC;
+
+# This function returns a date string properly formatted for sqlite.
+def make_date(month, day, year):
+  if day == '':
+    day = '01'
+  if month == '':
+    month = '01'
+  if year == '':
+    date = ''
+  date = str(year) + '-' + str(month) + '-' + str(day)
+  return date
+
+def get_geojson(geojson_feature_type):
+  with closing(get_db()) as db:
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
+    geojson = cur.execute(query, (geojson_feature_type,)).fetchall()
+  return geojson
