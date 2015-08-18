@@ -214,6 +214,7 @@ def delete_ips_delete():
   table_name = 'interest_points'
   keys = request.form.getlist('primary_key')
   delete(keys, table_name)
+  # rewrite the file that gets loaded in with geojson objects
   rewrite_geojson()
   return redirect(url_for('index'))
 
@@ -339,13 +340,10 @@ def edit_ips_edit():
   edited_by = ''
   key = request.form['edit-btn']
 
-  geojson_object = ''
-  coordinates = 'coooooordinates'
-  geojson_feature_type = "LIIIIne"
-  # geojson_raw = request.form.get('geojson')
-  # coordinates = get_coords(geojson_raw)
-  # geojson_feature_type = get_type(geojson_raw)
-  # geojson_object = add_name(geojson_raw, name)
+  geojson_object = request.form['geojson']
+  coordinates = str(get_coords(geojson_object))
+  geojson_feature_type = str(get_type(geojson_object))
+  geojson_object = add_name_and_color(geojson_object, name)
 
   table_name = 'interest_points'
   column = 'id'
