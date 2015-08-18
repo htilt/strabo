@@ -112,6 +112,8 @@ $(function()
 
   $dropDown.on("click", function(event) {
     var menuNum = $(this).attr('id');
+    var menuPar = $(this).parent();
+    var msg = '';
 
     switch(menuNum) {
       case 'menuItemOne' :
@@ -121,6 +123,9 @@ $(function()
           }
         });
         layer.setStyle({color:'#00A0B0'});
+        msg = 'Orange'
+        menuPar.text(msg);
+
         break;
       case 'menuItemTwo' :
         L.geoJson(obJSON, {
