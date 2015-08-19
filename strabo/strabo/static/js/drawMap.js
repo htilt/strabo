@@ -72,7 +72,7 @@ drawMap.addLayer(drawnItems);
 
 var shapeColorInit = '#2397EB';
 
-var drawControl = new L.Control.Draw({
+var options1 = {
     
     draw : {
       polyline: {
@@ -98,50 +98,78 @@ var drawControl = new L.Control.Draw({
         }
       }
     }
-});
+}
 
-drawMap.addControl(drawControl);
+var options2 = {
+  draw: false,
+
+  edit: {
+      featureGroup: drawnItems,
+      edit: {
+        selectedPathOptions: {
+          color: 'red'
+        }
+      }
+    }
+
+}
+
+var drawControla = new L.Control.Draw(options1);
+var drawControlb = new L.Control.Draw(options2);
+
+
+
+drawMap.addControl(drawControla);
 
 
 var obJSON; ////// THIS IS THE OBJECT U WANT
-var layer;
+var shapeLayer;
 
 
-// this is what grabs the coordinate data when a shape is drawn
-drawMap.on('draw:created', function (e) {
-  //layer type just means what kind of shape
+
+drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
-  //every drawn items gets its own layer
-  layer = e.layer;
-  //if the layer type is a circle, then we only have one set of latlngs to deal with, therefore different formula
+  shapeLayer = e.layer;
+  //if the layer type is a circle / marker, then we only have one set of latlngs to deal with, therefore different formula
   if (type === 'polyline') {
-    drawnItems.addLayer(layer);
-    obJSON = layer.toGeoJSON();
-    //this is what injects the values into the HTML
+    drawnItems.addLayer(shapeLayer);
+    obJSON = shapeLayer.toGeoJSON(); //creates JSON object
   }
   else if (type === 'marker') {
-    drawnItems.addLayer(layer);
-    obJSON = layer.toGeoJSON();    
+    drawnItems.addLayer(shapeLayer);
+    obJSON = shapeLayer.toGeoJSON();    
   }
   else if (type === 'polygon') {
-    obJSON = layer.toGeoJSON();
-   	drawnItems.addLayer(layer);
+    obJSON = shapeLayer.toGeoJSON();
+   	drawnItems.addLayer(shapeLayer);
   }
+
+  drawControla.removeFrom(drawMap);
+  drawMap.addControl(drawControlb);
+})
+
+drawMap.on('draw:deletestop', function (e) {
+  drawControlb.removeFrom(drawMap);
+  drawMap.addControl(drawControla);
+
 })
 
 
 drawMap.on('draw:edited', function (e) {
-
+  
   var editLayers = e.layers;
   var type = e.layerType;
-  layer.setStyle({color:'#2397EB'});
 
-  editLayers.eachLayer(function (layerShapes) {
-    obJSON = editLayers.toGeoJSON();
-    layerShapes.setStyle({color:'#2397EB'});
+
+
+
+  editLayers.eachLayer(function (layer) {
+    obJSON = layer.toGeoJSON();
+    console.log(obJSON);
+    console.log(shapeLayer);
+    //shapeLayer.setStyle({color:'#2397EB'});
+    //layer.setStyle({color:'#2397EB'})
     });
-
-
 })
 
 $(function()
@@ -149,8 +177,8 @@ $(function()
   var $dropDown = $('li');
 
   $dropDown.on("click", function(event) {
-    var menuNum = $(this).attr('id');
-    var menuPar = $(this).parent();
+    var menuNum = this.id;
+    var menuParent = $('btn btn-default dropdown-toggle');
     var msg = '';
 
     switch(menuNum) {
@@ -160,10 +188,8 @@ $(function()
             "color": '#00A0B0'
           }
         });
-        layer.setStyle({color:'#00A0B0'});
-        msg = 'Orange'
-        menuPar.text(msg);
-
+        shapeLayer.setStyle({color:'#00A0B0'}).addTo(drawMap);
+        console.log(obJSON);
         break;
       case 'menuItemTwo' :
         L.geoJson(obJSON, {
@@ -171,7 +197,7 @@ $(function()
             "color": '#6A4A3C'
           }
         });
-        layer.setStyle({color:'#6A4A3C'});
+        shapeLayer.setStyle({color:'#6A4A3C'});
         break;
       case 'menuItemThree' :
         L.geoJson(obJSON, {
@@ -179,7 +205,7 @@ $(function()
             "color": '#CC333F'
           }
         });
-        layer.setStyle({color:'#CC333F'});
+        shapeLayer.setStyle({color:'#CC333F'});
         break;
       case 'menuItemFour' :
         L.geoJson(obJSON, {
@@ -187,7 +213,7 @@ $(function()
             "color": '#EB6841'
           }
         });
-        layer.setStyle({color:'#EB6841'});
+        shapeLayer.setStyle({color:'#EB6841'});
         break;
       case 'menuItemFive' :
         L.geoJson(obJSON, {
@@ -195,7 +221,7 @@ $(function()
             "color": '#8A9B0F'
           }
         });
-        layer.setStyle({color:'#8A9B0F'});
+        shapeLayer.setStyle({color:'#8A9B0F'});
         break
       default:
         break;
