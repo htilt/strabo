@@ -1,41 +1,32 @@
-<link rel="stylesheet" type="text/css" href="../static/public_styles/display_thumbnails.css" />
-<link rel="stylesheet" type="text/css" href="../static/public_styles/gallery.css" />
+<link rel="stylesheet" type="text/css" href="../static/public_styles/display_thumbnails.css"/>
+<link rel="stylesheet" type="text/css" href="../static/public_styles/lightbox.css"/>
 
 <div id="gallery">
-  <div id="link-wrapper">
-    <span class="text-muted">Select another interest point or </span><a href="gallery?year=Year&event=Event&interest_point={{ images[0]['interest_point'] }}" class="text-muted" id="ip_link">see more images of {{ images[0]['interest_point'] }}</a> 
+
+  <div class "row">
+    <div id="link-wrapper">
+      <span class="text-muted">Select another interest point or </span><a href="gallery?year=Year&event=Event&interest_point={{ images[0]['interest_point'] }}" class="text-muted" id="ip_link">see more images of {{ images[0]['interest_point'] }}</a> 
+    </div>
   </div>
 
-  <div class="img-wrap">
-      <div id="thumbs">
-        {% for img in images %}
-        <div data-toggle="modal" data-target="#lightbox">
-          <a href="#"><img class="img-responsive" src="../../static/uploads/{{img['filename']}}" style="height:100px;width:100px;" alt=""/></a>
+  <!-- Projects Row -->
+  <div class "row">
+    {% for img in images %}
+        <div class="col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+            <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="../../static/uploads/{{ img['filename'] }}" style="height:120px;width:180px;" alt=""></a></p>
+            <div class="hidden" id="img-metadata">
+                <p>Title: {{ img['title'] }}</p>
+                {% if img['date_created'] %}
+                <br><p>Date: {{ img['date_created'] }}</p><br>
+                {% endif %}
+                {% if img['img_description'] %}
+                <p>Description: {{ img['img_description'] }}</p>
+                {% endif %}
+            </div>
         </div>
-        {% endfor %}
-        <span class="stretch"></span>
-      </div>
+    {% endfor %}
   </div>
-
-    {#{% for img in images %}
-      <!-- <div data-toggle="modal" data-target="#lightbox"> -->
-        <div id="thumbs">
-          <a href="#"><img class="img-responsive" src="../../static/uploads/{{ img['filename'] }}" alt=""/></a>
-          <span class="stretch"></span>
-        </div>
-        
-        <!-- <div class="hidden" id="img-metadata">
-          <p>Title: {{ img['title'] }}</p>
-          {% if img['date_created'] %}
-          <br><p>Date: {{ img['date_created'] }}</p><br>
-          {% endif %}
-          {% if img['img_description'] %}
-          <p>Description: {{ img['img_description'] }}</p>
-          {% endif %}
-        </div> -->
-      <!-- </div> -->
-    {% endfor %}#}
-  <!-- </div> -->
+  <!-- /.row -->
 
 </div>
 <script src="../static/js/gallery.js"></script>

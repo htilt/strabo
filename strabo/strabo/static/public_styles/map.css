@@ -18,11 +18,12 @@ html, body {
   height: 80px;
 }
 
-/*#img-wrapper {
+#img-wrapper {
   padding-bottom: 10px;
   padding-left: 60px;
 }
 
 #img-wrapper p {
-  padding: 20px;
-}*/
+  padding: 10px;
+  padding-top: 20px;
+}

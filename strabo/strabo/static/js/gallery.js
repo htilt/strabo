@@ -22,7 +22,7 @@ var main = function() {
 
     console.log(metadata)
 
-     // $lightbox.find('.close').addClass('hidden');
+     $lightbox.find('.close').addClass('hidden');
      $lightbox.find('img').attr('src', src);
      $lightbox.find('img').attr('alt', alt);
      $('.modal-metadata p').html(metadata)

@@ -170,16 +170,6 @@ def edit_event(params):
 
 # SELECT * FROM events ORDER BY date(created_at) DESC;
 
-# This function returns a date string properly formatted for sqlite.
-def make_date(month, day, year):
-  if day == '':
-    day = '01'
-  if month == '':
-    month = '01'
-  if year == '':
-    date = ''
-  date = str(year) + '-' + str(month) + '-' + str(day)
-  return date
 
 # returns the geojson objects of a given feature type
 def get_geojson(geojson_feature_type):
@@ -199,7 +189,7 @@ def get_images_for_page(id_num=None, page_event=None, column=None, search_term=N
       query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
       params = (id_num,)
     elif page_event == 'previous':
-      query = """SELECT * FROM images WHERE id < ? ORDER BY id LIMIT 12"""
+      query = """SELECT * FROM images WHERE id < ? ORDER BY id DESC LIMIT 12"""
       params = (id_num,)
     else: 
       query = """SELECT * FROM images ORDER BY id LIMIT 12"""
@@ -212,12 +202,13 @@ def get_images_for_page(id_num=None, page_event=None, column=None, search_term=N
       params = (id_num, search_term)
     elif page_event == 'previous':
       query = """SELECT * FROM images WHERE id < ? 
-      AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
+      AND strftime('%Y', date_created) = ? ORDER by id DESC LIMIT 12"""
       params = (id_num, search_term)
     else: 
-      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
-      return simple_query(query)
-  # if provided a column and search_term, add an additional WHERE clause
+      query = """SELECT * FROM images WHERE strftime('%Y', date_created) = ?
+      ORDER BY id LIMIT 12"""
+      params = (search_term,)
+  # if user is searching for images by an arbitrary column/search term
   else:
     if page_event == 'next':
       query = """SELECT * FROM images WHERE id > ? AND {column} = ? ORDER BY id
@@ -225,11 +216,12 @@ def get_images_for_page(id_num=None, page_event=None, column=None, search_term=N
       params = (id_num, search_term)
     elif page_event == 'previous':
       query = """SELECT * FROM images WHERE id < ? AND {column} = ? ORDER BY id
-        LIMIT 12""".format(column=column)
+        DESC LIMIT 12""".format(column=column)
       params = (id_num, search_term)
     else: 
-      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
-      return simple_query(query)
+      query = """SELECT * FROM images WHERE {column} = ? 
+      ORDER BY id LIMIT 12""".format(column=column)
+      params = (search_term,)
   images = simple_query(query, params)
   return images
 
