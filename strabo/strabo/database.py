@@ -192,34 +192,44 @@ def get_geojson(geojson_feature_type):
 
 # queries the db for a given number of image records, starting at the id of the
 # last viewed image
-def get_images_for_page(id_num, page_event, column=None, search_term=None):
+def get_images_for_page(id_num=None, page_event=None, column=None, search_term=None):
+  # if no search term or column is provided
   if column == None:
     if page_event == 'next':
       query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
       params = (id_num,)
-    else:
+    elif page_event == 'previous':
       query = """SELECT * FROM images WHERE id < ? ORDER BY id LIMIT 12"""
       params = (id_num,)
+    else: 
+      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
+      return simple_query(query)
   # if user is searching for a images within a certain year
   elif column == 'date_created':
     if page_event == 'next':
       query = """SELECT * FROM images WHERE id > ? 
       AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
       params = (id_num, search_term)
-    else:
+    elif page_event == 'previous':
       query = """SELECT * FROM images WHERE id < ? 
       AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
       params = (id_num, search_term)
+    else: 
+      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
+      return simple_query(query)
   # if provided a column and search_term, add an additional WHERE clause
   else:
     if page_event == 'next':
       query = """SELECT * FROM images WHERE id > ? AND {column} = ? ORDER BY id
         LIMIT 12""".format(column=column)
       params = (id_num, search_term)
-    else:
+    elif page_event == 'previous':
       query = """SELECT * FROM images WHERE id < ? AND {column} = ? ORDER BY id
         LIMIT 12""".format(column=column)
       params = (id_num, search_term)
+    else: 
+      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
+      return simple_query(query)
   images = simple_query(query, params)
   return images
 

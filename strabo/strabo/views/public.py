@@ -49,6 +49,7 @@ def map_post():
   # here we want to get the value of the key (i.e. ?key=value)
   ip_value = request.form.get('key')
   images = get_images_helper('interest_point', ip_value, 5)
+  print(images)
   return render_template("public/display_thumbnails.html", images=images)
 
 # @app.route("/gallery", methods=["GET"])
@@ -87,17 +88,19 @@ def gallery(page):
   # set the max or min image id by checking the id #s 
   # from the last set of images
   if pagination_event == 'next':
-    max_id = 1
+    id_num = 1
     for image_id in image_ids:
-      if int(image_id) > max_id:
-        max_id = int(image_id)
-    images = get_images_for_page(max_id, 'next', column, search_term)
-  else: # pagination_event == 'previous'
-    min_id = 10000000
+      if int(image_id) > id_num:
+        id_num = int(image_id)
+  elif pagination_event == 'previous':
+    id_num = 10000000
     for image_id in image_ids:
-      if int(image_id) < min_id:
-        min_id = int(image_id)
-    images = get_images_for_page(min_id, 'previous', column, search_term)
+      if int(image_id) < id_num:
+        id_num = int(image_id)
+  else: # no pagination event
+    pagination_event, id_num = None, None
+
+  images = get_images_for_page(id_num, pagination_event, column, search_term)
   # # get total count of images
   # count = count_all_images(column, search_term)
   # get images from db

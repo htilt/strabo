@@ -13,10 +13,28 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css' />
   <link rel="stylesheet" type="text/css" href="../static/public_styles/map.css" />
+  <link rel="stylesheet" type="text/css" href="../static/public_styles/header.css" />
+  <link rel="stylesheet" type="text/css" href="../static/public_styles/footer.css" />
 </head>
 
 <body>
+
+  <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
+          <div class="modal-content">
+              <div class="modal-body">
+                  <img src="" alt="" />
+              </div>
+              <div class="modal-metadata">
+                  <p></p>
+              </div>
+          </div>
+      </div>
+  </div>
+
   <div id="wrap">
+
     <div class="header">
       {% include "public/header.html" %}
     </div>
@@ -38,6 +56,7 @@
     <!-- // <script src="../static/js/interest_points.js"></script> -->
     <script>document.write('<script src="/../static/js/interest_points.js?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>
     <script src="../static/js/map.js"></script>
+    <script src="../static/js/gallery.js"></script>
 </body>
 </html>
 
