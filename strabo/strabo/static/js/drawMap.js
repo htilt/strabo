@@ -174,20 +174,26 @@ drawMap.on('draw:edited', function (e) {
 
 $(function()
 {
-  var $dropDown = $('#colorPick');
+  var $e = $("#colorPick")
+  var $usrSelect = $("#colorPick :selected").text()
+  console.log($usrSelect);
 
-  console.log($dropDown);
+  $e.change(function() {
+    $usrSelect = $("#colorPick :selected").text();
+    console.log($usrSelect); 
+  
+
+  
 
 
-  $dropDown.on('blur', function(event) {
+  //console.log($dropDown);
 
-    var menuNum = this.index;
-    console.log(menuNum);
+    //var menuNum = this.value;
     //var menuParent = $('btn btn-default dropdown-toggle');
     //var msg = '';
 
-    switch(menuNum) {
-      case '1' :
+    switch($usrSelect) {
+      case 'Turqoise' :
         L.geoJson(obJSON, {
           style: {
             "color": '#00A0B0'
