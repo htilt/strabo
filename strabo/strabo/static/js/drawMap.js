@@ -174,24 +174,28 @@ drawMap.on('draw:edited', function (e) {
 
 $(function()
 {
-  var $dropDown = $('li');
+  var $dropDown = $('#colorPick');
 
-  $dropDown.on("click", function(event) {
-    var menuNum = this.id;
-    var menuParent = $('btn btn-default dropdown-toggle');
-    var msg = '';
+  console.log($dropDown);
+
+
+  $dropDown.on('blur', function(event) {
+
+    var menuNum = this.index;
+    console.log(menuNum);
+    //var menuParent = $('btn btn-default dropdown-toggle');
+    //var msg = '';
 
     switch(menuNum) {
-      case 'menuItemOne' :
+      case '1' :
         L.geoJson(obJSON, {
           style: {
             "color": '#00A0B0'
           }
         });
         shapeLayer.setStyle({color:'#00A0B0'}).addTo(drawMap);
-        console.log(obJSON);
         break;
-      case 'menuItemTwo' :
+      case 'Brown' :
         L.geoJson(obJSON, {
           style: {
             "color": '#6A4A3C'
@@ -199,7 +203,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#6A4A3C'});
         break;
-      case 'menuItemThree' :
+      case "Father's Rage Red":
         L.geoJson(obJSON, {
           style: {
             "color": '#CC333F'
@@ -207,7 +211,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#CC333F'});
         break;
-      case 'menuItemFour' :
+      case 'Orange' :
         L.geoJson(obJSON, {
           style: {
             "color": '#EB6841'
@@ -215,7 +219,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#EB6841'});
         break;
-      case 'menuItemFive' :
+      case 'Green' :
         L.geoJson(obJSON, {
           style: {
             "color": '#8A9B0F'
