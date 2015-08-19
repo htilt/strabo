@@ -32,8 +32,20 @@
                 <input class="form-control" type="text" name="longitude" size="80" value={{ img['longitude'] }}>
               </div>
               <div class="form-group">
-                <label for="period">Date Created:</label><br>
-                <input class="form-control" type="text" name="period" size="80" value="{{ img['period'] }}">
+                <label for="year">Date Created:</label><br>
+                <div class="form-inline">
+                  <div class="form-group">
+                    <input type="number" name="month" class="form-control" min="1" max="12" value="{{ month }}">
+                  </div>
+                  <span> - </span>
+                  <div class="form-group">
+                    <input type="number" name="day" class="form-control" min="1" max="31" value="{{ day }}">
+                  </div>
+                  <span> - </span>
+                  <div class="form-group">
+                    <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="interest_point">Interest Point:</label><br>
@@ -45,8 +57,21 @@
                 </select>
               </div>
               <div class="form-group">
+                <label for="event">Event:</label><br>
+                <select class="form-control" name='event'>
+                  <option selected name='selected'>{{ img['event'] }}</option>
+                  {% for event in events %}
+                  <option name="event">{{ event['name'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
                 <input class="form-control" type="text" name="notes" size="80" value="{{ img['notes'] }}">
+              </div>
+              <div class="form-group">
+                <label for="tags">Tags:</label><br>
+                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
               </div>
               
               <p></p>

@@ -38,10 +38,25 @@
                   {% endfor %}
                 </select>
               </div>
+
+              <div class="form-group">
+                <label for="event">Event:</label><br>
+                <select class="form-control" name='event'>
+                  <option selected name="ip_auto"> Select One </option>
+                  {% for event in events %}
+                  <option name="event"> {{ event['title'] }} </option>
+                  {% endfor %}
+                </select>
+              </div>
   
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
                 <input class="form-control" type="text" name="notes" size="80">
+              </div>
+
+              <div class="form-group">
+                <label for="tags">Tags:</label><br>
+                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
               </div>
               
               <p></p>
@@ -51,11 +66,9 @@
   
   
             <div class="upload-wrapper col-lg-4">
-<<<<<<< HEAD
+
               <input type="file" id="img-input" name="file" required><br /><br />
-=======
-              <input type="file" id="img-input" name="file"><br /><br />
->>>>>>> 7a4eecb054240a90507626a3249b22a50aa184d7
+
               <img id="img-preview" src="#" alt="your image"></img>
             </div>
           
@@ -77,6 +90,7 @@
         <th>Longitude</th>
         <th>Creation Date</th>
         <th>Interest Point</th>
+        <th>Events</th>
         <th>Notes</th>
         <th>Filename</th>
       </tr>
@@ -89,8 +103,9 @@
         <td class="created_at">{{ key['created_at'] }}</td> 
         <td class="latitude">{{ key['latitude'] }}</td>
         <td class="longitude">{{ key['longitude'] }}</td>
-        <td class="period">{{ key['period'] }}</td>
+        <td class="date_created">{{ key['date_created'] }}</td>
         <td class="interest_point">{{ key['interest_point'] }}</td>
+        <td class="events">{{ key['events'] }}</td>
         <td class="notes">{{ key['notes'] }}</td>
         <td class="file_name">{{ key['filename'] }}</td>
       </tr>
