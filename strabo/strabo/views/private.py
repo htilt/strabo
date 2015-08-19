@@ -7,8 +7,9 @@ from werkzeug import secure_filename
 from strabo import app
 from strabo.database import migrate_db, get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
-edit_ip, edit_event, make_date, get_geojson
-from strabo.image_processing import make_thumbnail, allowed_file, DMS_to_Dec, clean_date #, getEXIF
+edit_ip, edit_event, get_geojson
+from strabo.utils import make_date, DMS_to_Dec, clean_date
+from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
 from strabo.geojson import get_coords, get_type, add_name_and_color, \
 make_featureCollection
 from strabo.filewriting import write_to, rewrite_geojson
