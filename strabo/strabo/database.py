@@ -28,7 +28,7 @@ def get_max_id():
 # column name.
 def get_images(year=None, event=None, location=None):
   if year is not None:
-    return get_images_helper('year', year, 12)
+    return get_images_helper('date_created', year, 12)
   if event is not None:
     return get_images_helper('event', event, 12)
   else:
@@ -39,9 +39,13 @@ def get_images_helper(column, variable, count):
   with closing(get_db()) as db:
     db.row_factory = dict_factory
     cur = db.cursor()
-    query = """SELECT * FROM images WHERE {column} = ? 
-      ORDER by id LIMIT ?""".format(column = column)
-    images = cur.execute(query, (variable, count)).fetchall()
+    if column == 'date_created':
+      query = """SELECT * FROM images WHERE strftime('%Y', date_created) = ? ORDER by id LIMIT ?"""
+      images = cur.execute(query, (variable, count)).fetchall()  
+    else:
+      query = """SELECT * FROM images WHERE {column} LIKE ? 
+        ORDER by id LIMIT ?""".format(column = column)
+      images = cur.execute(query, (variable, count)).fetchall()
   return images
 
 def dict_factory(cursor, row):
@@ -177,6 +181,7 @@ def make_date(month, day, year):
   date = str(year) + '-' + str(month) + '-' + str(day)
   return date
 
+# returns the geojson objects of a given feature type
 def get_geojson(geojson_feature_type):
   with closing(get_db()) as db:
     db.row_factory = dict_factory
@@ -184,3 +189,63 @@ def get_geojson(geojson_feature_type):
     query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
     geojson = cur.execute(query, (geojson_feature_type,)).fetchall()
   return geojson
+
+# queries the db for a given number of image records, starting at the id of the
+# last viewed image
+def get_images_for_page(id_num, page_event, column=None, search_term=None):
+  if column == None:
+    if page_event == 'next':
+      query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
+      params = (id_num,)
+    else:
+      query = """SELECT * FROM images WHERE id < ? ORDER BY id LIMIT 12"""
+      params = (id_num,)
+  # if user is searching for a images within a certain year
+  elif column == 'date_created':
+    if page_event == 'next':
+      query = """SELECT * FROM images WHERE id > ? 
+      AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
+      params = (id_num, search_term)
+    else:
+      query = """SELECT * FROM images WHERE id < ? 
+      AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
+      params = (id_num, search_term)
+  # if provided a column and search_term, add an additional WHERE clause
+  else:
+    if page_event == 'next':
+      query = """SELECT * FROM images WHERE id > ? AND {column} = ? ORDER BY id
+        LIMIT 12""".format(column=column)
+      params = (id_num, search_term)
+    else:
+      query = """SELECT * FROM images WHERE id < ? AND {column} = ? ORDER BY id
+        LIMIT 12""".format(column=column)
+      params = (id_num, search_term)
+  images = simple_query(query, params)
+  return images
+
+def count_all_images(column=None, search_term=None):
+  # count all images
+  if column == None:
+    query = """SELECT COUNT(*) FROM images"""
+    image_count = simple_query(query)
+  # count all images where column = search_term
+  else:
+    if column == 'date_created':
+      query = """SELECT COUNT(*) FROM images 
+      WHERE strftime('%Y', date_created) = ?"""
+    else:
+      query = """SELECT COUNT(*) FROM images 
+      WHERE {column} = ?""".format(column=column)
+    image_count = simple_query(query, (search_term,))
+  return image_count[0]['COUNT(*)']
+
+def simple_query(query, params=None):
+  with closing(get_db()) as db:
+    db.row_factory = dict_factory
+    cur = db.cursor()
+    if params == None:
+      data = cur.execute(query).fetchall()
+    else:
+      data = cur.execute(query, params).fetchall()
+  return data
+
