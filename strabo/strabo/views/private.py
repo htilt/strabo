@@ -128,6 +128,8 @@ def interest_points_post():
   name = request.form['name']
   notes = request.form['notes']
   tags = request.form['tags']
+  color = request.form['color']
+  print(color)
   if not request.form['feature_type'] == 'Select One':
     feature_type = request.form['feature_type']
   else: feature_type = ''
@@ -136,7 +138,7 @@ def interest_points_post():
   geojson_object = request.form['geojson']
   coordinates = str(get_coords(geojson_object))
   geojson_feature_type = str(get_type(geojson_object))
-  geojson_object = add_name_and_color(geojson_object, name)
+  geojson_object = add_name_and_color(geojson_object, name, color)
   params = (name, coordinates, geojson_object, feature_type, 
     geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
@@ -338,20 +340,15 @@ def edit_ips_edit():
   notes = request.form['notes']
   tags = request.form['tags']
   feature_type = request.form['feature_type']
+  coordinates = request.form['coordinates']
   edited_by = ''
   key = request.form['edit-btn']
-
-  geojson_object = request.form['geojson']
-  coordinates = str(get_coords(geojson_object))
-  geojson_feature_type = str(get_type(geojson_object))
-  geojson_object = add_name_and_color(geojson_object, name)
 
   table_name = 'interest_points'
   column = 'id'
   ip = search(table_name, column, key)
   
   created_at = ip[0]['created_at']
-  coordinates = ip[0]['coordinates']
   geojson_feature_type = ip[0]['geojson_feature_type']
   geojson_object = ip[0]['geojson_object']
 

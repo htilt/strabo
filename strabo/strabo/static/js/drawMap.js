@@ -19,39 +19,33 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 // add pre-existing points, zones, and lines to map
 var point_features = L.geoJson(interest_points, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachPoint,
 }).addTo(drawMap);
 
 var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachZone
 }).addTo(drawMap);
 
 var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachZone,
 }).addTo(drawMap);
 
-function whenClicked(e) {
-  // e = event
-  console.log(e.target.feature.geometry.name);
-  var name=e.target.feature.geometry.name;
-  $.post(
-    "/map/post", 
-    {key:name},
-    function(data) {
-      $("#img-wrapper").html(data)
-    }
-    );
-}
-
-function onEachFeature(feature, layer) {
-  layer.bindPopup(feature.geometry.name)
-  //bind click
-  layer.on({
-      click: whenClicked
+function onEachZone(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  layer.setStyle({
+        weight: 1,
+        color: feature.properties['marker-color'],
+        dashArray: '',
+        fillOpacity: 0.3
   });
 }
 
-var popup = L.popup();
+function onEachPoint(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  // layer.setIcon(feature.properties['icon']);
+}
+
+// var popup = L.popup();
 
 // function onMapClick(e) {
 //   popup

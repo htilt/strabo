@@ -180,11 +180,55 @@ def get_geojson(geojson_feature_type):
     geojson = cur.execute(query, (geojson_feature_type,)).fetchall()
   return geojson
 
-# queries the db for a given number of image records, starting at the id of the
-# last viewed image
-def get_images_for_page(id_num=None, page_event=None, column=None, search_term=None):
+# # queries the db for a given number of image records, starting at the id of the
+# # last viewed image
+# def get_images_for_page(id_num=None, page_event=None, column=None, search_term=None):
+#   # if no search term or column is provided
+#   if column == None:
+#     if page_event == 'next':
+#       query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
+#       params = (id_num,)
+#     elif page_event == 'previous':
+#       query = """SELECT * FROM images WHERE id < ? ORDER BY id DESC LIMIT 12"""
+#       params = (id_num,)
+#     else: 
+#       query = """SELECT * FROM images ORDER BY id LIMIT 12"""
+#       return simple_query(query)
+#   # if user is searching for a images within a certain year
+#   elif column == 'date_created':
+#     if page_event == 'next':
+#       query = """SELECT * FROM images WHERE id > ? 
+#       AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
+#       params = (id_num, search_term)
+#     elif page_event == 'previous':
+#       query = """SELECT * FROM images WHERE id < ? 
+#       AND strftime('%Y', date_created) = ? ORDER by id DESC LIMIT 12"""
+#       params = (id_num, search_term)
+#     else: 
+#       query = """SELECT * FROM images WHERE strftime('%Y', date_created) = ?
+#       ORDER BY id LIMIT 12"""
+#       params = (search_term,)
+#   # if user is searching for images by an arbitrary column/search term
+#   else:
+#     if page_event == 'next':
+#       query = """SELECT * FROM images WHERE id > ? AND {column} = ? ORDER BY id
+#         LIMIT 12""".format(column=column)
+#       params = (id_num, search_term)
+#     elif page_event == 'previous':
+#       query = """SELECT * FROM images WHERE id < ? AND {column} = ? ORDER BY id
+#         DESC LIMIT 12""".format(column=column)
+#       params = (id_num, search_term)
+#     else:
+#       query = """SELECT * FROM images WHERE {column} = ? 
+#       ORDER BY id LIMIT 12""".format(column=column)
+#       params = (search_term,)
+#   images = simple_query(query, params)
+#   return images
+
+def get_images_for_page(id_num=None, page_event=None, search_criteria=None):
   # if no search term or column is provided
-  if column == None:
+  print(search_criteria)
+  if len(search_criteria) == 0:
     if page_event == 'next':
       query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
       params = (id_num,)
@@ -194,34 +238,42 @@ def get_images_for_page(id_num=None, page_event=None, column=None, search_term=N
     else: 
       query = """SELECT * FROM images ORDER BY id LIMIT 12"""
       return simple_query(query)
-  # if user is searching for a images within a certain year
-  elif column == 'date_created':
-    if page_event == 'next':
-      query = """SELECT * FROM images WHERE id > ? 
-      AND strftime('%Y', date_created) = ? ORDER by id LIMIT 12"""
-      params = (id_num, search_term)
-    elif page_event == 'previous':
-      query = """SELECT * FROM images WHERE id < ? 
-      AND strftime('%Y', date_created) = ? ORDER by id DESC LIMIT 12"""
-      params = (id_num, search_term)
-    else: 
-      query = """SELECT * FROM images WHERE strftime('%Y', date_created) = ?
-      ORDER BY id LIMIT 12"""
-      params = (search_term,)
   # if user is searching for images by an arbitrary column/search term
   else:
+    # Make a string containing the user's query
     if page_event == 'next':
-      query = """SELECT * FROM images WHERE id > ? AND {column} = ? ORDER BY id
-        LIMIT 12""".format(column=column)
-      params = (id_num, search_term)
-    elif page_event == 'previous':
-      query = """SELECT * FROM images WHERE id < ? AND {column} = ? ORDER BY id
-        DESC LIMIT 12""".format(column=column)
-      params = (id_num, search_term)
-    else: 
-      query = """SELECT * FROM images WHERE {column} = ? 
-      ORDER BY id LIMIT 12""".format(column=column)
-      params = (search_term,)
+      query = """SELECT * FROM images WHERE id > ? AND """
+      params = [id_num]      
+    elif page_event == "previous":
+      query = """SELECT * FROM images WHERE id < ? AND """
+      params = [id_num]
+    else: # page_event == None
+      query = """SELECT * FROM images WHERE """
+      params = []
+    for tup in search_criteria:
+      # if the tuple contains a column/search term pair
+      if len(tup) == 2:
+        # make the column
+        column = tup[0]
+        # append a where clause to the query
+        query = query + """{column} = ? """.format(column=column)
+        # make the search term
+        search_term = tup[1]
+        # add the search term to the params
+        params.append(search_term)
+      # if the tuple contains a boolean
+      elif len(tup) == 1:
+        # get the boolean from the tuple
+        boolean = tup[0]
+        # append the boolean to the query
+        query = query + """{boolean} """.format(boolean=boolean)
+    params = tuple(params)
+    # finish the query string
+    query = query + """ ORDER BY id """
+    if page_event == "previous": query = query + """DESC """
+    query = query + """LIMIT 12"""
+    print(query)
+    print(params)
   images = simple_query(query, params)
   return images
 

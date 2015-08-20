@@ -18,37 +18,60 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 }).addTo(map);
 
-
-
-// add points, zones, and lines to map
+// add pre-existing points, zones, and lines to map
 var point_features = L.geoJson(interest_points, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachPoint,
 }).addTo(map);
-
-//controlLayers.addOverlay(point_features, 'Points');
-
 
 var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachZone
 }).addTo(map);
-
-//controlLayers.addOverlay(zone_features, 'Zones');
 
 var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachFeature
+  onEachFeature: onEachLine,
 }).addTo(map);
 
+// set styles and popups for zones
+function onEachZone(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  layer.setStyle({
+        weight: 1,
+        color: feature.properties['marker-color'],
+        dashArray: '',
+        fillOpacity: 0.3
+  });
+  layer.on({
+      click: whenClicked
+  });
+}
+// set styles and popups for lines
+function onEachLine(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  layer.setStyle({
+        weight: 4,
+        color: feature.properties['marker-color'],
+        dashArray: '',
+  });
+  layer.on({
+      click: whenClicked
+  });
+}
+// set styles and popups for points
+function onEachPoint(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  // layer.setIcon(feature.properties['icon']);
+  layer.on({
+      click: whenClicked
+  });
+}
 
 var overlays = {
   "Points": point_features,
-  "Lines": zone_features,
-  "Zones": line_features,
+  "Lines": line_features,
+  "Zones": zone_features,
 }
 
 var controlLayers = L.control.layers(null, overlays).addTo(map);
-
-
-//controlLayers.addOverlay(line_features, 'Lines');
 
 function whenClicked(e) {
   // e = event
@@ -61,14 +84,6 @@ function whenClicked(e) {
       $("#img-wrapper").html(data)
     }
     );
-}
-
-function onEachFeature(feature, layer) {
-  layer.bindPopup(feature.geometry.name)
-  //bind click
-  layer.on({
-      click: whenClicked
-  });
 }
 
 var popup = L.popup();
