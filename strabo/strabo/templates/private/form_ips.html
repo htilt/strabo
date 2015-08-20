@@ -25,7 +25,14 @@
               </div>
               <div class="form-group">
                 <label for="feature_type">Feature Type:</label><br>
-                <input class="form-control" type="text" name="feature_type" size="80" value="{{ ip['feature_type'] }}">
+                <select class="form-control" name='feature_type'>
+                  <option selected name='selected'>{{ ip['feature_type'] }}</option>
+                  <option name="Empty"></option>
+                  <option name="Landmark">Landmark</option>
+                  <option name="Zone">Zone</option>
+                  <option name="Building">Building</option>
+                  <option name="Heritage Tree">Heritage Tree</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>

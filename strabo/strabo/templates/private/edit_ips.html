@@ -40,8 +40,8 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Creation Date/Time</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th> 
+                    <th>Coordinates</th>
+                    <th>Feature Type</th>
                     <th>Additional Notes</th>
                     <th>Tags</th>
                   </tr>
@@ -54,8 +54,8 @@
                         <td class="image_key">{{ ip['id'] }}</td>
                         <td class="name">{{ ip['name'] | default("Untitled") }}</td>
                         <td class="created_at">{{ ip['created_at'] }}</td> 
-                        <td class="latitude">{{ ip['latitude'] }}</td>
-                        <td class="longitude">{{ ip['longitude'] }}</td>
+                        <td class="coordinates">{{ ip['coordinates'] }}</td>
+                        <td class="feature_type">{{ ip['feature_type'] }}</td>
                         <td class="notes">{{ ip['notes'] }}</td>
                         <td class="tags">{{ ip['tags'] }}</td>
                       </tr>

@@ -25,6 +25,7 @@ def add_name_and_color(feature, name, color=None):
   feature.properties['marker-size'] = 'medium'
   feature.properties['marker-symbol'] = ''
   feature = geojson.dumps(feature, sort_keys=True)
+  print (feature)
   return feature
 
 # This function receives a list containing geojson strings.

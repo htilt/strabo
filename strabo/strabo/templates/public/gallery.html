@@ -64,8 +64,9 @@
                         <select class="form-control" name='year'>
                             {% if year %}
                             <option selected name='year'>{{ year }}</option>
+                            <option name="All Years">All Years</option>
                             {% else %}
-                            <option selected label="All Years">All Years</option>
+                            <option selected name="All Years">All Years</option>
                             {% endif %}
                             {% for year in years %}
                             <option name={{year}}> {{year}} </option>
@@ -73,14 +74,26 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-info" value="Submit">
+                        <select class="form-control" name='bool-1'>
+                            {% if boolean_1 == 'AND' %}
+                            <option selected name='and'>{{ boolean_1 }}</option>
+                            <option name="or">OR</option>
+                            {% elif boolean_1 == 'OR' %}
+                            <option selected name='or'>{{ boolean_1 }}</option>
+                            <option name="and">AND</option>
+                            {% else %}
+                            <option selected name="and">AND</option>
+                            <option name="or">OR</option>
+                            {% endif %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control" name='event'>
                             {% if event %}
                             <option selected name='event'>{{ event }}</option>
+                            <option name="All Events">All Events</option>
                             {% else %}
-                            <option selected label="All Events">All Events</option>
+                            <option selected name="All Events">All Events</option>
                             {% endif %}
                             {% for event in events %}
                             <option>{{ event['title'] }}</option>
@@ -88,14 +101,26 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-info" value="Submit">
+                        <select class="form-control" name='bool-2'>
+                            {% if boolean_2 == 'AND' %}
+                            <option selected name='and'>{{ boolean_2 }}</option>
+                            <option name="or">OR</option>
+                            {% elif boolean_1 == 'OR' %}
+                            <option selected name='or'>{{ boolean_1 }}</option>
+                            <option name="and">AND</option>
+                            {% else %}
+                            <option selected name="and">AND</option>
+                            <option name="or">OR</option>
+                            {% endif %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control" name='interest_point'>
                             {% if interest_point %}
                             <option selected name='interest_point'>{{ interest_point }}</option>
+                            <option name="All Locations">All Locations</option>
                             {% else %}
-                            <option selected label="All Locations">All Locations</option>
+                            <option selected name="All Locations">All Locations</option>
                             {% endif %}
                             {% for interest_point in interest_points %}
                             <option>{{ interest_point['name'] }}</option>
