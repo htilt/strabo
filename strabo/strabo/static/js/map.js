@@ -18,18 +18,37 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 }).addTo(map);
 
+
+
 // add points, zones, and lines to map
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachFeature
 }).addTo(map);
 
+//controlLayers.addOverlay(point_features, 'Points');
+
+
 var zone_features = L.geoJson(interest_zones, {
   onEachFeature: onEachFeature
 }).addTo(map);
 
+//controlLayers.addOverlay(zone_features, 'Zones');
+
 var line_features = L.geoJson(interest_lines, {
   onEachFeature: onEachFeature
 }).addTo(map);
+
+
+var overlays = {
+  "Points": point_features,
+  "Lines": zone_features,
+  "Zones": line_features,
+}
+
+var controlLayers = L.control.layers(null, overlays).addTo(map);
+
+
+//controlLayers.addOverlay(line_features, 'Lines');
 
 function whenClicked(e) {
   // e = event
