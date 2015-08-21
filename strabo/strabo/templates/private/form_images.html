@@ -1,62 +1,59 @@
-<div class="form">
-      <fieldset>
-        <form id="image-upload"  method="POST" action="/upload_images/post" enctype="multipart/form-data">
-          <div class="row">
-            <div class="form-wrapper col-lg-8">
-              <legend>Upload a New Image</legend>
-              
-              <div class="form-group">
-                <label for="title">Image Title:</label><br>
-                <input class="form-control" type="text" name="title" size="15" placeholder="Untitled"><br>
-              </div>
-              
-              <div class="form-group">
-                <label for="img_description">Image Description:</label><br>
-                <input class="form-control" type="text" name="img_description" size="80" placeholder="Describe the view unique to this image">
-              </div>
-           
-              <div class="form-group">
-                <label for="latitude">Latitude:</label><br>
-                <input class="form-control" type="text" name="latitude" size="80" placeholder="If no value is supplied, defaults to any relevant geotags">
-              </div>
-  
-              <div class="form-group">
-                <label for="longitude">Longitude:</label><br>
-                <input class="form-control" type="text" name="longitude" size="80" placeholder="If no value is supplied, defaults to any relevant geotags">
-              </div>
-  
-              <div class="form-group">
-                <label for="period">Period:</label><br>
-                <input class="form-control" type="text" name="period" size="80" placeholder="Post-Restoration, Pre-Restoration">
-              </div>
-  
-              <div class="form-group">
-                <label for="interest_point">Interest Point:</label><br>
-                <select class="form-control" name='interest_point'>
-                  <option selected name="ip_auto"> Select One </option>
-                  {% for interest_point in interest_points %}
-                  <option name="interest_point"> {{ interest_point['name'] }} </option>
-                  {% endfor %}
-                </select>
-              </div>
-  
-              <div class="form-group">
-                <label for="notes">Additional Notes:</label><br>
-                <input class="form-control" type="text" name="notes" size="80">
-              </div>
-              
-              <p></p>
-              
-              <input type="submit" value="Upload">
-            </div>
-  
-  
-            <div class="upload-wrapper col-lg-4">
-              <input type="file" id="img-input" name="file"><br /><br />
-              <img id="img-preview" src="#" alt="your image"></img>
-            </div>
-          
-          </div>
-        </form>
-      </fieldset>
+{% if latitude %}
+<div class="form-group">
+  <label for="latitude">Latitude:</label><br>
+  <input class="form-control" type="text" name="latitude" size="80" value= {{ latitude }}>
+</div>
+{% else %}
+<div class="form-group">
+  <label for="latitude">Latitude:</label><br>
+  <input class="form-control" type="text" name="latitude" size="80">
+</div>
+{% endif %}
+
+{% if longitude %}
+<div class="form-group">
+  <label for="longitude">Longitude:</label><br>
+  <input class="form-control" type="text" name="longitude" size="80" value= {{ longitude }}>
+</div>
+{% else %}
+<div class="form-group">
+  <label for="longitude">Longitude:</label><br>
+  <input class="form-control" type="text" name="longitude" size="80">
+</div>
+{% endif %}
+
+{% if year %}
+<div class="form-group">
+<label for="year">Event Date:</label><br>
+  <div class="form-inline">
+    <div class="form-group">
+      <input type="number" name="month" class="form-control" min="1" max="12" value="{{ month }}">
     </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="day" class="form-control" min="1" max="31" value="{{ day }}">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="form-group">
+<label for="year">Event Date:</label><br>
+  <div class="form-inline">
+    <div class="form-group">
+      <input type="number" name="month" class="form-control" min="1" max="12" placeholder="mm">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="day" class="form-control" min="1" max="31" placeholder="dd">
+    </div>
+    <span> - </span>
+    <div class="form-group">
+      <input type="number" name="year" class="form-control" min="1900" max="2050" placeholder="yyyy"=>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -4,7 +4,7 @@
 }
 
 .portfolio-item {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 /* Filter Options */
@@ -35,7 +35,7 @@ a.hovertext:after {
   left: 0;
   bottom: 0;
   padding: 0.5em 20px;
-  width: 255px;
+  width: 263px;
   background: rgba(0,0,0,0.8);
   text-decoration: none !important;
   color: #fff;
@@ -48,7 +48,6 @@ a.hovertext:after {
 a.hovertext:hover:after, a.hovertext:focus:after {
   opacity: 1.0;
 }
-
 /* Light Box Viewer */
 
 #lightbox .modal-content {

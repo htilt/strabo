@@ -24,5 +24,6 @@ html, body {
 }
 
 #img-wrapper p {
+  padding: 10px;
   padding-top: 20px;
 }
