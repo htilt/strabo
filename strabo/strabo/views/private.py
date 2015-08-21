@@ -5,7 +5,7 @@ from flask import request, render_template, redirect, url_for
 from werkzeug import secure_filename
 
 from strabo import app
-from strabo.database import migrate_db, get_flex, get_column_names, search, \
+from strabo.database import get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
 edit_ip, edit_event, get_geojson
 from strabo.utils import make_date, DMS_to_Dec, clean_date
@@ -19,11 +19,9 @@ from strabo.filewriting import write_to, rewrite_geojson
 def index():
   # If the 'images' table exists, exit this code block. Otherwise, call migrate_db
   # and import 'images' table.
-  if not os.path.exists("bbs.sqlite3"):
-    migrate_db()
-  images = []
-  events = []
-  interest_points = []
+  # images = []
+  # events = []
+  # interest_points = []
   return render_template("private/base.html")      
 
 ###

@@ -1,3 +1,5 @@
+import re
+
 def set_id(pagination_event, image_ids):
   if pagination_event == 'next':
     id_num = 1
