@@ -55,10 +55,3 @@ Thumbs.db
 # Virtual Environment #
 #######################
 /straboenv
-
-# Livy-specific files/directories #
-###################################
-
-#/thumbnails-livy
-#/uploads-livy
-#header-livy.html
