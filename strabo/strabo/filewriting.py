@@ -2,6 +2,8 @@ import sys, os
 from strabo.database import get_geojson
 from strabo.geojson import make_featureCollection
 
+from strabo import app
+
 def rewrite_geojson():
 # Query db for geojson objects
   points = get_geojson('Point')
@@ -25,6 +27,6 @@ def rewrite_geojson():
 
 def write_to(points, zones, lines):
   file_content = "var interest_points = " + str(points) + "\nvar interest_zones = " + str(zones) + "\nvar interest_lines = " + str(lines)
-  geojson_file = open(os.path.join('../strabo/strabo/static/js/', 'interest_points.js'), 'w')
+  geojson_file = open(os.path.join(app.config['JS_FOLDER'], app.config['INTPT_FILE']), 'w')
   geojson_file.write(file_content)
   geojson_file.close()

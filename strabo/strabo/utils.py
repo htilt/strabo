@@ -17,7 +17,7 @@ def set_id(pagination_event, image_ids):
 
 def list_years():
   years = []
-  for x in reversed(range(1930,2015)):
+  for x in reversed(range(1930,2016)):
     years.append(x)
   return years
 
@@ -42,5 +42,4 @@ def DMS_to_Dec(lst):
 
 def clean_date(date_string):
   date_string = re.findall(r"[\w']+", date_string)
-  print(date_string)
   return date_string
