@@ -55,3 +55,7 @@ Thumbs.db
 # Virtual Environment #
 #######################
 /straboenv
+
+# Specific Interest Point files #
+#################################
+interest_points.js

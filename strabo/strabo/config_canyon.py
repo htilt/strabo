@@ -47,6 +47,7 @@ app.config['DRAWMAP_JS'] = 'drawMap.js'
 app.config['MAP_TEMPLATE'] = "map.html"
 app.config['BASE_TEMPLATE'] = "base.html"
 app.config['HEADER_TEMPLATE'] = 'header.html'
+app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = 'public/'
 app.config['HEADER_CSS'] = 'header.css'
 app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
 app.config['FOOTER_TEMPLATE'] = "footer.html"
