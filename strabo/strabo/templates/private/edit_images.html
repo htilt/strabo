@@ -57,7 +57,7 @@
                             <button type="submit" name="edit-btn" value={{ img['id'] }}>Edit</button>
                         </td>
                         <td class="image_key">{{ img['id'] }}</td>
-                        <td><img src="/static/test_thumbnails/{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                         <td class="image_title">{{ img['title'] | default("Untitled") }}</td>
                         <td class="img_description">{{ img['img_description'] }}</td>
                         <td class="date_created">{{ img['date_created'] }}</td> 

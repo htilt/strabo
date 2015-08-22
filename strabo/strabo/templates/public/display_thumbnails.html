@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="../static/public_styles/lightbox.css"/>
 
 <div id="gallery">
-
+  {% if images %}
   <div class "row">
     <div id="link-wrapper">
       <span class="text-muted">Select another interest point or </span><a href="gallery?year=All Years&event=All Events&interest_point={{ images[0]['interest_point'] }}" class="text-muted" id="ip_link">see more images of {{ images[0]['interest_point'] }}</a> 
@@ -13,7 +13,7 @@
   <div class "row">
     {% for img in images %}
         <div class="col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-            <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="../../static/uploads/{{ img['filename'] }}" style="height:120px;width:180px;" alt=""></a></p>
+            <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename'] }}" style="height:120px;width:180px;" alt=""></a></p>
             <div class="hidden" id="img-metadata">
                 <p>Title: {{ img['title'] }}</p>
                 {% if img['date_created'] %}
@@ -27,6 +27,11 @@
     {% endfor %}
   </div>
   <!-- /.row -->
+  {% else %}
+      <div>
+        <p class="text-muted">There are no images associated with this interest point. Please select another.</p>
+      </div>
+  {% endif %}
 
 </div>
 <script src="../static/js/gallery.js"></script>

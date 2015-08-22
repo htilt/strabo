@@ -99,6 +99,6 @@
 
 {% block footer %}
     {{ super () }}
-<script>document.write('<script src="/../static/js/interest_points.js?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>    
-<script src="../static/js/drawMap.js"></script>
+<script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>   
+<script src="../static/js/{{ DRAWMAP_JS }}"></script>
 {% endblock %}

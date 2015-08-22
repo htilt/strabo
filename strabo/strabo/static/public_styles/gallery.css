@@ -3,6 +3,15 @@
   padding-top: 70px;
 }
 
+#gallery-header {
+  padding-left:20px;
+  padding-top:20px;
+}
+
+#gallery-content {
+  padding:20px;
+}
+
 .portfolio-item {
   margin-bottom: 25px;
 }

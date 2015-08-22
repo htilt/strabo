@@ -27,9 +27,10 @@ var zone_features = L.geoJson(interest_zones, {
 }).addTo(drawMap);
 
 var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachZone,
+  onEachFeature: onEachLine,
 }).addTo(drawMap);
 
+// set styles and popups for zones
 function onEachZone(feature, layer) {
   layer.bindPopup(feature.geometry.name);
   layer.setStyle({
@@ -39,27 +40,23 @@ function onEachZone(feature, layer) {
         fillOpacity: 0.3
   });
 }
-
+// set styles and popups for lines
+function onEachLine(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  layer.setStyle({
+        weight: 4,
+        color: feature.properties['marker-color'],
+        dashArray: '',
+  });
+}
+// set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.name);
   // layer.setIcon(feature.properties['icon']);
 }
 
-// var popup = L.popup();
-
-// function onMapClick(e) {
-//   popup
-//     .setLatLng(e.latlng)
-//     .setContent(e.latlng.toString())
-//     .openOn(drawMap);
-// }
-
-// drawMap.on('click', onMapClick);
-
-
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);
-
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors

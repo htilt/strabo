@@ -56,7 +56,7 @@
                             <input type="checkbox" name='primary_key' value={{ img['id'] }}>
                         </td>
                         <td class="image_key">{{ img['id'] }}</td>
-                        <td><img src="/static/test_thumbnails/{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                         <td class="image_title">{{ img['title'] | default("Untitled") }}</td>
                         <td class="img_description">{{ img['img_description'] }}</td>
                         <td class="created_at">{{ img['created_at'] }}</td> 

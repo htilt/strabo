@@ -2,13 +2,13 @@ html, body {
   height: 100%;
 }
 
-#wrap {
+/*#wrap {
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin: 0 auto -60px;
   padding: 0 0 60;
-}
+}*/
 
 #map {
   height: 100%;
