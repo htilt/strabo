@@ -26,11 +26,11 @@ tags, edited_by, filename, thumbnail_name) VALUES(?, ?, ?, ?, ?, ?,
 app.config['EDIT_IMG_QUERY'] = """REPLACE INTO images 
 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 
-app.config['INSERT_IP_QUERY'] = """INSERT INTO interest_points(name, coordinates, 
-geojson_object, feature_type, geojson_feature_type, notes, tags, 
-edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"""
+app.config['INSERT_IP_QUERY'] = """INSERT INTO interest_points(name, books,
+coordinates, geojson_object, feature_type, geojson_feature_type, notes, tags, 
+edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 app.config['EDIT_IP_QUERY'] = """REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, 
-?, ?, ?, ?, ?)"""
+?, ?, ?, ?, ?, ?)"""
 
 app.config['INSERT_EVENT_QUERY'] = """INSERT INTO events
 (title, event_description, date_of_event, notes, tags, edited_by) 
@@ -40,8 +40,8 @@ app.config['EDIT_EVENT_QUERY'] = """REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
 
 app.config['JS_FOLDER'] = '../strabo/strabo/static/js/'
 app.config['INTPT_FILE'] = 'interest_points_livy.js'
-app.config['MAP_JS'] = 'map.js'
-app.config['DRAWMAP_JS'] = 'drawMap.js'
+app.config['MAP_JS'] = 'map-livy.js'
+app.config['DRAWMAP_JS'] = 'drawMap-livy.js'
 
 app.config['MAP_TEMPLATE'] = "map.html"
 app.config['BASE_TEMPLATE'] = "base.html"
@@ -59,3 +59,7 @@ app.config['TIMELINE_TITLE'] = "Timeline of Major Events"
 app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the first five books of Ab Urbe Condita."
 
 app.config['WEBSITE_TITLE'] = 'Reconstructing Livy\'s Rome'
+
+
+#### Changes made to config since last divergence from master branch
+app.config['INDEX_GREETING'] = "Select a tab to begin adding content to Livy's Rome."

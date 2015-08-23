@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS interest_points (
 	id INTEGER PRIMARY KEY,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	name TEXT,
+	books TEXT,
 	coordinates TEXT,
 	geojson_object TEXT,
 	feature_type TEXT,

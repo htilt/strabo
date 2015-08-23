@@ -1,11 +1,13 @@
-var map = L.map('map', {
+var map = L.map('map',
+{
   maxBounds: [
   //southWest
-  [45.4793, -122.6416],
+  [41.891206, 12.426391],
   //northEast
-  [45.48409, -122.62264]
+  [41.899312, 12.528788]
   ],
-}).setView([45.48174, -122.631], 17 );
+}
+).setView([41.882695, 12.495142], 14 );
 
 //var user_location = map.locate({setView:true, maxZoom:16});
 
@@ -17,6 +19,11 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   id: 'mapbox.streets',
 
 }).addTo(map);
+
+// var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Plan_of_the_Hills_of_Ancient_Rome.jpg/1280px-Plan_of_the_Hills_of_Ancient_Rome.jpg',
+//     imageBounds = [[41.86209, 12.448391], [41.921312, 12.518788]];
+
+// L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
 // add pre-existing points, zones, and lines to map
 var point_features = L.geoJson(interest_points, {

@@ -17,7 +17,9 @@ from strabo.filewriting import write_to, rewrite_geojson
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/", methods=["GET"])
 def index():
-  return render_template("private/base.html")      
+  return render_template("private/base.html", 
+    WEBSITE_TITLE=app.config['WEBSITE_TITLE'],
+    INDEX_GREETING=app.config['INDEX_GREETING'])      
 
 ###
 ###
@@ -121,7 +123,8 @@ def post():
 def upload_ips():
   interest_points = get_flex('interest_points')
   return render_template("private/upload_ips.html", 
-    interest_points=interest_points, INTPT_FILE=app.config['INTPT_FILE'],
+    interest_points=interest_points, 
+    INTPT_FILE=app.config['INTPT_FILE'],
     DRAWMAP_JS=app.config['DRAWMAP_JS'])
 
 @app.route("/interest_points/post", methods=["POST"])
@@ -129,6 +132,7 @@ def interest_points_post():
   name = request.form['name']
   notes = request.form['notes']
   tags = request.form['tags']
+  books = request.form['books']
   color = request.form['color']
   print(color)
   if not request.form['feature_type'] == 'Select One':
@@ -140,7 +144,7 @@ def interest_points_post():
   coordinates = str(get_coords(geojson_object))
   geojson_feature_type = str(get_type(geojson_object))
   geojson_object = add_name_and_color(geojson_object, name, color)
-  params = (name, coordinates, geojson_object, feature_type, 
+  params = (name, books, coordinates, geojson_object, feature_type, 
     geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
 
@@ -348,6 +352,7 @@ def edit_ips():
 @app.route("/edit_ips/edit/", methods=["POST"])
 def edit_ips_edit():
   name = request.form['name']
+  books = request.form['books']
   notes = request.form['notes']
   tags = request.form['tags']
   feature_type = request.form['feature_type']
@@ -363,7 +368,7 @@ def edit_ips_edit():
   geojson_feature_type = ip[0]['geojson_feature_type']
   geojson_object = ip[0]['geojson_object']
 
-  params = (key, created_at, name, coordinates, 
+  params = (key, created_at, name, books, coordinates, 
     geojson_object, feature_type, geojson_feature_type, 
     notes, tags, edited_by)
   edit_ip(params)

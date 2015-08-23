@@ -1,12 +1,13 @@
 var drawMap = L.map('drawMap', {
-  
-  maxBounds: [
-  //southWest
-  [45.4793, -122.6416],
-  //northEast
-  [45.48409, -122.62264]
-  ],
-}).setView([45.48174, -122.631], 17 );
+  // maxBounds: [
+  // //southWest
+  // [41.853206, 12.446391],
+  // //northEast
+  // [41.921312, 12.528788]
+  // ],
+}).setView([41.882695, 12.485142], 12 );
+
+//var user_location = drawMap.locate({setView:true, maxZoom:16});
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   maxZoom: 18,

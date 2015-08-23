@@ -7,7 +7,7 @@
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
 <link rel="stylesheet" type="text/css" href="../static/private_styles/upload_navbar.css">
 
-<title>{% block title %}Canyon Mapper{% endblock %}</title>
+<title>{{WEBSITE_TITLE}}</title>
 {% endblock head %}
 
 <body>
@@ -36,7 +36,7 @@
     <div class="body-wrapper">
         {% block content %}
         <div class="temp">
-            <h2 class="text-muted">Select a tab to begin adding content to the Reed Canyon Mapper.</h2>
+            <h2 class="text-muted">{{INDEX_GREETING}}</h2>
         </div>
         {% endblock content %}
     </div>
