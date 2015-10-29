@@ -5,7 +5,7 @@ from math import ceil
 from strabo import app
 from strabo.database import get_flex, \
 get_geojson, get_images_for_page, count_all_images, search
-from strabo.geojson import make_featureCollection
+from strabo.geojson_local import make_featureCollection
 from strabo.utils import set_id
 
 @app.route("/map")
