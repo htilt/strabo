@@ -2,7 +2,8 @@ from fabric.api import *
 
 env.hosts = ["sds.reed.edu"]
 
-STRABO_DIR="~/strabo"
+BASE_DIR="/opt/webapp"
+STRABO_DIR="/opt/webapp/strabo"
 BRANCH="livy_deploy"
 
 @task
@@ -15,13 +16,14 @@ def init_db():
 
 @task
 def init_clone():
-  run("git clone https://github.com/htilt/strabo.git")
-  with cd(STRABO_DIR):
-    run("git checkout {}".format(BRANCH))
-    run("virtualenv .")
-    use_virtualenv()
-    run("pip install -r strabo/requirements.txt")
-    init_db()
+  with cd(BASE_DIR):
+    run("git clone https://github.com/htilt/strabo.git")
+    with cd(STRABO_DIR):
+      run("git checkout {}".format(BRANCH))
+      run("virtualenv .")
+      use_virtualenv()
+      run("pip install -r strabo/requirements.txt")
+      init_db()
 
 @task
 def update_code():
@@ -31,4 +33,12 @@ def update_code():
 @task(default=True)
 def deploy():
   update_code()
+
+@task
+def copy_data():
+  with lcd("strabo"):
+    with cd(STRABO_DIR):
+      put("livy.sqlite3", "strabo")
+      put("strabo/static/thumbnails-livy", "strabo/strabo/static")
+      put("strabo/static/uploads-livy", "strabo/strabo/static")
 
