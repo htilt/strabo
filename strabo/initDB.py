@@ -20,5 +20,5 @@ def update_tables():
         db.cursor().executescript(fh.read())
         db.commit()
 
-# intiate_db()
+intiate_db()
 # update_tables()

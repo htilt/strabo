@@ -7,23 +7,20 @@ BRANCH="livy_deploy"
 
 @task
 def use_virtualenv():
-  with cd(STRABO_DIR):
-    run("source ./bin/activate")
+  run("source ./bin/activate")
 
 @task
 def init_db():
-  use_virtualenv()
-  with cd(STRABO_DIR):
-    run("cd strabo && python initDB.py")
+  run("cd strabo && python initDB.py")
 
 @task
 def init_clone():
   run("git clone https://github.com/htilt/strabo.git")
-  run("git checkout {}".format(BRANCH))
   with cd(STRABO_DIR):
+    run("git checkout {}".format(BRANCH))
     run("virtualenv .")
     use_virtualenv()
-    run("pip install -r pip-requirements.txt")
+    run("pip install -r strabo/requirements.txt")
     init_db()
 
 @task
