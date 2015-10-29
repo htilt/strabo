@@ -38,6 +38,20 @@ CREATE TABLE IF NOT EXISTS interest_points (
 	tags TEXT,
 	edited_by TEXT);
 
+CREATE TABLE IF NOT EXISTS text_selections (
+	id INTEGER PRIMARY KEY,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	name TEXT,
+	book TEXT,
+	section TEXT,
+	pages TEXT,
+	passage TEXT,
+	interest_point TEXT,
+	event TEXT,
+	notes TEXT,
+	tags TEXT,
+	edited_by TEXT);
+
 -- ALTER TABLE images ADD COLUMN events
 
 -- sqlite> ALTER TABLE images ADD COLUMN fav_food

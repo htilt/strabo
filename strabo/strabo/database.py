@@ -79,6 +79,7 @@ SCHEMA = {
   'images': [c[0] for c in get_column_names('images')],
   'events': [c[0] for c in get_column_names('events')],
   'interest_points': [c[0] for c in get_column_names('interest_points')],
+  'text_selections': [c[0] for c in get_column_names('text_selections')],
   'boolean': ['AND', 'OR']
 }
 
@@ -162,6 +163,13 @@ def insert_ips(params):
 def insert_events(params):
   with closing(get_db()) as db:
     query = app.config['INSERT_EVENT_QUERY']
+    db.cursor().execute(query, params)
+    db.commit()
+
+# inserts an event into the db
+def insert_text(params):
+  with closing(get_db()) as db:
+    query = app.config['INSERT_TEXT_QUERY']
     db.cursor().execute(query, params)
     db.commit()
 

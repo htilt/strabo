@@ -43,15 +43,23 @@
                 <label for="feature_type">Feature Type:</label><br>
                 <select class="form-control" name='feature_type'>
                   <option selected name="ip_auto"> Select One </option>
-                  <option name="Landmark">Landmark</option>
-                  <option name="Zone">Zone</option>
+                  <option name="Geological Feature">Geological Feature</option>
+                  <option name="Natural Feature">Natural Feature</option>
                   <option name="Building">Building</option>
-                  <option name="Heritage Tree">Heritage Tree</option>
+                  <option name="Altar">Altar</option>
+                  <option name="City">City</option>
+                  <option name="Neighborhood or Region">Neighborhood or Region</option>
+                  <option name="Dedicactory Monument">Dedicactory Monument</option>
+                  <option name="Street or Intersection">Street or Intersection</option>
+                  <option name="Tomb">Tomb</option>
+                  <option name="Gate">Gate</option>
+                  <option name="Infrastructure">Infrastructure</option>
+                  <option name="Recreational Facility">Recreational Facility</option>
                 </select>
             </div>
             <div class="form-group">
               <label for="notes">Additional Notes:</label><br>
-              <input class="form-control" type="text" name="notes" size="80" placeholder="Add any additional notes for private reference.">
+              <textarea class="form-control" rows='5' type="text" name="notes" placeholder="Add any additional notes for private reference."></textarea>
             </div>
             
             <div class="form-group">
@@ -94,7 +102,7 @@
         <td class="feature_type">{{ ip['feature_type'] }}</td>
         <td class="geojson_feature_type">{{ ip['geojson_feature_type'] }}</td>
         <td class="notes">{{ ip['notes'] }}</td>
-        <td class="notes">{{ ip['tags'] }}</td>
+        <td class="tags">{{ ip['tags'] }}</td>
       </tr>
       {% endfor %}
     </table>

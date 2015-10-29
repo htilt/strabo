@@ -30,23 +30,35 @@
                 <input class="form-control" type="text" name="coordinates" size="80" value="{{ ip['coordinates'] }}">
               </div>
               <div class="form-group">
+                <label for="geojson_object">GeoJSON Object:</label><br>
+                <input class="form-control" type="text" name="geojson_object" size="80" value="{{ ip['geojson_object'] }}">
+              </div>
+              <div class="form-group">
                 <label for="feature_type">Feature Type:</label><br>
                 <select class="form-control" name='feature_type'>
                   <option selected name='selected'>{{ ip['feature_type'] }}</option>
                   <option name="Empty"></option>
-                  <option name="Landmark">Landmark</option>
-                  <option name="Zone">Zone</option>
+                  <option name="Geological Feature">Geological Feature</option>
+                  <option name="Natural Feature">Natural Feature</option>
                   <option name="Building">Building</option>
-                  <option name="Heritage Tree">Heritage Tree</option>
+                  <option name="Altar">Altar</option>
+                  <option name="City">City</option>
+                  <option name="Neighborhood or Region">Neighborhood or Region</option>
+                  <option name="Dedicactory Monument">Dedicactory Monument</option>
+                  <option name="Street or Intersection">Street or Intersection</option>
+                  <option name="Tomb">Tomb</option>
+                  <option name="Gate">Gate</option>
+                  <option name="Infrastructure">Infrastructure</option>
+                  <option name="Recreational Facility">Recreational Facility</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
-                <input class="form-control" type="text" name="notes" size="80" value="{{ ip['notes'] }}">
+                <textarea class="form-control" rows='5' type="text" name="notes">{{ ip['notes'] }}</textarea>
               </div>
               <div class="form-group">
                 <label for="tags">Tags:</label><br>
-                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+                <input class="form-control" type="text" name="tags" maxlength="400" value="{{ ip['tags'] }}">
               </div>
               <p></p>
               

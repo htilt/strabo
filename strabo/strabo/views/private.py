@@ -7,7 +7,7 @@ from werkzeug import secure_filename
 from strabo import app
 from strabo.database import get_flex, get_column_names, search, \
 delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
-edit_ip, edit_event, get_geojson
+edit_ip, edit_event, get_geojson, insert_text
 from strabo.utils import make_date, DMS_to_Dec, clean_date
 from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
 from strabo.geojson import get_coords, get_type, add_name_and_color, \
@@ -134,16 +134,20 @@ def interest_points_post():
   tags = request.form['tags']
   books = request.form['books']
   color = request.form['color']
-  print(color)
   if not request.form['feature_type'] == 'Select One':
     feature_type = request.form['feature_type']
   else: feature_type = ''
   edited_by = ''
-  
-  geojson_object = request.form['geojson']
-  coordinates = str(get_coords(geojson_object))
-  geojson_feature_type = str(get_type(geojson_object))
-  geojson_object = add_name_and_color(geojson_object, name, color)
+  if request.form['geojson']:
+    geojson_object = request.form['geojson']
+    coordinates = str(get_coords(geojson_object))
+    geojson_feature_type = str(get_type(geojson_object))
+    geojson_object = add_name_and_color(geojson_object, name, color)
+  else: 
+    geojson_object = 'None'
+    coordinates = 'None'
+    geojson_feature_type = 'None'
+    geojson_object = 'None'
   params = (name, books, coordinates, geojson_object, feature_type, 
     geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
@@ -176,6 +180,39 @@ def event_post():
 
   params = (title, event_description, date_of_event, notes, tags, edited_by)
   insert_events(params)
+  return redirect(url_for('index'))
+
+###
+###
+### Views to add interest points to the db
+@app.route("/upload_text/")
+def upload_text():
+  text_selections = get_flex('text_selections')
+  interest_points = get_flex('interest_points')
+  events = get_flex('events')
+  return render_template("private/upload_text.html", 
+    text_selections=text_selections,
+    interest_points=interest_points,
+    events=events)
+
+@app.route("/text/post", methods=["POST"])
+def text_post():
+  name = request.form['name']
+  book = request.form['book']
+  section = request.form['section']
+  pages = request.form['pages']
+  passage = request.form['passage']
+  interest_point = request.form['interest_point']
+  event = request.form['event']
+  notes = request.form['notes']
+  tags = request.form['tags']
+  
+  edited_by = ''
+  
+  params = (name, book, section, pages, passage, 
+    interest_point, event, notes, tags, edited_by)
+  insert_text(params)
+
   return redirect(url_for('index'))
 
 ###
@@ -245,6 +282,31 @@ def delete_events():
 @app.route("/delete_events/delete/", methods=["POST"])
 def delete_events_delete():
   table_name = 'events'
+  keys = request.form.getlist('primary_key')
+  delete(keys, table_name)
+  return redirect(url_for('index'))
+
+###
+###
+### Views to search for and delete text ###
+@app.route("/delete_text/", methods=["GET"])
+def delete_text():
+  table_name = 'text_selections'
+  categories = get_column_names('text_selections')
+  search_term = request.args.get('search')
+  if search_term is None:
+    text_selections = get_flex(table_name)
+  else:
+    column = request.args.get('categories')
+    text_selections = search(table_name, column, search_term)
+  print(text_selections)
+  return render_template("private/delete_text.html", 
+    categories=categories, 
+    text_selections=text_selections)
+
+@app.route("/delete_text/delete/", methods=["POST"])
+def delete_text_delete():
+  table_name = 'text_selections'
   keys = request.form.getlist('primary_key')
   delete(keys, table_name)
   return redirect(url_for('index'))
@@ -357,6 +419,7 @@ def edit_ips_edit():
   tags = request.form['tags']
   feature_type = request.form['feature_type']
   coordinates = request.form['coordinates']
+  geojson_object = request.form['geojson_object']
   edited_by = ''
   key = request.form['edit-btn']
 
@@ -366,7 +429,7 @@ def edit_ips_edit():
   
   created_at = ip[0]['created_at']
   geojson_feature_type = ip[0]['geojson_feature_type']
-  geojson_object = ip[0]['geojson_object']
+  # geojson_object = ip[0]['geojson_object']
 
   params = (key, created_at, name, books, coordinates, 
     geojson_object, feature_type, geojson_feature_type, 

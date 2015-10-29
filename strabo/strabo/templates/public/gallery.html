@@ -120,13 +120,16 @@
             {% for img in images %}
                 <div class="col-md-3 portfolio-item" data-toggle="modal" data-target="#lightbox">
                     <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename'] }}" width="500" height="309" border="0" alt=""></a></p>
-                    <div class="hidden" id="img-metadata">
-                        <p>Title: {{ img['title'] }}</p>
+                    <div class="hidden img-metadata">
+                        <p>Title: {{ img['title'] }}</p><br>
                         {% if img['date_created'] %}
-                        <br><p>Date: {{ img['date_created'] }}</p><br>
+                        <p>Date: {{ img['date_created'] }}</p><br>
                         {% endif %}
                         {% if img['img_description'] %}
-                        <p>Description: {{ img['img_description'] }}</p>
+                        <p>Description: {{ img['img_description'] }}</p><br>
+                        {% endif %}
+                        {% if img['notes'] %}
+                        <p>Notes: {{ img['notes'] }}</p><br>
                         {% endif %}
                     </div>
                 </div>

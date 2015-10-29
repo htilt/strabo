@@ -20,19 +20,80 @@
     </div>
 </div>
 
-<div id="wrap">
 
-  <div class="row">
-    <div id="map" style="width: 100%; height: 700px">
-    </div>
+<!--Map and Text Selection Row-->
+<div class="row">
+  
+  <div id="map" class="col-md-12" style="height: 500px">
   </div>
 
-  <div class="row">
-    <div id="img-wrapper"><p class="text-muted">Select an interest point to see associated images.</p>
-    </div>
+  <div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
+      <div class="row">
+        <div id="close-text"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size:1.8em;text-align:right;float:right;"></span></div>
+        <h2 id='book_num' style="padding-left: 10px;padding-top: 15px;display: inline"></h2>&nbsp
+        <h3 id='section_num' style="padding-top: 30px;display: inline;font-size: 1.4em;" class="text-muted"></h3>
+      </div>
+      <div class="row">
+        <p id="title" align="left" style="padding-top: 10px;padding-left: 10px;padding-right: 10px; font-style: italic; font-size:17px;"></p>
+      </div>
+      <div class="row">
+        <p id="text" align="justify" style="padding-left: 10px;padding-right: 10px;"></p>
+      </div>
+
+      <div class="row">
+        <p id="attribution" align="left" style="padding: 10px; font-style: italic;"></p>
+      </div>
   </div>
 
 </div>
+<!--../Map and Text Selection Row-->
+
+<!--Gallery Row-->
+<div class="row" id="img-holder">
+  <div id="img-placeholder" class=''>
+      <p class="text-muted">Select an interest point to see associated images.</p>
+  </div>
+
+  <div id="gallery" class='hidden'>
+    <div id="link-wrapper" class="hidden">
+        <!-- <span class="text-muted">Select another interest point or </span><a class="text-muted" style="color: blue;" id="ip_link" href=""></a> -->
+        <span class="text-muted">You are viewing images of the </span><a class="text-muted" id="ip_link"></a>
+    </div>
+
+    <div class="hidden" id="image-gallery">
+      <div id="thumb-0" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+      <div id="thumb-1" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+      <div id="thumb-2" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+      <div id="thumb-3" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+      <div id="thumb-4" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+      <div id="thumb-5" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
+        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt=""></p>
+        <div class="hidden img-metadata"></div>
+      </div>
+    </div>
+
+    <div>
+      <p id="no-img-msg" class="hidden text-muted">There are no images associated with this interest point. Please select another.</p>
+    </div>
+  </div>
+</div>
+<!--../Gallery Row-->
+
 {% endblock content %}
 
 {% block footer %}

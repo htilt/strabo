@@ -38,6 +38,10 @@ VALUES(?, ?, ?, ?, ?, ?)"""
 app.config['EDIT_EVENT_QUERY'] = """REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
 ?, ?)"""
 
+app.config['INSERT_TEXT_QUERY'] = """INSERT INTO text_selections
+(name, book, section, pages, passage, interest_point, event,
+notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+
 app.config['JS_FOLDER'] = '../strabo/strabo/static/js/'
 app.config['INTPT_FILE'] = 'interest_points_livy.js'
 app.config['MAP_JS'] = 'map-livy.js'
