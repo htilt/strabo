@@ -19,6 +19,7 @@ def init_db():
 @task
 def init_clone():
   run("git clone https://github.com/htilt/strabo.git")
+  run("git checkout {}".format(BRANCH))
   with cd(STRABO_DIR):
     run("virtualenv .")
     use_virtualenv()
