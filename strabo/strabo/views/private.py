@@ -34,6 +34,7 @@ def upload_images():
     interest_points=interest_points, events=events, 
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
+# harvest and clean select EXIF data including datetime, lat, long
 @app.route("/upload_images/exif/", methods=['POST', 'GET'])
 def getEXIF():
   tags = request.form.get('key')

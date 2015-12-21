@@ -1,19 +1,5 @@
 import re
-
-def set_id(pagination_event, image_ids):
-  if pagination_event == 'next':
-    id_num = 1
-    for image_id in image_ids:
-      if int(image_id) > id_num:
-        id_num = int(image_id)
-  elif pagination_event == 'previous':
-    id_num = 10000000
-    for image_id in image_ids:
-      if int(image_id) < id_num:
-        id_num = int(image_id)
-  else: # no pagination event
-    id_num = None
-  return id_num
+from strabo import app
 
 def list_years():
   years = []
@@ -38,8 +24,20 @@ def DMS_to_Dec(lst):
   minutes = lst[1]
   seconds = lst[2]
   dec = (seconds/3600) + (minutes/60) + degrees
-  return(dec)
+  return dec
 
 def clean_date(date_string):
   date_string = re.findall(r"[\w']+", date_string)
   return date_string
+
+# convert list of raw column names to list of column names used in 
+# user search
+def prettify_columns(raw_columns):
+  print (raw_columns)
+  user_columns = []
+  for column in raw_columns:
+    x = column[0]
+    t = app.config['COLUMN_ALIASES'][x]
+    user_columns.append(t)
+  print (user_columns)
+  return user_columns

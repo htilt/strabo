@@ -18,23 +18,6 @@ def get_max_id():
       max_id = 0
   return max_id
 
-# return the total number of images in the db
-def count_all_images(column=None, search_term=None):
-  # count all images
-  if column == None:
-    query = """SELECT COUNT(*) FROM images"""
-    image_count = simple_query(query)
-  # count all images where column = search_term
-  else:
-    if column == 'date_created':
-      query = """SELECT COUNT(*) FROM images 
-      WHERE strftime('%Y', date_created) = ?"""
-    else:
-      query = """SELECT COUNT(*) FROM images 
-      WHERE {column} = ?""".format(column=column)
-    image_count = simple_query(query, (search_term,))
-  return image_count[0]['COUNT(*)']
-
 # given a query and parameters, perform the query
 def simple_query(query, params=None):
   with closing(get_db()) as db:
@@ -83,6 +66,28 @@ SCHEMA = {
   'boolean': ['AND', 'OR']
 }
 
+# searches for rows with search_term in specified column or in multiple columns
+# with fuzzy search
+def gallery_search(table_name, search_term, column=None):
+  if not table_name in SCHEMA:
+    return []
+  if not column in SCHEMA[table_name] and not column == None:
+    return []
+  # do fuzzy search
+  if column == None:
+    query = """SELECT * FROM {table} WHERE title LIKE ? OR img_description LIKE ?
+      OR interest_point LIKE ? OR event LIKE ? OR notes LIKE ? ORDER BY id 
+      DESC""".format(table=table_name)
+    search_term = '%{}%'.format(search_term)
+    params = (search_term,search_term,search_term,search_term,search_term)
+  else:
+    query = """SELECT * FROM {table} WHERE {column} LIKE ?
+      ORDER BY id DESC""".format(table=table_name, column=column)
+    search_term = '%{}%'.format(search_term)
+    params = (search_term,)
+  data = simple_query(query, params)
+  return data
+
 # searches for rows with search_term in column
 def search(table_name, column, search_term, count=None):
   if not table_name in SCHEMA:
@@ -96,7 +101,7 @@ def search(table_name, column, search_term, count=None):
       ORDER BY id DESC""".format(table=table_name, column=column)
     search_term = '%{}%'.format(search_term)
     params = (search_term,)
-  # otherwise, perform nromal search
+  # otherwise, perform normal search
   else:
     if count != None:
       query = """SELECT * FROM {table} WHERE {column} = ?
@@ -199,61 +204,4 @@ def get_geojson(geojson_feature_type):
   query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
   geojson = simple_query(query, (geojson_feature_type,))
   return geojson
-
-def get_images_for_page(last_img_count=None, page_event=None, search_criteria=None):
-  # if no search term or column is provided
-  print(search_criteria)
-  if len(search_criteria) == 0:
-    if page_event == 'next':
-      query = """SELECT * FROM images ORDER BY id LIMIT 12 OFFSET 12"""
-      # params = (id_num,)
-    elif page_event == 'previous':
-      query = """SELECT * FROM images ORDER BY id DESC LIMIT 12 OFFSET 12"""
-      # params = (id_num,)
-    else: 
-      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
-    return simple_query(query)
-  # if user is searching for images by an arbitrary column/search term
-  else:
-    # Make a string containing the user's query
-    query = """SELECT * FROM images WHERE """
-    params = []
-    for tup in search_criteria:
-      # if the tuple contains a column/search term pair
-      if len(tup) == 2:
-        # make the column
-        column = tup[0]
-        # ensure that the column name is in the schema
-        # if not column in ('event', 'interest_point', 
-        #   'strftime(\'%Y\', date_created'):
-        #   return []
-        # append a where clause to the query
-        query = query + """{column} = ? """.format(column=column)
-        # make the search term
-        search_term = tup[1]
-        # add the search term to the params
-        params.append(search_term)
-      # if the tuple contains a boolean
-      elif len(tup) == 1:
-        # get the boolean from the tuple
-        boolean = tup[0]
-        # ensure that the boolean is in the schema
-        # if not boolean in ('AND', 'OR'):
-        #   return []
-        # append the boolean to the query
-        query = query + """{boolean} """.format(boolean=boolean)
-    
-    # finish the query string
-    query = query + """ ORDER BY id """
-    if page_event == "previous": query = query + """DESC """
-    if page_event == 'next' or page_event == 'previous':
-      query = query + """LIMIT 12 OFFSET ?"""
-      params.append(last_img_count)
-    else: # page_event == None
-      query = query + """LIMIT 12"""
-    print(query)
-    print(params)
-    params = tuple(params)
-  images = simple_query(query, params)
-  return images
 

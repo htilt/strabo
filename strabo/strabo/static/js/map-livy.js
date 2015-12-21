@@ -142,8 +142,9 @@ function see_ip(name) {
         $('#attribution').html('')
         // show gallery and link to more images
         $('#link-wrapper').removeClass('hidden')
+        $("#img_id_msg").html(data['images'][0]['interest_point']+'.')
         $("#ip_link").html("see more images of " + data['images'][0]['interest_point'] + '.')
-        $("#ip_link").attr("href", 'gallery?year=All Years&event=All Events&interest_point=' + data['images'][0]['interest_point'])
+        $("#ip_link").attr("href", 'gallery?search_field=interest_point&search_term=' + data['images'][0]['interest_point'])
         $("#image-gallery").removeClass("hidden")
         // add images to page
         var images = data['images']
@@ -153,7 +154,8 @@ function see_ip(name) {
           var select_id = '#' + img_id;
           var $thumbnail = $(select_id);
           $thumbnail.removeClass('hidden')
-          $thumbnail.find('img').attr("src", "./static/uploads-livy/" + data['images'][image]['filename'])
+          $thumbnail.find('img').attr("src", "./static/thumbnails-livy/" + data['images'][image]['thumbnail_name'])
+          $thumbnail.find('img').data("fullsrc", "./static/uploads-livy/" + data['images'][image]['filename'])
           //add metadata to images
           $thumbnail.find('.img-metadata').append("<p>Title: "+data['images'][image]['title']+"</p>")
           
@@ -190,9 +192,9 @@ function see_ip(name) {
         // add images to page
         // show gallery and link to more images
         $('#link-wrapper').removeClass('hidden')
-        // $("#ip_link").html("see more images of " + data['images'][0]['interest_point'] + '.')
-        $("#ip_link").html(data['images'][0]['interest_point'] + '.')
-        $("#ip_link").attr("href", 'gallery?year=All Years&event=All Events&interest_point=' + data['images'][0]['interest_point'])
+        $("#img_id_msg").html(data['images'][0]['interest_point']+'.')
+        $("#ip_link").html("see more images of " + data['images'][0]['interest_point'] + '.')
+        $("#ip_link").attr("href", 'gallery?search_field=interest_point&search_term=' + data['images'][0]['interest_point'])
         $("#image-gallery").removeClass("hidden")
         // add images to page
         var images = data['images']
@@ -202,7 +204,8 @@ function see_ip(name) {
           var select_id = '#' + img_id;
           var $thumbnail = $(select_id);
           $thumbnail.removeClass('hidden')
-          $thumbnail.find('img').attr("src", "./static/uploads-livy/" + data['images'][image]['filename'])
+          $thumbnail.find('img').attr("src", "./static/thumbnails-livy/" + data['images'][image]['thumbnail_name'])
+          $thumbnail.find('img').data("fullsrc", "./static/uploads-livy/" + data['images'][image]['filename'])
           //add metadata to images
           $thumbnail.find('.img-metadata').append("<p>Title: "+data['images'][image]['title']+"</p>")
           

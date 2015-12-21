@@ -12,7 +12,7 @@ var main = function() {
   
   $('[data-target="#lightbox"]').on('click', function(event) {
       var $img = $(this).find('img'), 
-         src = $img.attr('src'),
+         src = $img.data('fullsrc'),
          alt = $img.attr('alt'),
          metadata = $(this).find('.img-metadata p').clone(),
          css = {

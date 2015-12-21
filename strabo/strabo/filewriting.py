@@ -25,6 +25,7 @@ def rewrite_geojson():
   # Write to the geojson file
   write_to(points, zones, lines)
 
+# Write to the geojson file with the new interest points
 def write_to(points, zones, lines):
   file_content = "var interest_points = " + str(points) + "\nvar interest_zones = " + str(zones) + "\nvar interest_lines = " + str(lines)
   geojson_file = open(os.path.join(app.config['JS_FOLDER'], app.config['INTPT_FILE']), 'w')

@@ -33,129 +33,53 @@
             </div>
         </div>
         <!-- /.row -->
-        <hr>
 
         <!-- Form -->
         <form id="gallery-content" class="form-inline" method="GET" action="/gallery" enctype="multipart/form-data">
-            <div id="filter-options">
-                <!-- <form class="form-inline" method="GET" action="/gallery" enctype="multipart/form-data"> -->
-                    <div class="form-group">
-                        <p class="text-muted">Filter images by:</p>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name='period'>
-                            {% if period %}
-                            <option selected name='period'>{{ period }}</option>
-                            <option name="{{ALL_PERIODS}}">{{ALL_PERIODS}}</option>
-                            {% else %}
-                            <option selected name="{{ALL_PERIODS}}">{{ALL_PERIODS}}</option>
-                            {% endif %}
-                            {% for period in periods %}
-                            <option name={{period}}> {{period}} </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name='bool-1'>
-                            {% if boolean_1 == 'AND' %}
-                            <option selected name='and'>{{ boolean_1 }}</option>
-                            <option name="or">OR</option>
-                            {% elif boolean_1 == 'OR' %}
-                            <option selected name='or'>{{ boolean_1 }}</option>
-                            <option name="and">AND</option>
-                            {% else %}
-                            <option selected name="and">AND</option>
-                            <option name="or">OR</option>
-                            {% endif %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name='event'>
-                            {% if event %}
-                            <option selected name='event'>{{ event }}</option>
-                            <option name="All Events">All Events</option>
-                            {% else %}
-                            <option selected name="All Events">All Events</option>
-                            {% endif %}
-                            {% for event in events %}
-                            <option>{{ event['title'] }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name='bool-2'>
-                            {% if boolean_2 == 'AND' %}
-                            <option selected name='and'>{{ boolean_2 }}</option>
-                            <option name="or">OR</option>
-                            {% elif boolean_1 == 'OR' %}
-                            <option selected name='or'>{{ boolean_1 }}</option>
-                            <option name="and">AND</option>
-                            {% else %}
-                            <option selected name="and">AND</option>
-                            <option name="or">OR</option>
-                            {% endif %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name='interest_point'>
-                            {% if interest_point %}
-                            <option selected name='interest_point'>{{ interest_point }}</option>
-                            <option name="All Locations">All Locations</option>
-                            {% else %}
-                            <option selected name="All Locations">All Locations</option>
-                            {% endif %}
-                            {% for interest_point in interest_points %}
-                            <option>{{ interest_point['name'] }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-info" value="Submit">
-                    </div>
-                <!-- </form> -->
+            <div class="form-group">
+                <select class="form-control" name='search_field'>
+                    <option selected name='all_fields'>All Fields</option>
+                    {% for field in fields %}
+                    <option name="field">{{field}}</option>
+                    {% endfor %}        
+                </select>
             </div>
-
-            <!-- Projects Row -->
-            <div class="row">
-            {% for img in images %}
-                <div class="col-md-3 portfolio-item" data-toggle="modal" data-target="#lightbox">
-                    <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename'] }}" width="500" height="309" border="0" alt=""></a></p>
-                    <div class="hidden img-metadata">
-                        <p>Title: {{ img['title'] }}</p><br>
-                        {% if img['date_created'] %}
-                        <p>Date: {{ img['date_created'] }}</p><br>
-                        {% endif %}
-                        {% if img['img_description'] %}
-                        <p>Description: {{ img['img_description'] }}</p><br>
-                        {% endif %}
-                        {% if img['notes'] %}
-                        <p>Notes: {{ img['notes'] }}</p><br>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-            </div>
-            <!-- /.row -->
-
-            <div class="row" id="image-ids">
+            <div class="form-group">
                 <div class="form-group">
-                    {% for img in images %}
-                    <input type="hidden" name='primary_key' value={{ img['id'] }}>
-                    {% endfor %}
-                </div>
-                <div class='wrapper text-center'>
-                    <div class="btn-group" role="group">
-                        <button name="page-btn" type="submit button" type="button" class="btn btn-default" value='previous'><span class="glyphicon glyphicon-chevron-left"></span></button>
-                        <button name="page-btn" type="submit button" type="button" class="btn btn-default" value='next'><span class="glyphicon glyphicon-chevron-right"></span></button>
-                    </div>
+                    <label for="Search Bar"></label>
+                    <input class="form-control" type="text hidden" type="text" name="search_term" size="80"  placeholder="Search by keyword" >
                 </div>
             </div>
-            
-            <hr>
 
+            <div class="form-group">
+                <input type="submit" class="btn btn-info" value="Submit">
+            </div> 
         </form>
         <!-- /Form -->
-
+        <hr>
+        <!-- Projects Row -->
+        <div class="row">
+        {% for img in images %}
+            <div class="col-md-3 portfolio-item" data-toggle="modal" data-target="#lightbox">
+                <p><a class="hovertext" href="#" metadata="{{ img['title'] }}"><img class="img-responsive" src="{{THUMBNAIL_FOLDER_RELPATH}}{{ img['thumbnail_name'] }}" data-fullsrc="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename']}}" alt="{{ img['title'] }}" width="500" height="309" border="0"></a></p>
+                <div class="hidden img-metadata">
+                    <p>Title: {{ img['title'] }}</p><br>
+                    {% if img['date_created'] %}
+                    <p>Date: {{ img['date_created'] }}</p><br>
+                    {% endif %}
+                    {% if img['img_description'] %}
+                    <p>Description: {{ img['img_description'] }}</p><br>
+                    {% endif %}
+                    {% if img['notes'] %}
+                    <p>Notes: {{ img['notes'] }}</p><br>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <!-- /.row -->
+            
+    <hr>
     </div>
     <!-- /.container -->
 

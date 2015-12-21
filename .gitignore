@@ -52,9 +52,10 @@ Thumbs.db
 *.JPG
 *.JPEG
 
-# Virtual Environment #
+# Virtual Environments #
 #######################
 /straboenv
+/py2env
 
 # Livy-specific files/directories #
 ###################################
@@ -62,3 +63,4 @@ Thumbs.db
 #/thumbnails-livy
 #/uploads-livy
 #header-livy.html
+*.swp

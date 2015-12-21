@@ -1,6 +1,6 @@
 from strabo import app
 # This is the path to the upload directory
-app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads-livy'
+app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads-livy/'
 app.config['UPLOAD_FOLDER_RELPATH'] = '/static/uploads-livy/'
 
 # These are the extension that we are accepting to be uploaded
@@ -67,3 +67,24 @@ app.config['WEBSITE_TITLE'] = 'Reconstructing Livy\'s Rome'
 
 #### Changes made to config since last divergence from master branch
 app.config['INDEX_GREETING'] = "Select a tab to begin adding content to Livy's Rome."
+
+# Provide aliases for column names
+app.config['COLUMN_ALIASES'] = {'id':'Integer ID', 'created_at':'Time Added to Database', 'title':'Title', 
+  'img_description':'Image Description', 'latitude':'Latitude', 'longitude':'Longitude', 
+  'date_created':'Date Created', 'interest_point':'Interest Point', 'event':'Event',
+  'period':'Period', 'notes':'Notes', 'tags':'Tags', 'edited_by':'Editor', 'filename':'Image Filename',
+  'thumbnail_name':'Image Thumbnail Filename'}
+
+# make a reverse dictionary of aliases
+# Should this go elsewhere?
+def reverse_aliases(column_aliases):
+  column_aliases_tuples = column_aliases.items()
+  rev_dict = {}
+  for tup in column_aliases_tuples:
+    x, y = tup
+    rev_dict[y] = x
+  return rev_dict
+
+
+app.config['REVERSE_COLUMN_ALIASES'] = reverse_aliases(app.config['COLUMN_ALIASES'])
+print(app.config['REVERSE_COLUMN_ALIASES'])
