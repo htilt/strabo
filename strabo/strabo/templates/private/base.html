@@ -12,17 +12,18 @@
 
 <body>
     {% set navigation_bar = [
-    ('/upload_images/', 'upload_images', 'Upload Images'),
-    ('/upload_ips/', 'upload_ips', 'Add Interest Points'),
-    ('/upload_events/', 'upload_events', 'Add Events'),
-    ('/upload_text/', 'upload_text', 'Add Text Selections'),
-    ('/edit_images/', 'edit_images', 'Edit Images'),
-    ('/edit_ips/', 'edit_ips', 'Edit Interest Points'),
-    ('/edit_events/', 'edit_events', 'Edit Events'),
-    ('/delete_images/', 'delete_images', 'Delete Images'),
-    ('/delete_ips/', 'delete_ips', 'Delete Interest Points'),
-    ('/delete_events/', 'delete_events', 'Delete Events'),
-    ('/delete_text/', 'delete_text', 'Delete Text Selections')
+    ('/admin/upload_images/', 'upload_images', 'Upload Images'),
+    ('/admin/upload_ips/', 'upload_ips', 'Add Interest Points'),
+    ('/admin/upload_events/', 'upload_events', 'Add Events'),
+    ('/admin/upload_text/', 'upload_text', 'Add Text Selections'),
+    ('/admin/edit_images/', 'edit_images', 'Edit Images'),
+    ('/admin/edit_ips/', 'edit_ips', 'Edit Interest Points'),
+    ('/admin/edit_events/', 'edit_events', 'Edit Events'),
+    ('/admin/edit_text/', 'edit_text', 'Edit Text Selections'),
+    ('/admin/delete_images/', 'delete_images', 'Delete Images'),
+    ('/admin/delete_ips/', 'delete_ips', 'Delete Interest Points'),
+    ('/admin/delete_events/', 'delete_events', 'Delete Events'),
+    ('/admin/delete_text/', 'delete_text', 'Delete Text Selections')
     ] -%}
     
     {% set active_page = active_page|default('index') -%}

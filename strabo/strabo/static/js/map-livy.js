@@ -1,30 +1,26 @@
+// instantiate a Leaflet map object in the correct div
+// 'map'. Set lat, lng for the map's center
 var map = L.map('map'
-// {
-//   maxBounds: [
-//   //southWest
-//   [41.891206, 12.426391],
-//   //northEast
-//   [41.899312, 12.528788]
-//   ],
-// }
-).setView([41.892695, 12.495142], 14 );
+).setView([lat_setting, long_setting], 14 );
 
-//var user_location = map.locate({setView:true, maxZoom:16});
-
-L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: 'abcd',
+// tile_src,  tile_attr1, subdomains, and extension are variables
+// from the interest_points.js file
+// if you wish to use different map tiles that take fewer variables, 
+// you will need to eliminate the extra variables below for map
+// tiles to load.
+// if you wish to use map tiles that take other or more variables,
+// you will need to add those below.
+L.tileLayer(tile_src, {
+  attribution: tile_attr1,
+  subdomains: subdomains,
   minZoom: 1,
   maxZoom: 16,
-  ext: 'png'
+  ext: extension
 }).addTo(map);
 
-// var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Plan_of_the_Hills_of_Ancient_Rome.jpg/1280px-Plan_of_the_Hills_of_Ancient_Rome.jpg',
-//     imageBounds = [[41.86209, 12.448391], [41.921312, 12.518788]];
-
-// L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
 // add pre-existing points, zones, and lines to map
+// interest_points, zones, and lines variables from the 
+// interest_points.js file
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachPoint,
 }).addTo(map);
@@ -71,14 +67,16 @@ function onEachPoint(feature, layer) {
   });
 }
 
+// Set layers and add toggle control menu for each layer
+// (upper rh corner of map)
 var overlays = {
   "Points": point_features,
   "Lines": line_features,
   "Zones": zone_features,
 }
-
 var controlLayers = L.control.layers(null, overlays).addTo(map);
 
+// Display the name of an interest point when clicked
 function whenClicked(e) {
   // e = event
   console.log(e.target.feature.geometry.name);
@@ -86,8 +84,8 @@ function whenClicked(e) {
   see_ip(name);
 }
 
+// Display latlng info for any place on the map when clicked
 var popup = L.popup();
-
 function onMapClick(e) {
   popup
     .setLatLng(e.latlng)
@@ -95,10 +93,11 @@ function onMapClick(e) {
     .openOn(map);
 }
 
+// Trigger onMapClick function whenever map is clicked
 map.on('click', onMapClick);
 
 //this function loads the text and images associated
-//with a selected interest points
+//with a selected interest point
 function see_ip(name) {
     //shrink map
     $('#map').removeClass('col-md-12');
@@ -116,7 +115,9 @@ function see_ip(name) {
     //remove img-metadata p divs
     $('.img-metadata').empty()
 
-    //get info from server
+    //get info from server and manage four possible situations
+    //(there are neither images nor text for an interest point,
+    //there are images but  
     $.post(
     "/map/post", 
     {name:name},

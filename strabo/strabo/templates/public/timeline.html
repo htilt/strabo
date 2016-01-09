@@ -1,7 +1,7 @@
 {% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
-    <link href="../static/public_styles/timeline.css" rel="stylesheet">
+    <link href="{{PATH_TO_PUBLIC_STYLES}}{{TIMELINE_CSS}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}

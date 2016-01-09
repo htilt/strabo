@@ -96,7 +96,7 @@ def search(table_name, column, search_term, count=None):
     return []
   # if searching a lengthy text field, do fuzzy search
   if column in ("title", "img_description", "event_description", "name", 
-    "tags"):
+    "passage", "tags", "notes"):
     query = """SELECT * FROM {table} WHERE {column} LIKE ?
       ORDER BY id DESC""".format(table=table_name, column=column)
     search_term = '%{}%'.format(search_term)
@@ -150,6 +150,13 @@ def delete(keys, table_name):
     db.commit()
   return
 
+# returns the geojson objects of a given feature type
+def get_geojson(geojson_feature_type):
+  query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
+  geojson = simple_query(query, (geojson_feature_type,))
+  print(geojson)
+  return geojson
+
 # inserts an image into the db
 def insert_images(params):
   with closing(get_db()) as db:
@@ -199,9 +206,12 @@ def edit_event(params):
     db.cursor().execute(query, params)
     db.commit()
 
-# returns the geojson objects of a given feature type
-def get_geojson(geojson_feature_type):
-  query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
-  geojson = simple_query(query, (geojson_feature_type,))
-  return geojson
+# insert into all 12 columns in text_selections to replace
+def edit_textselection(params):
+  with closing(get_db()) as db:
+    query = app.config['EDIT_TEXT_QUERY']
+    db.cursor().execute(query, params)
+    db.commit()
+
+
 

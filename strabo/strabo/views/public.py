@@ -6,7 +6,7 @@ from strabo import app
 from strabo.database import get_flex, get_column_names, \
 get_geojson, search, gallery_search
 from strabo.geojson import make_featureCollection
-from strabo.utils import prettify_columns
+from strabo.utils import prettify_columns, get_raw_column
 
 @app.route("/map")
 def map():
@@ -18,7 +18,9 @@ def map():
     HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
     FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
     HEADER_CSS=app.config['HEADER_CSS'],
-    FOOTER_CSS=app.config['FOOTER_CSS'], 
+    FOOTER_CSS=app.config['FOOTER_CSS'],
+    MAP_CSS=app.config['MAP_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
     PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
     RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
     BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
@@ -39,16 +41,12 @@ def map_post():
 
 @app.route("/gallery", methods=["GET"])
 def gallery():
-  # get raw column names and convert to 'prettified' column names
-  # from config.py
-  columns = get_column_names('images')
-  fields = prettify_columns(columns)
+  # get search fields
+  fields = prettify_columns(app.config['SEARCH_COLUMNS'])
   # get user input for search
-  search_term = request.args.get('search_term')
-  search_field = request.args.get('search_field')
+  search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
-  if search_field in app.config['REVERSE_COLUMN_ALIASES']:
-    search_field = app.config['REVERSE_COLUMN_ALIASES'][search_field]
+  search_field = get_raw_column(search_field)
 
   # if no search has been performed, show all images
   if search_term == '' or search_term == None:
@@ -72,6 +70,8 @@ def gallery():
     HEADER_CSS=app.config['HEADER_CSS'],
     FOOTER_CSS=app.config['FOOTER_CSS'], 
     PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    GALLERY_CSS=app.config['GALLERY_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
     RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
     TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
     TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
@@ -89,8 +89,10 @@ def timeline():
     HEADER_CSS=app.config['HEADER_CSS'],
     FOOTER_CSS=app.config['FOOTER_CSS'], 
     PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    UNDER_CONST_CSS=app.config['UNDER_CONST_CSS'],
     RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
     TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
+    BASE_CSS=app.config['BASE_CSS'],
     TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
     BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
     WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
@@ -101,6 +103,7 @@ def timeline():
   #   HEADER_CSS=app.config['HEADER_CSS'],
   #   FOOTER_CSS=app.config['FOOTER_CSS'], 
   #   PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+  #   TIMELINE_CSS=app.config['TIMELINE_CSS'],
   #   RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
   #   TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
   #   TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
@@ -116,6 +119,8 @@ def about():
     HEADER_CSS=app.config['HEADER_CSS'],
     FOOTER_CSS=app.config['FOOTER_CSS'], 
     PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    ABOUT_CSS=app.config['ABOUT_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
     RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
     TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
     TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],

@@ -2,7 +2,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link href="../static/public_styles/map.css" rel="stylesheet">
+    <link href="{{PATH_TO_PUBLIC_STYLES}}{{MAP_CSS}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -100,7 +100,8 @@
 {% block footer %}
     {{ super() }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <!-- Load in personalize js and gejson object-->
+    <!-- Load in geojson objects with janky cache-breaking solution so that changes to 
+    js file will be reflected on map -->
     <script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>
     <script src="../static/js/{{ MAP_JS }}"></script>
     <script src="../static/js/gallery.js"></script>

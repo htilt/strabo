@@ -9,19 +9,19 @@
 <main class="container">
   <div class="form">
     <fieldset>
-      <form id="ip-upload"  method="POST" action="/interest_points/post" enctype="multipart/form-data">
+      <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Interest Point</legend> 
             
             <div class="form-group">
               <label for="name">Location Name:</label><br>
-              <input class="form-control" type="text" name="name" required size="15" placeholder="Untitled" id = "name">
+              <input class="form-control" type="text" name="name" placeholder="Untitled" id="name">
             </div>
             <!-- Altered from Canyon instance -->
             <div class="form-group" >
               <label for="books">Books:</label><br>
-              <input class="form-control" type="text" name="books" required size="15" ><br>
+              <input class="form-control" type="text" name="books"><br>
             </div>
             <!-- -->
             <div id="drawMap" style="width: 100%; height: 400px">
@@ -34,7 +34,7 @@
                   <option value="#00A0B0">Select One</a></option>
                   <option value="#00A0B0">Turqoise</a></option>
                   <option value="#6A4A3C">Brown</a></option>
-                  <option value="#CC333F">Father's Rage Red</a></option>
+                  <option value="#CC333F">Red</a></option>
                   <option value="#EB6841">Orange</a></option>
                   <option value="#8A9B0F">Green</a></option>
                 </select>
@@ -43,18 +43,10 @@
                 <label for="feature_type">Feature Type:</label><br>
                 <select class="form-control" name='feature_type'>
                   <option selected name="ip_auto"> Select One </option>
-                  <option name="Geological Feature">Geological Feature</option>
-                  <option name="Natural Feature">Natural Feature</option>
-                  <option name="Building">Building</option>
-                  <option name="Altar">Altar</option>
-                  <option name="City">City</option>
-                  <option name="Neighborhood or Region">Neighborhood or Region</option>
-                  <option name="Dedicactory Monument">Dedicactory Monument</option>
-                  <option name="Street or Intersection">Street or Intersection</option>
-                  <option name="Tomb">Tomb</option>
-                  <option name="Gate">Gate</option>
-                  <option name="Infrastructure">Infrastructure</option>
-                  <option name="Recreational Facility">Recreational Facility</option>
+                  {% for feat_type in feat_types %}
+                  <option name="{{feat_type}}">{{feat_type}}</option>
+                  {% endfor %}
+                </select>
                 </select>
             </div>
             <div class="form-group">
@@ -64,7 +56,7 @@
             
             <div class="form-group">
               <label for="tags">Tags:</label><br>
-              <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+              <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
             </div>
 
             
@@ -112,6 +104,8 @@
 
 {% block footer %}
     {{ super () }}
+<!-- Load in geojson objects with janky cache-breaking solution so that changes to 
+    js file will be reflected on map -->
 <script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>   
 <script src="../static/js/{{ DRAWMAP_JS }}"></script>
 {% endblock %}

@@ -1,24 +1,21 @@
+// instantiate a Leaflet map object in the correct div
+// 'drawMap'. Set lat, lng for the map's center
 var drawMap = L.map('drawMap', {
-  // maxBounds: [
-  // //southWest
-  // [41.853206, 12.446391],
-  // //northEast
-  // [41.921312, 12.528788]
-  // ],
-}).setView([41.882695, 12.485142], 12 );
+}).setView([lat_setting, long_setting], 12 );
 
-//var user_location = drawMap.locate({setView:true, maxZoom:16});
-
+// if you wish to use map tiles that take other or more variables,
+// you will need to add those below.
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
   id: 'mapbox.streets',
-
 }).addTo(drawMap);
 
 // add pre-existing points, zones, and lines to map
+// interest_points, zones, and lines variables from the 
+// interest_points.js file
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachPoint,
 }).addTo(drawMap);
@@ -117,8 +114,6 @@ drawMap.addControl(drawControla);
 var obJSON; ////// THIS IS THE OBJECT U WANT
 var shapeLayer;
 
-
-
 drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
   shapeLayer = e.layer;
@@ -201,7 +196,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#6A4A3C'});
         break;
-      case "Father's Rage Red":
+      case "Red":
         L.geoJson(obJSON, {
           style: {
             "color": '#CC333F'

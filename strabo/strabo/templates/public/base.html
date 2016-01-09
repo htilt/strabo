@@ -15,12 +15,12 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="{{PATH_TO_PUBLIC_STYLES}}{{BASE_CSS}}" rel="stylesheet">
 </head>
 {% endblock head %}
 
-
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid wrapper">
         <div class="row">
             <div class="header">
               {% include RELPATH_TO_PUBLIC_TEMPLATES ~ HEADER_TEMPLATE %}
@@ -30,12 +30,14 @@
         {% block content %}
         {% endblock content %}   
 
-        <div class="row">
-            <div class="header">
-              {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %}
-            </div>
-        </div>
+        <div class="push"></div>
     </div>
+
+
+    <div class="footer row">
+      {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %}
+    </div>
+
 </body>
 
 {% block footer %}

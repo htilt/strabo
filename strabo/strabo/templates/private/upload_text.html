@@ -2,36 +2,35 @@
 {% set active_page = "upload_text" %}
 {% block head %}
     {{ super() }}
-    <!-- <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_text_selections.css"> -->
 {% endblock %}
 
 {% block content %}
 <main class="container">
   <div class="form">
     <fieldset>
-      <form id="text_selection-upload" name="upload-form" method="POST" action="/text/post" enctype="multipart/form-data">
+      <form id="text_selection-upload" name="upload-form" method="POST" action="/admin/text/post" enctype="multipart/form-data">
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Text Selection</legend>
             
             <div class="form-group">
               <label for="name">Text Selection Title:</label><br>
-              <input class="form-control" type="text"  name="name" required placeholder="Untitled"><br>
+              <input class="form-control" type="text"  name="name" placeholder="Untitled"><br>
             </div>
             <div class="form-group">
               <label for="book">Book:</label><br>
-              <input class="form-control" type="text" maxlength="30" name="book" required >
+              <input class="form-control" type="text" name="book">
             </div>
             <div class="form-group">
               <label for="section">Section:</label><br>
-              <input class="form-control" type="text" maxlength="30" name="section" required >
+              <input class="form-control" type="text" name="section">
             <div class="form-group">
               <label for="pages">Pages:</label><br>
-              <input class="form-control" type="text" maxlength="30" name="pages" >
+              <input class="form-control" type="text" name="pages">
             </div>
             <div class="form-group">
               <label for="passage">Passage:</label><br>
-              <textarea class="form-control" type="text" rows='7' name="passage" required placeholder="Enter text here."></textarea>
+              <textarea class="form-control" type="text" rows='7' name="passage" placeholder="Enter text here."></textarea>
             </div>
             <div class="form-group">
               <label for="interest_point">Interest Point:</label><br>
@@ -46,7 +45,7 @@
             <div class="form-group">
               <label for="event">Event:</label><br>
               <select class="form-control" name='event'>
-                <option selected name="ip_auto"> Select One </option>
+                <option selected name="event_auto"> Select One </option>
                 {% for event in events %}
                 <option name="event"> {{ event['title'] }} </option>
                 {% endfor %}
@@ -54,11 +53,11 @@
             </div>
             <div class="form-group">
               <label for="notes">Additional Notes:</label><br>
-              <textarea class="form-control" type="text" name="notes" maxlength="400" placeholder="Add any additional notes for private reference."></textarea>
+              <textarea class="form-control" type="text" name="notes" placeholder="Add any additional notes for private reference."></textarea>
             </div>
             <div class="form-group">
               <label for="tags">Tags:</label><br>
-              <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+              <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
             </div>
 
             <p></p>
