@@ -1,4 +1,4 @@
-var drawMap = L.map('drawMap', {
+var drawMap = L.map('drawMap', { // sets the viewport location
   
   maxBounds: [
   //southWest
@@ -6,19 +6,19 @@ var drawMap = L.map('drawMap', {
   //northEast
   [45.48409, -122.62264]
   ],
-}).setView([45.48174, -122.631], 17 );
+}).setView([45.48174, -122.631], 17 ); 
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // gets map data
   maxZoom: 18,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
   id: 'mapbox.streets',
 
-}).addTo(drawMap);
+}).addTo(drawMap); 
 
-// add pre-existing points, zones, and lines to map
-var point_features = L.geoJson(interest_points, {
+
+var point_features = L.geoJson(interest_points, { // these 3 variables add pre-existing points, zones, and lines to map
   onEachFeature: onEachPoint,
 }).addTo(drawMap);
 
@@ -30,7 +30,8 @@ var line_features = L.geoJson(interest_lines, {
   onEachFeature: onEachZone,
 }).addTo(drawMap);
 
-function onEachZone(feature, layer) {
+
+function onEachZone(feature, layer) { // this function attaches text to zones 
   layer.bindPopup(feature.geometry.name);
   layer.setStyle({
         weight: 1,
@@ -40,34 +41,16 @@ function onEachZone(feature, layer) {
   });
 }
 
-function onEachPoint(feature, layer) {
+function onEachPoint(feature, layer) { // this function attaches text to points
   layer.bindPopup(feature.geometry.name);
-  // layer.setIcon(feature.properties['icon']);
 }
 
-// var popup = L.popup();
+var drawnItems = new L.FeatureGroup(); // this variable contains items drawn in the current session
+drawMap.addLayer(drawnItems); // this function adds the variable to the map
 
-// function onMapClick(e) {
-//   popup
-//     .setLatLng(e.latlng)
-//     .setContent(e.latlng.toString())
-//     .openOn(drawMap);
-// }
+var shapeColorInit = '#2397EB'; // the default color for shapes and lines on the map
 
-// drawMap.on('click', onMapClick);
-
-
-var drawnItems = new L.FeatureGroup();
-drawMap.addLayer(drawnItems);
-
-
-// Initialise the draw control and pass it the FeatureGroup of editable layers
-// Removes some toolbar things and also sets colors
-
-var shapeColorInit = '#2397EB';
-
-var options1 = {
-    
+var options1 = { // this variable contains the feature set for draw mode
     draw : {
       polyline: {
         shapeOptions: {
@@ -94,7 +77,7 @@ var options1 = {
     }
 }
 
-var options2 = {
+var options2 = { //this variable disables the feature set for draw mode
   draw: false,
 
   edit: {
@@ -108,26 +91,26 @@ var options2 = {
 
 }
 
-var drawControla = new L.Control.Draw(options1);
+var drawControla = new L.Control.Draw(options1); //these two variables are used to toggle between enabling and disabling draw mode
 var drawControlb = new L.Control.Draw(options2);
 
 
 
-drawMap.addControl(drawControla);
+drawMap.addControl(drawControla); // by default, the map is in draw mode
 
 
-var obJSON; ////// THIS IS THE OBJECT U WANT
-var shapeLayer;
+var obJSON; // this variable will hold the user-created content
+var shapeLayer; // this variable is used to as a layer to store all the user-created content
 
 
 
 drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
   shapeLayer = e.layer;
-  //if the layer type is a circle / marker, then we only have one set of latlngs to deal with, therefore different formula
-  if (type === 'polyline') {
+  
+  if (type === 'polyline') { // these three conditions check the type of object
     drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON(); //creates JSON object
+    obJSON = shapeLayer.toGeoJSON(); 
   }
   else if (type === 'marker') {
     drawnItems.addLayer(shapeLayer);
@@ -138,37 +121,32 @@ drawMap.on('draw:created', function (e) { //grabs layer of drawn item
    	drawnItems.addLayer(shapeLayer);
   }
 
-  drawControla.removeFrom(drawMap);
+  drawControla.removeFrom(drawMap); // when a shape has been created, the map disables draw mode
   drawMap.addControl(drawControlb);
 })
 
-drawMap.on('draw:deletestop', function (e) {
+drawMap.on('draw:deletestop', function (e) { // if a shape is deleted, draw mode is renabled
   drawControlb.removeFrom(drawMap);
   drawMap.addControl(drawControla);
 
 })
 
 
-drawMap.on('draw:edited', function (e) {
+drawMap.on('draw:edited', function (e) { // updates the shape if it is edited
   
   var editLayers = e.layers;
   var type = e.layerType;
-
-
-
 
   editLayers.eachLayer(function (layer) {
     obJSON = layer.toGeoJSON();
     console.log(obJSON);
     console.log(shapeLayer);
-    //shapeLayer.setStyle({color:'#2397EB'});
-    //layer.setStyle({color:'#2397EB'})
     });
 })
 
-$(function()
+$(function() // this function allows the user to change the color of content
 {
-  var $e = $("#colorPick")
+  var $e = $("#colorPick") // this function references the HTML base containing the dropdown list of colors
   var $usrSelect = $("#colorPick :selected").text()
   console.log($usrSelect);
 
@@ -177,16 +155,8 @@ $(function()
     console.log($usrSelect); 
   
 
-  
 
-
-  //console.log($dropDown);
-
-    //var menuNum = this.value;
-    //var menuParent = $('btn btn-default dropdown-toggle');
-    //var msg = '';
-
-    switch($usrSelect) {
+    switch($usrSelect) { // this switch applies a color based on the dropdown menu of possible options
       case 'Turqoise' :
         L.geoJson(obJSON, {
           style: {
@@ -233,17 +203,9 @@ $(function()
   });
 });
 
-$('#upload-btn').click(function (e) {
+$('#upload-btn').click(function (e) { //this function stringifies the JSON object with correct color
   console.log(obJSON);
   var JSONobject = JSON.stringify(obJSON);
   console.log(JSONobject);
   $('#geojson-field').attr("value", JSONobject);
 }); 
-
-
-  // Returns an array of the points in the path.
-
-
-       // need to write a function which updates this array if the points are edited.
-
-    // process latLngs as you see fit and then save
