@@ -106,6 +106,6 @@
     {{ super () }}
 <!-- Load in geojson objects with janky cache-breaking solution so that changes to 
     js file will be reflected on map -->
-<script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>   
-<script src="../static/js/{{ DRAWMAP_JS }}"></script>
+<script>document.write('<script src="/static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>   
+<script src="/static/js/{{ DRAWMAP_JS }}"></script>
 {% endblock %}

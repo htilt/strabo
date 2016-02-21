@@ -7,7 +7,7 @@ document.getElementById("img-input").onchange = function(e) {
         var tags = EXIF.getAllTags(this);
         var JSONtags = JSON.stringify(tags)
         $.post(
-            "/upload_images/exif/", 
+            "/admin/upload_images/exif/", 
             {key: JSONtags},
             function(data) {
               $("#exif-autoComplete").html(data)

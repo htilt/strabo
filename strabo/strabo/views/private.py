@@ -545,12 +545,14 @@ def edit_events_edit():
 @app.route("/admin/edit_text/", methods=["GET"])
 def edit_text():
   table_name = 'text_selections'
+  events = get_flex('events')
+  interest_points = get_flex('interest_points')
 
   # if administrator clicks edit button on a text selection
   if request.args.get('edit-btn'):
     text_selection = search(table_name, 'id', request.args.get('edit-btn'))
-    return render_template("private/form_text.html", 
-      text_selection=text_selection)
+    return render_template("private/form_text.html", events=events,
+      interest_points=interest_points, text_selection=text_selection)
 
   # get search fields
   fields = get_fields(table_name)

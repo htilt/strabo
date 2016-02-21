@@ -1,5 +1,4 @@
 import geojson
-from geojson import Feature, Point, LineString, FeatureCollection, Polygon
 
 # returns a feature's coordinates
 def get_coords(feature):
@@ -36,5 +35,5 @@ def make_featureCollection(features):
     geojson_object = feature['geojson_object']
     geojson_object = geojson.loads(geojson_object)
     feature_collection.append(geojson_object)
-  feature_collection = FeatureCollection(feature_collection)
+  feature_collection = geojson.FeatureCollection(feature_collection)
   return feature_collection

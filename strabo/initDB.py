@@ -22,5 +22,6 @@ def update_tables():
         db.cursor().executescript(fh.read())
         db.commit()
 
-intiate_db()
+if __name__ == '__main__':
+  intiate_db()
 # update_tables()

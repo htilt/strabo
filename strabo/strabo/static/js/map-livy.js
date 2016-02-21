@@ -177,8 +177,20 @@ function see_ip(name) {
         $('#no-img-msg').removeClass('hidden')
         // add content to text box
         $('#text').html(data['text-selection'][0]['passage'])
-        $('#book_num').html("Book " + data['text-selection'][0]['book'])
-        $('#section_num').html("Section " + data['text-selection'][0]['section'])
+        // if the admin has specified a book number, add it
+        if (data['text-selection'][0]['book']) {
+          $('#book_num').html("Book " + data['text-selection'][0]['book'])
+        }
+        else {
+          $('#book_num').html("")
+        }
+        // if the admin has specified a section number, add it
+        if (data['text-selection'][0]['section']) {
+          $('#section_num').html("Section " + data['text-selection'][0]['section'])
+        }
+        else {
+          $('#section_num').html("")
+        }
         $('#title').html(data['text-selection'][0]['name'])
         $('#attribution').html(data['text-selection'][0]['notes'])
       }
@@ -186,8 +198,20 @@ function see_ip(name) {
       else {
         // add content to text box
         $('#text').html(data['text-selection'][0]['passage'])
-        $('#book_num').html("Book " + data['text-selection'][0]['book'])
-        $('#section_num').html("Section " + data['text-selection'][0]['section'])
+        // if the admin has specified a book number, add it
+        if (data['text-selection'][0]['book']) {
+          $('#book_num').html("Book " + data['text-selection'][0]['book'])
+        }
+        else {
+          $('#book_num').html("")
+        }
+        // if the admin has specified a section number, add it
+        if (data['text-selection'][0]['section']) {
+          $('#section_num').html("Section " + data['text-selection'][0]['section'])
+        }
+        else {
+          $('#section_num').html("")
+        }
         $('#title').html(data['text-selection'][0]['name'])
         $('#attribution').html(data['text-selection'][0]['notes'])
         // add images to page

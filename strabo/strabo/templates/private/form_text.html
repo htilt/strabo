@@ -37,11 +37,21 @@
               </div>
               <div class="form-group">
                 <label for="interest_point">Interest Point:</label><br>
-                <input class="form-control" type="text" name="interest_point" value="{{ txt['interest_point'] }}">
+                <select class="form-control" name='interest_point'>
+                  <option selected name='selected'>{{ txt['interest_point'] }}</option>
+                  {% for interest_point in interest_points %}
+                  <option name="interest_point">{{ interest_point['name'] }}</option>
+                  {% endfor %}
+                </select>
               </div>
               <div class="form-group">
-                <label for="event">Events:</label><br>
-                <input class="form-control" type="text" name="event" value="{{ txt['event'] }}">
+                <label for="event">Event:</label><br>
+                <select class="form-control" name='event'>
+                  <option selected name='selected'>{{ txt['event'] }}</option>
+                  {% for event in events %}
+                  <option name="event">{{ event['title'] }}</option>
+                  {% endfor %}
+                </select>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
