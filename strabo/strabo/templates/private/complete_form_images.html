@@ -10,14 +10,14 @@
 {% for img in image %}
   <div class="form">
       <fieldset>
-        <form id="image-upload" method="POST" action="/edit_images/edit/" enctype="multipart/form-data">
+        <form id="image-upload" method="POST" action="/admin/edit_images/edit/" enctype="multipart/form-data">
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Edit Image</legend>
               
               <div class="form-group" >
                 <label for="title">Image Title:</label><br>
-                <input class="form-control" type="text" name="title" required size="15" value="{{ img['title'] }}"><br>
+                <input class="form-control" type="text" name="title" value="{{ img['title'] }}"><br>
               </div>
               <div class="form-group">
                 <label for="img_description">Image Description:</label><br>
@@ -25,11 +25,11 @@
               </div>
               <div class="form-group">
                 <label for="latitude">Latitude:</label><br>
-                <input class="form-control" type="text" name="latitude" size="80" value={{ img['latitude'] }}>
+                <input class="form-control" type="text" name="latitude" value={{ img['latitude'] }}>
               </div>
               <div class="form-group">
                 <label for="longitude">Longitude:</label><br>
-                <input class="form-control" type="text" name="longitude" size="80" value={{ img['longitude'] }}>
+                <input class="form-control" type="text" name="longitude" value={{ img['longitude'] }}>
               </div>
               <div class="form-group">
                 <label for="year">Date Created:</label><br>
@@ -43,7 +43,7 @@
                   </div>
                   <span> - </span>
                   <div class="form-group">
-                    <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+                    <input type="number" name="year" class="form-control" value="{{ year }}"=>
                   </div>
                 </div>
               </div>
@@ -61,26 +61,35 @@
                 <select class="form-control" name='event'>
                   <option selected name='selected'>{{ img['event'] }}</option>
                   {% for event in events %}
-                  <option name="event">{{ event['name'] }}</option>
+                  <option name="event">{{ event['title'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="period">Period:</label><br>
+                <select class="form-control" name='period'>
+                  <option selected name='selected'>{{ img['period'] }}</option>
+                  {% for period in periods %}
+                  <option name="period">{{ period }}</option>
                   {% endfor %}
                 </select>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
-                <input class="form-control" type="text" name="notes" size="80" value="{{ img['notes'] }}">
+                <input class="form-control" type="text" name="notes" value="{{ img['notes'] }}">
               </div>
               <div class="form-group">
                 <label for="tags">Tags:</label><br>
-                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+                <input class="form-control" type="text" name="tags" value="{{ img['tags'] }}" placeholder="Add tags separated by commas.">
               </div>
               
               <p></p>
               
               <button type="submit" name="edit-btn" value={{ img['id'] }}>Edit</button>
             </div>
-  
+          
             <div class="upload-wrapper col-lg-4">
-              <img id="img-preview" src="/static/uploads/{{ img['filename'] }}"></img>
+              <img id="img-preview" src="{{ UPLOAD_FOLDER_RELPATH }}{{ img['filename'] }}"></img>
             </div>
           
           </div>

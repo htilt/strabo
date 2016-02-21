@@ -6,22 +6,22 @@
 
 {% block content %}
 <main>
-  <div class "row" id="filter-options">
-      <form class="form-inline" method="GET" action="/delete_ips/" enctype="multipart/form-data">
+  <div id="filter-options">
+      <form class="form-inline" method="GET" action="/admin/delete_ips/" enctype="multipart/form-data">
           <div class="form-group">
               <p class="text-muted">Search for interest points by category:</p>
           </div>
           
           <div class="form-group">
-            <select class="form-control" name='categories'>
-              {% for category in categories %}
-              <option name="categories"> {{ category.0 }} </option>
-              {% endfor %}
-            </select>
+              <select class="form-control" name='search_field'>
+                {% for field in fields %}
+                    <option name="field">{{field}}</option>
+                {% endfor %}  
+              </select>
           </div>
           
           <div class="form-group">
-            <input class="form-control" type="text" name="search" size="80" placeholder="Add your search term here">
+              <input class="form-control" type="text" name="search_term" placeholder="Add your search term here">
           </div>
 
           <div class="form-group">
@@ -32,7 +32,7 @@
   <p></p>
   <p></p>
   <div>
-      <form method="POST" action="/delete_ips/delete/" enctype="multipart/form-data">
+      <form method="POST" action="/admin/delete_ips/delete/" enctype="multipart/form-data">
           <div class="table">
               <table class="table-bordered" margin="10px" id="preview">
                 <tr>

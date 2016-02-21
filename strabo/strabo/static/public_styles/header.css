@@ -31,3 +31,21 @@ p {
 .menu a {
   color: black;
 }
+
+/* Menu */ 
+
+.header .menu {
+  float: right;
+  list-style: none;
+  margin-top: 0px;
+}
+
+.menu > li {
+  display: inline;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.menu a {
+  color: #898989;
+}

@@ -1,84 +1,130 @@
-from flask import request, render_template, url_for, redirect, session
+import os
+from flask import request, render_template, url_for, redirect, session, jsonify
 from math import ceil
 
 from strabo import app
-from strabo.database import get_images, get_images_helper, get_flex, \
-get_geojson, get_images_for_page, count_all_images
+from strabo.database import get_flex, get_column_names, \
+get_geojson, search, gallery_search
 from strabo.geojson import make_featureCollection
-from strabo.utils import set_id, list_years
+from strabo.utils import prettify_columns, get_raw_column
 
 @app.route("/map")
 def map():
-  return render_template("public/map.html")
+  template = os.path.join("public/", app.config['MAP_TEMPLATE'])
+  return render_template(template, 
+    INTPT_FILE=app.config['INTPT_FILE'],
+    MAP_JS=app.config['MAP_JS'], 
+    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
+    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
+    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
+    HEADER_CSS=app.config['HEADER_CSS'],
+    FOOTER_CSS=app.config['FOOTER_CSS'],
+    MAP_CSS=app.config['MAP_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
+    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
+    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
+    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
 
 @app.route('/map/post', methods=["POST", "GET"])
 def map_post():
-  # here we want to get the value of the key (i.e. ?key=value)
-  ip_value = request.form.get('key')
+  # get the ip_value user has clicked
+  ip_value = request.form.get('name')
+  # query db for corresponding images, text
   images = search('images', 'interest_point', ip_value, 6)
-  print(images)
-  return render_template("public/display_thumbnails.html", images=images)
+  text = search('text_selections', 'interest_point', ip_value)
+  ip_info = {
+    'images': images,
+    'text-selection': text
+  }
+  return jsonify(ip_info)
 
 @app.route("/gallery", methods=["GET"])
 def gallery():
-  # get options for filter dropdown menu
-  events = get_flex('events')
-  interest_points = get_flex('interest_points')
-  # make a list of years for dropdown menu
-  years = list_years()
-  # get the user's filter selections
-  year = request.args.get('year')
-  event = request.args.get('event')
-  interest_point = request.args.get('interest_point')
-  boolean_1 = request.args.get('bool-1')
-  boolean_2 = request.args.get('bool-2')
-  # get a list of the current image ids
-  image_ids = request.values.getlist('primary_key')
-  # get the user's selection for previous or next page
-  pagination_event = request.args.get('page-btn')    
-  
-  ###### Set variables for image search #####
-  search_criteria = []
-  # if no search has been performed
-  print(year, event, interest_point)
-  if year == None or (year =='All Years' and 
-    event =='All Events' and interest_point =='All Locations'):
-    column, search_term = None, None
-    year, event, interest_point = None, None, None
-  # elif someone has searched for year
-  if year != 'All Years' and year != None:
-    column, search_term = "strftime(\'%Y\', date_created)", year
-    search_criteria.append((column,search_term))
-    # test whether there's a search term following
-    if event != None and event != 'All Events':
-      search_criteria.append((boolean_1,))
-    elif interest_point != None and interest_point != 'All Locations':
-      search_criteria.append((boolean_2,))
-  # elif someone has searched for event
-  else: year = None
-  if event != 'All Events' and event != None:
-    column, search_term = 'event', event
-    search_criteria.append((column,search_term))
-    # test whether there's a search term following
-    if interest_point != None and interest_point != 'All Locations':
-      search_criteria.append((boolean_2,))
-  else: event = None
-  # elif someone has searched for location
-  if interest_point != 'All Locations' and interest_point != None:
-    column, search_term = 'interest_point', interest_point
-    search_criteria.append((column,search_term))
-  else: interest_point = None
-  
-  id_num = set_id(pagination_event, image_ids)
-  images = get_images_for_page(id_num, pagination_event, search_criteria)
-  
-  return render_template("public/gallery.html", images=images, years=years,
-    events=events, interest_points=interest_points, 
-    year=year, event=event, interest_point=interest_point,
-    boolean_1=boolean_1, boolean_2=boolean_2)
+  # get search fields
+  fields = prettify_columns(app.config['SEARCH_COLUMNS'])
+  # get user input for search
+  search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
+  # if the specified column name is 'prettified', refert to raw column name
+  search_field = get_raw_column(search_field)
+
+  # if no search has been performed, show all images
+  if search_term == '' or search_term == None:
+    images = get_flex('images')
+  # or search in all fields
+  elif search_field == 'All Fields':
+    images = gallery_search('images', search_term, None)
+  # or search in specific field
+  else:
+    images = gallery_search('images', search_term, search_field)
+
+  return render_template("public/gallery.html", images=images,
+    fields=fields,
+    GALLERY_TITLE=app.config['GALLERY_TITLE'],
+    GALLERY_SUBTITLE=app.config['GALLERY_SUBTITLE'],
+    UPLOAD_FOLDER=app.config['UPLOAD_FOLDER'],
+    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
+    THUMBNAIL_FOLDER_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'],
+    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
+    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
+    HEADER_CSS=app.config['HEADER_CSS'],
+    FOOTER_CSS=app.config['FOOTER_CSS'], 
+    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    GALLERY_CSS=app.config['GALLERY_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
+    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
+    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
+    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
+    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
+    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
 
 @app.route("/timeline")
 def timeline():
   table_name = 'events'
   events = get_flex(table_name, 100)
-  return render_template("public/timeline.html", events=events)
+  return render_template("public/under_construction.html",
+    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
+    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
+    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
+    HEADER_CSS=app.config['HEADER_CSS'],
+    FOOTER_CSS=app.config['FOOTER_CSS'], 
+    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    UNDER_CONST_CSS=app.config['UNDER_CONST_CSS'],
+    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
+    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
+    BASE_CSS=app.config['BASE_CSS'],
+    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
+    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
+    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+  # return render_template("public/timeline.html", events=events, 
+  #   UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
+  #   HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
+  #   FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
+  #   HEADER_CSS=app.config['HEADER_CSS'],
+  #   FOOTER_CSS=app.config['FOOTER_CSS'], 
+  #   PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+  #   TIMELINE_CSS=app.config['TIMELINE_CSS'],
+  #   RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
+  #   TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
+  #   TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
+  #   BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
+  #   WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+
+@app.route("/about")
+def about():
+  return render_template("public/about.html",
+    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
+    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
+    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
+    HEADER_CSS=app.config['HEADER_CSS'],
+    FOOTER_CSS=app.config['FOOTER_CSS'], 
+    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
+    ABOUT_CSS=app.config['ABOUT_CSS'],
+    BASE_CSS=app.config['BASE_CSS'],
+    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
+    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
+    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
+    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
+    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+
+

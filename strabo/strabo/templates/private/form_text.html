@@ -1,0 +1,75 @@
+{% extends "/private/base.html" %}
+{% set active_page = "edit_text" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_tool.css">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+{% for txt in text_selection %}
+  <div class="form">
+      <fieldset>
+        <form id="image-upload" method="POST" action="/admin/edit_text/edit/" enctype="multipart/form-data">
+          <div class="row">
+            <div class="form-wrapper col-lg-8">
+              <legend>Edit Text Selection</legend>
+              
+              <div class="form-group" >
+                <label for="name">Text Selection Name:</label><br>
+                <input class="form-control" type="text" name="name" value="{{ txt['name'] }}">
+              </div>
+              <div class="form-group">
+                <label for="book">Book:</label><br>
+                <input class="form-control" type="text" name="book" value="{{ txt['book'] }}">
+              </div>
+              <div class="form-group">
+                <label for="section">Section:</label><br>
+                <input class="form-control" type="text" name="section" value="{{ txt['section'] }}">
+              </div>
+              <div class="form-group">
+                <label for="pages">Pages:</label><br>
+                <input class="form-control" type="pages" name="pages" value="{{ txt['pages'] }}">
+              </div>
+              <div class="form-group">
+                <label for="passage">Passage:</label><br>
+                <textarea class="form-control" type="text" name="passage" rows='7'>{{ txt['passage'] }}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="interest_point">Interest Point:</label><br>
+                <select class="form-control" name='interest_point'>
+                  <option selected name='selected'>{{ txt['interest_point'] }}</option>
+                  {% for interest_point in interest_points %}
+                  <option name="interest_point">{{ interest_point['name'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="event">Event:</label><br>
+                <select class="form-control" name='event'>
+                  <option selected name='selected'>{{ txt['event'] }}</option>
+                  {% for event in events %}
+                  <option name="event">{{ event['title'] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="notes">Additional Notes:</label><br>
+                <input class="form-control" type="text" name="notes" value="{{ txt['notes'] }}">
+              </div>
+              <div class="form-group">
+                <label for="tags">Tags:</label><br>
+                <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas." value="{{ txt['tags'] }}">
+              </div>
+              <p></p>
+              
+              <button type="submit" name="edit-btn" value={{ txt['id'] }}>Edit</button>
+            </div>
+  
+          </div>
+        </form>
+      </fieldset>
+    </div>
+{% endfor %}
+</main>
+{% endblock %}
