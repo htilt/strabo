@@ -1,12 +1,17 @@
-import sqlite3, os
+import os
 from contextlib import closing
 
 from strabo import app
+import sqlalchemy
+from sqlalchemy.orm import sessionmaker
 
-# This function starts a new connection to the bbs.sqlite3 database.
+from strabo import app
+
+engine = sqlalchemy.create_engine(app.config['DATABASE_URL'], echo=app.config['IS_DEBUG'])
+'''
 def get_db():
-  conn = sqlite3.connect(app.config['DATABASE'])
-  return conn
+    Session = sessionmaker(bind=engine)
+    return Session()
 
 # get the maximum id in table images
 def get_max_id():
@@ -40,11 +45,11 @@ def dict_factory(cursor, row):
 # Gets 10 images with select metadata
 def get_flex(table_name, count=None):
   if count:
-    query = """SELECT * FROM {table} ORDER BY id DESC 
+    query = """SELECT * FROM {table} ORDER BY id DESC
       LIMIT ?""".format(table=table_name)
     data = simple_query(query, (count,))
   else: #count=None
-    query = """SELECT * FROM {table} 
+    query = """SELECT * FROM {table}
       ORDER by id DESC""".format(table=table_name)
     data = simple_query(query)
   return data
@@ -76,7 +81,7 @@ def gallery_search(table_name, search_term, column=None):
   # do fuzzy search
   if column == None:
     query = """SELECT * FROM {table} WHERE title LIKE ? OR img_description LIKE ?
-      OR interest_point LIKE ? OR event LIKE ? OR notes LIKE ? ORDER BY id 
+      OR interest_point LIKE ? OR event LIKE ? OR notes LIKE ? ORDER BY id
       DESC""".format(table=table_name)
     search_term = '%{}%'.format(search_term)
     params = (search_term,search_term,search_term,search_term,search_term)
@@ -95,7 +100,7 @@ def search(table_name, column, search_term, count=None):
   if not column in SCHEMA[table_name]:
     return []
   # if searching a lengthy text field, do fuzzy search
-  if column in ("title", "img_description", "event_description", "name", 
+  if column in ("title", "img_description", "event_description", "name",
     "passage", "tags", "notes"):
     query = """SELECT * FROM {table} WHERE {column} LIKE ?
       ORDER BY id DESC""".format(table=table_name, column=column)
@@ -116,7 +121,7 @@ def search(table_name, column, search_term, count=None):
 
 # SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
 
-# receives a list of ids and loops over them, deleting 
+# receives a list of ids and loops over them, deleting
 # each row from the db. If an image is deleted, the function also
 # removes the image file from /uploads
 def delete(keys, table_name):
@@ -125,7 +130,7 @@ def delete(keys, table_name):
   with closing(get_db()) as db:
     c = db.cursor()
     for key in keys:
-      # if images is the table to be modified, 
+      # if images is the table to be modified,
       if table_name == "images":
         query1 = """SELECT filename FROM images WHERE id = ?"""
         query2 = """SELECT thumbnail_name FROM images WHERE id = ?"""
@@ -211,7 +216,4 @@ def edit_textselection(params):
   with closing(get_db()) as db:
     query = app.config['EDIT_TEXT_QUERY']
     db.cursor().execute(query, params)
-    db.commit()
-
-
-
+    db.commit()'''
