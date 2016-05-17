@@ -51,7 +51,7 @@ app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the fir
 #
 app.config['IS_DEBUG'] = True
 # set name of database
-app.config['DATABASE_URL'] = "postgres://localhost/strabo"
+app.config['DATABASE_URL'] = "postgres://localhost/strabo_test"
 # set absolute and relative paths to the upload directory for images
 app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads-livy/'
 app.config['UPLOAD_FOLDER_RELPATH'] = '/static/uploads-livy/'
@@ -106,32 +106,6 @@ app.config['SEARCH_COLUMNS'] = ['title', 'img_description', 'latitude', 'longitu
 #
 #
 ###### The following variables probably will not require configuration.
-
-# Only edit SQL statements if coulumns in schema.py have been altered.
-app.config['INSERT_IMG_QUERY'] = """INSERT INTO images(title, img_description,
-latitude, longitude, date_created, interest_point, event, period, notes,
-tags, edited_by, filename, thumbnail_name) VALUES(?, ?, ?, ?, ?, ?,
-?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_IMG_QUERY'] = """REPLACE INTO images
-VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-
-app.config['INSERT_IP_QUERY'] = """INSERT INTO interest_points(name, books,
-coordinates, geojson_object, feature_type, geojson_feature_type, notes, tags,
-edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_IP_QUERY'] = """REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?,
-?, ?, ?, ?, ?, ?)"""
-
-app.config['INSERT_EVENT_QUERY'] = """INSERT INTO events
-(title, event_description, date_of_event, notes, tags, edited_by)
-VALUES(?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_EVENT_QUERY'] = """REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
-?, ?)"""
-
-app.config['INSERT_TEXT_QUERY'] = """INSERT INTO text_selections
-(name, book, section, pages, passage, interest_point, event,
-notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_TEXT_QUERY'] = """REPLACE INTO text_selections
-VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 
 # Provide aliases for column names
 # Only edit column aliases if coulumns in schema.py have been altered.

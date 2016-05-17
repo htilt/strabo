@@ -31,13 +31,16 @@ def DMS_to_Dec(lst):
 # return a list containing [year, month, day] when given a string
 def clean_date(date_string):
   date_list = re.findall(r"[\w']+", date_string)
-  # if missing year, append original string to list containing 
+  # if missing year, append original string to list containing
   # empty string to preserve index range
   if len(date_list) < 3:
     return [''] + date_list
   return date_list
 
-# convert raw column names to list of column names used in 
+def clear_sel(inputstr):
+    return  inputstr if not inputstr == 'Select One' else ""
+
+# convert raw column names to list of column names used in
 # user search
 def prettify_columns(raw_columns):
   user_columns = []
@@ -67,4 +70,3 @@ def get_raw_column(search_field):
     search_field = app.config['REVERSE_COLUMN_ALIASES'][search_field]
     return search_field
   else: return search_field
-

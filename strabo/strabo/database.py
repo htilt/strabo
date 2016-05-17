@@ -4,43 +4,19 @@ from contextlib import closing
 from strabo import app
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
-
+from strabo import schema_livy
 from strabo import app
 
 engine = sqlalchemy.create_engine(app.config['DATABASE_URL'], echo=app.config['IS_DEBUG'])
-'''
-def get_db():
-    Session = sessionmaker(bind=engine)
+
+Session = sessionmaker(bind=engine)
+
+def new_session():
     return Session()
 
 # get the maximum id in table images
 def get_max_id():
-  with closing(get_db()) as db:
-    cur = db.cursor()
-    cur = cur.execute('SELECT max(id) FROM images')
-    max_id = cur.fetchone()[0]
-    if max_id == None:
-      max_id = 0
-  return max_id
-
-# given a query and parameters, perform the query
-def simple_query(query, params=None):
-  with closing(get_db()) as db:
-    db.row_factory = dict_factory
-    cur = db.cursor()
-    if params == None:
-      data = cur.execute(query).fetchall()
-    else:
-      data = cur.execute(query, params).fetchall()
-  return data
-
-# returns sqlite results as dictionaries, with column names
-# that can be referenced
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
+  return session.query(func.max(Player.score)).one()
 
 # Gets 10 images with select metadata
 def get_flex(table_name, count=None):
@@ -63,13 +39,13 @@ def get_column_names(table_name):
   return column_names
 
 # define accepted terms for the schema
-SCHEMA = {
+'''SCHEMA = {
   'images': [c[0] for c in get_column_names('images')],
   'events': [c[0] for c in get_column_names('events')],
   'interest_points': [c[0] for c in get_column_names('interest_points')],
   'text_selections': [c[0] for c in get_column_names('text_selections')],
   'boolean': ['AND', 'OR']
-}
+}'''
 
 # searches for rows with search_term in specified column or in multiple columns
 # with fuzzy search
@@ -95,9 +71,19 @@ def gallery_search(table_name, search_term, column=None):
 
 # searches for rows with search_term in column
 def search(table_name, column, search_term, count=None):
-  if not table_name in SCHEMA:
-    return []
-  if not column in SCHEMA[table_name]:
+    if (not table_name in schema_livy.table_names or
+            not column in schema_livy.table_collums[table_name]):
+        return []
+    session = Session()
+    sqltable = session.query(schema_livy.class_names[table_name])
+    # if searching a lengthy text field, do fuzzy search
+    if column in ("title", "img_description", "event_description", "name",
+        "passage", "tags", "notes"):
+        sqltable.filter()
+
+def searchold(table_name, column, search_term, count=None):
+  if (not table_name in schema_livy.table_names or
+        not column in schema_livy.table_collums[table_name]):
     return []
   # if searching a lengthy text field, do fuzzy search
   if column in ("title", "img_description", "event_description", "name",
@@ -119,12 +105,35 @@ def search(table_name, column, search_term, count=None):
   data = simple_query(query, params)
   return data
 
+def delete_file(filename,file_path):
+    file_fullpath = os.path.join(file_path, filename)
+    os.remove(file_fullpath)
+
+def delete_image_data(filename,thumbnail_name):
+    delete_file(filename,app.config['UPLOAD_FOLDER'])
+    delete_file(thumbnail_name,app.config['NEW_DATA_DIRECTORY'])
+
 # SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
 
 # receives a list of ids and loops over them, deleting
 # each row from the db. If an image is deleted, the function also
 # removes the image file from /uploads
-def delete(keys, table_name):
+def delete(keys,table_name):
+    if table_name not in schema_livy.table_names:
+        return []
+
+    table_type = schema_livy.class_names[table_name]
+
+    session = Session()
+    sqltable = session.query(table_type)
+    for key in keys:
+        keyrow = sqltable.filter(table_type.id == id)
+        if table_name == "images":
+            delete_image_data(keyrow.filename,keyrow.thumbnail_name)
+        session.delete(keyrow)
+    session.commit()
+
+def deleteold(keys, table_name):
   if not table_name in SCHEMA:
     return []
   with closing(get_db()) as db:
@@ -157,63 +166,45 @@ def delete(keys, table_name):
 
 # returns the geojson objects of a given feature type
 def get_geojson(geojson_feature_type):
-  query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
-  geojson = simple_query(query, (geojson_feature_type,))
-  print(geojson)
-  return geojson
+    ses = Session()
+    geodata = ses.query().filter(InterestPoints.geojson_feature_type == geojson_feature_type)
+    print(geodata)
+    return geodata
+
+def param_add_fn(table_type):
+    def calc(params):
+        ses = Session()
+        ses.add(schema_livy.Images(**params))
+        ses.commit()
+    return calc
 
 # inserts an image into the db
-def insert_images(params):
-  with closing(get_db()) as db:
-    query = app.config['INSERT_IMG_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+insert_images = param_add_fn(schema_livy.Images)
 
 # inserts an interest point into the db
-def insert_ips(params):
-  with closing(get_db()) as db:
-    query = app.config['INSERT_IP_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+insert_ips = param_add_fn(schema_livy.InterestPoints)
 
 # inserts an event into the db
-def insert_events(params):
-  with closing(get_db()) as db:
-    query = app.config['INSERT_EVENT_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+insert_ips = param_add_fn(schema_livy.Events)
 
 # inserts an event into the db
-def insert_text(params):
-  with closing(get_db()) as db:
-    query = app.config['INSERT_TEXT_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+insert_ips = param_add_fn(schema_livy.TextSelections)
 
-# insert into all 14 columns in images to replace
-def edit_image(params):
-  with closing(get_db()) as db:
-    query = app.config['EDIT_IMG_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+def param_edit_fn(table_type):
+    def calc(id,params):
+        ses = Session()
+        ses.query(table_type).filter(table_type.id == id).update(**params)
+        ses.commit()
+    return calc
 
-# insert into all 10 columns in interest_points to replace
-def edit_ip(params):
-  with closing(get_db()) as db:
-    query = app.config['EDIT_IP_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+#replace all params in the image specified by the id
+edit_image = param_edit_fn(schema_livy.Images)
 
-# insert into all 8 columns in events to replace
-def edit_event(params):
-  with closing(get_db()) as db:
-    query = app.config['EDIT_EVENT_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()
+#replace all params in the interest point specified by the id
+edit_ip = param_edit_fn(schema_livy.InterestPoints)
 
-# insert into all 12 columns in text_selections to replace
-def edit_textselection(params):
-  with closing(get_db()) as db:
-    query = app.config['EDIT_TEXT_QUERY']
-    db.cursor().execute(query, params)
-    db.commit()'''
+#replace all params in the event specified by the id
+edit_event = param_edit_fn(schema_livy.Events)
+
+#replace all params in the test selection specified by the id
+edit_textselection = param_edit_fn(schema_livy.TextSelections)
