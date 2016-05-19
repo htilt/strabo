@@ -1,24 +1,24 @@
 {% if latitude %}
 <div class="form-group">
   <label for="latitude">Latitude:</label><br>
-  <input class="form-control" type="text" name="latitude" size="80" value= {{ latitude }}>
+  <input class="form-control" type="text" name="latitude" value= {{ latitude }}>
 </div>
 {% else %}
 <div class="form-group">
   <label for="latitude">Latitude:</label><br>
-  <input class="form-control" type="text" name="latitude" size="80">
+  <input class="form-control" type="text" name="latitude" >
 </div>
 {% endif %}
 
 {% if longitude %}
 <div class="form-group">
   <label for="longitude">Longitude:</label><br>
-  <input class="form-control" type="text" name="longitude" size="80" value= {{ longitude }}>
+  <input class="form-control" type="text" name="longitude" value= {{ longitude }}>
 </div>
 {% else %}
 <div class="form-group">
   <label for="longitude">Longitude:</label><br>
-  <input class="form-control" type="text" name="longitude" size="80">
+  <input class="form-control" type="text" name="longitude" >
 </div>
 {% endif %}
 
@@ -35,7 +35,7 @@
     </div>
     <span> - </span>
     <div class="form-group">
-      <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+      <input type="number" name="year" class="form-control" value="{{ year }}"=>
     </div>
   </div>
 </div>
@@ -52,7 +52,7 @@
     </div>
     <span> - </span>
     <div class="form-group">
-      <input type="number" name="year" class="form-control" min="1900" max="2050" placeholder="yyyy"=>
+      <input type="number" name="year" class="form-control" placeholder="yyyy"=>
     </div>
   </div>
 </div>

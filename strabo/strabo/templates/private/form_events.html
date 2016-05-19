@@ -10,18 +10,18 @@
 {% for evnt in event %}
   <div class="form">
       <fieldset>
-        <form id="image-upload" method="POST" action="/edit_events/edit/" enctype="multipart/form-data">
+        <form id="image-upload" method="POST" action="/admin/edit_events/edit/" enctype="multipart/form-data">
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Edit Events</legend>
               
               <div class="form-group" >
                 <label for="title">Event Title:</label><br>
-                <input class="form-control" type="text" name="title" required size="15" value="{{ evnt['title'] }}">
+                <input class="form-control" type="text" name="title" value="{{ evnt['title'] }}">
               </div>
               <div class="form-group">
                 <label for="event_description">Event Description:</label><br>
-                <input class="form-control" type="text" name="event_description" size="80" value="{{ evnt['event_description'] }}">
+                <input class="form-control" type="text" name="event_description" value="{{ evnt['event_description'] }}">
               </div>
               <div class="form-group">
                 <label for="year">Event Date:</label><br>
@@ -35,17 +35,17 @@
                   </div>
                   <span> - </span>
                   <div class="form-group">
-                    <input type="number" name="year" class="form-control" min="1900" max="2050" value="{{ year }}"=>
+                    <input type="number" name="year" class="form-control" value="{{ year }}"=>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
-                <input class="form-control" type="text" name="notes" size="80" value="{{ evnt['notes'] }}">
+                <input class="form-control" type="text" name="notes" value="{{ evnt['notes'] }}">
               </div>
               <div class="form-group">
                 <label for="tags">Tags:</label><br>
-                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+                <input class="form-control" type="text" name="tags" value="{{ evnt['tags'] }}" placeholder="Add tags separated by commas.">
               </div>
               <p></p>
               

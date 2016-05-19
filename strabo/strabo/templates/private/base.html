@@ -5,22 +5,25 @@
       rel="stylesheet">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
-<link rel="stylesheet" type="text/css" href="../static/private_styles/upload_navbar.css">
+<link rel="stylesheet" type="text/css" href="/static/private_styles/upload_navbar.css">
 
-<title>{% block title %}Canyon Mapper{% endblock %}</title>
+<title>{{WEBSITE_TITLE}}</title>
 {% endblock head %}
 
 <body>
     {% set navigation_bar = [
-    ('/upload_images/', 'upload_images', 'Upload Images'),
-    ('/upload_ips/', 'upload_ips', 'Add Interest Points'),
-    ('/upload_events/', 'upload_events', 'Add Events'),
-    ('/edit_images/', 'edit_images', 'Edit Images'),
-    ('/edit_ips/', 'edit_ips', 'Edit Interest Points'),
-    ('/edit_events/', 'edit_events', 'Edit Events'),
-    ('/delete_images/', 'delete_images', 'Delete Images'),
-    ('/delete_ips/', 'delete_ips', 'Delete Interest Points'),
-    ('/delete_events/', 'delete_events', 'Delete Events')
+    ('/admin/upload_images/', 'upload_images', 'Upload Images'),
+    ('/admin/upload_ips/', 'upload_ips', 'Add Interest Points'),
+    ('/admin/upload_events/', 'upload_events', 'Add Events'),
+    ('/admin/upload_text/', 'upload_text', 'Add Text Selections'),
+    ('/admin/edit_images/', 'edit_images', 'Edit Images'),
+    ('/admin/edit_ips/', 'edit_ips', 'Edit Interest Points'),
+    ('/admin/edit_events/', 'edit_events', 'Edit Events'),
+    ('/admin/edit_text/', 'edit_text', 'Edit Text Selections'),
+    ('/admin/delete_images/', 'delete_images', 'Delete Images'),
+    ('/admin/delete_ips/', 'delete_ips', 'Delete Interest Points'),
+    ('/admin/delete_events/', 'delete_events', 'Delete Events'),
+    ('/admin/delete_text/', 'delete_text', 'Delete Text Selections')
     ] -%}
     
     {% set active_page = active_page|default('index') -%}
@@ -36,7 +39,7 @@
     <div class="body-wrapper">
         {% block content %}
         <div class="temp">
-            <h2 class="text-muted">Select a tab to begin adding content to the Reed Canyon Mapper.</h2>
+            <h2 class="text-muted">{{INDEX_GREETING}}</h2>
         </div>
         {% endblock content %}
     </div>
@@ -45,7 +48,7 @@
         {% block footer %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-        <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
         {% endblock  footer %}
     </div>

@@ -1,0 +1,79 @@
+{% extends "/private/base.html" %}
+{% set active_page = "edit_text" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<main>
+    <div id="filter-options">
+        <form class="form-inline" method="GET" action="/admin/edit_text/" enctype="multipart/form-data">
+            <div class="form-group">
+                <p class="text-muted">Search for text selections by category:</p>
+            </div>
+            
+            <div class="form-group">
+              <select class="form-control" name='search_field'>
+                {% for field in fields %}
+                    <option name="field">{{field}}</option>
+                {% endfor %}  
+              </select>
+            </div>
+          
+            <div class="form-group">
+                <input class="form-control" type="text" name="search_term" placeholder="Add your search term here">
+            </div>
+
+            <div class="form-group">
+              <input type="submit" class="btn btn-info" value="Submit">
+            </div>
+        </form>
+    </div>
+    <p></p>
+    <p></p>
+    <div id="form-field">
+        <form method="GET" action="/admin/edit_text/" enctype="multipart/form-data">
+            <div class="table">
+                <table class="table-bordered" margin="10px" id="preview">
+                  <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Creation Date</th>
+                    <th>Book</th>
+                    <th>Section</th>
+                    <th>Pages</th>
+                    <th>Passage</th>
+                    <th>Event</th>
+                    <th>Interest Point</th>
+                    <th>Additional Notes</th>
+                  </tr>
+                {% for txt in text_selections %}
+                  <tr>
+                    <td>
+                        <button type="submit" name="edit-btn" value={{ txt['id'] }}>Edit</button>
+                    </td>
+                    <td class="key">{{ txt['id'] }}</td>
+                    <td class="name">{{ txt['name'] | default("Untitled") }}</td>
+                    <td class="created_at">{{ txt['created_at'] }}</td> 
+                    <td class="book">{{ txt['book'] }}</td>
+                    <td class="section">{{ txt['section'] }}</td>
+                    <td class="pages">{{ txt['pages'] }}</td>
+                    <td class="passage">{{ txt['passage'] }}</td>
+                    <td class="event">{{ txt['event'] }}</td>
+                    <td class="interest_point">{{ txt['interest_point'] }}</td>
+                    <td class="notes">{{ txt['notes'] }}</td>
+                  </tr>
+                {% endfor %}
+
+                </table>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+    {{ super () }}
+{% endblock %}
+

@@ -7,22 +7,22 @@
 
 {% block content %}
 <main class="container">
-
+<br>
   <div class="form">
       <fieldset>
-        <form id="image-upload" name="upload-form" method="POST" action="/upload_images/post" enctype="multipart/form-data">
+        <form id="image-upload" name="upload-form" method="POST" action="/admin/upload_images/post" enctype="multipart/form-data">
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Upload a New Image</legend>
               
               <div class="form-group" >
                 <label for="title">Image Title:</label><br>
-                <input class="form-control" type="text" name="title" required size="15" placeholder="Untitled"><br>
+                <input class="form-control" type="text" name="title" placeholder="Untitled"><br>
               </div>
               
               <div class="form-group">
                 <label for="img_description">Image Description:</label><br>
-                <input class="form-control" type="text" name="img_description" size="80" placeholder="Describe the view unique to this image">
+                <input class="form-control" type="text" name="img_description" placeholder="Describe the view unique to this image">
               </div>
            
               <div id='exif-autoComplete'>
@@ -42,21 +42,31 @@
               <div class="form-group">
                 <label for="event">Event:</label><br>
                 <select class="form-control" name='event'>
-                  <option selected name="ip_auto"> Select One </option>
+                  <option selected name="event_auto"> Select One </option>
                   {% for event in events %}
                   <option name="event"> {{ event['title'] }} </option>
                   {% endfor %}
                 </select>
               </div>
-  
+              
+              <div class="form-group">
+                <label for="period">Period:</label><br>
+                <select class="form-control" name='period'>
+                  <option selected name="period_auto"> Select One </option>
+                  {% for period in periods %}
+                  <option name="period"> {{ period }} </option>
+                  {% endfor %}
+                </select>
+              </div>
+
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
-                <input class="form-control" type="text" name="notes" size="80">
+                <input class="form-control" type="text" name="notes">
               </div>
 
               <div class="form-group">
                 <label for="tags">Tags:</label><br>
-                <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+                <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
               </div>
               
               <p></p>
@@ -97,7 +107,7 @@
 
       {% for key in images %}
       <tr>
-        <td><img src="/static/test_thumbnails/{{ key['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ key['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
         <td class="image_title">{{ key['title'] | default("Untitled") }}</td>
         <td class="img_description">{{ key['img_description'] }}</td>
         <td class="created_at">{{ key['created_at'] }}</td> 
@@ -105,7 +115,7 @@
         <td class="longitude">{{ key['longitude'] }}</td>
         <td class="date_created">{{ key['date_created'] }}</td>
         <td class="interest_point">{{ key['interest_point'] }}</td>
-        <td class="events">{{ key['events'] }}</td>
+        <td class="events">{{ key['event'] }}</td>
         <td class="notes">{{ key['notes'] }}</td>
         <td class="file_name">{{ key['filename'] }}</td>
       </tr>

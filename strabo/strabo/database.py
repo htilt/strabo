@@ -5,7 +5,7 @@ from strabo import app
 
 # This function starts a new connection to the bbs.sqlite3 database.
 def get_db():
-  conn = sqlite3.connect("bbs.sqlite3")
+  conn = sqlite3.connect(app.config['DATABASE'])
   return conn
 
 # get the maximum id in table images
@@ -18,23 +18,6 @@ def get_max_id():
       max_id = 0
   return max_id
 
-# return the total number of images in the db
-def count_all_images(column=None, search_term=None):
-  # count all images
-  if column == None:
-    query = """SELECT COUNT(*) FROM images"""
-    image_count = simple_query(query)
-  # count all images where column = search_term
-  else:
-    if column == 'date_created':
-      query = """SELECT COUNT(*) FROM images 
-      WHERE strftime('%Y', date_created) = ?"""
-    else:
-      query = """SELECT COUNT(*) FROM images 
-      WHERE {column} = ?""".format(column=column)
-    image_count = simple_query(query, (search_term,))
-  return image_count[0]['COUNT(*)']
-
 # given a query and parameters, perform the query
 def simple_query(query, params=None):
   with closing(get_db()) as db:
@@ -45,27 +28,6 @@ def simple_query(query, params=None):
     else:
       data = cur.execute(query, params).fetchall()
   return data
-
-# This function ensures that get_images_helper will receive a safe 
-# column name.
-def get_images(year=None, event=None, location=None):
-  if year is not None:
-    return get_images_helper('date_created', year, 12)
-  if event is not None:
-    return get_images_helper('event', event, 12)
-  else:
-    return get_images_helper('interest_point', location, 12)
-
-# Gets 12 images from db for which a given column matches the user input.
-def get_images_helper(column, variable, count):
-  if column == 'date_created':
-    query = """SELECT * FROM images WHERE strftime('%Y', date_created) = ? 
-      ORDER by id LIMIT ?"""
-  else:
-    query = """SELECT * FROM images WHERE {column} LIKE ? 
-      ORDER by id LIMIT ?""".format(column = column)
-  images = simple_query(query, (variable, count))
-  return images
 
 # returns sqlite results as dictionaries, with column names
 # that can be referenced
@@ -100,8 +62,31 @@ SCHEMA = {
   'images': [c[0] for c in get_column_names('images')],
   'events': [c[0] for c in get_column_names('events')],
   'interest_points': [c[0] for c in get_column_names('interest_points')],
+  'text_selections': [c[0] for c in get_column_names('text_selections')],
   'boolean': ['AND', 'OR']
 }
+
+# searches for rows with search_term in specified column or in multiple columns
+# with fuzzy search
+def gallery_search(table_name, search_term, column=None):
+  if not table_name in SCHEMA:
+    return []
+  if not column in SCHEMA[table_name] and not column == None:
+    return []
+  # do fuzzy search
+  if column == None:
+    query = """SELECT * FROM {table} WHERE title LIKE ? OR img_description LIKE ?
+      OR interest_point LIKE ? OR event LIKE ? OR notes LIKE ? ORDER BY id 
+      DESC""".format(table=table_name)
+    search_term = '%{}%'.format(search_term)
+    params = (search_term,search_term,search_term,search_term,search_term)
+  else:
+    query = """SELECT * FROM {table} WHERE {column} LIKE ?
+      ORDER BY id DESC""".format(table=table_name, column=column)
+    search_term = '%{}%'.format(search_term)
+    params = (search_term,)
+  data = simple_query(query, params)
+  return data
 
 # searches for rows with search_term in column
 def search(table_name, column, search_term, count=None):
@@ -110,12 +95,13 @@ def search(table_name, column, search_term, count=None):
   if not column in SCHEMA[table_name]:
     return []
   # if searching a lengthy text field, do fuzzy search
-  if column in ("title", "img_description", "event_description", "name"):
+  if column in ("title", "img_description", "event_description", "name", 
+    "passage", "tags", "notes"):
     query = """SELECT * FROM {table} WHERE {column} LIKE ?
       ORDER BY id DESC""".format(table=table_name, column=column)
     search_term = '%{}%'.format(search_term)
     params = (search_term,)
-  # otherwise, perform nromal search
+  # otherwise, perform normal search
   else:
     if count != None:
       query = """SELECT * FROM {table} WHERE {column} = ?
@@ -139,128 +125,93 @@ def delete(keys, table_name):
   with closing(get_db()) as db:
     c = db.cursor()
     for key in keys:
-      # if images is the table to be modified, delete the image from /uploads
+      # if images is the table to be modified, 
       if table_name == "images":
-        query = """SELECT filename FROM images WHERE id = ?"""
-        file_name = simple_query(query, (key,))
-        file_name = (file_name[0][0])
-        path = app.config['UPLOAD_FOLDER']
-        fullpath = os.path.join(path, file_name)
-        os.remove(fullpath)
+        query1 = """SELECT filename FROM images WHERE id = ?"""
+        query2 = """SELECT thumbnail_name FROM images WHERE id = ?"""
+        # get the filename
+        file_name = simple_query(query1, (key,))
+        file_name = (file_name[0]['filename'])
+        # get the thumbnail name
+        thumbnail_name = simple_query(query2, (key,))
+        thumbnail_name = (thumbnail_name[0]['thumbnail_name'])
+
+        # delete the image from /uploads
+        file_path = app.config['UPLOAD_FOLDER']
+        file_fullpath = os.path.join(file_path, file_name)
+        os.remove(file_fullpath)
+        # then delete the image from /thumbnails
+        thumbnail_path = app.config['NEW_DATA_DIRECTORY']
+        thumbnail_fullpath = os.path.join(thumbnail_path, thumbnail_name)
+        os.remove(thumbnail_fullpath)
       # then delete the db row
       query = """DELETE FROM {table} WHERE id = ?""".format(table=table_name)
       db.execute(query, (key,))
     db.commit()
   return
 
+# returns the geojson objects of a given feature type
+def get_geojson(geojson_feature_type):
+  query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
+  geojson = simple_query(query, (geojson_feature_type,))
+  print(geojson)
+  return geojson
+
 # inserts an image into the db
 def insert_images(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""INSERT INTO images(title, img_description, 
-      latitude, longitude, date_created, interest_point, event, notes, 
-      tags, edited_by, filename, thumbnail_name) VALUES(?, ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?, ?)""", params)
+    query = app.config['INSERT_IMG_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
 # inserts an interest point into the db
 def insert_ips(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""INSERT INTO interest_points
-      (name, coordinates, geojson_object, feature_type, geojson_feature_type, 
-        notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", params)
+    query = app.config['INSERT_IP_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
 # inserts an event into the db
 def insert_events(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""INSERT INTO events
-      (title, event_description, date_of_event, notes, tags, edited_by) 
-      VALUES(?, ?, ?, ?, ?, ?)""", params)
+    query = app.config['INSERT_EVENT_QUERY']
+    db.cursor().execute(query, params)
+    db.commit()
+
+# inserts an event into the db
+def insert_text(params):
+  with closing(get_db()) as db:
+    query = app.config['INSERT_TEXT_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
 # insert into all 14 columns in images to replace
 def edit_image(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO images VALUES(?, ?, ?, ?, ?, ?, ?, 
-      ?, ?, ?, ?, ?, ?, ?)""", params)
+    query = app.config['EDIT_IMG_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
 # insert into all 10 columns in interest_points to replace
 def edit_ip(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, 
-      ?, ?, ?, ?, ?)""", params)
+    query = app.config['EDIT_IP_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
 # insert into all 8 columns in events to replace
 def edit_event(params):
   with closing(get_db()) as db:
-    db.cursor().execute("""REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
-      ?, ?)""", params)
+    query = app.config['EDIT_EVENT_QUERY']
+    db.cursor().execute(query, params)
     db.commit()
 
-# returns the geojson objects of a given feature type
-def get_geojson(geojson_feature_type):
-  query = """SELECT * FROM interest_points WHERE geojson_feature_type = ?"""
-  geojson = simple_query(query, (geojson_feature_type,))
-  return geojson
+# insert into all 12 columns in text_selections to replace
+def edit_textselection(params):
+  with closing(get_db()) as db:
+    query = app.config['EDIT_TEXT_QUERY']
+    db.cursor().execute(query, params)
+    db.commit()
 
-def get_images_for_page(id_num=None, page_event=None, search_criteria=None):
-  # if no search term or column is provided
-  print(search_criteria)
-  if len(search_criteria) == 0:
-    if page_event == 'next':
-      query = """SELECT * FROM images WHERE id > ? ORDER BY id LIMIT 12"""
-      params = (id_num,)
-    elif page_event == 'previous':
-      query = """SELECT * FROM images WHERE id < ? ORDER BY id DESC LIMIT 12"""
-      params = (id_num,)
-    else: 
-      query = """SELECT * FROM images ORDER BY id LIMIT 12"""
-      return simple_query(query)
-  # if user is searching for images by an arbitrary column/search term
-  else:
-    # Make a string containing the user's query
-    if page_event == 'next':
-      query = """SELECT * FROM images WHERE id > ? AND """
-      params = [id_num]      
-    elif page_event == "previous":
-      query = """SELECT * FROM images WHERE id < ? AND """
-      params = [id_num]
-    else: # page_event == None
-      query = """SELECT * FROM images WHERE """
-      params = []
-    for tup in search_criteria:
-      # if the tuple contains a column/search term pair
-      if len(tup) == 2:
-        # make the column
-        column = tup[0]
-        # ensure that the column name is in the schema
-        # if not column in ('event', 'interest_point', 
-        #   'strftime(\'%Y\', date_created'):
-        #   return []
-        # append a where clause to the query
-        query = query + """{column} = ? """.format(column=column)
-        # make the search term
-        search_term = tup[1]
-        # add the search term to the params
-        params.append(search_term)
-      # if the tuple contains a boolean
-      elif len(tup) == 1:
-        # get the boolean from the tuple
-        boolean = tup[0]
-        # ensure that the boolean is in the schema
-        # if not boolean in ('AND', 'OR'):
-        #   return []
-        # append the boolean to the query
-        query = query + """{boolean} """.format(boolean=boolean)
-    params = tuple(params)
-    # finish the query string
-    query = query + """ ORDER BY id """
-    if page_event == "previous": query = query + """DESC """
-    query = query + """LIMIT 12"""
-    print(query)
-    print(params)
-  images = simple_query(query, params)
-  return images
+
 

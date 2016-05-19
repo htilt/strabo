@@ -1,23 +1,21 @@
+// instantiate a Leaflet map object in the correct div
+// 'drawMap'. Set lat, lng for the map's center
 var drawMap = L.map('drawMap', {
-  
-  maxBounds: [
-  //southWest
-  [45.4793, -122.6416],
-  //northEast
-  [45.48409, -122.62264]
-  ],
-}).setView([45.48174, -122.631], 17 );
+}).setView([lat_setting, long_setting], 12 );
 
+// if you wish to use map tiles that take other or more variables,
+// you will need to add those below.
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
   id: 'mapbox.streets',
-
 }).addTo(drawMap);
 
 // add pre-existing points, zones, and lines to map
+// interest_points, zones, and lines variables from the 
+// interest_points.js file
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachPoint,
 }).addTo(drawMap);
@@ -27,9 +25,10 @@ var zone_features = L.geoJson(interest_zones, {
 }).addTo(drawMap);
 
 var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachZone,
+  onEachFeature: onEachLine,
 }).addTo(drawMap);
 
+// set styles and popups for zones
 function onEachZone(feature, layer) {
   layer.bindPopup(feature.geometry.name);
   layer.setStyle({
@@ -39,27 +38,23 @@ function onEachZone(feature, layer) {
         fillOpacity: 0.3
   });
 }
-
+// set styles and popups for lines
+function onEachLine(feature, layer) {
+  layer.bindPopup(feature.geometry.name);
+  layer.setStyle({
+        weight: 4,
+        color: feature.properties['marker-color'],
+        dashArray: '',
+  });
+}
+// set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.name);
   // layer.setIcon(feature.properties['icon']);
 }
 
-// var popup = L.popup();
-
-// function onMapClick(e) {
-//   popup
-//     .setLatLng(e.latlng)
-//     .setContent(e.latlng.toString())
-//     .openOn(drawMap);
-// }
-
-// drawMap.on('click', onMapClick);
-
-
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);
-
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors
@@ -118,8 +113,6 @@ drawMap.addControl(drawControla);
 
 var obJSON; ////// THIS IS THE OBJECT U WANT
 var shapeLayer;
-
-
 
 drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
@@ -203,7 +196,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#6A4A3C'});
         break;
-      case "Father's Rage Red":
+      case "Red":
         L.geoJson(obJSON, {
           style: {
             "color": '#CC333F'

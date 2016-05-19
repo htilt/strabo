@@ -9,19 +9,19 @@
 <main class="container">
   <div class="form">
     <fieldset>
-      <form id="event-upload" name="upload-form" method="POST" action="/events/post" enctype="multipart/form-data">
+      <form id="event-upload" name="upload-form" method="POST" action="/admin/events/post" enctype="multipart/form-data">
         <div class="row">
           <div class="form-wrapper col-lg-8">
             <legend>Add a New Event</legend>
             
             <div class="form-group">
               <label for="title">Event Title:</label><br>
-              <input class="form-control" type="text" maxlength="30" name="title" required placeholder="Untitled"><br>
+              <input class="form-control" type="text" name="title" placeholder="Untitled"><br>
             </div>
             
             <div class="form-group">
               <label for="event_description">Event Description:</label><br>
-              <input class="form-control" type="text" name="event_description" required maxlength="200" placeholder="Provide a description to be displayed on the website.">
+              <input class="form-control" type="text" name="event_description" placeholder="Provide a description to be displayed on the website.">
             </div>
          
             <div class="form-group">
@@ -36,19 +36,19 @@
                 </div>
                 <span> - </span>
                 <div class="form-group">
-                  <input type="number" name="year" class="form-control" min="1900" max="2050" placeholder="yyyy" required=>
+                  <input type="number" name="year" class="form-control" placeholder="yyyy" =>
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <label for="notes">Additional Notes:</label><br>
-              <input class="form-control" type="text" name="notes" maxlength="400" placeholder="Add any additional notes for private reference.">
+              <input class="form-control" type="text" name="notes" placeholder="Add any additional notes for private reference.">
             </div>
             
             <div class="form-group">
               <label for="tags">Tags:</label><br>
-              <input class="form-control" type="text" name="tags" maxlength="400" placeholder="Add tags separated by commas.">
+              <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
             </div>
 
             <p></p>

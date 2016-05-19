@@ -22,57 +22,29 @@ html, body {
   padding-top:20px;
 }
 
-
 /* Header */
+#page-header {
+    padding:20px;
+}
 
-.header {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid #ddd;
+#page-header h1 {
+  color: white;
   
-  font-family: 'Oswald', sans-serif;
+  /*font-family: 'Oswald', sans-serif;*/
   font-weight: 300;
   
-  font-size: 17px;
+  font-size: 30px;
   padding: 15px;
 }
 
-/* Menu */ 
-
-.header .menu {
-  float: right;
-  list-style: none;
-  margin-top: 0px;
-}
-
-.menu > li {
-  display: inline;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.menu a {
-  color: #898989;
-}
-
-/* Dropdown */
-
-.dropdown-menu {
-  font-size: 16px;
-  margin-top: 5px;
-  min-width: 105px;
-}
-
-.dropdown-menu li a {
-  color: #898989;
-  padding: 6px 20px;
+#page-header p {
+  color: white;
+  
+  /*font-family: 'Oswald', sans-serif;*/
   font-weight: 300;
-}
-
-/* Sub-Header */
-
-#page-header h1 {
-    color: rgba(255, 255, 255, 0.95);
-
+  
+  font-size: 18px;
+  padding-left: 15px;
 }
 
 /* Timeline */

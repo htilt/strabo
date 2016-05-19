@@ -1,13 +1,10 @@
+/* Page Styling */
+
+/*Override color preferences from base.css, 
+because any color on the map looks terrible*/
 html, body {
   height: 100%;
-}
-
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -60px;
-  padding: 0 0 60;
+  background-color: #f7f7f7;
 }
 
 #map {
@@ -18,12 +15,72 @@ html, body {
   height: 80px;
 }
 
-#img-wrapper {
-  padding-bottom: 10px;
-  padding-left: 60px;
+#book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {
+  color:#4A4A4A;
 }
 
-#img-wrapper p {
-  padding: 10px;
-  padding-top: 20px;
+
+/*Style Elements at page bottom (image gallery)*/
+
+#img-placeholder p {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#link-wrapper {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#no-img-msg {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#img-holder {
+  background-color: #B8CFD6;
+  border:1px solid #B0B0B0 ;
+}
+
+#gallery img { 
+   padding:1px;
+   border:1px solid #021a40;
+   background-color:#F0F0F0;
+}
+
+/* Light Box Viewer */
+
+#lightbox .modal-content {
+    display: inline-block;
+    text-align: center;   
+}
+
+#lightbox .close {
+    opacity: 1;
+    color: rgb(255, 255, 255);
+    background-color: rgb(25, 25, 25);
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 2px solid rgb(255, 255, 255);
+    position: absolute;
+    top: -15px;
+    right: -55px;
+    z-index:1032;
+}
+
+.modal-metadata {
+    font-size: 14px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #B8CFD6;
+    border:2px solid #B0B0B0 ;
+}
+
+.modal-metadata p {
+  color:#4A4A4A;
 }
