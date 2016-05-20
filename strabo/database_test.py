@@ -60,7 +60,6 @@ data2 = {
 def compare(dict,asd):
     pass
 
-
 @test_fixture(schema_livy.Images,[data1,data1])
 def edit_test():
   database.edit_table_key(schema_livy.Images,22,data2)
@@ -70,8 +69,14 @@ def delete_test():
     database.delete([5],schema_livy.Images)
     return True
 
+def clear_database():
+    clear_table(schema_livy.Images)
+    clear_table(schema_livy.Events)
+    clear_table(schema_livy.InterestPoints)
+    clear_table(schema_livy.TextSelections)
 
-clear_table(schema_livy.Images)
+#database.get_all_rows(schema_livy.Events)
+#clear_database()
 #insert_test()
 #edit_test()
 #delete_test()

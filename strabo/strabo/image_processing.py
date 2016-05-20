@@ -14,15 +14,21 @@ def allowed_file(filename):
 # This helper function uses PIL to make a new thumbnail of a given image
 def make_thumbnail(filename, this_id):
   # import desired image from /uploads folder
-  img = Image.open(app.config['UPLOAD_FOLDER'] + '/' + filename)
+  img_fullpath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+  img = Image.open(img_fullpath)
   # create a thumbnail from desired image
   size = 300, 300
   img.thumbnail(size)
   # save the image under a new filename in thumbnails directory
   imagename = filename.rsplit(".", 1)[0]
-  newfilename = imagename + "_thumbnail.jpeg"
+  newfilename = imagename + "_thumbnail.jpg"
   path = app.config['NEW_DATA_DIRECTORY']
   fullpath = os.path.join(path, newfilename)
+  print(fullpath)
+  print(imagename)
+  print(newfilename)
+  print(path)
+  print(img_fullpath)
   img.save(fullpath)
   # return the filename for the thumbnail
   return newfilename

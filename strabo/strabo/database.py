@@ -4,24 +4,29 @@ from contextlib import closing
 from strabo import app
 from strabo import schema_livy
 from strabo import db
+from sqlalchemy.sql.expression import func
 
-#engine = sqlalchemy.create_engine(app.config['DATABASE_URL'], echo=app.config['IS_DEBUG'])
-
-#Session = sessionmaker(bind=engine)
+def obj_list_to_dict_list(objs):
+    #kind of hackish solution
+    return [ob.__dict__ for ob in objs]
 
 # get the maximum id in table images
-def get_max_id():
-  return session.query(func.max(Player.score)).one()
+def get_max_img_id():
+  data = db.session.query(func.max(schema_livy.Images.id)).one()
+  if data == (None,):
+      return 0
+  else:
+      return data.id
+  return data
 
-def get_flex(table, count=None):
-    query = table.query
-    if count == None:
-        return query.all()
-    else:
-        return query.limit(count).all()
+def get_rows(table,count):
+    return table.query.limit(count).all()
+
+def get_all_rows(table):
+    return table.query.all()
 
 # Gets 10 images with select metadata
-def get_flexold(table_name, count=None):
+def get_all_rowsold(table_name, count=None):
   if count:
     query = """SELECT * FROM {table} ORDER BY id DESC
       LIMIT ?""".format(table=table_name)
@@ -40,7 +45,7 @@ def search_all_image_fields(search_term):
     #start on a performance optimization on above that sends a single sql query instead of many
     '''
     search_cols = app.config['IMAGE_SEARCH_COLUMNS']
-    search_col_objs = [table_column_name_dic[table.name][col_name] for col_name in search_cols]
+    search_col_objs = [table_column_name_dic[table.__table__.name][col_name] for col_name in search_cols]
     if len(search_cols) == 0:
         return []
     else if len(search_cols) == 1:
@@ -78,16 +83,19 @@ def gallery_search(table_name, search_term, column=None):
 
 # searches for rows with search_term in column
 def search(table, column, search_term):
-    if not column in table.columns:
+    if not column in table.__table__.columns:
         return []
-    column_obj = table_column_name_dic[table.name][column]
+    column_obj = schema_livy.table_column_name_dic[table.__table__.name][column]
     # if searching a lengthy text field, do fuzzy search
     if column in app.config['FUZZY_SEARCH_COLUMNS']:
         dataquery = table.query.filter(column_obj.like('%{}%'.format(search_term)))
     else:
         dataquery = table.query.filter(column_obj==search_term)
 
-    return dataquery.all()
+    datathing = dataquery.all()
+    if not isinstance(datathing,list):
+        datathing = [datathing]
+    return obj_list_to_dict_list(datathing)
 
 
 def searchold(table_name, column, search_term, count=None):
@@ -169,7 +177,8 @@ def deleteold(keys, table_name):
 
 # returns the geojson objects of a given feature type
 def get_geojson(geojson_feature_type):
-    geodata = InterestPoints.query.filter_by(geojson_feature_type=geojson_feature_type).all()
+    ips = schema_livy.InterestPoints.query.filter_by(geojson_feature_type=geojson_feature_type).all()
+    geodata = obj_list_to_dict_list(ips)
     print(geodata)
     return geodata
 

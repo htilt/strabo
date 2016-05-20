@@ -4,6 +4,7 @@ from math import ceil
 
 from strabo import app
 from strabo import database
+from strabo import schema_livy
 from strabo.geojson import make_featureCollection
 from strabo.utils import prettify_columns, get_raw_column
 
@@ -49,7 +50,7 @@ def gallery():
 
   # if no search has been performed, show all images
   if search_term == '' or search_term == None:
-    images = database.get_flex('images')
+    images = database.get_all_rows(schema_livy.Images)
   # or search in all fields
   elif search_field == 'All Fields':
     images = database.search_all_image_fields(search_term, None)
@@ -80,7 +81,7 @@ def gallery():
 @app.route("/timeline")
 def timeline():
   table_name = 'events'
-  events = database.get_flex(table_name, 100)
+  events = database.get_rows(table_name, 100)
   return render_template("public/under_construction.html",
     UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
     HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],

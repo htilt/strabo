@@ -59,8 +59,10 @@ class TextSelections(db.Model,DataType):
     edited_by = db.Column(db.Text)
 
 mdata = db.metadata
+tables = mdata.sorted_tables
 table_column_name_dic = {t.name:{e.name:e for e in t.columns} for t in mdata.sorted_tables}
 table_column_names = {t.name:[e.name for e in t.columns] for t in mdata.sorted_tables}
+
 '''
 table_names = {t.name for t in mdata.sorted_tables}
 class_names = {t.name:t for t in mdata.sorted_tables}
