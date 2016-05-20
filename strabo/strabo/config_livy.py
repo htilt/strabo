@@ -50,8 +50,6 @@ app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the fir
 
 #
 app.config['IS_DEBUG'] = True
-# set name of database
-app.config['DATABASE_URL'] = "postgres://localhost/strabo_test"
 # set absolute and relative paths to the upload directory for images
 app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads-livy/'
 app.config['UPLOAD_FOLDER_RELPATH'] = '/static/uploads-livy/'
@@ -98,8 +96,16 @@ app.config["SUBDOMAINS"] = 'abcd'
 app.config["EXTENSION"] = 'png'
 
 # list the columns that users should be able to search in the public gallery
-app.config['SEARCH_COLUMNS'] = ['title', 'img_description', 'latitude', 'longitude',
+app.config['IMAGE_SEARCH_COLUMNS'] = ['title', 'img_description', 'latitude', 'longitude',
 'interest_point', 'event', 'period', 'notes']
+
+app.config['FUZZY_SEARCH_COLUMNS'] = ["title", "img_description", "event_description", "name",
+    "passage", "tags", "notes"]
+
+#flask_sqlalchemy specific configuations
+# set name of database
+app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo_test"
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #
 #

@@ -6,9 +6,8 @@ from flask import request, render_template, redirect, url_for
 from werkzeug import secure_filename
 
 from strabo import app
-from strabo.database import get_flex, get_column_names, search, \
-delete, insert_images, insert_ips, insert_events, get_max_id, edit_image, \
-edit_ip, edit_event, get_geojson, insert_text, edit_textselection
+from strabo import database
+from strabo import schema_livy
 from strabo.utils import make_date, DMS_to_Dec, clean_date, prettify_columns, \
 get_raw_column, get_fields
 from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
@@ -28,13 +27,13 @@ def index():
 ### Views to upload images to db
 @app.route("/admin/upload_images/")
 def upload_images():
-  table_name = 'images'
-  images = get_flex(table_name, 10)
-  events = get_flex('events')
+  itable = schema_livy.Images
+  images = database.get_flex(itable, 10)
+  events = database.get_flex(itable,'events')
   periods = app.config['PERIODS']
-  interest_points = get_flex('interest_points')
+  interest_points = database.get_flex(itable,'interest_points')
   return render_template("private/upload_images.html", images= images,
-,,,    NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
+     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
 # harvest and clean select EXIF data including datetime, lat, long
 @app.route("/admin/upload_images/exif/", methods=['POST', 'GET'])
@@ -89,7 +88,7 @@ def post():
   params["period"] = utils.clear_sel(request.form['period'])
 
   # Get primary key for saving filename and thumbnailname
-  max_id = get_max_id()
+  max_id = database.get_max_id()
   this_id = max_id + 1
 
   # Check if the file is one of the allowed types/extensions
@@ -110,7 +109,7 @@ def post():
       raise RuntimeError("file extension not allowed")
 
   # insert new db entry
-  insert_images(params)
+  database.add_to_table(schema_livy.Images,params)
   return redirect(url_for('index'))
 
 ###
@@ -118,7 +117,7 @@ def post():
 ### Views to add interest points to the db
 @app.route("/admin/upload_ips/")
 def upload_ips():
-  interest_points = get_flex('interest_points')
+  interest_points = database.get_flex(schema_livy.InterestPoints)
   # get feature types
   feat_types = app.config["FEATURE_TYPES"]
   return render_template("private/upload_ips.html",
@@ -149,7 +148,7 @@ def interest_points_post():
   params["geojson_object"] = add_name_and_color(geojson_object, name, color) if is_gg else ''
 
   # insert new db entry
-  insert_ips(params)
+  database.add_to_table(schema_livy.InterestPoints, params)
   # Rewrite geoJSON file according to changes
   rewrite_geojson()
   return redirect(url_for('index'))
@@ -159,7 +158,7 @@ def interest_points_post():
 ### Views to add events to the db
 @app.route("/admin/upload_events/")
 def upload_events():
-  events = get_flex('events')
+  events = database.get_flex(schema_livy.Events)
   return render_template("private/upload_events.html", events=events)
 
 @app.route("/admin/events/post", methods=["POST"])
@@ -176,7 +175,7 @@ def event_post():
   params["date_of_event"] = make_date(month, day, year)
 
   # insert new db entry
-  insert_events(params)
+  database.add_to_table(schema_livy.Events,params)
   return redirect(url_for('index'))
 
 ###
@@ -184,9 +183,9 @@ def event_post():
 ### Views to add interest points to the db
 @app.route("/admin/upload_text/")
 def upload_text():
-  text_selections = get_flex('text_selections')
-  interest_points = get_flex('interest_points')
-  events = get_flex('events')
+  text_selections = database.get_flex(schema_livy.TextSelections)
+  interest_points = database.get_flex(schema_livy.InterestPoints)
+  events = database.get_flex(schema_livy.Events)
   return render_template("private/upload_text.html",
     text_selections=text_selections,
     interest_points=interest_points,
@@ -208,7 +207,8 @@ def text_post():
   params["edited_by"] = ''
 
   # insert new db entry
-  insert_text(params)
+  database.add_to_table(schema_livy.TextSelections,params)
+
   return redirect(url_for('index'))
 
 ###
@@ -216,9 +216,8 @@ def text_post():
 ### Views to search for and delete images ###
 @app.route("/admin/delete_images/", methods=["GET"])
 def delete_images():
-  table_name = 'images'
   # get search fields
-  fields = get_fields(table_name)
+  fields = get_fields(schema_livy.Images)
   # get user input for search
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
@@ -226,17 +225,16 @@ def delete_images():
 
   # get images from search
   if search_term is None:
-    images = get_flex(table_name)
+    images = database.get_flex(schema_livy.Images)
   else:
-    images = search(table_name, search_field, search_term)
+    images = database.search(schema_livy.Images, search_field, search_term)
   return render_template("private/delete_images.html", fields=fields, images=images,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
 @app.route("/admin/delete_images/delete/", methods=["POST"])
 def delete_images_delete():
-  table_name = 'images'
   keys = request.form.getlist('primary_key')
-  delete(keys, table_name)
+  delete(keys, schema_livy.Images)
   return redirect(url_for('index'))
 
 ###
@@ -254,9 +252,9 @@ def delete_ips():
 
   # get interest points from search
   if search_term is None:
-    interest_points = get_flex(table_name)
+    interest_points = database.get_flex(schema_livy.InterestPoints)
   else:
-    interest_points = search(table_name, search_field, search_term)
+    interest_points = database.search(schema_livy.InterestPoints, search_field, search_term)
   return render_template("private/delete_ips.html", fields=fields,
     interest_points=interest_points)
 
@@ -273,7 +271,6 @@ def delete_ips_delete():
 ### Views to search for and delete events ###
 @app.route("/admin/delete_events/", methods=["GET"])
 def delete_events():
-  table_name = 'events'
   # get search fields
   fields = get_fields(table_name)
   # get user input for search
@@ -283,9 +280,9 @@ def delete_events():
 
   # get events from search
   if search_term is None:
-    events = get_flex(table_name)
+    events = database.get_flex(schema_livy.Events)
   else:
-    events = search(table_name, search_field, search_term)
+    events = database.search(schema_livy.Events, search_field, search_term)
   return render_template("private/delete_events.html", fields=fields,
     events=events)
 
@@ -309,9 +306,9 @@ def delete_text():
   search_field = get_raw_column(search_field)
   # get text selections from search
   if search_term is None:
-    text_selections = get_flex(table_name)
+    text_selections = database.get_flex(schema_livy.TextSelections)
   else:
-    text_selections = search(table_name, search_field, search_term)
+    text_selections = database.search(schema_livy.TextSelections, search_field, search_term)
   return render_template("private/delete_text.html",
     fields=fields,
     text_selections=text_selections)
@@ -332,14 +329,14 @@ def edit_images():
   # if administrator clicks edit button on an image
   # return editing form with prior values
   if request.args.get('edit-btn'):
-    image = search(table_name, 'id', request.args.get('edit-btn'))
+    image = database.search(schema_livy.Images, 'id', request.args.get('edit-btn'))
     date_created = image[0]['date_created']
     date_created = clean_date(date_created)
     year = date_created[0]
     month = date_created[1]
     day = date_created[2]
-    events = get_flex('events')
-    interest_points = get_flex('interest_points')
+    events = database.get_flex(schema_livy.Events)
+    interest_points = database.get_flex(schema_livy.InterestPoints)
 
     # get periods
     periods = app.config['PERIODS']
@@ -359,9 +356,9 @@ def edit_images():
 
   # get images from search
   if search_term is None:
-    images = get_flex(table_name)
+    images = database.get_flex(schema_livy.Images)
   else:
-    images = search(table_name, search_field, search_term)
+    images = database.search(schema_livy.Images, search_field, search_term)
   return render_template("private/edit_images.html",
     fields=fields, images=images,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
@@ -391,13 +388,13 @@ def edit_images_edit():
 
   # retrieve pieces of info for image that should not be edited
   key = request.form['edit-btn']
-  image = search('images', 'id', key)
+  image = database.search('images', 'id', key)
   params["created_at"] = image[0]['created_at']
   params["thumbnail_name"] = image[0]['thumbnail_name']
   params["filename"] = image[0]['filename']
 
   # edit db entry
-  edit_image(key,params)
+  database.edit_table_key(schema_livy.Images,key,params)
   return redirect(url_for('index'))
 
 ###
@@ -410,7 +407,7 @@ def edit_ips():
   feat_types = app.config['FEATURE_TYPES']
   # if administrator clicks edit button on an interest point
   if request.args.get('edit-btn'):
-    interest_point = search(table_name, 'id', request.args.get('edit-btn'))
+    interest_point = database.search(schema_livy.InterestPoints, 'id', request.args.get('edit-btn'))
     return render_template("private/form_ips.html", feat_types=feat_types,
       interest_point=interest_point)
 
@@ -423,9 +420,9 @@ def edit_ips():
 
   # get interest points from search
   if search_term is None:
-    interest_points = get_flex(table_name)
+    interest_points = database.get_flex(schema_livy.InterestPoints)
   else:
-    interest_points = search(table_name, search_field, search_term)
+    interest_points = database.search(schema_livy.InterestPoints, search_field, search_term)
 
   return render_template("private/edit_ips.html", fields=fields,
     interest_points=interest_points)
@@ -445,12 +442,12 @@ def edit_ips_edit():
 
   # retrieve pieces of info for image that should not be edited
   key = request.form['edit-btn']
-  ip = search('interest_points', 'id', key)
+  ip = database.search('interest_points', 'id', key)
   params["created_at"] = ip[0]['created_at']
   params["geojson_feature_type"] = ip[0]['geojson_feature_type']
 
   # edit db entry
-  edit_ip(key,params)
+  database.edit_table_key(schema_livy.InterestPoints,key,params)
   # rewrite geojson file
   rewrite_geojson()
   return redirect(url_for('index'))
@@ -464,7 +461,7 @@ def edit_events():
 
   # if administrator clicks edit button on an event
   if request.args.get('edit-btn'):
-    event = search(table_name, 'id', request.args.get('edit-btn'))
+    event = database.search(schema_livy.Events, 'id', request.args.get('edit-btn'))
     date_of_event = event[0]['date_of_event']
     date_of_event = clean_date(date_of_event)
     year = date_of_event[0]
@@ -482,9 +479,9 @@ def edit_events():
 
   # get events from search
   if search_term is None:
-    events = get_flex(table_name)
+    events = database.get_flex(schema_livy.Events)
   else:
-    events = search(table_name, search_field, search_term)
+    events = database.search(schema_livy.Events, search_field, search_term)
 
   return render_template("private/edit_events.html", fields=fields,
     events=events)
@@ -504,10 +501,11 @@ def edit_events_edit():
 
   # retrieve pieces of info for image that should not be edited
   key = request.form['edit-btn']
-  event = search('events', 'id', key)
+  event = database.search('events', 'id', key)
   params["created_at"] = event[0]['created_at']
 
   # edit db entry
+  database.edit_table_key(schema_livy.Events,key,params)
   edit_event(key,params)
   return redirect(url_for('index'))
 
@@ -517,12 +515,12 @@ def edit_events_edit():
 @app.route("/admin/edit_text/", methods=["GET"])
 def edit_text():
   table_name = 'text_selections'
-  events = get_flex('events')
-  interest_points = get_flex('interest_points')
+  events = database.get_flex(schema_livy.Events)
+  interest_points = database.get_flex(schema_livy.InterestPoints)
 
   # if administrator clicks edit button on a text selection
   if request.args.get('edit-btn'):
-    text_selection = search(table_name, 'id', request.args.get('edit-btn'))
+    text_selection = database.search(schema_livy.TextSelections, 'id', request.args.get('edit-btn'))
     return render_template("private/form_text.html", events=events,
       interest_points=interest_points, text_selection=text_selection)
 
@@ -535,9 +533,9 @@ def edit_text():
 
   # get text selections from search
   if search_term is None:
-    text_selections = get_flex(table_name)
+    text_selections = database.get_flex(schema_livy.TextSelections)
   else:
-    text_selections = search(table_name, search_field, search_term)
+    text_selections = database.search(schema_livy.TextSelections, search_field, search_term)
 
   return render_template("private/edit_text.html",
     fields=fields,
@@ -560,9 +558,10 @@ def edit_text_edit():
 
   # retrieve pieces of info for image that should not be edited
   key = request.form['edit-btn']
-  params["text_selection"] = search('text_selections', 'id', key)
+  params["text_selection"] = database.search('text_selections', 'id', key)
   params["created_at"] = text_selection[0]['created_at']
 
   # edit db entry
-  edit_textselection(key,params)
+  database.edit_table_key(schema_livy.TextSelections,key,params)
+
   return redirect(url_for('index'))

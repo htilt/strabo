@@ -1,7 +1,7 @@
 import re
 
 from strabo import app
-from strabo.database import get_column_names
+from strabo import schema_livy
 
 def list_years():
   years = []
@@ -60,7 +60,7 @@ def prettify_columns(raw_columns):
 # get raw column names and convert to 'prettified' column names
 # from config.py
 def get_fields(table_name):
-  columns = get_column_names(table_name)
+  columns = schema_livy.table_column_names[table_name]
   fields = prettify_columns(columns)
   return fields
 
