@@ -12,8 +12,8 @@
       <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
         <div class="row">
           <div class="form-wrapper col-lg-8">
-            <legend>Add a New Interest Point</legend> 
-            
+            <legend>Add a New Interest Point</legend>
+
             <div class="form-group">
               <label for="name">Location Name:</label><br>
               <input class="form-control" type="text" name="name" placeholder="Untitled" id="name">
@@ -53,20 +53,20 @@
               <label for="notes">Additional Notes:</label><br>
               <textarea class="form-control" rows='5' type="text" name="notes" placeholder="Add any additional notes for private reference."></textarea>
             </div>
-            
+
             <div class="form-group">
               <label for="tags">Tags:</label><br>
               <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
             </div>
 
-            
+
 
             <div class="form-group">
               <input id="geojson-field" type="hidden" name="geojson" value="">
             </div>
 
             <p></p>
-            
+
             <input id="upload-btn" type="submit" value="Upload">
           </div>
         </div>
@@ -86,7 +86,7 @@
         <th>Additional Notes</th>
         <th>Tags</th>
       </tr>
-      
+
       {% for ip in interest_points %}
       <tr>
         <td class="ip_name">{{ ip['name'] | default("Untitled") }}</td>
@@ -104,8 +104,16 @@
 
 {% block footer %}
     {{ super () }}
-<!-- Load in geojson objects with janky cache-breaking solution so that changes to 
-    js file will be reflected on map -->
-<script>document.write('<script src="/static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>   
+<script>
+    var lat_setting = {{ LAT_SETTING }};
+    var long_setting = {{ LONG_SETTING }};
+    var tile_src = "{{ MAP_TILE_SRC }}";
+    var tile_attr1 = "{{ MAP_ATTR1 }}";
+    var subdomains = "{{ SUBDOMAINS }}";
+    var extension = "{{ EXTENSION }}";
+    var interest_points = {{ interest_points_json|tojson }};
+    var interest_zones = {{ interest_zones_json|tojson }};
+    var interest_lines = {{ interest_lines_json|tojson }};
+</script>
 <script src="/static/js/{{ DRAWMAP_JS }}"></script>
 {% endblock %}

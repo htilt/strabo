@@ -12,15 +12,14 @@ from strabo.utils import make_date, DMS_to_Dec, clean_date, prettify_columns, \
 get_raw_column, get_fields
 from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
 from strabo.geojson import get_coords, get_type, add_name_and_color, \
-make_featureCollection
-from strabo.filewriting import write_to, rewrite_geojson
+make_featureCollection,make_geojsons
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
 def index():
-  return render_template("private/base.html", 
+  return render_template("private/base.html",
     WEBSITE_TITLE=app.config['WEBSITE_TITLE'],
-    INDEX_GREETING=app.config['INDEX_GREETING'])      
+    INDEX_GREETING=app.config['INDEX_GREETING'])
 
 ###
 ###
@@ -33,7 +32,7 @@ def upload_images():
   periods = app.config['PERIODS']
   interest_points = get_flex('interest_points')
   return render_template("private/upload_images.html", images= images,
-    interest_points=interest_points, events=events, periods=periods, 
+    interest_points=interest_points, events=events, periods=periods,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
 # harvest and clean select EXIF data including datetime, lat, long
@@ -48,11 +47,11 @@ def getEXIF():
     year = dateTimeOriginal[0]
     month = dateTimeOriginal[1]
     day = dateTimeOriginal[2]
-  else: 
+  else:
     year = None
     month = None
     day = None
-  if 'GPSLatitude' in dicty: 
+  if 'GPSLatitude' in dicty:
     latitude = dicty['GPSLatitude']
     latitude = DMS_to_Dec(latitude)
   else: latitude = None
@@ -65,7 +64,7 @@ def getEXIF():
 
 @app.route("/admin/upload_images/post", methods=["POST"])
 def post():
-  # get input from user according to field. Save those values under 
+  # get input from user according to field. Save those values under
   # similar variable names.
   title = request.form.get('title', None)
   img_description = request.form['img_description']
@@ -112,8 +111,8 @@ def post():
     thumbnail_name = make_thumbnail(filename, this_id)
 
   # insert new db entry
-  params = (title, img_description, latitude, longitude, 
-    date_created, interest_point, event, period, notes, tags, 
+  params = (title, img_description, latitude, longitude,
+    date_created, interest_point, event, period, notes, tags,
     edited_by, filename, thumbnail_name)
   insert_images(params)
   return redirect(url_for('index'))
@@ -124,13 +123,16 @@ def post():
 @app.route("/admin/upload_ips/")
 def upload_ips():
   interest_points = get_flex('interest_points')
-  # get feature types 
+  points,zones,lines = make_geojsons()
+  # get feature types
   feat_types = app.config["FEATURE_TYPES"]
-  return render_template("private/upload_ips.html", 
-    interest_points=interest_points, 
+  return render_template("private/upload_ips.html",
+    interest_points=interest_points,
+    interest_points_json=points,
+    interest_zones_json=lines,
+    interest_lines_json=zones,
     feat_types=feat_types,
-    INTPT_FILE=app.config['INTPT_FILE'],
-    DRAWMAP_JS=app.config['DRAWMAP_JS'])
+    **app.config)
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
@@ -140,7 +142,7 @@ def interest_points_post():
   tags = request.form['tags']
   books = request.form['books']
   color = request.form['color']
-  # if administrator does not provide feature_type, fill 
+  # if administrator does not provide feature_type, fill
   # with empty string
   if not request.form['feature_type'] == 'Select One':
     feature_type = request.form['feature_type']
@@ -154,18 +156,16 @@ def interest_points_post():
     geojson_feature_type = str(get_type(geojson_object))
     geojson_object = add_name_and_color(geojson_object, name, color)
   # Otherwise, supply empty string
-  else: 
+  else:
     geojson_object = ''
     coordinates = ''
     geojson_feature_type = ''
     geojson_object = ''
 
   # insert new db entry
-  params = (name, books, coordinates, geojson_object, feature_type, 
+  params = (name, books, coordinates, geojson_object, feature_type,
     geojson_feature_type, notes, tags, edited_by)
   insert_ips(params)
-  # Rewrite geoJSON file according to changes
-  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -202,7 +202,7 @@ def upload_text():
   text_selections = get_flex('text_selections')
   interest_points = get_flex('interest_points')
   events = get_flex('events')
-  return render_template("private/upload_text.html", 
+  return render_template("private/upload_text.html",
     text_selections=text_selections,
     interest_points=interest_points,
     events=events)
@@ -220,9 +220,9 @@ def text_post():
   notes = request.form['notes']
   tags = request.form['tags']
   edited_by = ''
-  
+
   # insert new db entry
-  params = (name, book, section, pages, passage, 
+  params = (name, book, section, pages, passage,
     interest_point, event, notes, tags, edited_by)
   insert_text(params)
   return redirect(url_for('index'))
@@ -239,13 +239,13 @@ def delete_images():
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
   search_field = get_raw_column(search_field)
-  
+
   # get images from search
   if search_term is None:
     images = get_flex(table_name)
   else:
     images = search(table_name, search_field, search_term)
-  return render_template("private/delete_images.html", fields=fields, images=images, 
+  return render_template("private/delete_images.html", fields=fields, images=images,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
 @app.route("/admin/delete_images/delete/", methods=["POST"])
@@ -273,15 +273,13 @@ def delete_ips():
     interest_points = get_flex(table_name)
   else:
     interest_points = search(table_name, search_field, search_term)
-  return render_template("private/delete_ips.html", fields=fields, 
+  return render_template("private/delete_ips.html", fields=fields,
     interest_points=interest_points)
 
 @app.route("/admin/delete_ips/delete/", methods=["POST"])
 def delete_ips_delete():
   # delete selected items from specified table by primary key
   delete(request.form.getlist('primary_key'), 'interest_points')
-  # rewrite the file that gets loaded in with geojson objects
-  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -302,7 +300,7 @@ def delete_events():
     events = get_flex(table_name)
   else:
     events = search(table_name, search_field, search_term)
-  return render_template("private/delete_events.html", fields=fields, 
+  return render_template("private/delete_events.html", fields=fields,
     events=events)
 
 @app.route("/admin/delete_events/delete/", methods=["POST"])
@@ -328,8 +326,8 @@ def delete_text():
     text_selections = get_flex(table_name)
   else:
     text_selections = search(table_name, search_field, search_term)
-  return render_template("private/delete_text.html", 
-    fields=fields, 
+  return render_template("private/delete_text.html",
+    fields=fields,
     text_selections=text_selections)
 
 @app.route("/admin/delete_text/delete/", methods=["POST"])
@@ -344,7 +342,7 @@ def delete_text_delete():
 @app.route("/admin/edit_images/", methods=["GET"])
 def edit_images():
   table_name = 'images'
-  
+
   # if administrator clicks edit button on an image
   # return editing form with prior values
   if request.args.get('edit-btn'):
@@ -361,8 +359,8 @@ def edit_images():
     periods = app.config['PERIODS']
 
     return render_template("private/complete_form_images.html", image=image,
-      events=events, interest_points=interest_points, year=year, month=month, 
-      day=day, periods=periods, 
+      events=events, interest_points=interest_points, year=year, month=month,
+      day=day, periods=periods,
       UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'])
 
   # get search fields
@@ -371,15 +369,15 @@ def edit_images():
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
   search_field = get_raw_column(search_field)
-  
+
 
   # get images from search
   if search_term is None:
     images = get_flex(table_name)
   else:
     images = search(table_name, search_field, search_term)
-  return render_template("private/edit_images.html", 
-    fields=fields, images=images, 
+  return render_template("private/edit_images.html",
+    fields=fields, images=images,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
 
 @app.route("/admin/edit_images/edit/", methods=["POST"])
@@ -415,11 +413,11 @@ def edit_images_edit():
   image = search('images', 'id', key)
   created_at = image[0]['created_at']
   thumbnail_name = image[0]['thumbnail_name']
-  filename = image[0]['filename']  
+  filename = image[0]['filename']
 
   # edit db entry
-  params = (key, created_at, title, img_description, latitude, longitude, 
-    date_created, interest_point, event, period, notes, tags, edited_by, 
+  params = (key, created_at, title, img_description, latitude, longitude,
+    date_created, interest_point, event, period, notes, tags, edited_by,
     filename, thumbnail_name)
   edit_image(params)
   return redirect(url_for('index'))
@@ -430,7 +428,7 @@ def edit_images_edit():
 @app.route("/admin/edit_ips/", methods=["GET"])
 def edit_ips():
   table_name = 'interest_points'
-  
+
   feat_types = app.config['FEATURE_TYPES']
   # if administrator clicks edit button on an interest point
   if request.args.get('edit-btn'):
@@ -444,14 +442,14 @@ def edit_ips():
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
   search_field = get_raw_column(search_field)
-  
+
   # get interest points from search
   if search_term is None:
     interest_points = get_flex(table_name)
   else:
     interest_points = search(table_name, search_field, search_term)
 
-  return render_template("private/edit_ips.html", fields=fields, 
+  return render_template("private/edit_ips.html", fields=fields,
     interest_points=interest_points)
 
 @app.route("/admin/edit_ips/edit/", methods=["POST"])
@@ -473,12 +471,10 @@ def edit_ips_edit():
   geojson_feature_type = ip[0]['geojson_feature_type']
 
   # edit db entry
-  params = (key, created_at, name, books, coordinates, 
-    geojson_object, feature_type, geojson_feature_type, 
+  params = (key, created_at, name, books, coordinates,
+    geojson_object, feature_type, geojson_feature_type,
     notes, tags, edited_by)
   edit_ip(params)
-  # rewrite geojson file
-  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -496,23 +492,23 @@ def edit_events():
     year = date_of_event[0]
     month = date_of_event[1]
     day = date_of_event[2]
-    return render_template("private/form_events.html", 
+    return render_template("private/form_events.html",
       event=event, year=year, month=month, day=day)
-  
+
   # get search fields
   fields = get_fields(table_name)
   # get user input for search
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
   search_field = get_raw_column(search_field)
-  
+
   # get events from search
   if search_term is None:
     events = get_flex(table_name)
   else:
     events = search(table_name, search_field, search_term)
-  
-  return render_template("private/edit_events.html", fields=fields, 
+
+  return render_template("private/edit_events.html", fields=fields,
     events=events)
 
 @app.route("/admin/edit_events/edit/", methods=["POST"])
@@ -532,9 +528,9 @@ def edit_events_edit():
   key = request.form['edit-btn']
   event = search('events', 'id', key)
   created_at = event[0]['created_at']
-  
+
   # edit db entry
-  params = (key, created_at, title, event_description, date_of_event, notes, 
+  params = (key, created_at, title, event_description, date_of_event, notes,
     tags, edited_by)
   edit_event(params)
   return redirect(url_for('index'))
@@ -560,15 +556,15 @@ def edit_text():
   search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
   # if the specified column name is 'prettified', refert to raw column name
   search_field = get_raw_column(search_field)
-  
+
   # get text selections from search
   if search_term is None:
     text_selections = get_flex(table_name)
   else:
     text_selections = search(table_name, search_field, search_term)
-  
-  return render_template("private/edit_text.html", 
-    fields=fields, 
+
+  return render_template("private/edit_text.html",
+    fields=fields,
     text_selections=text_selections)
 
 @app.route("/admin/edit_text/edit/", methods=["POST"])
@@ -595,4 +591,3 @@ def edit_text_edit():
     interest_point, event, notes, tags, edited_by)
   edit_textselection(params)
   return redirect(url_for('index'))
-

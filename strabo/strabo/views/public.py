@@ -5,14 +5,19 @@ from math import ceil
 from strabo import app
 from strabo.database import get_flex, get_column_names, \
 get_geojson, search, gallery_search
-from strabo.geojson import make_featureCollection
+from strabo.geojson import make_geojsons
 from strabo.utils import prettify_columns, get_raw_column
 import copy
 
 @app.route("/map")
 def map():
   template = os.path.join("public/", app.config['MAP_TEMPLATE'])
-  return render_template(template, **app.config)
+  points,zones,lines = make_geojsons()
+  return render_template(template,
+    interest_points_json=points,
+    interest_zones_json=lines,
+    interest_lines_json=zones,
+     **app.config)
 
 @app.route('/map/post', methods=["POST", "GET"])
 def map_post():
