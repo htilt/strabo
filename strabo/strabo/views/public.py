@@ -7,24 +7,12 @@ from strabo.database import get_flex, get_column_names, \
 get_geojson, search, gallery_search
 from strabo.geojson import make_featureCollection
 from strabo.utils import prettify_columns, get_raw_column
+import copy
 
 @app.route("/map")
 def map():
   template = os.path.join("public/", app.config['MAP_TEMPLATE'])
-  return render_template(template, 
-    INTPT_FILE=app.config['INTPT_FILE'],
-    MAP_JS=app.config['MAP_JS'], 
-    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
-    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
-    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
-    HEADER_CSS=app.config['HEADER_CSS'],
-    FOOTER_CSS=app.config['FOOTER_CSS'],
-    MAP_CSS=app.config['MAP_CSS'],
-    BASE_CSS=app.config['BASE_CSS'],
-    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
-    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
-    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
-    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+  return render_template(template, **app.config)
 
 @app.route('/map/post', methods=["POST", "GET"])
 def map_post():
@@ -57,74 +45,16 @@ def gallery():
   # or search in specific field
   else:
     images = gallery_search('images', search_term, search_field)
-
   return render_template("public/gallery.html", images=images,
-    fields=fields,
-    GALLERY_TITLE=app.config['GALLERY_TITLE'],
-    GALLERY_SUBTITLE=app.config['GALLERY_SUBTITLE'],
-    UPLOAD_FOLDER=app.config['UPLOAD_FOLDER'],
-    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
-    THUMBNAIL_FOLDER_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'],
-    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
-    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
-    HEADER_CSS=app.config['HEADER_CSS'],
-    FOOTER_CSS=app.config['FOOTER_CSS'], 
-    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
-    GALLERY_CSS=app.config['GALLERY_CSS'],
-    BASE_CSS=app.config['BASE_CSS'],
-    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
-    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
-    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
-    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
-    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+    fields=fields,**app.config)
 
 @app.route("/timeline")
 def timeline():
   table_name = 'events'
   events = get_flex(table_name, 100)
-  return render_template("public/under_construction.html",
-    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
-    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
-    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
-    HEADER_CSS=app.config['HEADER_CSS'],
-    FOOTER_CSS=app.config['FOOTER_CSS'], 
-    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
-    UNDER_CONST_CSS=app.config['UNDER_CONST_CSS'],
-    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
-    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
-    BASE_CSS=app.config['BASE_CSS'],
-    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
-    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
-    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
-  # return render_template("public/timeline.html", events=events, 
-  #   UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
-  #   HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
-  #   FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
-  #   HEADER_CSS=app.config['HEADER_CSS'],
-  #   FOOTER_CSS=app.config['FOOTER_CSS'], 
-  #   PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
-  #   TIMELINE_CSS=app.config['TIMELINE_CSS'],
-  #   RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
-  #   TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
-  #   TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
-  #   BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
-  #   WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+  return render_template("public/under_construction.html",**app.config)
+  # return render_template("public/timeline.html", events=events,**app.config)
 
 @app.route("/about")
 def about():
-  return render_template("public/about.html",
-    UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
-    HEADER_TEMPLATE=app.config['HEADER_TEMPLATE'],
-    FOOTER_TEMPLATE=app.config['FOOTER_TEMPLATE'],
-    HEADER_CSS=app.config['HEADER_CSS'],
-    FOOTER_CSS=app.config['FOOTER_CSS'], 
-    PATH_TO_PUBLIC_STYLES=app.config['PATH_TO_PUBLIC_STYLES'],
-    ABOUT_CSS=app.config['ABOUT_CSS'],
-    BASE_CSS=app.config['BASE_CSS'],
-    RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
-    TIMELINE_TITLE=app.config['TIMELINE_TITLE'],
-    TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
-    BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
-    WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
-
-
+  return render_template("public/about.html",**app.config)
