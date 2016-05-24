@@ -12,8 +12,7 @@ from strabo.utils import make_date, DMS_to_Dec, clean_date, prettify_columns, \
 get_raw_column, get_fields
 from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
 from strabo.geojson import get_coords, get_type, add_name_and_color, \
-make_featureCollection
-from strabo.filewriting import write_to, rewrite_geojson
+make_featureCollection,make_geojsons
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
@@ -32,7 +31,12 @@ def upload_images():
   periods = app.config['PERIODS']
   interest_points = database.get_all_rows(schema_livy.InterestPoints)
   return render_template("private/upload_images.html", images= images,
+<<<<<<< HEAD
      NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
+=======
+    interest_points=interest_points, events=events, periods=periods,
+    NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
+>>>>>>> javascript_data_transfer
 
 # harvest and clean select EXIF data including datetime, lat, long
 @app.route("/admin/upload_images/exif/", methods=['POST', 'GET'])
@@ -120,13 +124,16 @@ def post():
 @app.route("/admin/upload_ips/")
 def upload_ips():
   interest_points = database.get_all_rows(schema_livy.InterestPoints)
+  points,zones,lines = make_geojsons()
   # get feature types
   feat_types = app.config["FEATURE_TYPES"]
   return render_template("private/upload_ips.html",
     interest_points=interest_points,
+    interest_points_json=points,
+    interest_zones_json=lines,
+    interest_lines_json=zones,
     feat_types=feat_types,
-    INTPT_FILE=app.config['INTPT_FILE'],
-    DRAWMAP_JS=app.config['DRAWMAP_JS'])
+    **app.config)
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
@@ -151,8 +158,6 @@ def interest_points_post():
 
   # insert new db entry
   database.add_to_table(schema_livy.InterestPoints, params)
-  # Rewrite geoJSON file according to changes
-  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -210,7 +215,6 @@ def text_post():
 
   # insert new db entry
   database.add_to_table(schema_livy.TextSelections,params)
-
   return redirect(url_for('index'))
 
 ###
@@ -264,8 +268,6 @@ def delete_ips():
 def delete_ips_delete():
   # delete selected items from specified table by primary key
   delete(request.form.getlist('primary_key'), 'interest_points')
-  # rewrite the file that gets loaded in with geojson objects
-  rewrite_geojson()
   return redirect(url_for('index'))
 
 ###
@@ -449,9 +451,7 @@ def edit_ips_edit():
   params["geojson_feature_type"] = ip[0]['geojson_feature_type']
 
   # edit db entry
-  database.edit_table_key(schema_livy.InterestPoints,key,params)
-  # rewrite geojson file
-  rewrite_geojson()
+  database.edit_table_key(schema_livy.InterestPoints,key,params
   return redirect(url_for('index'))
 
 ###
@@ -565,5 +565,4 @@ def edit_text_edit():
 
   # edit db entry
   database.edit_table_key(schema_livy.TextSelections,key,params)
-
   return redirect(url_for('index'))

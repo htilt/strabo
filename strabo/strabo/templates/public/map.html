@@ -23,7 +23,7 @@
 
 <!--Map and Text Selection Row-->
 <div class="row">
-  
+
   <div id="map" class="col-md-12" style="height: 500px">
   </div>
 
@@ -56,7 +56,7 @@
 
   <div id="gallery" class='hidden'>
     <div id="link-wrapper" class="hidden">
-        
+
         <span class="text-muted">You are viewing images of the </span><span class="text-muted" id="img_id_msg"></span>
         <span class="text-muted">Select another interest point or </span><a class="text-muted" style="color: blue;" id="ip_link" href=""></a>
     </div>
@@ -100,10 +100,17 @@
 {% block footer %}
     {{ super() }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <!-- Load in geojson objects with janky cache-breaking solution so that changes to 
-    js file will be reflected on map -->
-    <script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>
+    <script>
+        var lat_setting = {{ LAT_SETTING }};
+        var long_setting = {{ LONG_SETTING }};
+        var tile_src = "{{ MAP_TILE_SRC }}";
+        var tile_attr1 = "{{ MAP_ATTR1 }}";
+        var subdomains = "{{ SUBDOMAINS }}";
+        var extension = "{{ EXTENSION }}";
+        var interest_points = {{ interest_points_json|tojson }};
+        var interest_zones = {{ interest_zones_json|tojson }};
+        var interest_lines = {{ interest_lines_json|tojson }};
+    </script>
     <script src="../static/js/{{ MAP_JS }}"></script>
     <script src="../static/js/gallery.js"></script>
 {% endblock footer %}
-

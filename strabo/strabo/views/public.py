@@ -3,14 +3,22 @@ from flask import request, render_template, url_for, redirect, session, jsonify
 from math import ceil
 
 from strabo import app
+<<<<<<< HEAD
 from strabo import database
 from strabo import schema_livy
 from strabo.geojson import make_featureCollection
+=======
+from strabo.database import get_flex, get_column_names, \
+get_geojson, search, gallery_search
+from strabo.geojson import make_geojsons
+>>>>>>> javascript_data_transfer
 from strabo.utils import prettify_columns, get_raw_column
+import copy
 
 @app.route("/map")
 def map():
   template = os.path.join("public/", app.config['MAP_TEMPLATE'])
+<<<<<<< HEAD
   return render_template(template,
     INTPT_FILE=app.config['INTPT_FILE'],
     MAP_JS=app.config['MAP_JS'],
@@ -25,6 +33,14 @@ def map():
     RELPATH_TO_PUBLIC_TEMPLATES=app.config['RELPATH_TO_PUBLIC_TEMPLATES'],
     BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
     WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+=======
+  points,zones,lines = make_geojsons()
+  return render_template(template,
+    interest_points_json=points,
+    interest_zones_json=lines,
+    interest_lines_json=zones,
+     **app.config)
+>>>>>>> javascript_data_transfer
 
 @app.route('/map/post', methods=["POST", "GET"])
 def map_post():
@@ -56,6 +72,7 @@ def gallery():
     images = database.search_all_image_fields(search_term, None)
   # or search in specific field
   else:
+<<<<<<< HEAD
     images = database.search('images', search_term, search_field)
 
   return render_template("public/gallery.html", images=images,
@@ -77,10 +94,16 @@ def gallery():
     TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
     BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
     WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+=======
+    images = gallery_search('images', search_term, search_field)
+  return render_template("public/gallery.html", images=images,
+    fields=fields,**app.config)
+>>>>>>> javascript_data_transfer
 
 @app.route("/timeline")
 def timeline():
   table_name = 'events'
+<<<<<<< HEAD
   events = database.get_rows(table_name, 100)
   return render_template("public/under_construction.html",
     UPLOAD_FOLDER_RELPATH=app.config['UPLOAD_FOLDER_RELPATH'],
@@ -126,3 +149,12 @@ def about():
     TIMELINE_SUBTITLE=app.config['TIMELINE_SUBTITLE'],
     BASE_TEMPLATE=app.config['BASE_TEMPLATE'],
     WEBSITE_TITLE=app.config['WEBSITE_TITLE'])
+=======
+  events = get_flex(table_name, 100)
+  return render_template("public/under_construction.html",**app.config)
+  # return render_template("public/timeline.html", events=events,**app.config)
+
+@app.route("/about")
+def about():
+  return render_template("public/about.html",**app.config)
+>>>>>>> javascript_data_transfer
