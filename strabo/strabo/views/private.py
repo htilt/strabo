@@ -31,12 +31,8 @@ def upload_images():
   periods = app.config['PERIODS']
   interest_points = database.get_all_rows(schema_livy.InterestPoints)
   return render_template("private/upload_images.html", images= images,
-<<<<<<< HEAD
-     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
-=======
     interest_points=interest_points, events=events, periods=periods,
     NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
->>>>>>> javascript_data_transfer
 
 # harvest and clean select EXIF data including datetime, lat, long
 @app.route("/admin/upload_images/exif/", methods=['POST', 'GET'])
@@ -70,9 +66,6 @@ def post():
   # get input from user according to field. Save those values under
   # similar variable names.
   params = dict()
-  print(request.form['latitude'])
-  print(request.form['longitude'])
-  print(request.form)
   params["title"] = request.form['title']
   params["img_description"] = request.form['img_description']
   params["latitude"] = float(request.form['latitude'])
@@ -451,7 +444,7 @@ def edit_ips_edit():
   params["geojson_feature_type"] = ip[0]['geojson_feature_type']
 
   # edit db entry
-  database.edit_table_key(schema_livy.InterestPoints,key,params
+  database.edit_table_key(schema_livy.InterestPoints,key,params)
   return redirect(url_for('index'))
 
 ###
