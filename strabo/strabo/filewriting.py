@@ -1,6 +1,6 @@
 import sys, os
 from strabo.database import get_geojson
-from strabo.geojson import make_featureCollection
+from strabo.geojson_wrapper import make_featureCollection
 
 from strabo import app
 
