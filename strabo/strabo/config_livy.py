@@ -104,7 +104,8 @@ app.config['FUZZY_SEARCH_COLUMNS'] = ["title", "img_description", "event_descrip
 
 #flask_sqlalchemy specific configuations
 # set name of database
-app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo_test"
+#app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo_test"
+app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../sqlalchemy_data.sqlite3"
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 #
