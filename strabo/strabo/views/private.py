@@ -11,7 +11,7 @@ from strabo import schema_livy
 from strabo.utils import make_date, DMS_to_Dec, clean_date, prettify_columns, \
 get_raw_column, get_fields
 from strabo.image_processing import make_thumbnail, allowed_file #, getEXIF
-from strabo.geojson import get_coords, get_type, add_name_and_color, get_all_feature_collections
+from strabo.geojson_wrapper import get_coords, get_type, add_name_and_color, get_all_feature_collections
 
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])

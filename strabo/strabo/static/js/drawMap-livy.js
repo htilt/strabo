@@ -180,7 +180,7 @@ $(function()
     //var msg = '';
 
     switch($usrSelect) {
-      case 'Turqoise' :
+      case 'Turquoise' :
         L.geoJson(obJSON, {
           style: {
             "color": '#00A0B0'

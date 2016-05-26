@@ -5,7 +5,7 @@ from math import ceil
 from strabo import app
 from strabo import database
 from strabo import schema_livy
-from strabo.geojson import get_all_feature_collections
+from strabo.geojson_wrapper import get_all_feature_collections
 from strabo.utils import prettify_columns, get_raw_column
 import copy
 
