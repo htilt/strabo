@@ -5,7 +5,7 @@ from math import ceil
 from strabo import app
 from strabo.database import get_flex, get_column_names, \
 get_geojson, search, gallery_search
-from strabo.geojson import make_geojsons
+from strabo.geojson_wrapper import make_geojsons
 from strabo.utils import prettify_columns, get_raw_column
 import copy
 
