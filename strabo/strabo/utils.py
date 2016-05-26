@@ -40,6 +40,10 @@ def clean_date(date_string):
 def clear_sel(inputstr):
     return  inputstr if not inputstr == 'Select One' else ""
 
+def safe_float_conv(inputstr):
+    return  float(inputstr) if not inputstr == '' else 0.0
+
+
 # convert raw column names to list of column names used in
 # user search
 def prettify_columns(raw_columns):

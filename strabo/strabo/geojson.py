@@ -39,23 +39,15 @@ def make_featureCollection(features):
   feature_collection = geojson.FeatureCollection(feature_collection)
   return feature_collection
 
-def make_geojsons():
-# Query db for geojson objects
-  points = get_geojson('Point')
-  zones = get_geojson('Polygon')
-  lines = get_geojson('LineString')
-  # Convert geojson objects to feature collections
-  if points != None:
-    points = make_featureCollection(points)
-  else:
-    points = []
-  if zones != None:
-    zones = make_featureCollection(zones)
-  else:
-    points = []
-  if lines != None:
-    lines = make_featureCollection(lines)
-  else:
-    lines = []
+def get_feature_collection(geojson_feature_type):
+  # Query db for geojson objects
+  db_geo_obj = get_geojson(geojson_feature_type)
+  # Convert geojson objects to feature collection
+  return make_featureCollection(db_geo_obj) if db_geo_obj != None else []
 
+
+def get_all_feature_collections():
+  points = get_feature_collection('Point')
+  zones = get_feature_collection('Polygon')
+  lines = get_feature_collection('LineString')
   return points,zones,lines

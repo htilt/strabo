@@ -6,37 +6,31 @@ from strabo import schema_livy
 from strabo import db
 from sqlalchemy.sql.expression import func
 
+#converts a sqlalchemy object to a dictionary from strings
+#that correspond to the collums of the table to the information in each
+#collumn in the row
+def obj_to_dict(obj):
+    #kind of hackish solution that may not always work due to how sqlalchemy works
+    return obj.__dict__
+
 def obj_list_to_dict_list(objs):
-    #kind of hackish solution
-    return [ob.__dict__ for ob in objs]
+    return [obj_to_dict(ob) for ob in objs]
 
 # get the maximum id in table images
 def get_max_img_id():
   data = db.session.query(func.max(schema_livy.Images.id)).one()
-  if data == (None,):
-      return 0
-  else:
-      return data.id
-  return data
+  maxid = data[0]
+  return 0 if data == None else 0
 
+# returns a number of row objects in the table table
 def get_rows(table,count):
     return table.query.limit(count).all()
 
+#return all result objects of the table
 def get_all_rows(table):
     return table.query.all()
 
-# Gets 10 images with select metadata
-def get_all_rowsold(table_name, count=None):
-  if count:
-    query = """SELECT * FROM {table} ORDER BY id DESC
-      LIMIT ?""".format(table=table_name)
-    data = simple_query(query, (count,))
-  else: #count=None
-    query = """SELECT * FROM {table}
-      ORDER by id DESC""".format(table=table_name)
-    data = simple_query(query)
-  return data
-
+#searches all rows in Image tablesearch_term for search term
 def search_all_image_fields(search_term):
     entries = []
     for col_name in app.config['IMAGE_SEARCH_COLUMNS']:
@@ -58,36 +52,17 @@ def search_all_image_fields(search_term):
     curobj = db.or_()
     for col_name in search_cols[2:]:'''
 
-
-# searches for rows with search_term in specified column or in multiple columns
-# with fuzzy search
-def gallery_search(table_name, search_term, column=None):
-  if not table_name in SCHEMA:
-    return []
-  if not column in SCHEMA[table_name] and not column == None:
-    return []
-  # do fuzzy search
-  if column == None:
-    query = """SELECT * FROM {table} WHERE title LIKE ? OR img_description LIKE ?
-      OR interest_point LIKE ? OR event LIKE ? OR notes LIKE ? ORDER BY id
-      DESC""".format(table=table_name)
-    search_term = '%{}%'.format(search_term)
-    params = (search_term,search_term,search_term,search_term,search_term)
-  else:
-    query = """SELECT * FROM {table} WHERE {column} LIKE ?
-      ORDER BY id DESC""".format(table=table_name, column=column)
-    search_term = '%{}%'.format(search_term)
-    params = (search_term,)
-  data = simple_query(query, paramsdic)
-  return data
+def get_row_by_id(table,id):
+    return obj_to_dict(table.query.get(id))
 
 # searches for rows with search_term in column
-def search(table, column, search_term):
+def search_text(table, column, search_term):
     if not column in table.__table__.columns:
         return []
     column_obj = schema_livy.table_column_name_dic[table.__table__.name][column]
-    # if searching a lengthy text field, do fuzzy search
+
     if column in app.config['FUZZY_SEARCH_COLUMNS']:
+        #returns all strings that have the search term as a substring/
         dataquery = table.query.filter(column_obj.like('%{}%'.format(search_term)))
     else:
         dataquery = table.query.filter(column_obj==search_term)
@@ -97,31 +72,6 @@ def search(table, column, search_term):
         datathing = [datathing]
     return obj_list_to_dict_list(datathing)
 
-
-def searchold(table_name, column, search_term, count=None):
-  if (not table_name in schema_livy.table_names or
-        not column in schema_livy.table_collums[table_name]):
-    return []
-  # if searching a lengthy text field, do fuzzy search
-  if column in ("title", "img_description", "event_description", "name",
-    "passage", "tags", "notes"):
-    query = """SELECT * FROM {table} WHERE {column} LIKE ?
-      ORDER BY id DESC""".format(table=table_name, column=column)
-    search_term = '%{}%'.format(search_term)
-    params = (search_term,)
-  # otherwise, perform normal search
-  else:
-    if count != None:
-      query = """ SELECT * FROM {table} WHERE {column} = ?
-        ORDER by id DESC LIMIT ?""".format(table=table_name, column=column)
-      params = (search_term, count)
-    else:
-      query = """SELECT * FROM {table} WHERE {column} = ?
-        ORDER by id DESC""".format(table=table_name, column=column)
-      params = (search_term,)
-  data = simple_query(query, params)
-  return data
-
 def delete_file(filename,file_path):
     file_fullpath = os.path.join(file_path, filename)
     os.remove(file_fullpath)
@@ -129,8 +79,6 @@ def delete_file(filename,file_path):
 def delete_image_data(filename,thumbnail_name):
     delete_file(filename,app.config['UPLOAD_FOLDER'])
     delete_file(thumbnail_name,app.config['NEW_DATA_DIRECTORY'])
-
-# SEARCH_VAR_PATTERN = re.compile(r'^[\w_]+$')
 
 # receives a list of ids and loops over them, deleting
 # each row from the db. If an image is deleted, the function also
@@ -144,38 +92,8 @@ def delete(keys,table):
         idquery.delete()
     db.session.commit()
 
-def deleteold(keys, table_name):
-  if not table_name in SCHEMA:
-    return []
-  with closing(get_db()) as db:
-    c = db.cursor()
-    for key in keys:
-      # if images is the table to be modified,
-      if table_name == "images":
-        query1 = """SELECT filename FROM images WHERE id = ?"""
-        query2 = """SELECT thumbnail_name FROM images WHERE id = ?"""
-        # get the filename
-        file_name = simple_query(query1, (key,))
-        file_name = (file_name[0]['filename'])
-        # get the thumbnail name
-        thumbnail_name = simple_query(query2, (key,))
-        thumbnail_name = (thumbnail_name[0]['thumbnail_name'])
-
-        # delete the image from /uploads
-        file_path = app.config['UPLOAD_FOLDER']
-        file_fullpath = os.path.join(file_path, file_name)
-        os.remove(file_fullpath)
-        # then delete the image from /thumbnails
-        thumbnail_path = app.config['NEW_DATA_DIRECTORY']
-        thumbnail_fullpath = os.path.join(thumbnail_path, thumbnail_name)
-        os.remove(thumbnail_fullpath)
-      # then delete the db row
-      query = """DELETE FROM {table} WHERE id = ?""".format(table=table_name)
-      db.execute(query, (key,))
-    db.commit()
-  return
-
-# returns the geojson objects of a given feature type
+# Returns a list of dictionaries from collumn names to rows
+# All rows in list are of a given feature type
 def get_geojson(geojson_feature_type):
     ips = schema_livy.InterestPoints.query.filter_by(geojson_feature_type=geojson_feature_type).all()
     geodata = obj_list_to_dict_list(ips)

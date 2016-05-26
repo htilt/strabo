@@ -5,21 +5,21 @@ from math import ceil
 from strabo import app
 from strabo import database
 from strabo import schema_livy
-from strabo.geojson import make_geojsons
+from strabo.geojson import get_all_feature_collections
 from strabo.utils import prettify_columns, get_raw_column
 import copy
 
 @app.route("/map")
 def map():
   template = os.path.join("public/", app.config['MAP_TEMPLATE'])
-  points,zones,lines = make_geojsons()
+  points,zones,lines = get_all_feature_collections()
   return render_template(template,
     interest_points_json=points,
     interest_zones_json=lines,
     interest_lines_json=zones,
      **app.config)
 
-@app.route('/map/post', methods=["POST", "GET"])
+'''@app.route('/map/post', methods=["POST", "GET"])
 def map_post():
   # get the ip_value user has clicked
   ip_value = request.form.get('name')
@@ -30,7 +30,7 @@ def map_post():
     'images': images,
     'text-selection': text
   }
-  return jsonify(ip_info)
+  return jsonify(ip_info)'''
 
 @app.route("/gallery", methods=["GET"])
 def gallery():
