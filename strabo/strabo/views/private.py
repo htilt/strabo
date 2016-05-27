@@ -171,6 +171,7 @@ def interest_points_post():
 ###
 ###
 ### Views to add events to the db
+"""
 @app.route("/admin/upload_events/")
 def upload_events():
   events = get_flex('events')
@@ -226,6 +227,7 @@ def text_post():
     interest_point, event, notes, tags, edited_by)
   insert_text(params)
   return redirect(url_for('index'))
+"""
 
 ###
 ###
@@ -284,6 +286,7 @@ def delete_ips_delete():
   rewrite_geojson()
   return redirect(url_for('index'))
 
+"""
 ###
 ###
 ### Views to search for and delete events ###
@@ -337,7 +340,7 @@ def delete_text_delete():
   # delete selected items from specified table by primary key
   delete(request.form.getlist('primary_key'), 'text_selections')
   return redirect(url_for('index'))
-
+"""
 ###
 ###
 ### Views to search for and edit images ###
@@ -480,7 +483,7 @@ def edit_ips_edit():
   # rewrite geojson file
   rewrite_geojson()
   return redirect(url_for('index'))
-
+"""
 ###
 ###
 ### Views to search for and edit events ###
@@ -595,4 +598,6 @@ def edit_text_edit():
     interest_point, event, notes, tags, edited_by)
   edit_textselection(params)
   return redirect(url_for('index'))
+  """
+  
 

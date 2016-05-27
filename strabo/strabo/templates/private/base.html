@@ -14,16 +14,12 @@
     {% set navigation_bar = [
     ('/admin/upload_images/', 'upload_images', 'Upload Images'),
     ('/admin/upload_ips/', 'upload_ips', 'Add Interest Points'),
-    ('/admin/upload_events/', 'upload_events', 'Add Events'),
-    ('/admin/upload_text/', 'upload_text', 'Add Text Selections'),
+
     ('/admin/edit_images/', 'edit_images', 'Edit Images'),
     ('/admin/edit_ips/', 'edit_ips', 'Edit Interest Points'),
-    ('/admin/edit_events/', 'edit_events', 'Edit Events'),
-    ('/admin/edit_text/', 'edit_text', 'Edit Text Selections'),
+
     ('/admin/delete_images/', 'delete_images', 'Delete Images'),
-    ('/admin/delete_ips/', 'delete_ips', 'Delete Interest Points'),
-    ('/admin/delete_events/', 'delete_events', 'Delete Events'),
-    ('/admin/delete_text/', 'delete_text', 'Delete Text Selections')
+    ('/admin/delete_ips/', 'delete_ips', 'Delete Interest Points')
     ] -%}
     
     {% set active_page = active_page|default('index') -%}
