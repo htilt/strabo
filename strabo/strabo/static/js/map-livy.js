@@ -17,6 +17,13 @@ L.tileLayer(tile_src, {
   ext: extension
 }).addTo(map);
 
+
+L.tileLayer(tile2_src, {
+  attribution: tile_attr2,
+  minZoom: 15,
+  maxZoom: 20
+}).addTo(map);
+
 // add pre-existing points, zones, and lines to map
 // interest_points, zones, and lines variables from the 
 // interest_points.js file
