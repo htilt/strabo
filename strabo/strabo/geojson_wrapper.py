@@ -1,4 +1,5 @@
 import geojson
+from strabo.database import get_geojson
 
 # returns a feature's coordinates
 def get_coords(feature):
@@ -17,7 +18,7 @@ def get_type(feature):
 def add_name_and_color(feature, name, color=None):
   feature = geojson.loads(feature)
   feature.geometry['name'] = name
-  if color: 
+  if color:
     feature.properties['marker-color'] = color
 
   # defaults for marker size and symbol
@@ -37,3 +38,16 @@ def make_featureCollection(features):
     feature_collection.append(geojson_object)
   feature_collection = geojson.FeatureCollection(feature_collection)
   return feature_collection
+
+def get_feature_collection(geojson_feature_type):
+  # Query db for geojson objects
+  db_geo_obj = get_geojson(geojson_feature_type)
+  # Convert geojson objects to feature collection
+  return make_featureCollection(db_geo_obj) if db_geo_obj != None else []
+
+
+def get_all_feature_collections():
+  points = get_feature_collection('Point')
+  zones = get_feature_collection('Polygon')
+  lines = get_feature_collection('LineString')
+  return points,zones,lines

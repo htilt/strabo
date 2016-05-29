@@ -14,7 +14,7 @@
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Edit Image</legend>
-              
+
               <div class="form-group" >
                 <label for="title">Image Title:</label><br>
                 <input class="form-control" type="text" name="title" value="{{ img['title'] }}"><br>
@@ -56,6 +56,7 @@
                   {% endfor %}
                 </select>
               </div>
+              <!---
               <div class="form-group">
                 <label for="event">Event:</label><br>
                 <select class="form-control" name='event'>
@@ -65,6 +66,7 @@
                   {% endfor %}
                 </select>
               </div>
+              -->
               <div class="form-group">
                 <label for="period">Period:</label><br>
                 <select class="form-control" name='period'>
@@ -82,16 +84,16 @@
                 <label for="tags">Tags:</label><br>
                 <input class="form-control" type="text" name="tags" value="{{ img['tags'] }}" placeholder="Add tags separated by commas.">
               </div>
-              
+
               <p></p>
-              
+
               <button type="submit" name="edit-btn" value={{ img['id'] }}>Edit</button>
             </div>
-          
+
             <div class="upload-wrapper col-lg-4">
               <img id="img-preview" src="{{ UPLOAD_FOLDER_RELPATH }}{{ img['filename'] }}"></img>
             </div>
-          
+
           </div>
         </form>
       </fieldset>

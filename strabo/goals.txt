@@ -1,0 +1,6 @@
+* Make a museum map, numbers corresponding to walking thorough (or GPS corresponding to location). I think this would work well to have a line, as one of the information types, along with polygons, as paths which have information associated.
+* Points correspond to both pictures, videos, perhaps other information.
+* Set up a meeting with digital collections, archives
+* Disclaimer about being uploading to reed's archives or other things (perhaps a full integration, this is also a frontend to the archive thing, or the reed archive being a frontend to this).
+* A filter to deal with larger numbers of photos in a reasonable way (maybe not necessary for the canyon map, but other things).
+* Emulate reed canyon website except better and more accessible.

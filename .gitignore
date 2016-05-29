@@ -40,6 +40,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.cache
 
 # Images #
 ##########
@@ -51,6 +52,7 @@ Thumbs.db
 *.TIFF
 *.JPG
 *.JPEG
+*.xcf
 
 # Virtual Environments #
 #######################

@@ -7,37 +7,36 @@
 
 {% block content %}
 <main class="container">
-{% for ip in interest_point %}
   <div class="form">
       <fieldset>
         <form id="image-upload" method="POST" action="/admin/edit_ips/edit/" enctype="multipart/form-data">
           <div class="row">
             <div class="form-wrapper col-lg-8">
               <legend>Edit Interest Point</legend>
-              
+
               <div class="form-group" >
                 <label for="name">Interest Point Name:</label><br>
-                <input class="form-control" type="text" name="name" value="{{ ip['name'] }}"><br>
+                <input class="form-control" type="text" name="name" value="{{ interest_point['name'] }}"><br>
               </div>
               <!-- Altered from Canyon instance -->
               <div class="form-group" >
                 <label for="books">Books:</label><br>
-                <input class="form-control" type="text" name="books" value="{{ ip['books'] }}">
+                <input class="form-control" type="text" name="books" value="{{ interest_point['books'] }}">
               </div>
               <!-- -->
               <div class="form-group">
                 <label for="coordinates">Coordinates:</label><br>
-                <input class="form-control" type="text" name="coordinates" value="{{ ip['coordinates'] }}">
+                <input class="form-control" type="text" name="coordinates" value="{{ interest_point['coordinates'] }}">
                 <p class="text-muted">*Note that in addition to editing the coordinates, you must also edit the GeoJSON object directly in order to see changes reflected in the map.</p>
               </div>
               <div class="form-group">
                 <label for="geojson_object">GeoJSON Object:</label><br>
-                <input class="form-control" type="text" name="geojson_object" value="{{ ip['geojson_object'] }}">
+                <input class="form-control" type="text" name="geojson_object" value="{{ interest_point['geojson_object'] }}">
               </div>
               <div class="form-group">
                 <label for="feature_type">Feature Type:</label><br>
                 <select class="form-control" name='feature_type'>
-                  <option selected name='selected'>{{ ip['feature_type'] }}</option>
+                  <option selected name='selected'>{{ interest_point['feature_type'] }}</option>
                   {% for feat_type in feat_types %}
                   <option name="{{feat_type}}">{{feat_type}}</option>
                   {% endfor %}
@@ -45,21 +44,20 @@
               </div>
               <div class="form-group">
                 <label for="notes">Additional Notes:</label><br>
-                <textarea class="form-control" rows='5' type="text" name="notes">{{ ip['notes'] }}</textarea>
+                <textarea class="form-control" rows='5' type="text" name="notes">{{ interest_point['notes'] }}</textarea>
               </div>
               <div class="form-group">
                 <label for="tags">Tags:</label><br>
-                <input class="form-control" type="text" name="tags" value="{{ ip['tags'] }}">
+                <input class="form-control" type="text" name="tags" value="{{ interest_point['tags'] }}">
               </div>
               <p></p>
-              
-              <button type="submit" name="edit-btn" value={{ ip['id'] }}>Edit</button>
+
+              <button type="submit" name="edit-btn" value={{ interest_point['id'] }}>Edit</button>
             </div>
-  
+
           </div>
         </form>
       </fieldset>
     </div>
-{% endfor %}
 </main>
 {% endblock %}

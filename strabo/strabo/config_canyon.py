@@ -4,21 +4,22 @@ from strabo import app
 #
 #
 #
-###### The following variables require configuration. 
+###### The following variables require configuration.
 
 # set the latitude and longitude for the center of the map
 # these values will be passed into the js file that gets rewritten
-# each time interest points are updated by the administrator, so 
+# each time interest points are updated by the administrator, so
 # changes here will not be reflected until an interest point is
 # added, edited, or deleted.
-app.config['LAT_SETTING'] = 41.892695
-app.config['LONG_SETTING'] = 12.495142
+app.config['LAT_SETTING'] = 45.481851
+app.config['LONG_SETTING'] = -122.630397
 # set periods for uploading images and searching timeline
-app.config['PERIODS'] = ('Republican', 'Augustan', 'Imperial', 'Modern')
-# set feature types for uploading interest points 
-app.config['FEATURE_TYPES'] = ("Geological Feature", "Natural Feature", 
-  "Building", "Altar", "City", "Neighborhood or Region", "Dedicactory Monument", 
-  "Street or Intersection", "Tomb", "Gate", "Infrastructure", "Recreational Facility")
+#### CHANGE TO: one for each decade? ####
+app.config['PERIODS'] = ('1900 to 1920s', '1930s', '1940s', '1950s','1960s','1970s','1980s','1990s','2000s','2010s')
+# set feature types for uploading interest points
+app.config['FEATURE_TYPES'] = ("Historical Feature", "Plant",
+  "Tree", "Building", "Trail", "Pipe", "Bridge",
+  "Natural Feature", "Recreational Facility","Water Feature","Other")
 
 #
 #
@@ -31,16 +32,16 @@ app.config['FEATURE_TYPES'] = ("Geological Feature", "Natural Feature",
 app.config['BASE_CSS'] = "reedred_base.css"
 
 # set website title
-app.config['WEBSITE_TITLE'] = 'Reconstructing Livy\'s Rome'
+app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
 # set greeting on homepage for admin end
-app.config['INDEX_GREETING'] = "Select a tab to begin adding content to Livy's Rome."
+app.config['INDEX_GREETING'] = "Select a tab to begin adding content to the Canyon."
 # set title and subtitle for image gallery
 app.config['GALLERY_TITLE'] = "Image Gallery"
-app.config['GALLERY_SUBTITLE'] = "Livy's Rome Past and Present"
-# timeline functionality is currently disabled 
+app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
+# timeline functionality is currently disabled
 # set title and subtitle for timeline
 app.config['TIMELINE_TITLE'] = "Timeline of Major Events"
-app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the first five books of Ab Urbe Condita."
+app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the history of the canyon."
 
 #
 #
@@ -48,8 +49,8 @@ app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the fir
 #
 ###### The following variables probably will not require configuration.
 
-# set name of database
-app.config['DATABASE'] = "livy.sqlite3"
+#
+app.config['IS_DEBUG'] = True
 # set absolute and relative paths to the upload directory for images
 app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads-livy/'
 app.config['UPLOAD_FOLDER_RELPATH'] = '/static/uploads-livy/'
@@ -72,7 +73,7 @@ app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
 # set template filenames
 app.config['MAP_TEMPLATE'] = "map.html"
 app.config['BASE_TEMPLATE'] = "base.html"
-app.config['HEADER_TEMPLATE'] = "header-livy.html"
+app.config['HEADER_TEMPLATE'] = "header.html"
 app.config['FOOTER_TEMPLATE'] = "footer.html"
 
 # set stylesheet filenames
@@ -88,57 +89,40 @@ app.config['ABOUT_CSS'] = 'about.css'
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG'])
 
 # set the map tile source, attribution, subdomains, and extension.
-# if you wish to use different map tiles that take other variables, 
+# if you wish to use different map tiles that take other variables,
 # you will need to edit map.js directly.
-app.config["MAP_TILE_SRC"] = 'http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png'
-app.config["MAP_ATTR1"] = 'Map tiles by Stamen Design, Map data by OpenStreetMap'
+app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png'
+app.config["MAP_ATTR1"] = '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 app.config["SUBDOMAINS"] = 'abcd'
 app.config["EXTENSION"] = 'png'
 
 # list the columns that users should be able to search in the public gallery
-app.config['SEARCH_COLUMNS'] = ['title', 'img_description', 'latitude', 'longitude',
+app.config['IMAGE_SEARCH_COLUMNS'] = ['title', 'img_description', 'latitude', 'longitude',
 'interest_point', 'event', 'period', 'notes']
 
+app.config['FUZZY_SEARCH_COLUMNS'] = ["title", "img_description", "event_description", "name",
+    "passage", "tags", "notes"]
+
+#flask_sqlalchemy specific configuations
+# set name of database
+#app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo_test"
+app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../sqlalchemy_data.sqlite3"
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
 #
 #
 #
 #
-###### The following variables probably will not require configuration. 
-
-# Only edit SQL statements if coulumns in schema.py have been altered.
-app.config['INSERT_IMG_QUERY'] = """INSERT INTO images(title, img_description, 
-latitude, longitude, date_created, interest_point, event, period, notes, 
-tags, edited_by, filename, thumbnail_name) VALUES(?, ?, ?, ?, ?, ?,
-?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_IMG_QUERY'] = """REPLACE INTO images 
-VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-
-app.config['INSERT_IP_QUERY'] = """INSERT INTO interest_points(name, books,
-coordinates, geojson_object, feature_type, geojson_feature_type, notes, tags, 
-edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_IP_QUERY'] = """REPLACE INTO interest_points VALUES(?, ?, ?, ?, ?, 
-?, ?, ?, ?, ?, ?)"""
-
-app.config['INSERT_EVENT_QUERY'] = """INSERT INTO events
-(title, event_description, date_of_event, notes, tags, edited_by) 
-VALUES(?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_EVENT_QUERY'] = """REPLACE INTO events VALUES(?, ?, ?, ?, ?, ?,
-?, ?)"""
-
-app.config['INSERT_TEXT_QUERY'] = """INSERT INTO text_selections
-(name, book, section, pages, passage, interest_point, event,
-notes, tags, edited_by) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-app.config['EDIT_TEXT_QUERY'] = """REPLACE INTO text_selections 
-VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+###### The following variables probably will not require configuration.
 
 # Provide aliases for column names
 # Only edit column aliases if coulumns in schema.py have been altered.
-app.config['COLUMN_ALIASES'] = {'id':'Integer ID', 'created_at':'Time Added to Database', 'title':'Title', 
-  'img_description':'Image Description', 'latitude':'Latitude', 'longitude':'Longitude', 
+app.config['COLUMN_ALIASES'] = {'id':'Integer ID', 'created_at':'Time Added to Database', 'title':'Title',
+  'img_description':'Image Description', 'latitude':'Latitude', 'longitude':'Longitude',
   'date_created':'Date Created', 'interest_point':'Interest Point', 'event':'Event',
   'period':'Period', 'notes':'Notes', 'tags':'Tags', 'edited_by':'Editor', 'filename':'Image Filename',
-  'thumbnail_name':'Image Thumbnail Filename', 'event_description':'Event Description', 
-  'date_of_event':'Date of Event', 'name':'Name', 'books':'Books', 'coordinates':'Coordinates', 
+  'thumbnail_name':'Image Thumbnail Filename', 'event_description':'Event Description',
+  'date_of_event':'Date of Event', 'name':'Name', 'books':'Books', 'coordinates':'Coordinates',
   'geojson_object':'Geojson Object', 'feature_type':'Feature Type', 'book':'Book',
   'geojson_feature_type': 'Geojson Feature Type', 'section':'Section', 'pages':'Pages',
   'passage':'Passage'}

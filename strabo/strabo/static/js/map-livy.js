@@ -1,7 +1,7 @@
 // instantiate a Leaflet map object in the correct div
 // 'map'. Set lat, lng for the map's center
 var map = L.map('map'
-).setView([lat_setting, long_setting], 14 );
+).setView([lat_setting, long_setting], 16);
 
 // tile_src,  tile_attr1, subdomains, and extension are variables
 // from the interest_points.js file
@@ -12,9 +12,8 @@ var map = L.map('map'
 // you will need to add those below.
 L.tileLayer(tile_src, {
   attribution: tile_attr1,
-  subdomains: subdomains,
-  minZoom: 1,
-  maxZoom: 16,
+  minZoom: 15,
+  maxZoom: 20,
   ext: extension
 }).addTo(map);
 
