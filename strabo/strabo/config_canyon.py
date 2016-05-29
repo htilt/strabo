@@ -11,14 +11,15 @@ from strabo import app
 # each time interest points are updated by the administrator, so
 # changes here will not be reflected until an interest point is
 # added, edited, or deleted.
-app.config['LAT_SETTING'] = 41.892695
-app.config['LONG_SETTING'] = 12.495142
+app.config['LAT_SETTING'] = 45.481851
+app.config['LONG_SETTING'] = -122.630397
 # set periods for uploading images and searching timeline
-app.config['PERIODS'] = ('Republican', 'Augustan', 'Imperial', 'Modern')
+#### CHANGE TO: one for each decade? ####
+app.config['PERIODS'] = ('1900 to 1920s', '1930s', '1940s', '1950s','1960s','1970s','1980s','1990s','2000s','2010s')
 # set feature types for uploading interest points
-app.config['FEATURE_TYPES'] = ("Geological Feature", "Natural Feature",
-  "Building", "Altar", "City", "Neighborhood or Region", "Dedicactory Monument",
-  "Street or Intersection", "Tomb", "Gate", "Infrastructure", "Recreational Facility")
+app.config['FEATURE_TYPES'] = ("Historical Feature", "Plant",
+  "Tree", "Building", "Trail", "Pipe", "Bridge",
+  "Natural Feature", "Recreational Facility","Water Feature","Other")
 
 #
 #
@@ -31,16 +32,16 @@ app.config['FEATURE_TYPES'] = ("Geological Feature", "Natural Feature",
 app.config['BASE_CSS'] = "reedred_base.css"
 
 # set website title
-app.config['WEBSITE_TITLE'] = 'Reconstructing Livy\'s Rome'
+app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
 # set greeting on homepage for admin end
-app.config['INDEX_GREETING'] = "Select a tab to begin adding content to Livy's Rome."
+app.config['INDEX_GREETING'] = "Select a tab to begin adding content to the Canyon."
 # set title and subtitle for image gallery
 app.config['GALLERY_TITLE'] = "Image Gallery"
-app.config['GALLERY_SUBTITLE'] = "Livy's Rome Past and Present"
+app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
 # timeline functionality is currently disabled
 # set title and subtitle for timeline
 app.config['TIMELINE_TITLE'] = "Timeline of Major Events"
-app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the first five books of Ab Urbe Condita."
+app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the history of the canyon."
 
 #
 #
@@ -72,7 +73,7 @@ app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
 # set template filenames
 app.config['MAP_TEMPLATE'] = "map.html"
 app.config['BASE_TEMPLATE'] = "base.html"
-app.config['HEADER_TEMPLATE'] = "header-livy.html"
+app.config['HEADER_TEMPLATE'] = "header.html"
 app.config['FOOTER_TEMPLATE'] = "footer.html"
 
 # set stylesheet filenames
@@ -90,8 +91,8 @@ app.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'png', 'jpg', 'jpeg', 'JPG', 'JPE
 # set the map tile source, attribution, subdomains, and extension.
 # if you wish to use different map tiles that take other variables,
 # you will need to edit map.js directly.
-app.config["MAP_TILE_SRC"] = 'http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png'
-app.config["MAP_ATTR1"] = 'Map tiles by Stamen Design, Map data by OpenStreetMap'
+app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png'
+app.config["MAP_ATTR1"] = '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 app.config["SUBDOMAINS"] = 'abcd'
 app.config["EXTENSION"] = 'png'
 

@@ -1,9 +1,9 @@
-var lat_setting = 41.892695
-var long_setting = 12.495142
-var tile_src = "http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png"
-var tile_attr1 = "Map tiles by Stamen Design, Map data by OpenStreetMap"
+var lat_setting = 45.481851
+var long_setting = -122.630397
+var tile_src = "http://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png"
+var tile_attr1 = "&copy; <a href='http://www.thunderforest.com/'>Thunderforest</a>, &copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
 var subdomains = "abcd"
 var extension = "png"
-var interest_points = {"features": [{"geometry": {"coordinates": [12.473430633544922, 41.915818693496426], "name": "loc", "type": "Point"}, "properties": {"marker-color": "#00A0B0", "marker-size": "medium", "marker-symbol": ""}, "type": "Feature"}], "type": "FeatureCollection"}
+var interest_points = {"features": [{"geometry": {"coordinates": [-122.63246834278107, 45.48234648178552], "name": "Fish Ladder", "type": "Point"}, "properties": {"marker-color": "#00A0B0", "marker-size": "medium", "marker-symbol": ""}, "type": "Feature"}, {"geometry": {"coordinates": [-122.63035476207732, 45.481710844017755], "name": "Blue Bridge", "type": "Point"}, "properties": {"marker-color": "#00A0B0", "marker-size": "medium", "marker-symbol": ""}, "type": "Feature"}], "type": "FeatureCollection"}
 var interest_zones = {"features": [], "type": "FeatureCollection"}
 var interest_lines = {"features": [], "type": "FeatureCollection"}
