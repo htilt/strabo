@@ -5,7 +5,7 @@ var map = L.map('map'
 
 // tile_src,  tile_attr1, subdomains, and extension are variables
 // from the interest_points.js file
-// if you wish to use different map tiles that take fewer variables, 
+// if you wish to use different map tiles that take fewer variables,
 // you will need to eliminate the extra variables below for map
 // tiles to load.
 // if you wish to use map tiles that take other or more variables,
@@ -18,7 +18,7 @@ L.tileLayer(tile_src, {
 }).addTo(map);
 
 // add pre-existing points, zones, and lines to map
-// interest_points, zones, and lines variables from the 
+// interest_points, zones, and lines variables from the
 // interest_points.js file
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachPoint,
@@ -116,12 +116,12 @@ function see_ip(name) {
 
     //get info from server and manage four possible situations
     //(there are neither images nor text for an interest point,
-    //there are images but  
+    //there are images but
     $.post(
-    "/map/post", 
+    "/map/post",
     {name:name},
     function(data) {
-      //if there are neither images nor text      
+      //if there are neither images nor text
       if (typeof data['text-selection'][0] === 'undefined' && typeof data['images'][0] === 'undefined') {
         //indicate there is no text
         $('#text').html('There is no passage associated with this location. Please select another.')
@@ -154,11 +154,11 @@ function see_ip(name) {
           var select_id = '#' + img_id;
           var $thumbnail = $(select_id);
           $thumbnail.removeClass('hidden')
-          $thumbnail.find('img').attr("src", "./static/thumbnails-livy/" + data['images'][image]['thumbnail_name'])
-          $thumbnail.find('img').data("fullsrc", "./static/uploads-livy/" + data['images'][image]['filename'])
+          $thumbnail.find('img').attr("src", "./static/thumbnails/" + data['images'][image]['thumbnail_name'])
+          $thumbnail.find('img').data("fullsrc", "./static/uploads/" + data['images'][image]['filename'])
           //add metadata to images
           $thumbnail.find('.img-metadata').append("<p>Title: "+data['images'][image]['title']+"</p>")
-          
+
           if (data['images'][image]['date_created']) {
             $thumbnail.find('.img-metadata').append("<br><p>Date Created: "+data['images'][image]['date_created']+"</p><br>")
           }
@@ -228,11 +228,11 @@ function see_ip(name) {
           var select_id = '#' + img_id;
           var $thumbnail = $(select_id);
           $thumbnail.removeClass('hidden')
-          $thumbnail.find('img').attr("src", "./static/thumbnails-livy/" + data['images'][image]['thumbnail_name'])
-          $thumbnail.find('img').data("fullsrc", "./static/uploads-livy/" + data['images'][image]['filename'])
+          $thumbnail.find('img').attr("src", "./static/thumbnails/" + data['images'][image]['thumbnail_name'])
+          $thumbnail.find('img').data("fullsrc", "./static/uploads/" + data['images'][image]['filename'])
           //add metadata to images
           $thumbnail.find('.img-metadata').append("<p>Title: "+data['images'][image]['title']+"</p>")
-          
+
           if (data['images'][image]['date_created']) {
             $thumbnail.find('.img-metadata').append("<br><p>Date Created: "+data['images'][image]['date_created']+"</p><br>")
           }
@@ -265,4 +265,3 @@ $('#close-text').click(function(){
     //add img message
     $("#img-placeholder").removeClass('hidden')
 });
-

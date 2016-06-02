@@ -1,7 +1,7 @@
-from strabo import schema_livy
+from strabo import schema
 from strabo import database
 from strabo.utils import make_date
-from strabo import schema_livy
+from strabo import schema
 from strabo import db
 
 def test_fixture(table,insert_data):
@@ -60,26 +60,26 @@ data2 = {
 def compare(dict,asd):
     pass
 
-@test_fixture(schema_livy.Images,[data1,data1])
+@test_fixture(schema.Images,[data1,data1])
 def edit_test():
-  database.edit_table_key(schema_livy.Images,22,data2)
+  database.edit_table_key(schema.Images,22,data2)
   return True
 
 def delete_test():
-    database.delete([5],schema_livy.Images)
+    database.delete([5],schema.Images)
     return True
 
 def clear_database():
-    clear_table(schema_livy.Images)
-    clear_table(schema_livy.Events)
-    clear_table(schema_livy.InterestPoints)
-    clear_table(schema_livy.TextSelections)
+    clear_table(schema.Images)
+    clear_table(schema.Events)
+    clear_table(schema.InterestPoints)
+    clear_table(schema.TextSelections)
 
-#database.get_all_rows(schema_livy.Events)
+#database.get_all_rows(schema.Events)
 #clear_database()
 #insert_test()
 #edit_test()
 #delete_test()
 
 
-#clear_table(schema_livy.Images)
+#clear_table(schema.Images)

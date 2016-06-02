@@ -1,5 +1,5 @@
 from strabo import db
-from strabo import schema_livy
+from strabo import schema
 
 if __name__ == '__main__':
     # This function loads in the proper sql table

@@ -1,7 +1,9 @@
 import re
+import random
+import os
 
 from strabo import app
-from strabo import schema_livy
+from strabo import schema
 
 def list_years():
   years = []
@@ -64,7 +66,7 @@ def prettify_columns(raw_columns):
 # get raw column names and convert to 'prettified' column names
 # from config.py
 def get_fields(table_name):
-  columns = schema_livy.table_column_names[table_name]
+  columns = schema.table_column_names[table_name]
   fields = prettify_columns(columns)
   return fields
 
@@ -74,3 +76,19 @@ def get_raw_column(search_field):
     search_field = app.config['REVERSE_COLUMN_ALIASES'][search_field]
     return search_field
   else: return search_field
+
+def extract_name_extention(filename):
+    dot_idx = filename.rfind('.')
+    return filename[:dot_idx], filename[dot_idx+1:]
+
+#generates a filename which does not yet iexist in the folder specified by path
+def unique_filename(path,filename):
+    def gen_new_name():
+        name,ext = extract_name_extention(filename)
+        return name+str(random.randint(0,1000000000000000)) + '.' + ext
+
+    uniq_name = filename
+    while os.path.isfile(os.path.join(path,uniq_name)):
+        uniq_name = gen_new_name()
+
+    return uniq_name

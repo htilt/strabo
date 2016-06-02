@@ -62,7 +62,4 @@ Thumbs.db
 # Livy-specific files/directories #
 ###################################
 
-#/thumbnails-livy
-#/uploads-livy
-#header-livy.html
 *.swp

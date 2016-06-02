@@ -1,11 +1,5 @@
 import geojson
-from strabo.database import get_geojson
-
-# returns a feature's coordinates
-def get_coords(feature):
-  feature = geojson.loads(feature)
-  coords = list(geojson.utils.coords(feature))
-  return(coords)
+from strabo import database
 
 # returns a feature's type (point/polygon/line/etc.)
 def get_type(feature):
@@ -25,25 +19,21 @@ def add_name_and_color(feature, name, color=None):
   feature.properties['marker-size'] = 'medium'
   feature.properties['marker-symbol'] = ''
   feature = geojson.dumps(feature, sort_keys=True)
-  print (feature)
   return feature
 
 # This function receives a list containing geojson strings.
 # It returns a geojson feature collection.
-def make_featureCollection(features):
-  feature_collection = []
-  for feature in features:
-    geojson_object = feature['geojson_object']
-    geojson_object = geojson.loads(geojson_object)
-    feature_collection.append(geojson_object)
-  feature_collection = geojson.FeatureCollection(feature_collection)
+def make_featureCollection(geojson_objs):
+  feature_list = []
+  for geojson_object in geojson_objs:
+    geo_object = geojson.loads(geojson_object)
+    feature_list.append(geo_object)
+  feature_collection = geojson.FeatureCollection(feature_list)
   return feature_collection
 
 def get_feature_collection(geojson_feature_type):
-  # Query db for geojson objects
-  db_geo_obj = get_geojson(geojson_feature_type)
-  # Convert geojson objects to feature collection
-  return make_featureCollection(db_geo_obj) if db_geo_obj != None else []
+  db_geo_objs = database.get_geo_objects(geojson_feature_type)
+  return make_featureCollection(db_geo_objs)
 
 
 def get_all_feature_collections():

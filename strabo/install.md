@@ -23,7 +23,7 @@ If you ever get an error that looks like the above, this means you do not have t
 
     pip uninstall Pillow
     brew install libjpeg
-    pip install Pillow
+    pip install  --no-cache-dir -I  Pillow
 
 On other systems, the process should be very similar, but the specific package and package system will be different.
 
