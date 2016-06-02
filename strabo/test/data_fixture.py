@@ -11,7 +11,7 @@ import os
 from strabo import app
 import shutil
 
-app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo_test"
+app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../test_sqlalchemy_data.sqlite3"
 
 class mock_flask_file_obj:
     def __init__(self,path,filename):
@@ -25,11 +25,10 @@ class mock_flask_file_obj:
 #hackish and bad way of reinniting the postgres database
 def recreate_postgres_db():
     #delete database
-    os.system("dropdb strabo_test")
+    os.system("rm sqlalchemy_data.sqlite3")
     os.system("rm strabo/static/uploads/*")
     os.system("rm strabo/static/thumbnails/*")
     #recreates database
-    os.system("createdb strabo_test")
     os.system("python initDB.py")
 
 class DatabaseFixture(unittest.TestCase):
