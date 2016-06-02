@@ -7,6 +7,7 @@ from strabo import schema
 from strabo.geojson_wrapper import get_all_feature_collections
 from strabo.utils import prettify_columns, get_raw_column
 import copy
+from strabo import public_helper
 
 #@app.route("/")
 @app.route("/map")

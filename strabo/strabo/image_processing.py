@@ -4,11 +4,11 @@ from contextlib import closing
 from PIL import Image
 
 from strabo import app
+from strabo import utils
 
 # For a given file, return whether it's an allowed type or not
 def allowed_file(filename):
-  return '.' in filename and \
-    filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+  return utils.get_extension(filename) in app.config['ALLOWED_EXTENSIONS']
 
 # This helper function uses PIL to make a new thumbnail of a given image
 def make_thumbnail(filename):
@@ -19,7 +19,7 @@ def make_thumbnail(filename):
   size = 300, 300
   img.thumbnail(size)
   # save the image under a new filename in thumbnails directory
-  imagename = filename.rsplit(".", 1)[0]
+  imagename = utils.remove_extension(filename)
   newfilename = imagename + "_thumbnail.jpg"
   path = app.config['NEW_DATA_DIRECTORY']
   fullpath = os.path.join(path, newfilename)

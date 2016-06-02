@@ -78,8 +78,18 @@ def get_raw_column(search_field):
   else: return search_field
 
 def extract_name_extention(filename):
-    dot_idx = filename.rfind('.')
+    dot_loc = filename.rfind('.')
+
+    find_not_found_value = -1
+    dot_idx = dot_loc if dot_loc != find_not_found_value else len(filename) - 1
+
     return filename[:dot_idx], filename[dot_idx+1:]
+
+def remove_extension(filename):
+    return extract_name_extention(filename)[0]
+
+def get_extension(filename):
+    return extract_name_extention(filename)[1]
 
 #generates a filename which does not yet iexist in the folder specified by path
 def unique_filename(path,filename):

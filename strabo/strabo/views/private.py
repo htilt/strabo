@@ -6,7 +6,7 @@ from strabo.geojson_wrapper import get_all_feature_collections
 from flask import request, render_template, redirect, url_for
 
 from strabo import database
-from strabo import post_helper
+from strabo import private_helper
 from strabo import schema
 from strabo import app
 # Landing page allows viewer to select amoung tabs to start editing
@@ -27,7 +27,7 @@ def upload_images():
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
     print(request.form)
-    img_obj = post_helper.make_image(request.files['file'],request.form['interest_point'])
+    img_obj = private_helper.make_image(request.files['file'],request.form['interest_point'])
     database.store_item(img_obj)
     return redirect(url_for('index'))
 
@@ -45,10 +45,11 @@ def upload_ips():
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
-    ip = post_helper.make_interest_point(request.form['title'],request.form['description'],request.form['geojson'],request.form['layer'])
+    ip = private_helper.make_interest_point(request.form['title'],request.form['description'],request.form['geojson'],request.form['layer'])
     database.store_item(ip)
     return redirect(url_for('index'))
 
+'''
 ###
 ###
 ### Views to search for and delete images ###
@@ -101,3 +102,4 @@ def delete_ips_delete():
   # delete selected items from specified table by primary key
   database.delete(request.form.getlist('primary_key'), schema.InterestPoints)
   return redirect(url_for('index'))
+'''
