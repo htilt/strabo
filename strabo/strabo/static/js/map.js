@@ -1,5 +1,4 @@
-// instantiate a Leaflet map object in the correct div
-// 'map'. Set lat, lng for the map's center
+
 var map = L.map('map'
 ).setView([lat_setting, long_setting], 16);
 
@@ -9,6 +8,9 @@ L.tileLayer(tile_src, {
   maxZoom: 20,
   ext: extension
 }).addTo(map);
+
+
+
 
 // add pre-existing points, zones, and lines to map
 // interest_points, zones, and lines variables from the

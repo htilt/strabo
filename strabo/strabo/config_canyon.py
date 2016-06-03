@@ -39,7 +39,7 @@ def config_app(app):
     ##### "About" page ("about.html") must be edited directly.
 
     # Choose between reedred_base.css, berkeleyblue_base.css, and minwhite_base.css
-    app.config['BASE_CSS'] = "reedred_base.css"
+    app.config['BASE_CSS'] = "canyon_base.css"
 
 
     app.config['HEADER_CSS'] = "header.css"

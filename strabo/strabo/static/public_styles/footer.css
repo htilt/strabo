@@ -3,13 +3,15 @@
 .wrapper {
   min-height: 100%;
   height: auto !important;
-  height: 100%;
-  margin: 0 auto -4em;
+  /*height: 100%;*/
+  margin: 0 auto -3em;
+  position: relative;
 }
 
 #footer {
-  border-top: 1px solid #ddd;
-  background-color: #e0f0dc; /*light green*/
+  border-top: 1px solid #ddd; /*gray*/
+  background-color: #e0f0dc; 
+  position: relative;
 }
 
 .footer, .push {
@@ -17,8 +19,8 @@
 }
 
 #footer p {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 300;
-  font-size: 17px;
+  font-family: 'Futura', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
   padding: 15px;
 }
