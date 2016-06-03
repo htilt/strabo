@@ -1,11 +1,11 @@
 /* Navbar */
 .navbar {
-  background-color: #F0F0F0  ;
+  background-color: #FFFFFF  ;
   border-bottom: 1px solid #ddd;
   opacity: 1;
   
-  font-family: 'Oswald', sans-serif;
-  font-weight: 300;
+  font-family: 'Futura', sans-serif;
+  font-weight: 500;
   
   font-size: 17px;
   padding: 15px;
@@ -47,5 +47,5 @@ p {
 }
 
 .menu a {
-  color: #898989;
+  color: #e0f0dc; /*light green*/
 }

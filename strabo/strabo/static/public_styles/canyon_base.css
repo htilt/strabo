@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+  background-color: #e0f0dc; /*light green*/
+}
+
+p {
+  color: black;
+}
+
+h1, h2, h3, i, span {
+  color:black;
+}

@@ -1,21 +1,16 @@
-// instantiate a Leaflet map object in the correct div
-// 'map'. Set lat, lng for the map's center
+
 var map = L.map('map'
 ).setView([lat_setting, long_setting], 17);
 
-// tile_src,  tile_attr1, subdomains, and extension are variables
-// from the interest_points.js file
-// if you wish to use different map tiles that take fewer variables,
-// you will need to eliminate the extra variables below for map
-// tiles to load.
-// if you wish to use map tiles that take other or more variables,
-// you will need to add those below.
 L.tileLayer(tile_src, {
   attribution: tile_attr1,
-  minZoom: 14,
+  minZoom: 14, //increased min zoom to see Willamette river
   maxZoom: 22,
   ext: extension
 }).addTo(map);
+
+
+
 
 // add pre-existing points, zones, and lines to map
 // interest_points, zones, and lines variables from the

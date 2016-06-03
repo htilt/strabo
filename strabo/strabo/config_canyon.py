@@ -25,10 +25,10 @@ def config_app(app):
     app.config['LONG_SETTING'] = -122.630397
 
     app.config['LAYER_FIELDS'] = lay_fields = {
-            Layers.plant:"Plant",
-            Layers.animal:"Animal Sighting",
-            Layers.hist:"Historical Feature",
-            Layers.cool:"Cool Stuff"
+            Layers.plant:"Plants",
+            Layers.animal:"Animals",
+            Layers.hist:"Interest Points",
+            Layers.cool:"Sensitive Areas"
         }
 
     app.config['LAYER_FIELD_ENUMS'] = reverse_dict(lay_fields)
@@ -39,7 +39,7 @@ def config_app(app):
     ##### "About" page ("about.html") must be edited directly.
 
     # Choose between reedred_base.css, berkeleyblue_base.css, and minwhite_base.css
-    app.config['BASE_CSS'] = "reedred_base.css"
+    app.config['BASE_CSS'] = "canyon_base.css"
 
 
     app.config['HEADER_CSS'] = "header.css"
@@ -50,6 +50,7 @@ def config_app(app):
     app.config['UNDER_CONST_CSS'] = 'under_const.css'
     app.config['ABOUT_CSS'] = 'about.css'
 
+
     # set website title
     app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
     # set greeting on homepage for admin end
@@ -58,6 +59,7 @@ def config_app(app):
     app.config['GALLERY_TITLE'] = "Image Gallery"
     app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
     # timeline functionality is currently disabled
+
     # set title and subtitle for timeline
     app.config['TIMELINE_TITLE'] = "Timeline of Major Events"
     app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the history of the canyon."
@@ -91,27 +93,20 @@ def config_app(app):
     app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
     app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
 
-    # set allowed extensions for uploaded images
+
+
+
     app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}
 
-    # set the map tile source, attribution, subdomains, and extension.
-    # if you wish to use different map tiles that take other variables,
-    # you will need to edit map.js directly.
     app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
-    app.config["MAP_ATTR1"] = '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    app.config["MAP_ATTR1"] = 'Map tiles by Thunderforest, Map data by OpenStreetMap'
     app.config["SUBDOMAINS"] = 'abcd'
     app.config["EXTENSION"] = 'png'
 
-    #flask_sqlalchemy specific configuations
-    # set name of database
     app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
-    #app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../sqlalchemy_data.sqlite3"
-    #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-    #
-    #
-    #
-    #
+
+
     ###### The following variables probably will not require configuration.
 
     # Provide aliases for column names
