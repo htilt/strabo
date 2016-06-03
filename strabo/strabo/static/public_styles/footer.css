@@ -3,19 +3,17 @@
 .wrapper {
   min-height: 100%;
   height: auto !important;
-  /*height: 100%;*/
-  margin: 0 auto -3em;
-  position: relative;
+  height: 100%;
+  margin: 0 auto -4em;
 }
 
 #footer {
   border-top: 1px solid #ddd; /*gray*/
   background-color: #e0f0dc; 
-  position: relative;
 }
 
 .footer, .push {
-  height: 3em;
+  height: 4em;
 }
 
 #footer p {
