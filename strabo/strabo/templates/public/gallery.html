@@ -1,0 +1,103 @@
+{% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
+{% block head %}
+    {{ super() }}
+    <link href="{{PATH_TO_PUBLIC_STYLES}}{{GALLERY_CSS}}" rel="stylesheet">
+{% endblock %}
+    
+{% block content %}
+<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="" alt="" />
+            </div>
+            <div class="modal-metadata">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="gallery-wrapper">
+
+    <!-- Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 id="gallery-header">{{GALLERY_TITLE}}
+                    <small>{{GALLERY_SUBTITLE}}</small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Form -->
+        <form id="gallery-content" class="form-inline" method="GET" action="/gallery" enctype="multipart/form-data">
+            <div class="form-group">
+                <select class="form-control" name='search_field'>
+                    <option selected name='all_fields'>All Fields</option>
+                    {% for field in fields %}
+                    <option name="field">{{field}}</option>
+                    {% endfor %}        
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="Search Bar"></label>
+                    <input class="form-control" type="text hidden" type="text" name="search_term" size="80"  placeholder="Search by keyword" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-info" value="Submit">
+            </div> 
+        </form>
+        <!-- /Form -->
+        <hr>
+        <!-- Projects Row -->
+        <div class="row">
+        {% for img in images %}
+            <div class="portfolio-item col-lg-3 col-md-4 col-sm-6 " data-toggle="modal" data-target="#lightbox">
+                <div class="thumbnail">
+                    
+                    <div class="caption">
+                        <h4 class="headline">{{img['title']}}</h4><br>
+                         <p><a href="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename']}}" download="{{ img['filename']}}" class="btn btn-primary btn-xs" title="Download now">Download</a></p>
+                    </div>
+                    
+                    <img class="img-responsive " src="{{THUMBNAIL_FOLDER_RELPATH}}{{ img['thumbnail_name'] }}" data-fullsrc="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename']}}" alt="{{ img['title'] }}" width="500" height="309" border="0">
+            
+
+                    <div class="hidden img-metadata">
+                        <p>Title: {{ img['title'] }}</p><br>
+                        {% if img['date_created'] %}
+                        <p>Date: {{ img['date_created'] }}</p><br>
+                        {% endif %}
+                        {% if img['img_description'] %}
+                        <p>Description: {{ img['img_description'] }}</p><br>
+                        {% endif %}
+                        {% if img['notes'] %}
+                        <p>Notes: {{ img['notes'] }}</p><br>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>    
+        {% endfor %}
+        </div>
+        <!-- /.row -->
+            
+    <hr>
+    </div>
+    <!-- /.container -->
+    
+</div>
+{% endblock content %}
+    
+{% block footer %}
+    {{ super() }}
+    <script src="../static/js/gallery.js"></script>
+{% endblock footer %}

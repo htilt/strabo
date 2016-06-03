@@ -9,8 +9,8 @@ from strabo.utils import prettify_columns, get_raw_column
 import copy
 from strabo import public_helper
 
-#@app.route("/")
-@app.route("/map")
+
+@app.route("/")
 def map():
   template = "public/map.html"
   points,zones,lines = get_all_feature_collections()
@@ -19,6 +19,11 @@ def map():
     interest_zones_json=lines,
     interest_lines_json=zones,
      **app.config)
+
+
+
+
+
 '''
 @app.route('/map/post', methods=["POST"])
 def map_post():
