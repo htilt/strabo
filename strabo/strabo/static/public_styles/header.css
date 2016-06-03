@@ -1,14 +1,14 @@
 /* Navbar */
 .navbar {
-  background-color: #e0f0dc  ;
+  background-color: #ffffff;
   border-bottom: 1px solid #ddd;
-  opacity: 0.6;
+  opacity: 1;
   
   font-family: 'Futura', sans-serif;
-  font-weight: 500;
+  font-weight: 800;
   
-  font-size: 17px;
-  padding: 15px;
+  font-size: 20px;
+  padding: 1px;
 }
 
 p {

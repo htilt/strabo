@@ -112,6 +112,8 @@ function see_ip(name) {
     //get info from server and manage four possible situations
     //(there are neither images nor text for an interest point,
     //there are images but
+
+    ///
     $.post(
     "/map/post",
     {name:name},
@@ -243,7 +245,7 @@ function see_ip(name) {
     );
 
 }
-
+///
 //on close button, reset divs
 $('#close-text').click(function(){
     //hide text box

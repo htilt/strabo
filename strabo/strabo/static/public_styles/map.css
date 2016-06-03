@@ -12,7 +12,7 @@ html, body {
 }
 
 .header {
-  height: 80px;
+  height: 50px;
 }
 
 #book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {
