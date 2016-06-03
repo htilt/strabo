@@ -97,15 +97,15 @@ def config_app(app):
     # set the map tile source, attribution, subdomains, and extension.
     # if you wish to use different map tiles that take other variables,
     # you will need to edit map.js directly.
-    app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png'
+    app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
     app.config["MAP_ATTR1"] = '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     app.config["SUBDOMAINS"] = 'abcd'
     app.config["EXTENSION"] = 'png'
 
     #flask_sqlalchemy specific configuations
     # set name of database
-    #app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
-    app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../sqlalchemy_data.sqlite3"
+    app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
+    #app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../sqlalchemy_data.sqlite3"
     #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
     #
