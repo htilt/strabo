@@ -1,11 +1,11 @@
 
 var map = L.map('map'
-).setView([lat_setting, long_setting], 16);
+).setView([lat_setting, long_setting], 17);
 
 L.tileLayer(tile_src, {
   attribution: tile_attr1,
   minZoom: 14, //increased min zoom to see Willamette river
-  maxZoom: 20,
+  maxZoom: 22,
   ext: extension
 }).addTo(map);
 

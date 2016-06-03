@@ -1,12 +1,12 @@
 // instantiate a Leaflet map object in the correct div
 // 'drawMap'. Set lat, lng for the map's center
 var drawMap = L.map('drawMap', {
-}).setView([lat_setting, long_setting], 16 );
+}).setView([lat_setting, long_setting], 17 );
 
 // if you wish to use map tiles that take other or more variables,
 // you will need to add those below.
 L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-  maxZoom: 20,
+  maxZoom: 22,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>'
