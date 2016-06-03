@@ -9,11 +9,11 @@
 
 #footer {
   border-top: 1px solid #ddd;
-  background-color: #eee;
+  background-color: #e0f0dc; /*light green*/
 }
 
 .footer, .push {
-  height: 4em;
+  height: 3em;
 }
 
 #footer p {

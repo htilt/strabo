@@ -25,10 +25,10 @@ def config_app(app):
     app.config['LONG_SETTING'] = -122.630397
 
     app.config['LAYER_FIELDS'] = lay_fields = {
-            Layers.plant:"Plant",
-            Layers.animal:"Animal Sighting",
-            Layers.hist:"Historical Feature",
-            Layers.cool:"Cool Stuff"
+            Layers.plant:"Plants",
+            Layers.animal:"Animals",
+            Layers.hist:"Interest Points",
+            Layers.cool:"Sensitive Areas"
         }
 
     app.config['LAYER_FIELD_ENUMS'] = reverse_dict(lay_fields)
