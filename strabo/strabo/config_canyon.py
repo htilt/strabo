@@ -106,6 +106,7 @@ def config_app(app):
     app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
 
 
+
     ###### The following variables probably will not require configuration.
 
     # Provide aliases for column names
