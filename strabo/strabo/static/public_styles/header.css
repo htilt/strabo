@@ -8,7 +8,7 @@ and the Menu separately ****/
   border-bottom: 1px solid #ddd;
   opacity: 1;
   padding: 1px;
-  text-shadow: 2px 2px #ddd;
+/* text-shadow: 2px 2px #ddd; */
 }
 
 /****what is this ugh*/
@@ -19,12 +19,11 @@ p {
 
 .navbar-header a {
   float: left;
-  color: pink;
-  font-family: serif;
+  color: #006666;
+  font-family: 'Futura', sans-serif;
   font-weight: 700;
   font-size: 30px;
 }
-
 
 /* Navbar Menu */
 
@@ -42,7 +41,7 @@ p {
 }
 
 .menu a {
-  color: green;
+  color: #006666;
   font-family: 'Futura', sans-serif;
   font-weight: 600;
   font-size: 20px;
