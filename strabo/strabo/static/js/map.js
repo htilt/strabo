@@ -78,9 +78,8 @@ function whenClicked(e) {
 }
 
 // Display latlng info for any place on the map when clicked
-var popup = L.popup();
 function onMapClick(e) {
-  popup
+   L.popup()
     .setLatLng(e.latlng)
     .setContent(e.latlng.toString())
     .openOn(map);
