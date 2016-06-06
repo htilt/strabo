@@ -29,7 +29,7 @@ var line_features = L.geoJson(interest_lines, {
 
 // set styles and popups for zones
 function onEachZone(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id);
+  layer.bindPopup(feature.geometry.db_id.toString());
   layer.setStyle({
         weight: 1,
         color: feature.properties['marker-color'],
@@ -42,7 +42,7 @@ function onEachZone(feature, layer) {
 }
 // set styles and popups for lines
 function onEachLine(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id);
+  layer.bindPopup(feature.geometry.db_id.toString());
   layer.setStyle({
         weight: 4,
         color: feature.properties['marker-color'],
@@ -54,7 +54,7 @@ function onEachLine(feature, layer) {
 }
 // set styles and popups for points
 function onEachPoint(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id);
+  layer.bindPopup(feature.geometry.db_id.toString());
   // layer.setIcon(feature.properties['icon']);
   layer.on({
       click: whenClicked
@@ -73,8 +73,7 @@ var controlLayers = L.control.layers(null, overlays).addTo(map);
 // Display the id of an interest point when clicked
 function whenClicked(e) {
   // e = event
-  var db_id=e.target.feature.geometry.db_id;
-  see_ip(db_id);
+  see_ip(e.target.feature.geometry.db_id);
 }
 
 // Display latlng info for any place on the map when clicked
