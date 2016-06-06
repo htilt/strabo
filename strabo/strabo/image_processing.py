@@ -19,10 +19,6 @@ def make_thumbnail(filename):
   size = 300, 300
   img.thumbnail(size)
   # save the image under a new filename in thumbnails directory
-  imagename = utils.remove_extension(filename)
-  newfilename = imagename + "_thumbnail.jpg"
   path = app.config['NEW_DATA_DIRECTORY']
-  fullpath = os.path.join(path, newfilename)
+  fullpath = os.path.join(path, filename)
   img.save(fullpath)
-  # return the filename for the thumbnail
-  return newfilename
