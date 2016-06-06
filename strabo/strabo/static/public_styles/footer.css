@@ -1,15 +1,8 @@
 /* Footer */
 
-.wrapper {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -4em;
-}
-
 #footer {
-  border-top: 1px solid #ffffff; 
-  background-color: #e0f0dc; 
+  border-top: 1px solid #ffffff;
+  background-color: #e0f0dc;
 }
 
 .footer, .push {
