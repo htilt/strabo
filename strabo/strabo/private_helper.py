@@ -24,7 +24,7 @@ def fill_interest_point(ip,form_title,form_body,form_geo_obj,form_layer):
 #make image from flask file object
 #saves image and thumbnail in static
 #returns image database object
-def make_image(form_file_obj,ip_id_str):
+def make_image(form_file_obj,form_descrip,ip_id_str):
     #if no files is attached, then do nothing
     if not form_file_obj:
         return
@@ -44,4 +44,5 @@ def make_image(form_file_obj,ip_id_str):
     image_processing.make_thumbnail(unique_filename)
 
     ip_id = int(ip_id_str)
-    return schema.Images(filename=unique_filename,interest_point=database.get_row_by_id(schema.InterestPoints,ip_id))
+    return schema.Images(filename=unique_filename,description=form_descrip,
+        interest_point=database.get_row_by_id(schema.InterestPoints,ip_id))

@@ -27,7 +27,7 @@ def upload_images():
 
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
-    img_obj = private_helper.make_image(request.files['file'],request.form['interest_point'])
+    img_obj = private_helper.make_image(request.files['file'],request.form['description'],request.form['interest_point'])
     database.store_item(img_obj)
     return redirect(url_for('index'))
 

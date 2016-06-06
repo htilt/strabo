@@ -43,12 +43,12 @@ geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordi
 ip1 = make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][Layers.plant])
 ip2 = make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][Layers.animal])
 
-img1 = private_helper.make_image(mock_flask_file_obj("test_images","download.jpg"),str(ip1.id))
-img2 = private_helper.make_image(mock_flask_file_obj("test_images","download1.jpg"),str(ip1.id))
-img3 = private_helper.make_image(mock_flask_file_obj("test_images","download2.jpg"),str(ip1.id))
-img4 = private_helper.make_image(mock_flask_file_obj("test_images","download3.jpg"),str(ip2.id))
-img5 = private_helper.make_image(mock_flask_file_obj("test_images","image with space.jpg"),str(ip2.id))
-img6 = private_helper.make_image(mock_flask_file_obj("test_images","phone_testing.png"),str(ip2.id))
+img1 = private_helper.make_image(mock_flask_file_obj("test_images","download.jpg"),"bird",str(ip1.id))
+img2 = private_helper.make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower",str(ip1.id))
+img3 = private_helper.make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers",str(ip1.id))
+img4 = private_helper.make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach",str(ip2.id))
+img5 = private_helper.make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon",str(ip2.id))
+img6 = private_helper.make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone",str(ip2.id))
 
 ip1.images.append(img1)
 ip1.images.append(img2)

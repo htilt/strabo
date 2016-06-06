@@ -34,6 +34,8 @@ class Images(db.Model,DataType):
     interest_point_id = Column(db.Integer, db.ForeignKey('interest_points.id'))
     interest_point = db.relationship("InterestPoints",back_populates="images")
 
+    description = Column(db.Text)
+
 
 
 '''
