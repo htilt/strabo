@@ -1,7 +1,6 @@
 import werkzeug
 import os
 from strabo.image_processing import make_thumbnail, allowed_file
-from strabo.geojson_wrapper import get_type, add_name_and_color
 
 from strabo import app
 from strabo import schema
@@ -11,20 +10,21 @@ from strabo import database
 from strabo import image_processing
 from strabo import utils
 
-#makes an interest point from text input from the admin interface
-def make_interest_point(form_title,form_body,form_geo_obj,form_layer):
-    return schema.InterestPoints(
-        title=form_title,
-        descrip_body=form_body,
-        geojson_object=geojson_wrapper.add_name_and_color(form_geo_obj,form_title),
-        geojson_feature_type=str(geojson_wrapper.get_type(form_geo_obj)),
-        layer=app.config['LAYER_FIELD_ENUMS'][form_layer].value
-        )
+#assigns entries in the InterestPoints accoring to text input from the admin interface
+#requires theadd_name_and_color
+def fill_interest_point(ip,form_title,form_body,form_geo_obj,form_layer):
+    if not ip.id:
+        raise RuntimeError("ip needs to be stored in database to be filled")
+    ip.title = form_title
+    ip.descrip_body = form_body
+    ip.geojson_object = geojson_wrapper.add_info(form_geo_obj,form_title,ip.id)
+    ip.geojson_feature_type = str(geojson_wrapper.get_type(form_geo_obj))
+    ip.layer = app.config['LAYER_FIELD_ENUMS'][form_layer].value
 
 #make image from flask file object
 #saves image and thumbnail in static
 #returns image database object
-def make_image(form_file_obj,ip_id_str):
+def make_image(form_file_obj,form_descrip,ip_id_str):
     #if no files is attached, then do nothing
     if not form_file_obj:
         return
@@ -44,4 +44,5 @@ def make_image(form_file_obj,ip_id_str):
     image_processing.make_thumbnail(unique_filename)
 
     ip_id = int(ip_id_str)
-    return schema.Images(filename=unique_filename,interest_point=database.get_row_by_id(schema.InterestPoints,ip_id))
+    return schema.Images(filename=unique_filename,description=form_descrip,
+        interest_point=database.get_row_by_id(schema.InterestPoints,ip_id))

@@ -1,38 +1,32 @@
+/**** The setup of this page allows you to edit the color, font, and size of the Header 
+and the Menu separately ****/
+
 /* Navbar */
+
 .navbar {
-  background-color: #FFFFFF  ;
+  background-color: #ffffff; 
   border-bottom: 1px solid #ddd;
   opacity: 1;
-  
-  font-family: 'Futura', sans-serif;
-  font-weight: 500;
-  
-  font-size: 17px;
-  padding: 15px;
+  padding: 1px;
+  text-shadow: 2px 2px #ddd;
 }
 
+/****what is this ugh*/
 p {
   z-index: 12;
 }
+/*what*/
 
 .navbar-header a {
   float: left;
-  color: black;
+  color: pink;
+  font-family: serif;
+  font-weight: 700;
+  font-size: 30px;
 }
 
-/* Navbar Menu */ 
-.menu > li {
-  display: inline;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: black;
-}
 
-.menu a {
-  color: black;
-}
-
-/* Menu */ 
+/* Navbar Menu */
 
 .header .menu {
   float: right;
@@ -40,12 +34,17 @@ p {
   margin-top: 0px;
 }
 
-.menu > li {
+
+.menu > li { 
   display: inline;
   padding-left: 20px;
   padding-right: 20px;
 }
 
 .menu a {
-  color: #e0f0dc; /*light green*/
-}
+  color: green;
+  font-family: 'Futura', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+} 
+
