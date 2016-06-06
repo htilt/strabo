@@ -1,5 +1,7 @@
 /* Footer */
 
+/*This code allows us to make a footer that sticks at the bottom of the page*/
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
