@@ -5,33 +5,36 @@
   opacity: 1;
   
   font-family: 'Futura', sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   
   font-size: 20px;
   padding: 1px;
+  text-shadow: 2px 2px #ddd;
 }
-
+/*
 p {
   z-index: 12;
 }
+*/
 
 .navbar-header a {
   float: left;
-  color: black;
+  color: blue;
 }
+
 
 /* Navbar Menu */ 
 .menu > li {
   display: inline;
   padding-left: 20px;
   padding-right: 20px;
-  color: black;
+
 }
 
-.menu a {
+/*.menu a {
   color: black;
 }
-
+*/
 /* Menu */  
 
 .header .menu {
