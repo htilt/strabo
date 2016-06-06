@@ -74,7 +74,6 @@ var controlLayers = L.control.layers(null, overlays).addTo(map);
 function whenClicked(e) {
   // e = event
   var db_id=e.target.feature.geometry.db_id;
-  console.log(db_id);
   see_ip(db_id);
 }
 
@@ -87,56 +86,16 @@ function onMapClick(e) {
     .openOn(map);
 }
 
-// Trigger onMapClick function whenever map is clicked
+// Trigger onMapClick function whenever map is clickeddb_id
 map.on('click', onMapClick);
 
 //this function loads the text and images associated
 //with a selected interest point
 function see_ip(db_id) {
-    //shrink map
-    $('#map').removeClass('col-md-12');
-    $('#map').addClass('col-md-9');
-    //show text box
-    $('#text-selection').removeClass('hidden');
-    //show gallery
-    $('#gallery').removeClass('hidden');
-    //hide previous image messages
-    $("#img-placeholder").addClass('hidden')
-    $('#no-img-msg').addClass('hidden')
-    $('#link-wrapper').addClass('hidden')
-    //hide anny previous images
-    $(".portfolio-item").addClass('hidden')
-    //remove img-metadata p divs
-    $('.img-metadata').empty()
-
-    //get info from server and manage four possible situations
-    //(there are neither images nor text for an interest point,
-    //there are images but
-
-    ///
+    //in every other thing bug, this is never called
     $.post(
     "/map/post",
     {db_id:db_id},
-    function(data){
-        // show gallery and link to more images
-        $('#link-wrapper').removeClass('hidden')
-        //$("#img_id_msg").html(data['images'][0]['interest_point']+'.')
-        //$("#ip_link").html("see more images of " + data['images'][0]['interest_point'] + '.')
-        //$("#ip_link").attr("href", 'gallery?search_field=interest_point&search_term=' + data['images'][0]['interest_point'])
-        $("#image-gallery").removeClass("hidden")
-        // add images to page
-        var thum_names = data['thumb_fnames']
-
-        for (t_name in thum_names) {
-          var img_id = 'thumb-' + t_name;
-          var select_id = '#' + img_id;
-          var $thumbnail = $(select_id);
-          $thumbnail.removeClass('hidden');
-          $thumbnail.find('img').attr("src", "./static/thumbnails/" + t_name);
-          //$thumbnail.find('img').data("fullsrc", "./static/uploads/" + data['images'][image]['filename'])
-          //add metadata to images
-          //$thumbnail.find('.img-metadata').append("<p>Title: "+data['images'][image]['title']+"</p>")
-        }
-      }
+    function(data){console.log("post callback called!");}
     );
 }
