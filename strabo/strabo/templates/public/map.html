@@ -5,7 +5,11 @@
     <link href="{{PATH_TO_PUBLIC_STYLES}}{{MAP_CSS}}" rel="stylesheet">
 {% endblock %}
 
+
+
+
 {% block content %}
+<!--
 <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
@@ -19,15 +23,16 @@
         </div>
     </div>
 </div>
+-->
 
 
 <!--Map and Text Selection Row-->
 <div class="row">
-  
-  <div id="map" class="col-md-12" style="height: 500px">
+  <div id="map" class="col-md-12" style="height: 555px">
+
   </div>
 
-  <div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
+  <!--div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
       <div class="row">
         <div id="close-text"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size:1.8em;text-align:right;float:right;"></span></div>
         <h2 id='book_num' style="padding-left: 10px;padding-top: 15px;display: inline"></h2>&nbsp
@@ -43,67 +48,29 @@
       <div class="row">
         <p id="attribution" align="left" style="padding: 10px; font-style: italic;"></p>
       </div>
-  </div>
+  </div-->
 
 </div>
 <!--../Map and Text Selection Row-->
 
-<!--Gallery Row-->
-<div class="row" id="img-holder">
-  <div id="img-placeholder" class=''>
-      <p class="text-muted">Select an interest point to see associated images.</p>
-  </div>
-
-  <div id="gallery" class='hidden'>
-    <div id="link-wrapper" class="hidden">
-        
-        <span class="text-muted">You are viewing images of the </span><span class="text-muted" id="img_id_msg"></span>
-        <span class="text-muted">Select another interest point or </span><a class="text-muted" style="color: blue;" id="ip_link" href=""></a>
-    </div>
-
-    <div class="hidden" id="image-gallery">
-      <div id="thumb-0" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-1" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-2" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-3" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-4" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-5" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-    </div>
-
-    <div>
-      <p id="no-img-msg" class="hidden text-muted">There are no images associated with this interest point. Please select another.</p>
-    </div>
-  </div>
-</div>
-<!--../Gallery Row-->
 
 {% endblock content %}
+
+<!--Javascript files for Leaflet-->
 
 {% block footer %}
     {{ super() }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <!-- Load in geojson objects with janky cache-breaking solution so that changes to 
-    js file will be reflected on map -->
-    <script>document.write('<script src="/../static/js/{{ INTPT_FILE }}?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>
+    <script>
+        var lat_setting = {{ LAT_SETTING }};
+        var long_setting = {{ LONG_SETTING }};
+        var tile_src = "{{ MAP_TILE_SRC }}";
+        var tile_attr1 = "{{ MAP_ATTR1 }}";
+        var subdomains = "{{ SUBDOMAINS }}";
+        var extension = "{{ EXTENSION }}";
+        var interest_points = {{ interest_points_json|tojson }};
+        var interest_zones = {{ interest_zones_json|tojson }};
+        var interest_lines = {{ interest_lines_json|tojson }};
+    </script>
     <script src="../static/js/{{ MAP_JS }}"></script>
-    <script src="../static/js/gallery.js"></script>
 {% endblock footer %}
-

@@ -1,24 +1,26 @@
 /* Footer */
 
+/*This code allows us to make a footer that sticks at the bottom of the page*/
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -4em;
-}
-
-#footer {
-  border-top: 1px solid #ddd;
-  background-color: #eee;
+  margin: 0 auto -2em; /*margin and push height must be the same value*/
 }
 
 .footer, .push {
-  height: 4em;
+  height: 2em;
+}
+
+#footer {
+  border-top: 1px solid #ffffff;
+  background-color: #e0f0dc;
 }
 
 #footer p {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 300;
-  font-size: 17px;
-  padding: 15px;
+  font-family: 'Futura', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  padding: 1px;
 }

@@ -1,19 +1,19 @@
 // instantiate a Leaflet map object in the correct div
 // 'drawMap'. Set lat, lng for the map's center
 var drawMap = L.map('drawMap', {
-}).setView([lat_setting, long_setting], 16 );
+}).setView([lat_setting, long_setting], 17 );
 
 // if you wish to use map tiles that take other or more variables,
 // you will need to add those below.
 L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-  maxZoom: 20,
+  maxZoom: 22,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>'
 }).addTo(drawMap);
 
 // add pre-existing points, zones, and lines to map
-// interest_points, zones, and lines variables from the 
+// interest_points, zones, and lines variables from the
 // interest_points.js file
 var point_features = L.geoJson(interest_points, {
   onEachFeature: onEachPoint,
@@ -61,7 +61,7 @@ drawMap.addLayer(drawnItems);
 var shapeColorInit = '#2397EB';
 
 var options1 = {
-    
+
     draw : {
       polyline: {
         shapeOptions: {
@@ -123,7 +123,7 @@ drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   }
   else if (type === 'marker') {
     drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON();    
+    obJSON = shapeLayer.toGeoJSON();
   }
   else if (type === 'polygon') {
     obJSON = shapeLayer.toGeoJSON();
@@ -142,7 +142,7 @@ drawMap.on('draw:deletestop', function (e) {
 
 
 drawMap.on('draw:edited', function (e) {
-  
+
   var editLayers = e.layers;
   var type = e.layerType;
 
@@ -166,10 +166,10 @@ $(function()
 
   $e.change(function() {
     $usrSelect = $("#colorPick :selected").text();
-    console.log($usrSelect); 
-  
+    console.log($usrSelect);
 
-  
+
+
 
 
   //console.log($dropDown);
@@ -230,7 +230,7 @@ $('#upload-btn').click(function (e) {
   var JSONobject = JSON.stringify(obJSON);
   console.log(JSONobject);
   $('#geojson-field').attr("value", JSONobject);
-}); 
+});
 
 
   // Returns an array of the points in the path.

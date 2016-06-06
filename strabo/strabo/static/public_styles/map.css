@@ -2,9 +2,10 @@
 
 /*Override color preferences from base.css, 
 because any color on the map looks terrible*/
+
 html, body {
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
 }
 
 #map {
@@ -12,46 +13,17 @@ html, body {
 }
 
 .header {
-  height: 80px;
+  height: 50px;
 }
-
+/*
 #book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {
   color:#4A4A4A;
 }
 
 
-/*Style Elements at page bottom (image gallery)*/
 
-#img-placeholder p {
-  padding-left: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
 
-#link-wrapper {
-  padding-left: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-#no-img-msg {
-  padding-left: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-#img-holder {
-  background-color: #B8CFD6;
-  border:1px solid #B0B0B0 ;
-}
-
-#gallery img { 
-   padding:1px;
-   border:1px solid #021a40;
-   background-color:#F0F0F0;
-}
-
-/* Light Box Viewer */
+/* Light Box Viewer 
 
 #lightbox .modal-content {
     display: inline-block;
@@ -84,3 +56,5 @@ html, body {
 .modal-metadata p {
   color:#4A4A4A;
 }
+
+*/

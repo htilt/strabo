@@ -1,43 +1,23 @@
-/* Footer */
-
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -60px;
-  padding: 0 0 60;
-}
-
-#footer {
-  height: 60px;
-  background-color: #eee;
-}
-
-#footer p {
-  padding-top:20px;
-}
-
 /* Header */
+
 #page-header {
     padding:20px;
 }
 
 #page-header h1 {
-  font-family: 'Oswald', sans-serif;
+  font-family: serif;
   font-weight: 300;
-  font-size: 30px;
-  padding: 15px;
+  font-size: 40px;
+  padding: 1.5rem;
 }
 
 #page-header span {
   font-weight: 200;
-  font-size:24px;
+  font-size:2.4rem;
 }
 
 #page-header p {
   font-weight: 300;
-  font-size: 18px;
-  padding-left: 15px;
+  font-size: 1.8rem;
+  padding-left: 1.5rem;
 }
-
-

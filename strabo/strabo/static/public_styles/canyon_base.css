@@ -1,10 +1,10 @@
 html, body {
   height: 100%;
-  background-color: #F0F8FF;
+  background-color: #e0f0dc; /*light green*/
 }
 
 p {
-  color: gray;
+  color: black;
 }
 
 h1, h2, h3, i, span {
