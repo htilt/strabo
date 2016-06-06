@@ -1,7 +1,7 @@
-/* Navbar */
+/**** The setup of this page allows you to edit the color, font, and size of the Header 
+and the Menu separately ****/
 
-/* The setup of this page allows you to edit the color, font, and size of the Header and 
-the Menu separately*/
+/* Navbar */
 
 .navbar {
   background-color: #ffffff; 
@@ -25,6 +25,7 @@ p {
   font-size: 30px;
 }
 
+
 /* Navbar Menu */
 
 .header .menu {
@@ -32,6 +33,7 @@ p {
   list-style: none;
   margin-top: 0px;
 }
+
 
 .menu > li { 
   display: inline;
@@ -45,3 +47,4 @@ p {
   font-weight: 600;
   font-size: 20px;
 } 
+
