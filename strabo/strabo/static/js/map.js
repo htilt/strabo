@@ -75,7 +75,6 @@ var overlays = {
   "Lines": line_features,
   "Zones": zone_features,
 }
-
 L.control.layers(null, overlays).addTo(map);
 
 
