@@ -8,6 +8,7 @@ from strabo.geojson_wrapper import get_all_feature_collections
 from strabo.utils import prettify_columns, get_raw_column
 import copy
 from strabo import public_helper
+import werkzeug
 
 
 @app.route("/")
@@ -29,9 +30,24 @@ def map_post():
 
   images = ip.images
   ip_info = {
-    "thumb_fnames": [img.filename for img in images]
+    "db_id": ip_id
   }
   return jsonify(ip_info)
+
+class RegexConverter(werkzeug.routing.BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+app.url_map.converters['regex'] = RegexConverter
+
+@app.route('/ip_display-<ip_id>/')
+def gal_upload(ip_id):
+    ip = schema.InterestPoints.query.get(int(ip_id))
+
+    filenames = [img.filename for img in ip.images]
+    return render_template("public/ip_show.html",filenames=filenames,**app.config)
+
 
 @app.route("/about")
 def about():

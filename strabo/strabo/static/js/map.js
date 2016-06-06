@@ -90,10 +90,10 @@ map.on('click', onMapClick);
 //this function loads the text and images associated
 //with a selected interest point
 function see_ip(db_id) {
-    //in every other thing bug, this is never called
-    $.post(
+    window.location.href = ('http://localhost:5000/ip_display-'+db_id.toString());
+    /*$.post(
     "/map/post",
     {db_id:db_id},
-    function(data){console.log("post callback called!");}
-    );
+    function(data){loadUrl('http://localhost:5000/ip_display');}
+);*/
 }
