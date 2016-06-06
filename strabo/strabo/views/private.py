@@ -9,6 +9,7 @@ from strabo import database
 from strabo import private_helper
 from strabo import schema
 from strabo import app
+from strabo import db
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
 def index():
@@ -26,7 +27,6 @@ def upload_images():
 
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
-    print(request.form)
     img_obj = private_helper.make_image(request.files['file'],request.form['interest_point'])
     database.store_item(img_obj)
     return redirect(url_for('index'))
@@ -45,8 +45,11 @@ def upload_ips():
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
-    ip = private_helper.make_interest_point(request.form['title'],request.form['description'],request.form['geojson'],request.form['layer'])
-    database.store_item(ip)
+    ip = schema.InterestPoints()
+    db.session.add(ip)
+    db.session.flush()
+    private_helper.fill_interest_point(ip,request.form['title'],request.form['description'],request.form['geojson'],request.form['layer'])
+    db.session.commit()
     return redirect(url_for('index'))
 
 '''

@@ -9,9 +9,11 @@ def get_type(feature):
 
 # adds and interest point's properties to that point's
 # geojson object and returns the geojson object.
-def add_name_and_color(feature, name, color=None):
+def add_info(feature, name,ip_id, color=None):
   feature = geojson.loads(feature)
   feature.geometry['name'] = name
+  feature.geometry['db_id'] = ip_id
+ # feature.geometry['db_id'] = ip_id
   if color:
     feature.properties['marker-color'] = color
 

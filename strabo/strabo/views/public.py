@@ -11,6 +11,7 @@ from strabo import public_helper
 
 
 @app.route("/")
+@app.route("/map")
 def map():
   template = "public/map.html"
   points,zones,lines = get_all_feature_collections()
@@ -20,23 +21,17 @@ def map():
     interest_lines_json=zones,
      **app.config)
 
-
-
-
-
-'''
 @app.route('/map/post', methods=["POST"])
 def map_post():
   # get the ip_value user has clicked
-  ip_value = request.form.get('name')
-  # query db for corresponding images, text
-  images = database.search('images', 'interest_point', ip_value, 6)
-  text = database.search('text_selections', 'interest_point', ip_value)
+  ip_id = request.form['db_id']
+  ip = schema.InterestPoints.query.get(ip_id)
+
+  images = ip.images
   ip_info = {
-    'images': images,
-    'text-selection': text
+    "thumb_fnames": [img.filename for img in images]
   }
-  return jsonify(ip_info)'''
+  return jsonify(ip_info)
 
 @app.route("/about")
 def about():
