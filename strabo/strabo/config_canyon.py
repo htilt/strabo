@@ -46,8 +46,6 @@ def config_app(app):
     app.config['FOOTER_CSS'] = "footer.css"
     app.config['MAP_CSS'] = "map.css"
     app.config['GALLERY_CSS'] = "gallery.css"
-    app.config['TIMELINE_CSS'] = "timeline.css"
-    app.config['UNDER_CONST_CSS'] = 'under_const.css'
     app.config['ABOUT_CSS'] = 'about.css'
 
 
@@ -60,15 +58,12 @@ def config_app(app):
     app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
     # timeline functionality is currently disabled
 
-    # set title and subtitle for timeline
-    app.config['TIMELINE_TITLE'] = "Timeline of Major Events"
-    app.config['TIMELINE_SUBTITLE'] = "Scroll to explore the major events in the history of the canyon."
 
-    # set template filenames
     app.config['MAP_TEMPLATE'] = "map.html"
     app.config['BASE_TEMPLATE'] = "base.html"
     app.config['HEADER_TEMPLATE'] = "header.html"
     app.config['FOOTER_TEMPLATE'] = "footer.html"
+
 
     # set filename for js file with Leaflet for public map
     app.config['MAP_JS'] = 'map.js'
@@ -89,11 +84,11 @@ def config_app(app):
     app.config['NEW_DATA_DIRECTORY_RELPATH'] = '/static/thumbnails/'
     # set folder name for javascript
     app.config['JS_FOLDER'] = '../strabo/strabo/static/js/'
+
+
     # set absolute and relative paths to styles
     app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
     app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
-
-
 
 
     app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}

@@ -5,7 +5,11 @@
     <link href="{{PATH_TO_PUBLIC_STYLES}}{{MAP_CSS}}" rel="stylesheet">
 {% endblock %}
 
+
+
+
 {% block content %}
+<!--
 <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
@@ -19,15 +23,16 @@
         </div>
     </div>
 </div>
+-->
 
 
 <!--Map and Text Selection Row-->
 <div class="row">
+  <div id="map" class="col-md-12" style="height: 555px">
 
-  <div id="map" class="col-md-12" style="height: 550px">
   </div>
 
-  <div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
+  <!--div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
       <div class="row">
         <div id="close-text"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size:1.8em;text-align:right;float:right;"></span></div>
         <h2 id='book_num' style="padding-left: 10px;padding-top: 15px;display: inline"></h2>&nbsp
@@ -43,13 +48,15 @@
       <div class="row">
         <p id="attribution" align="left" style="padding: 10px; font-style: italic;"></p>
       </div>
-  </div>
+  </div-->
 
 </div>
 <!--../Map and Text Selection Row-->
 
 
 {% endblock content %}
+
+<!--Javascript files for Leaflet-->
 
 {% block footer %}
     {{ super() }}
