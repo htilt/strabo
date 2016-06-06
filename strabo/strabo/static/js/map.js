@@ -1,14 +1,14 @@
+// Initiates a Leaflet map
 
 var map = L.map('map'
-).setView([lat_setting, long_setting], 17);
+).setView([lat_setting, long_setting], initial_zoom);
 
 L.tileLayer(tile_src, {
   attribution: tile_attr1,
-  minZoom: 14, //increased min zoom to see Willamette river
+  minZoom: 14,   //increased min zoom to see Willamette river
   maxZoom: 22,
   ext: extension
 }).addTo(map);
-
 
 
 
@@ -20,12 +20,14 @@ var point_features = L.geoJson(interest_points, {
 }).addTo(map);
 
 var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: onEachZone
+  onEachFeature: onEachZone,
 }).addTo(map);
 
 var line_features = L.geoJson(interest_lines, {
   onEachFeature: onEachLine,
 }).addTo(map);
+
+
 
 // set styles and popups for zones
 function onEachZone(feature, layer) {
@@ -40,6 +42,7 @@ function onEachZone(feature, layer) {
       click: whenClicked
   });
 }
+
 // set styles and popups for lines
 function onEachLine(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
@@ -52,6 +55,7 @@ function onEachLine(feature, layer) {
       click: whenClicked
   });
 }
+
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
@@ -61,18 +65,27 @@ function onEachPoint(feature, layer) {
   });
 }
 
+
+
+
+
 // Set layers and add toggle control menu for each layer
-// (upper rh corner of map)
 var overlays = {
-  "Points": point_features,
+  "Interest Points": point_features,
   "Lines": line_features,
   "Zones": zone_features,
 }
-var controlLayers = L.control.layers(null, overlays).addTo(map);
+
+L.control.layers(null, overlays).addTo(map);
+
+
+
+
+
+
 
 // Display the id of an interest point when clicked
 function whenClicked(e) {
-  // e = event
   see_ip(e.target.feature.geometry.db_id);
 }
 
@@ -83,6 +96,8 @@ function onMapClick(e) {
     .setContent(e.latlng.toString())
     .openOn(map);
 }
+
+
 
 // Trigger onMapClick function whenever map is clickeddb_id
 map.on('click', onMapClick);

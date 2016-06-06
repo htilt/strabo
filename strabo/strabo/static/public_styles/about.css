@@ -8,16 +8,16 @@
   font-family: serif;
   font-weight: 300;
   font-size: 40px;
-  padding: 1.5rem;
+  padding: 15px;
 }
 
 #page-header span {
   font-weight: 200;
-  font-size:2.4rem;
+  font-size:24px;
 }
 
 #page-header p {
   font-weight: 300;
-  font-size: 1.8rem;
-  padding-left: 1.5rem;
+  font-size: 18px;
+  padding-left: 15px;
 }
