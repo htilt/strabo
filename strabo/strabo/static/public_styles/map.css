@@ -15,7 +15,7 @@ html, body {
 .header {
   height: 50px;
 }
-
+/*
 #book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {
   color:#4A4A4A;
 }
