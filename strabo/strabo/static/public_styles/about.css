@@ -1,5 +1,11 @@
 /* Header */
 
+.page-header {
+  margin: 40px 0 20px;
+  padding-bottom: 9px;
+  border-bottom: none;
+}
+
 #page-header {
     padding:20px;
 }
