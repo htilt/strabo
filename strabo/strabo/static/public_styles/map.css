@@ -1,15 +1,17 @@
 /* Page Styling */
 
-/* what is happening here */
+html, body {
+  height: 100%;
+}
+/* map is not rendering */
 
-html, body, #map {
-  height: 555px;
+#map {
+    height: 80%;
 }
 
 .header {
   height: 50px; /* AVA */
 }
-
 
 
 .container-popup {
