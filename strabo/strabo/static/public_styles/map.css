@@ -1,11 +1,18 @@
 /* Page Styling */
 
-#map {
-  height: 555px;
+/* what is happening here */
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #map {
+  height: 100%;
 }
 
 #mapwrapper {
-  height: 50%; /*I don't think this is called anywhere*/
+  height: 100%;
 }
 
 .header {
@@ -15,6 +22,7 @@
 .container-popup {
     position: fixed; /*or relative*/
 }
+
 .popup-background {
     position: relative;
     position: fixed;

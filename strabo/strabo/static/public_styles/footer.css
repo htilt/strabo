@@ -1,6 +1,6 @@
-/* Footer */
+/* Sticky Footer */
 
-.wrapper { /* Sticky footer */
+.wrapper {
   min-height: 100%;
   height: auto !important;
   height: 100%;
