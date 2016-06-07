@@ -23,6 +23,7 @@ def config_app(app):
     # added, edited, or deleted.
     app.config['LAT_SETTING'] = 45.481851
     app.config['LONG_SETTING'] = -122.630397
+    app.config['INITIAL_ZOOM'] = 17
 
     app.config['LAYER_FIELDS'] = lay_fields = {
             Layers.plant:"Plants",

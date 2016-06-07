@@ -1,6 +1,8 @@
+/* Base Canyon setup */
+
 html, body {
   height: 100%;
-  background-color: #e0f0dc; /*light green*/
+  background-color: #ebf5e4; /*light green*/
 }
 
 p {
