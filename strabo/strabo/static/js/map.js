@@ -1,5 +1,11 @@
 // Initiates a Leaflet map
 
+function exit_button_clicked(){
+    $('.popup').hide();
+    $('.container-popup').hide();
+};
+
+$(document).ready(function(){
 var map = L.map('map'
 ).setView([lat_setting, long_setting], initial_zoom);
 
@@ -118,6 +124,10 @@ function get_description_html(descrip){
 function get_title_html(title){
     return '<p>' + descrip + '</p>';
 }
+function remove_all_carosel_entries(){
+    var $carousel = $("#carouselholder");
+    $carousel.flickity( 'remove', $carousel.flickity('getCellElements'));
+}
 function see_ip(db_id) {
     $.post(
         "/map/post",
@@ -126,19 +136,25 @@ function see_ip(db_id) {
             var imgs = data.images;
             var ip_descrip = data.description;
             var ip_title = data.title;
+
+            $('.popup').show();
+            $('.container-popup').show();
+
+            remove_all_carosel_entries();
+            
             var carousel_html = "";
             imgs.forEach(function(img){
-                carousel_html += get_carosel_html(img.filename,img.description);
+                var $cellElems = $(get_carosel_html(img.filename,img.description));
+                $("#carouselholder").flickity('append', $cellElems);
             });
-            $("#carousel-holder").html(carousel_html);
             $("#ip_description").html(ip_descrip);
             $("#ip_title").html(ip_title);
+
+
+            // resize after un-hiding Flickity
+            $("#carouselholder").flickity('resize');
+            $("#carouselholder").flickity('reposition');
         }
     );
-    $('.popup').show();
-    $('.container-popup').show();
 }
-function exit_button_clicked(){
-    $('.popup').hide();
-    $('.container-popup').hide();
-}
+});
