@@ -1,5 +1,11 @@
 // Initiates a Leaflet map
 
+function exit_button_clicked(){
+    $('.popup').hide();
+    $('.container-popup').hide();
+};
+
+$(document).ready(function(){
 var map = L.map('map'
 ).setView([lat_setting, long_setting], initial_zoom);
 
@@ -103,11 +109,52 @@ map.on('click', onMapClick);
 
 //this function loads the text and images associated
 //with a selected interest point
-function see_ip(db_id) {
-    window.location.href = ('http://localhost:5000/ip_display-'+db_id.toString());
-    /*$.post(
-    "/map/post",
-    {db_id:db_id},
-    function(data){loadUrl('http://localhost:5000/ip_display');}
-);*/
+//example output:
+// <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download1.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download2.jpg"/></div>
+function get_carosel_html(filename,descrip){
+    var html = '<div class="carousel-cell">';
+    html += '<img src= "static/thumbnails/' + filename + '"/>';
+    html += '<p>' + descrip + '</p>';
+    html += '</div>';
+    return html;
 }
+function get_description_html(descrip){
+    return '<p>' + descrip + '</p>';
+}
+function get_title_html(title){
+    return '<p>' + descrip + '</p>';
+}
+function remove_all_carosel_entries(){
+    var $carousel = $("#carouselholder");
+    $carousel.flickity( 'remove', $carousel.flickity('getCellElements'));
+}
+function see_ip(db_id) {
+    $.post(
+        "/map/post",
+        {db_id:db_id},
+        function(data){
+            var imgs = data.images;
+            var ip_descrip = data.description;
+            var ip_title = data.title;
+
+            $('.popup').show();
+            $('.container-popup').show();
+
+            remove_all_carosel_entries();
+            
+            var carousel_html = "";
+            imgs.forEach(function(img){
+                var $cellElems = $(get_carosel_html(img.filename,img.description));
+                $("#carouselholder").flickity('append', $cellElems);
+            });
+            $("#ip_description").html(ip_descrip);
+            $("#ip_title").html(ip_title);
+
+
+            // resize after un-hiding Flickity
+            $("#carouselholder").flickity('resize');
+            $("#carouselholder").flickity('reposition');
+        }
+    );
+}
+});

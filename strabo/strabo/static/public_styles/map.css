@@ -1,6 +1,6 @@
 /* Page Styling */
 
-/*Override color preferences from base.css, 
+/*Override color preferences from base.css,
 because any color on the map looks terrible*/
 
 html, body {
@@ -12,8 +12,35 @@ html, body {
   height: 100%;
 }
 
+#mapwrapper {
+  height: 100%;
+}
+
 .header {
   height: 50px;
+}
+
+.container-popup {
+    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 2;
+}
+.popup {
+    width: 90%;
+    height: 90%;
+    background: #ffffff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 100000; //goes above leaflet link
 }
 /*
 #book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {
@@ -23,11 +50,11 @@ html, body {
 
 
 
-/* Light Box Viewer 
+/* Light Box Viewer
 
 #lightbox .modal-content {
     display: inline-block;
-    text-align: center;   
+    text-align: center;
 }
 
 #lightbox .close {
