@@ -17,6 +17,10 @@ L.tileLayer(tile_src, {
 }).addTo(map);
 
 
+// Use GPS to locate you on the map
+map.locate({setView: false, maxZoom: 22});
+// Popup will change later.
+
 
 // add pre-existing points, zones, and lines to map
 // interest_points, zones, and lines variables from the
@@ -72,9 +76,6 @@ function onEachPoint(feature, layer) {
 }
 
 
-
-
-
 // Set layers and add toggle control menu for each layer
 var overlays = {
   "Interest Points": point_features,
@@ -84,10 +85,39 @@ var overlays = {
 L.control.layers(null, overlays).addTo(map);
 
 
+// Set up GPS location
 
+// map.locate();
 
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
 
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
+    L.circle(e.latlng, radius).addTo(map);
+
+// Attempting to center map on your location within
+// Reed campus area. 
+
+//    var northEast = L.latlng(45.4847, -122.62266);
+//    var southWest = L.latlng(45.47852, -122.63903);
+//    var bounds = L.latlngBounds(southWest,northEast);
+
+//    if (L.contains(bounds, e.latlng)) {
+//      map.locate({setView: true, maxZoom: 22});
+//    }
+
+}
+
+map.on('locationfound', onLocationFound);
+
+// Error if locating fails
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
 
 // Display the id of an interest point when clicked
 function whenClicked(e) {
@@ -101,6 +131,8 @@ function onMapClick(e) {
     .setContent(e.latlng.toString())
     .openOn(map);
 }
+
+
 
 
 
