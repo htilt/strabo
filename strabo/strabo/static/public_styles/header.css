@@ -1,6 +1,3 @@
-/**** The setup of this page allows you to edit the color, font, and size of the Header 
-and the Menu separately ****/
-
 /* Navbar */
 
 .navbar {
@@ -13,7 +10,7 @@ and the Menu separately ****/
 .navbar-header a {
   float: left;
   color: #006666;
-  font-family: 'Futura', sans-serif;
+  font-family: 'Lucida-Sans', sans-serif;
   font-weight: 700;
   font-size: 30px;
 }
@@ -51,6 +48,7 @@ span.icon-bar {
   font-weight: 600;
   font-size: 20px;
 } 
+
  /* Change the color of the hover background on the navbar menu */ 
 .nav>li>a:focus, .nav>li>a:hover {
     background-color: #ebf5e4;
