@@ -89,11 +89,34 @@ map.on('click', onMapClick);
 
 //this function loads the text and images associated
 //with a selected interest point
+//example output:
+// <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download1.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download2.jpg"/></div>
+function get_carosel_html(filename,descrip){
+    var html = '<div class="carousel-cell">';
+    html += '<img src= "static/thumbnails/' + filename + '"/>';
+    html += '<p>' + descrip + '</p>';
+    html += '</div>';
+    return html;
+}
+function get_description_html(descrip){
+    return '<p>' + descrip + '</p>';
+}
 function see_ip(db_id) {
-    window.location.href = ('http://localhost:5000/ip_display-'+db_id.toString());
-    /*$.post(
-    "/map/post",
-    {db_id:db_id},
-    function(data){loadUrl('http://localhost:5000/ip_display');}
-);*/
+    $.post(
+        "/map/post",
+        {db_id:db_id},
+        function(imgs){
+            var carousel_html = "";
+            imgs.forEach(function(img){
+                carousel_html += get_carosel_html(img.filename,img.description);
+            });
+            $("#carousel-holder").html(carousel_html);
+        }
+    );
+    $('.popup').show();
+    $('.container-popup').show();
+}
+function exit_button_clicked(){
+    $('.popup').hide();
+    $('.container-popup').hide();
 }

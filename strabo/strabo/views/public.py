@@ -26,28 +26,10 @@ def map():
 def map_post():
   # get the ip_value user has clicked
   ip_id = request.form['db_id']
-  ip = schema.InterestPoints.query.get(ip_id)
+  ip = schema.InterestPoints.query.get(int(ip_id))
 
-  images = ip.images
-  ip_info = {
-    "db_id": ip_id
-  }
-  return jsonify(ip_info)
-
-class RegexConverter(werkzeug.routing.BaseConverter):
-    def __init__(self, url_map, *items):
-        super(RegexConverter, self).__init__(url_map)
-        self.regex = items[0]
-
-app.url_map.converters['regex'] = RegexConverter
-
-@app.route('/ip_display-<ip_id>/')
-def gal_upload(ip_id):
-    ip = schema.InterestPoints.query.get(int(ip_id))
-
-    filenames = [img.filename for img in ip.images]
-    return render_template("public/ip_show.html",filenames=filenames,**app.config)
-
+  filenames = [{"filename":img.filename,"description":img.description} for img in ip.images]
+  return jsonify(filenames)
 
 @app.route("/about")
 def about():
