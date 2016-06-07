@@ -2,22 +2,15 @@
 
 /* what is happening here */
 
-body {
-    padding: 0;
-    margin: 0;
-}
-
 html, body, #map {
-  height: 100%;
-}
-
-#mapwrapper {
-  height: 100%;
+  height: 555px;
 }
 
 .header {
   height: 50px; /* AVA */
 }
+
+
 
 .container-popup {
     position: fixed; /*or relative*/
