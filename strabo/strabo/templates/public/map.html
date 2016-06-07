@@ -12,9 +12,7 @@
         var long_setting = {{ LONG_SETTING }};
         var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
-        var tile_attr1 = "{{ MAP_ATTR1 }}";
-        var subdomains = "{{ SUBDOMAINS }}";
-        var extension = "{{ EXTENSION }}";
+        var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
         var interest_points = {{ interest_points_json|tojson }};
         var interest_zones = {{ interest_zones_json|tojson }};
         var interest_lines = {{ interest_lines_json|tojson }};
@@ -41,7 +39,7 @@
         </h2>
 
         <div class="col-md-2">
-          <button type="button" class="btn btn-default" onclick="exit_button_clicked();">Close</button>
+          <button type="button" class="btn btn-default" onclick="hide_popup();">Close</button>
         </div>
     </div>
     <div class="row">
@@ -50,7 +48,7 @@
         </p>
     </div>
     <div class="row">
-        <div id="carouselholder" class="carousel js-flickity">
+        <div id="carouselholder" class="carousel">
             <!--javascrip puts carosel items here -->
         </div>
     </div>

@@ -95,9 +95,13 @@ def config_app(app):
     app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}
 
     app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
-    app.config["MAP_ATTR1"] = 'Map tiles by Thunderforest, Map data by OpenStreetMap'
-    app.config["SUBDOMAINS"] = 'abcd'
-    app.config["EXTENSION"] = 'png'
+
+    app.config['LEAFLET_ATTRIBUTES'] = {
+        "attribution":'Map tiles by Thunderforest, Map data by OpenStreetMap',
+        "minZoom": 14,
+        "maxZoon": 22,
+        "ext": 'png'
+    }
 
     app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
 
