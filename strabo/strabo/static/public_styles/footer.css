@@ -1,8 +1,6 @@
 /* Footer */
 
-/* This code allows us to make a footer that sticks at the bottom of the page */
-
-.wrapper {
+.wrapper { /* Sticky footer */
   min-height: 100%;
   height: auto !important;
   height: 100%;
@@ -11,16 +9,17 @@
 
 .footer, .push {
   height: 2em;
+  float: left;
 }
 
 #footer {
-  border-top: 1px solid #ffffff;
+  border-top: 0.071428571em solid #ffffff; /* 1/14 */
   background-color: #ebf5e4;
 }
 
 #footer p {
   font-family: 'Futura', sans-serif;
   font-weight: 200;
-  font-size: 12px;
-  padding: 1px;
+  font-size: 0.857142857em; /* 12/14 */
+  padding: 0.071428571em; /* 1/14 */
 }

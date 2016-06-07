@@ -20,27 +20,26 @@
     <script src="../static/js/{{ MAP_JS }}"></script>
 {% endblock head %}
 
-
-
-
 {% block content %}
 
 <!--Map and Text Selection Row-->
 <div class="row">
-  <div id="map" class="col-md-12" style="height: 555px">
+  <div id="map" class="col-md-12">
   </div>
 </div>
 
-<div class="container-popup" hidden></div>
+<div class="popup-background" hidden></div>
 <div class="popup" hidden>
     <div class="row">
-        <h2 id="ip_title" class="col-md-10">
-            <!--javascrip puts title item in here -->
-        </h2>
-
-        <div class="col-md-2">
-          <button type="button" class="btn btn-default" onclick="hide_popup();">Close</button>
+<!--- This exit button is the best solution so far.
+All other ways made it look super bad on mobile,
+so while it's not ideal on desktop, it looks good on mobile -->
+        <div class="col-md-1">
+          <button type="button" class="close"  onclick="hide_popup();" aria-hidden="true">&times;</button>
         </div>
+        <h2 id="ip_title" class="col-md-11">
+            <!--javascript puts title item in here -->
+        </h2>
     </div>
     <div class="row">
         <p id="ip_description" class="col-md-12">

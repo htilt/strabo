@@ -1,12 +1,13 @@
-/* Base Canyon setup */
+/* Canyon Base */
 
 html, body {
   height: 100%;
-  background-color: #ebf5e4; /*light green*/
+  background-color: #ebf5e4; /* light green */
 }
 
 p {
   color: black;
+  font-size: 100%; /** Bootstrap global default font size is 14px **/
 }
 
 h1, h2, h3, i, span {
