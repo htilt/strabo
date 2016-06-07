@@ -12,9 +12,7 @@
         var long_setting = {{ LONG_SETTING }};
         var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
-        var tile_attr1 = "{{ MAP_ATTR1 }}";
-        var subdomains = "{{ SUBDOMAINS }}";
-        var extension = "{{ EXTENSION }}";
+        var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
         var interest_points = {{ interest_points_json|tojson }};
         var interest_zones = {{ interest_zones_json|tojson }};
         var interest_lines = {{ interest_lines_json|tojson }};
@@ -41,6 +39,14 @@
     <div class="row">
         <h2 id="ip_title" class="col-md-10">
             <!--javascrip puts title item in here -->
+<!--- This exit button is the best solution so far.
+All other ways made it look super bad on mobile,
+so while it's not ideal on desktop, it looks good on mobile -->
+        <div class="col-md-1">
+          <button type="button" class="close"  onclick="hide_popup();" aria-hidden="true">&times;</button>
+        </div>
+        <h2 id="ip_title" class="col-md-11">
+            <!--javascript puts title item in here -->
         </h2>
 
         <div class="col-md-2">
@@ -53,8 +59,8 @@
         </p>
     </div>
     <div class="row">
-        <div id="carouselholder" class="carousel js-flickity">
-            <!--javascript puts carosel items here -->
+        <div id="carouselholder" class="carousel">
+            <!--javascrip puts carosel items here -->
         </div>
     </div>
 </div>
