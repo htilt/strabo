@@ -115,16 +115,24 @@ function get_carosel_html(filename,descrip){
 function get_description_html(descrip){
     return '<p>' + descrip + '</p>';
 }
+function get_title_html(title){
+    return '<p>' + descrip + '</p>';
+}
 function see_ip(db_id) {
     $.post(
         "/map/post",
         {db_id:db_id},
-        function(imgs){
+        function(data){
+            var imgs = data.images;
+            var ip_descrip = data.description;
+            var ip_title = data.title;
             var carousel_html = "";
             imgs.forEach(function(img){
                 carousel_html += get_carosel_html(img.filename,img.description);
             });
             $("#carousel-holder").html(carousel_html);
+            $("#ip_description").html(ip_descrip);
+            $("#ip_title").html(ip_title);
         }
     );
     $('.popup').show();

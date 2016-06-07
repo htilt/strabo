@@ -33,14 +33,14 @@ html, body {
 .popup {
     width: 90%;
     height: 90%;
-    background: #1abcb9;
+    background: #ffffff;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     margin: auto;
-    z-index: 3;
+    z-index: 100000; //goes above leaflet link
 }
 /*
 #book_num, #section_num, #text, #title, #attribution, .glyphicon-remove {

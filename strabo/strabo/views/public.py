@@ -29,7 +29,12 @@ def map_post():
   ip = schema.InterestPoints.query.get(int(ip_id))
 
   filenames = [{"filename":img.filename,"description":img.description} for img in ip.images]
-  return jsonify(filenames)
+  js_data = {
+    "images":filenames,
+    "description":ip.descrip_body,
+    "title":ip.title
+  }
+  return jsonify(js_data)
 
 @app.route("/about")
 def about():
