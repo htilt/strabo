@@ -8,14 +8,7 @@ and the Menu separately ****/
   border-bottom: 1px solid #ddd;
   opacity: 1;
   padding: 1px;
-/* text-shadow: 2px 2px #ddd; */
 }
-
-/****what is this ugh
-p {
-  z-index: 12;
-}
-/*what*/
 
 .navbar-header a {
   float: left;
@@ -25,6 +18,18 @@ p {
   font-size: 30px;
 }
 
+.navbar-toggle {
+  position: relative;
+  float: right;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #777;
+  border-radius: 4px;
+}
+
+span.icon-bar {
+  background-color: #777;
+}
 
 /* Navbar Menu */
 
