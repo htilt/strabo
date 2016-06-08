@@ -58,16 +58,12 @@ def config_app(app):
     app.config['HEADER_TEMPLATE'] = "header.html"
     app.config['FOOTER_TEMPLATE'] = "footer.html"
 
-    # set filename for js file with Leaflet for public map
     app.config['MAP_JS'] = 'map.js'
-    # set filename for js file with Leaflet for private, admin end map
-    app.config['DRAWMAP_JS'] = 'drawMap.js'
-    #
-    #
-    #
-    #
-    ###### The following variables probably will not require configuration.
+    app.config['ADMINMAP_JS'] = 'drawMap.js'
 
+   
+
+    ###### The following variables probably will not require configuration.
     # set absolute and relative paths to the upload directory for images
     app.config['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads/'
     app.config['UPLOAD_FOLDER_RELPATH'] = '/static/uploads/'
@@ -85,7 +81,6 @@ def config_app(app):
     app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}
 
     app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
-
     app.config['LEAFLET_ATTRIBUTES'] = {
         "attribution":'Map tiles by Thunderforest, Map data by OpenStreetMap',
         "minZoom": 14,
