@@ -1,6 +1,7 @@
 //flickety object
 var flkty;
-var map;
+var map
+// var map;
 
 //is called whenever a leafelet feature is clicked
 function whenClicked(e) {
@@ -9,11 +10,11 @@ function whenClicked(e) {
 
 function hide_popup(){
     $('.popup').hide();
-    $('.container-popup').hide();
+    $('.popup-background').hide();
 }
 function show_popup(){
     $('.popup').show();
-    $('.container-popup').show();
+    $('.popup-background').show();
 }
 
 //this function loads the text and images associated
@@ -113,36 +114,6 @@ function onEachPoint(feature, layer) {
   });
 }
 
-<<<<<<< HEAD
-
-// Set layers and add toggle control menu for each layer
-var overlays = {
-  "Interest Points": point_features,
-  "Lines": line_features,
-  "Zones": zone_features,
-}
-L.control.layers(null, overlays).addTo(map);
-
-
-
-
-// Display the id of an interest point when clicked
-function whenClicked(e) {
-  see_ip(e.target.feature.geometry.db_id);
-}
-
-// Display latlng info for any place on the map when clicked
-function onMapClick(e) {
-   L.popup()
-    .setLatLng(e.latlng)
-    .setContent(e.latlng.toString())
-    .openOn(map);
-}
-
-
-// Trigger onMapClick function whenever map is clickeddb_id
-map.on('click', onMapClick);
-
 //this function loads the text and images associated
 //with a selected interest point
 //example output:
@@ -174,7 +145,7 @@ function see_ip(db_id) {
             var ip_title = data.title;
 
             $('.popup').show();
-            $('.container-popup').show();
+            $('.popup-background').show();
 
             remove_all_carosel_entries();
             
@@ -190,13 +161,14 @@ function see_ip(db_id) {
             // resize after un-hiding Flickity
             $("#carouselholder").flickity('resize');
             $("#carouselholder").flickity('reposition');
-        }
+        });
+      }
 $(document).ready(function(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true}
     );
 
-map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
+    map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
     L.tileLayer(tile_src, tile_attributes).addTo(map);
 
     // add pre-existing points, zones, and lines to map
@@ -213,6 +185,15 @@ map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
     var line_features = L.geoJson(interest_lines, {
       onEachFeature: onEachLine
     }).addTo(map);
+
+    // Set layers and add toggle control menu for each layer
+    var overlays = {
+      "Interest Points": point_features,
+      "Lines": line_features,
+      "Zones": zone_features,
+    }
+    L.control.layers(null, overlays).addTo(map);
+
 
     // Use GPS to locate you on the map
     map.locate({setView: false, maxZoom: 22});
@@ -258,6 +239,25 @@ map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
       "Zones": zone_features,
     }
     L.control.layers(null, overlays).addTo(map);
+
+
+    // Display the id of an interest point when clicked
+    function whenClicked(e) {
+     see_ip(e.target.feature.geometry.db_id);
+    }
+
+// Display latlng info for any place on the map when clicked
+    function onMapClick(e) {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(e.latlng.toString())
+        .openOn(map);
+}
+
+
+// Trigger onMapClick function whenever map is clickeddb_id
+map.on('click', onMapClick);
+
 
     set_map_click(map);
 });
