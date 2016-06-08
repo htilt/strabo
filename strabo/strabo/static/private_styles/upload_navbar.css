@@ -1,13 +1,8 @@
 /* Admin Nav Bar */
 
-
-/*
 main { 
-  padding-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-top: 2em;
 }
-*/
 
 .temp h2 {
 	padding-top: 1.5em;
@@ -16,5 +11,8 @@ main {
 
 .tab-active {
 	background-color: #e6e6e6;
+}
 
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #e6e6e6;
 }

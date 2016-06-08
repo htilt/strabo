@@ -13,7 +13,7 @@
 <body>
 <!--set href, id, and caption for tabs in nav bar-->
     {% set navigation_bar = [
-    ('/admin/upload_images/', 'upload_images', 'Upload Images'),
+    ('/admin/upload_images/', 'upload_images', 'Add Images'),
     ('/admin/upload_ips/', 'upload_ips', 'Add Point of Interest'),
 
     ('/admin/delete_images/', 'delete_images', 'Delete Images'),
@@ -29,7 +29,6 @@
         </li>
         {% endfor %}
     </ul>
-
 
     <div class="body-wrapper">
         {% block content %}
