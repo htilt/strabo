@@ -1,12 +1,12 @@
 {% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
   <link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css" media="screen">
     <link href="{{PATH_TO_PUBLIC_STYLES}}{{MAP_CSS}}" rel="stylesheet">
     <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
         var lat_setting = {{ LAT_SETTING }};
         var long_setting = {{ LONG_SETTING }};
