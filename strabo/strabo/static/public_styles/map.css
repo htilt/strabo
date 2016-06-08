@@ -3,19 +3,12 @@
 html, body {
   height: 100%;
 }
-/* map is not rendering */
 
 #map {
-    height: 80%;
-}
-
-.header {
-  height: 50px; /* AVA */
-}
-
-
-.container-popup {
-    position: fixed; /*or relative*/
+    width: 100%;
+    position: absolute;
+    top: 4.5em;
+    bottom: 2em;
 }
 
 .popup-background {
