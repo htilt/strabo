@@ -93,6 +93,9 @@ function onEachZone(feature, layer) {
       click: whenClicked
   });
 }
+
+
+
 // set styles and popups for lines
 function onEachLine(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
@@ -100,14 +103,23 @@ function onEachLine(feature, layer) {
         weight: 4,
         color: feature.properties['marker-color'],
         dashArray: '',
+        fillOpacity: 1
   });
   layer.on({
       click: whenClicked
   });
 }
+
+
+
+
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
+  layer.setStyle({
+        color: feature.properties['marker-color'],
+        fillOpacity: 1
+  })
   // layer.setIcon(feature.properties['icon']);
   layer.on({
       click: whenClicked

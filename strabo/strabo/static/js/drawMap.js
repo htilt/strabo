@@ -45,6 +45,16 @@ function onEachLine(feature, layer) {
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.name);
+
+
+var myIcon = L.divIcon({
+      className: 'my-div-icon',
+      iconSize: [5, 5]
+    });
+                                                                                                                                                                                                                                                                                                       
+
+
+  
   // layer.setIcon(feature.properties['icon']);
 }
 
@@ -174,6 +184,10 @@ $(function()
     //var menuParent = $('btn btn-default dropdown-toggle');
     //var msg = '';
 
+
+
+
+
     switch($usrSelect) {
       case 'Turquoise' :
         L.geoJson(obJSON, {
@@ -220,6 +234,11 @@ $(function()
     }
   });
 });
+
+
+
+
+
 
 $('#upload-btn').click(function (e) {
   console.log(obJSON);
