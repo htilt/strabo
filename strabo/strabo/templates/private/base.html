@@ -10,17 +10,17 @@
 <title>{{WEBSITE_TITLE}}</title>
 {% endblock head %}
 
-
 <body>
     {% set navigation_bar = [
     ('/admin/upload_images/', 'upload_images', 'Upload Images'),
-    ('/admin/upload_ips/', 'upload_ips', 'Add Interest Points'),
+    ('/admin/upload_ips/', 'upload_ips', 'Add Point of Interest'),
 
     ('/admin/delete_images/', 'delete_images', 'Delete Images'),
-    ('/admin/delete_ips/', 'delete_ips', 'Delete Interest Points')
+    ('/admin/delete_ips/', 'delete_ips', 'Delete Point of Interest')
     ] -%}
 
-    {% set active_page = active_page|default('index') -%}
+    {% set active_page = active_page|default('upload_images') -%}
+
 
     <ul id="navigation" class="nav nav-tabs">
         {% for href, id, caption in navigation_bar %}
