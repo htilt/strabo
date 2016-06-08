@@ -1,10 +1,20 @@
+/* Admin Nav Bar */
+
+
+/*
+main { 
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+*/
+
 .temp h2 {
-  padding-left: 30px;
-  padding-top: 30px;
+	padding-top: 1.5em;
+	padding-left: 2em;
 }
 
-main {
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+.tab-active {
+	background-color: #e6e6e6;
+
 }
