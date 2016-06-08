@@ -18,19 +18,14 @@
         var interest_lines = {{ interest_lines_json|tojson }};
     </script>
     <script src="../static/js/{{ MAP_JS }}"></script>
-
-
-
 {% endblock head %}
 
 {% block content %}
 
-<!--Map and Text Selection Row-->
 <div class="row">
-
   <div id="map"></div>
-
 </div>
+
 
 <div class="popup-background" hidden></div>
 <div class="popup" hidden>
