@@ -46,16 +46,12 @@ def config_app(app):
     app.config['GALLERY_CSS'] = "gallery.css"
     app.config['ABOUT_CSS'] = 'about.css'
 
-
     app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
     app.config['INDEX_GREETING'] = "Select a tab to begin adding content to the Canyon."
-
 
     # set title and subtitle for image gallery
     app.config['GALLERY_TITLE'] = "Image Gallery"
     app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
-    # timeline functionality is currently disabled
-
 
     app.config['MAP_TEMPLATE'] = "map.html"
     app.config['BASE_TEMPLATE'] = "base.html"
@@ -65,7 +61,7 @@ def config_app(app):
     # set filename for js file with Leaflet for public map
     app.config['MAP_JS'] = 'map.js'
     # set filename for js file with Leaflet for private, admin end map
-    app.config['ADMINMAP_JS'] = 'drawMap.js'
+    app.config['DRAWMAP_JS'] = 'drawMap.js'
     #
     #
     #
