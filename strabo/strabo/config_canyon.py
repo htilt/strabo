@@ -39,10 +39,7 @@ def config_app(app):
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
 
-    # Choose between reedred_base.css, berkeleyblue_base.css, and minwhite_base.css
     app.config['BASE_CSS'] = "canyon_base.css"
-
-
     app.config['HEADER_CSS'] = "header.css"
     app.config['FOOTER_CSS'] = "footer.css"
     app.config['MAP_CSS'] = "map.css"
@@ -50,10 +47,10 @@ def config_app(app):
     app.config['ABOUT_CSS'] = 'about.css'
 
 
-    # set website title
     app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
-    # set greeting on homepage for admin end
     app.config['INDEX_GREETING'] = "Select a tab to begin adding content to the Canyon."
+
+
     # set title and subtitle for image gallery
     app.config['GALLERY_TITLE'] = "Image Gallery"
     app.config['GALLERY_SUBTITLE'] = "Reed College Canyon Past and Present"
@@ -65,12 +62,10 @@ def config_app(app):
     app.config['HEADER_TEMPLATE'] = "header.html"
     app.config['FOOTER_TEMPLATE'] = "footer.html"
 
-
     # set filename for js file with Leaflet for public map
     app.config['MAP_JS'] = 'map.js'
     # set filename for js file with Leaflet for private, admin end map
-    # with draw functionality
-    app.config['DRAWMAP_JS'] = 'drawMap.js'
+    app.config['ADMINMAP_JS'] = 'drawMap.js'
     #
     #
     #
@@ -91,7 +86,6 @@ def config_app(app):
     app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
     app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
 
-
     app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}
 
     app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
@@ -99,7 +93,7 @@ def config_app(app):
     app.config['LEAFLET_ATTRIBUTES'] = {
         "attribution":'Map tiles by Thunderforest, Map data by OpenStreetMap',
         "minZoom": 14,
-        "maxZoon": 22,
+        "maxZoom": 22,
         "ext": 'png'
     }
 
