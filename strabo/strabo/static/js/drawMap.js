@@ -112,30 +112,19 @@ var shapeLayer;
 drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
   shapeLayer = e.layer;
-  //if the layer type is a circle / marker, then we only have one set of latlngs to deal with, therefore different formula
-  if (type === 'polyline') {
-    drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON(); //creates JSON object
-  }
-  else if (type === 'marker') {
     drawnItems.addLayer(shapeLayer);
     obJSON = shapeLayer.toGeoJSON();
-  }
-  else if (type === 'polygon') {
-    obJSON = shapeLayer.toGeoJSON();
-   	drawnItems.addLayer(shapeLayer);
-  }
 
   drawControla.removeFrom(drawMap);
   drawMap.addControl(drawControlb);
 })
 
-drawMap.on('draw:deletestop', function (e) {
-  drawControlb.removeFrom(drawMap);
-  drawMap.addControl(drawControla);
-
+drawMap.on('draw:deleted', function (e) {
+    if (Object.keys(e.layers._layers).length > 0){
+        drawControlb.removeFrom(drawMap);
+        drawMap.addControl(drawControla);
+    }
 })
-
 
 drawMap.on('draw:edited', function (e) {
 
@@ -143,12 +132,8 @@ drawMap.on('draw:edited', function (e) {
   var type = e.layerType;
 
 
-
-
   editLayers.eachLayer(function (layer) {
     obJSON = layer.toGeoJSON();
-    console.log(obJSON);
-    console.log(shapeLayer);
     //shapeLayer.setStyle({color:'#2397EB'});
     //layer.setStyle({color:'#2397EB'})
     });
@@ -157,12 +142,10 @@ drawMap.on('draw:edited', function (e) {
 $(function()
 {
   var $e = $("#colorPick")
-  var $usrSelect = $("#colorPick :selected").text()
-  console.log($usrSelect);
+  var $usrSelect = $("#colorPick :selected").text();
 
   $e.change(function() {
     $usrSelect = $("#colorPick :selected").text();
-    console.log($usrSelect);
 
 
 
@@ -222,9 +205,7 @@ $(function()
 });
 
 $('#upload-btn').click(function (e) {
-  console.log(obJSON);
   var JSONobject = JSON.stringify(obJSON);
-  console.log(JSONobject);
   $('#geojson-field').attr("value", JSONobject);
 });
 
