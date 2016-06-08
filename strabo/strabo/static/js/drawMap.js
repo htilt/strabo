@@ -1,14 +1,9 @@
 
 var drawMap = L.map('drawMap', {
-}).setView([lat_setting, long_setting], 17);
+}).setView([lat_setting, long_setting], initial_zoom);
 
 
-L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-  maxZoom: 22,
-  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>'
-}).addTo(drawMap);
+L.tileLayer(tile_src,tile_attributes).addTo(drawMap);
 
 
 

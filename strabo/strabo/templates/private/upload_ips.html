@@ -59,7 +59,7 @@
     var long_setting = {{ LONG_SETTING }};
     var initial_zoom = {{ INITIAL_ZOOM }};
     var tile_src = "{{ MAP_TILE_SRC }}";
-    var tile_attributes = {{LEAFLET_ATTRIBUTES}};
+    var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
     var interest_points = {{ interest_points_json|tojson }};
     var interest_zones = {{ interest_zones_json|tojson }};
     var interest_lines = {{ interest_lines_json|tojson }};
