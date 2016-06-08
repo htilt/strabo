@@ -1,7 +1,6 @@
 {% extends "/private/base.html" %}
 {% set active_page = "upload_ips" %}
 {% block head %}
-
     {{ super() }}
 {% endblock %}
 
@@ -10,31 +9,39 @@
   <div class="form">
     <fieldset>
       <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
+
         <div class="row">
-          <div class="form-wrapper col-lg-8">
-            <legend>Add a New Interest Point</legend>
+          <div class="form-wrapper col-md-8">
+            <legend>Add a New Point of Interest</legend>
 
-            <div class="form-group">
-              <label for="name">Location Title:</label><br>
-              <input class="form-control" type="text" name="title" placeholder="Untitled" id="name">
-            </div>
-            <div id="drawMap" style="width: 100%; height: 400px">
-              <div class="container"></div>
-            </div><br>
+          <div class="form-group">
+            <label for="name">Location Title:</label><br>
+            <input class="form-control" type="text" name="title" placeholder="Untitled" id="name">
+          </div>
 
-            <div class="form-group">
-              <label for="layer">Layer:</label><br>
-              <select class="form-control" name="layer" id="colorPick">
-                  <option>Select One</a></option>
-                  {% for layer_name in LAYER_FIELD_ENUMS %}
-                  <option>{{layer_name}}</option>
-                  {% endfor %}
-                </select>
-            </div><br>
+
+
+
+          <div id="drawMap" style="width: 100%; height: 400px">
+            <div class="container"></div>
+          </div><br>
+
+
+
+
+          <div class="form-group">
+            <label for="layer">Layer:</label><br>
+            <select class="form-control" name="layer" id="colorPick">
+                <option>Select One</a></option>
+                {% for layer_name in LAYER_FIELD_ENUMS %}
+                <option>{{layer_name}}</option>
+                {% endfor %}
+              </select>
+          </div><br>
 
             <div class="form-group">
               <label for="description">Interest Point Description:</label><br>
-              <textarea class="form-control" rows='5' type="text" name="description" ></textarea>
+              <textarea class="form-control" rows='5' type="text" name="description" placeholder="None" ></textarea>
             </div>
 
             <div class="form-group">
@@ -52,6 +59,7 @@
 </main>
 {% endblock %}
 
+
 {% block footer %}
     {{ super () }}
 <script>
@@ -64,5 +72,5 @@
     var interest_zones = {{ interest_zones_json|tojson }};
     var interest_lines = {{ interest_lines_json|tojson }};
 </script>
-<script src="/static/js/{{ DRAWMAP_JS }}"></script>
+<script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}
