@@ -5,58 +5,51 @@
     <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_tool.css">
 {% endblock %}
 
-
-
-
 {% block content %}
 <main class="container">
   <div class="form">
       <fieldset>
-
-
         <form id="image-upload" name="upload-form" method="POST" action="/admin/upload_images/post" enctype="multipart/form-data">
+          
           <div class="row">
-            <div class="form-wrapper col-lg-8">
+            <div class="form-wrapper col-md-8">
               <legend>Upload a New Image</legend>
 
-              <div class="form-group">
-                <label for="interest_point">Interest Point:</label><br>
-                <select class="form-control" name='interest_point' >
-                  <option selected name="ip_auto"> Select One </option>
-                  {% for interest_point in interest_points %}
-                  <option value="{{ interest_point.id }}"> {{ interest_point.title }} </option>
-                  {% endfor %}
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="name">Image Description:</label><br>
-                <input class="form-control" type="text" name="description">
-              </div>
-
-              <p></p>
-
-              <input type="submit" value="Upload">
+            <div class="upload-wrapper">
+              <input type="file" id="img-input" name="file" required>
+              <br>
+              <img id="img-preview" src="#" class="img-responsive" alt="your image"></img>
+              <br>
+              <br>
             </div>
 
-
-            <div class="upload-wrapper col-lg-4">
-
-              <input type="file" id="img-input" name="file" required><br /><br />
-
-              <img id="img-preview" src="#" alt="your image"></img>
+            <div class="form-group">
+              <label for="interest_point">Point of Interest:</label><br>
+              <select class="form-control" name='interest_point' >
+                <option selected name="ip_auto"> Select One </option>
+                {% for interest_point in interest_points %}
+                <option value="{{ interest_point.id }}"> {{ interest_point.title }} </option>
+                {% endfor %}
+              </select>
             </div>
+
+            <div class="form-group">
+              <label for="name">Image Description:</label><br>
+              <input class="form-control" type="text" name="description">
+            </div>
+
+            <input type="submit" value="Upload">
+          </div>
 
           </div>
         </form>
       </fieldset>
     </div>
-
-  <p></p>
-  <p></p>
-
 </main>
 {% endblock %}
+
+
+
 
 {% block footer %}
     {{ super () }}
@@ -64,6 +57,10 @@
     <script type="text/javascript" src="/static/js/exif.js"></script>
     <script type="text/javascript" src="/static/js/get_tags.js"></script>
     <script type="text/javascript">
+    
+
+
+    
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
