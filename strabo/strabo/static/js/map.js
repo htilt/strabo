@@ -1,6 +1,6 @@
 //flickety object
 var flkty;
-var map
+var map; 
 // var map;
 
 //is called whenever a leafelet feature is clicked
@@ -199,9 +199,7 @@ $(document).ready(function(){
     map.locate({setView: false, maxZoom: 22});
     // Popup will change later.
 
-// Set up GPS location
-
-// map.locate();
+    // Set up GPS location
 
     function onLocationFound(e) {
       var radius = e.accuracy / 2;

@@ -3,19 +3,18 @@
 html, body {
   height: 100%;
 }
-/* map is not rendering */
+
+/* map is rendering, but CSS is not ideal */
 
 #map {
-    height: 80%;
+    position: absolute;
+    top: 50px; /* AVA */
+    bottom: 2em;
+    width: 100%;
 }
 
 .header {
   height: 50px; /* AVA */
-}
-
-
-.container-popup {
-    position: fixed; /*or relative*/
 }
 
 .popup-background {
