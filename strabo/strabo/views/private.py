@@ -37,7 +37,6 @@ def image_post():
 @app.route("/admin/upload_ips/")
 def upload_ips():
   points,zones,lines = get_all_feature_collections()
-  image_table_cols = {"description":"Description"}
 
   #get all avaliable images
   all_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
@@ -48,7 +47,6 @@ def upload_ips():
     interest_points_json=points,
     interest_zones_json=lines,
     interest_lines_json=zones,
-    table_column_names=image_table_cols,
     all_images=all_images,
     **app.config)
 
@@ -63,57 +61,42 @@ def interest_points_post():
     db.session.commit()
     return redirect(url_for('index'))
 
-'''
-###
-###
-### Views to search for and delete images ###
-@app.route("/admin/delete_images/", methods=["GET"])
-def delete_images():
-  # get search fields
-  fields = get_fields('images')
-  # get user input for search
-  search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
-  # if the specified column name is 'prettified', refert to raw column name
-  search_field = get_raw_column(search_field)
+@app.route("/admin/edit_ips/")
+def interest_points_table():
+    interest_points = schema.InterestPoints.query.all()
+    return render_template("private/edit_ips.html",
+      interest_points=interest_points,
+      **app.config)
 
-  # get images from search
-  if search_term is None:
-    images = database.get_all_rows(schema.Images)
-  else:
-    images = database.search_text(schema.Images, search_field, search_term)
-  return render_template("private/delete_images.html", fields=fields, images=images,
-    NEW_DATA_DIRECTORY_RELPATH=app.config['NEW_DATA_DIRECTORY_RELPATH'])
+@app.route("/admin/edit_ips/redirect")
+def interest_points_redirect():
+    edit_id = request.args.get("edit-btn")
+    del_id = request.args.get("delete-btn")
+    if edit_id:
+        #render edit form here
+        pass
+    elif del_id:
+        database.delete_ip(del_id)
+        return redirect(url_for('interest_points_table'))
+    else:
+        raise RuntimeError("edit form somehow submitted without delete or edit being pressed")
 
-@app.route("/admin/delete_images/delete/", methods=["POST"])
-def delete_images_delete():
-  keys = request.form.getlist('primary_key')
-  database.delete(keys, schema.Images)
-  return redirect(url_for('index'))
+@app.route("/admin/edit_images/")
+def images_table():
+    images = schema.Images.query.all()
+    return render_template("private/edit_images.html",
+      all_images=images,
+      **app.config)
 
-###
-###
-### Views to search for and delete interest points ###
-@app.route("/admin/delete_ips/", methods=["GET"])
-def delete_ips():
-  table_name = 'interest_points'
-  # get search fields
-  fields = get_fields(table_name)
-  # get user input for search
-  search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
-  # if the specified column name is 'prettified', refert to raw column name
-  search_field = get_raw_column(search_field)
-
-  # get interest points from search
-  if search_term is None:
-    interest_points = database.get_all_rows(schema.InterestPoints)
-  else:
-    interest_points = database.search_text(schema.InterestPoints, search_field, search_term)
-  return render_template("private/delete_ips.html", fields=fields,
-    interest_points=interest_points)
-
-@app.route("/admin/delete_ips/delete/", methods=["POST"])
-def delete_ips_delete():
-  # delete selected items from specified table by primary key
-  database.delete(request.form.getlist('primary_key'), schema.InterestPoints)
-  return redirect(url_for('index'))
-'''
+@app.route("/admin/edit_images/redirect")
+def images_redirect():
+    edit_id = request.args.get("edit-btn")
+    del_id = request.args.get("delete-btn")
+    if edit_id:
+        #render edit form here
+        pass
+    elif del_id:
+        database.delete_image(del_id)
+        return redirect(url_for('images_table'))
+    else:
+        raise RuntimeError("edit form somehow submitted without delete or edit being pressed")
