@@ -5,13 +5,14 @@ html, body {
 }
 
 #map {
-    width: 100%;
+    max-width: 100%;
     position: absolute;
     top: 4.5em;
     bottom: 2em;
 }
 
 .popup-background {
+    /*if you change either position thing it doesn't work*/
     position: relative;
     position: fixed;
     top: 0;

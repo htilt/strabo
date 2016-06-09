@@ -29,32 +29,34 @@ class mock_flask_file_obj:
     def save(self,new_file_path):
         shutil.copyfile(self.full_filename,new_file_path)
 
-def make_interest_point(form_title,form_body,form_geo_obj,form_layer):
+def make_interest_point(image_ids,form_title,form_body,form_geo_obj,form_layer):
     ip = schema.InterestPoints()
     db.session.add(ip)
     db.session.flush()
-    private_helper.fill_interest_point(ip,form_title,form_body,form_geo_obj,form_layer)
+    private_helper.fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer)
     db.session.commit()
     return ip
 
 geo_obj1 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.63034939765929,45.48205499198348]}}'
 geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.630397,45.481851]}}'
 
-ip1 = make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][Layers.plant])
-ip2 = make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][Layers.animal])
+img1 = private_helper.make_image(mock_flask_file_obj("test_images","download.jpg"),"bird")
+img2 = private_helper.make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower")
+img3 = private_helper.make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers")
+img4 = private_helper.make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach")
+img5 = private_helper.make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon")
+img6 = private_helper.make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone")
 
-img1 = private_helper.make_image(mock_flask_file_obj("test_images","download.jpg"),"bird",str(ip1.id))
-img2 = private_helper.make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower",str(ip1.id))
-img3 = private_helper.make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers",str(ip1.id))
-img4 = private_helper.make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach",str(ip2.id))
-img5 = private_helper.make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon",str(ip2.id))
-img6 = private_helper.make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone",str(ip2.id))
+db.session.add(img1)
+db.session.add(img2)
+db.session.add(img3)
+db.session.add(img4)
+db.session.add(img5)
+db.session.add(img6)
 
-ip1.images.append(img1)
-ip1.images.append(img2)
-ip1.images.append(img3)
-ip2.images.append(img4)
-ip2.images.append(img5)
-ip2.images.append(img6)
+db.session.commit()
+
+ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][Layers.plant])
+ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][Layers.animal])
 
 db.session.commit()

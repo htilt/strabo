@@ -37,10 +37,19 @@ def image_post():
 @app.route("/admin/upload_ips/")
 def upload_ips():
   points,zones,lines = get_all_feature_collections()
+  image_table_cols = {"description":"Description"}
+
+  #get all avaliable images
+  all_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
+  #makes most recently added (not updated) images appear first
+  all_images.reverse()
+
   return render_template("private/upload_ips.html",
     interest_points_json=points,
     interest_zones_json=lines,
     interest_lines_json=zones,
+    table_column_names=image_table_cols,
+    all_images=all_images,
     **app.config)
 
 @app.route("/admin/interest_points/post", methods=["POST"])
@@ -48,10 +57,11 @@ def interest_points_post():
     ip = schema.InterestPoints()
     db.session.add(ip)
     db.session.flush()
-    private_helper.fill_interest_point(ip,request.form['title'],request.form['description'],request.form['geojson'],request.form['layer'])
+    private_helper.fill_interest_point(ip,request.form.getlist('image_ids'),
+        request.form['title'],request.form['description'],request.form['geojson'],
+        request.form['layer'])
     db.session.commit()
     return redirect(url_for('index'))
-
 
 '''
 ###
