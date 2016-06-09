@@ -169,6 +169,7 @@ $(document).ready(function(){
     );
 
     map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
+    
     L.tileLayer(tile_src, tile_attributes).addTo(map);
 
     // add pre-existing points, zones, and lines to map
@@ -195,8 +196,21 @@ $(document).ready(function(){
     L.control.layers(null, overlays).addTo(map);
 
 
-    // Use GPS to locate you on the map
+    // Use GPS to locate you on the map.
+
     map.locate({setView: false, maxZoom: 22});
+
+    // Current solution to keep geoLocation only
+    // relevant in the campus/canyon area is to set
+    // map bounds. Not the ideal solution, but I think
+    // it will work for now. 
+
+    var northWest = L.latlng(45.48469, -122.63892);
+    var southEast = L.latlng(45.47846, -122.62171);
+    var bounds = L.latLngBounds(northWest, southEast);
+
+    map.setMaxBounds(bounds);
+
     // Popup will change later.
 
     // Set up GPS location
@@ -207,20 +221,9 @@ $(document).ready(function(){
       L.marker(e.latlng).addTo(map)
         .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-       L.circle(e.latlng, radius).addTo(map);
+      L.circle(e.latlng, radius).addTo(map);
 
-// Attempting to center map on your location within
-// Reed campus area. 
-
-//    var northEast = L.latlng(45.4847, -122.62266);
-//    var southWest = L.latlng(45.47852, -122.63903);
-//    var bounds = L.latlngBounds(southWest,northEast);
-
-//    if (L.contains(bounds, e.latlng)) {
-//      map.locate({setView: true, maxZoom: 22});
-//    }
     }
-
     map.on('locationfound', onLocationFound);
 
     // Error if locating fails
