@@ -10,13 +10,13 @@
   <div class="form">
       <fieldset>
         <form id="image-upload" name="upload-form" method="POST" action="/admin/upload_images/post" enctype="multipart/form-data">
-          
+
           <div class="row">
             <div class="form-wrapper col-md-8">
               <legend>Upload a New Image</legend>
 
             <div class="upload-wrapper">
-              <input type="file" id="img-input" name="file" required>
+              <input type="file" id="img-input" name="file">
               <br>
               <img id="img-preview" src="#" class="img-responsive" alt="your image"></img>
               <br>
@@ -38,7 +38,7 @@
 
             <div class="form-group">
               <label for="name">Image Description:</label><br>
-              <input class="form-control" type="text" name="description" placeholder="None">
+              <input class="form-control" type="text" name="description" value={{ image.description }}>
             </div>
 
             <input type="submit" value="Upload">
@@ -57,10 +57,10 @@
     <script type="text/javascript" src="/static/js/exif.js"></script>
     <script type="text/javascript" src="/static/js/get_tags.js"></script>
     <script type="text/javascript">
-    
 
 
-    
+
+
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();

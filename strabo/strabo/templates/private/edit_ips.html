@@ -1,0 +1,43 @@
+{% extends "/private/base.html" %}
+{% set active_page = "edit_ips" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<main>
+    <div id="form-field">
+        <form method="GET" action="/admin/edit_ips/redirect" enctype="multipart/form-data">
+            <div class="table">
+                <table class="table-bordered" margin="10px" id="preview">
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Layer</th>
+                  </tr>
+
+                  {% for ip in interest_points %}
+                      <tr>
+                        <td>
+                            <button type="submit" name="edit-btn" value={{ ip.id }}>Edit</button>
+                        </td>
+                        <td>
+                            <button type="submit" name="delete-btn" value={{ ip.id }}>Delete</button>
+                        </td>
+                        <td>{{ ip.title }}</td>
+                        <td>{{ ip.descrip_body }}</td>
+                        <td>{{ ip.layer }}</td>
+                      </tr>
+                  {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+    {{ super () }}
+{% endblock %}

@@ -116,10 +116,11 @@ function onEachLine(feature, layer) {
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
-  layer.setStyle({
+  //I am not sure why this doesn't work but it doesn't
+  /*layer.setStyle({
         color: feature.properties['marker-color'],
         fillOpacity: 1
-  })
+  })*/
   // layer.setIcon(feature.properties['icon']);
   layer.on({
       click: whenClicked

@@ -6,7 +6,6 @@
 
 {% block content %}
 <main class="container">
-
   <div class="form">
     <fieldset>
       <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
@@ -17,53 +16,36 @@
 
           <div class="form-group">
             <label for="name">Location Title:</label><br>
-            <input class="form-control" type="text" name="title" placeholder="Untitled" id="name">
+            <input class="form-control" type="text" name="title" placeholder="Untitled" value={{interest_point.title}} id="name">
           </div>
 
 
 
 
-        <div class="row">
-          <div id="drawMap" style="width: 100%; height: 400px"></div> <!--the map's height and width are defined manually in this code. This is not ideal.-->
-        </div>
-        <br>
+          <div id="drawMap" style="width: 100%; height: 400px">
+            <div class="container"></div>
+          </div><br>
 
 
+          <div class="form-group">
+            <!--allows the javascript to upload data in the form-->
+            <input id="geojson-field" type="hidden" name="geojson" value="">
+          </div>
 
+          <div class="form-group">
+            <label for="layer">Layer:</label><br>
+            <select class="form-control" name="layer" id="colorPick">
+                <option>Select One</a></option>
+                {% for layer_name in LAYER_FIELD_ENUMS %}
+                <option>{{layer_name}}</option>
+                {% endfor %}
+              </select>
+          </div><br>
 
-        <div class="form-group">
-          <label for="color">Color:</label>
-          <br>
-          <select class="form-control" name="color" id="colorPick">
-            <option value="#00A0B0">Select One</a></option>
-            <option value="#00A0B0">Turquoise</a></option>
-            <option value="#6A4A3C">Brown</a></option>
-            <option value="#CC333F">Red</a></option>
-            <option value="#EB6841">Orange</a></option>
-            <option value="#8A9B0F">Green</a></option>
-          </select>
-        </div>
-        <br>
-
-        <div class="form-group">
-          <label for="layer">Layer:</label><br>
-          <select class="form-control" name="layer" id="colorPick">
-              <option>Select One</a></option>
-              {% for layer_name in LAYER_FIELD_ENUMS %}
-              <option>{{layer_name}}</option>
-              {% endfor %}
-            </select>
-        </div>
-        <br>
-
-        <div class="form-group">
-            <label for="description">Interest Point Description:</label><br>
-            <textarea class="form-control" rows='5' type="text" name="description" placeholder="None" ></textarea>
-        </div>
-
-            
-
-
+            <div class="form-group">
+              <label for="description">Interest Point Description:</label><br>
+              <textarea class="form-control" rows='5' type="text" name="description" placeholder="None" ></textarea>
+            </div>
 
             <div class="form-group">
               <input id="geojson-field" type="hidden" name="geojson" value="">
@@ -71,18 +53,30 @@
 
             <p></p>
 
-
-
-
-
-            <input type="submit" value="Upload">
+            <input id="upload-btn" type="submit" value="Upload">
           </div>
+          <table class="table-bordered" margin="10px">
+            <tr>
+              <th></th>
+              <th>Image</th>
+              <th>Description</th>
+            </tr>
+
+            {% for img in all_images %}
+                <tr>
+                  <td>
+                      <input type="checkbox" name='image_ids' value={{ img.id }}>
+                  </td>
+                  <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                  <td>{{ img.description }}</td>
+                </tr>
+            {% endfor %}
+          </table>
         </div>
       </form>
     </fieldset>
   </div>
 </main>
-
 {% endblock %}
 
 
