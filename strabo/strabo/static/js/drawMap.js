@@ -1,7 +1,7 @@
+// The Admin Map 
 
 var drawMap = L.map('drawMap', {
 }).setView([lat_setting, long_setting], initial_zoom);
-
 
 L.tileLayer(tile_src,tile_attributes).addTo(drawMap);
 
@@ -22,6 +22,8 @@ var zone_features = L.geoJson(interest_zones, {
 var line_features = L.geoJson(interest_lines, {
   onEachFeature: onEachLine,
 }).addTo(drawMap);
+
+
 
 // set styles and popups for zones
 function onEachZone(feature, layer) {
