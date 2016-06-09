@@ -15,15 +15,17 @@ from strabo import db
 def index():
   return render_template("private/base.html",**app.config)
 
+def show_image_upload_form(image):
+    return render_template("private/upload_images.html",
+    image=image,
+    **app.config)
+
 ###
 ###
 ### Views to upload images to db
 @app.route("/admin/upload_images/")
 def upload_images():
-  interest_points = database.get_all_rows(schema.InterestPoints)
-  return render_template("private/upload_images.html",
-    interest_points=interest_points,
-    **app.config)
+    return show_image_upload_form(schema.Images(filename="",description=""))
 
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
@@ -31,24 +33,27 @@ def image_post():
     database.store_item(img_obj)
     return redirect(url_for('index'))
 
+def show_ips_upload_form(interest_point):
+    points,zones,lines = get_all_feature_collections()
+
+    #get all avaliable images
+    all_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
+    #makes most recently added images appear first
+    all_images.reverse()
+
+    return render_template("private/upload_ips.html",
+        interest_points_json=points,
+        interest_zones_json=lines,
+        interest_lines_json=zones,
+        all_images=all_images,
+        interest_point=interest_point,
+        **app.config)
 ###
 ###
 ### Views to add interest points to the db
 @app.route("/admin/upload_ips/")
 def upload_ips():
-  points,zones,lines = get_all_feature_collections()
-
-  #get all avaliable images
-  all_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
-  #makes most recently added (not updated) images appear first
-  all_images.reverse()
-
-  return render_template("private/upload_ips.html",
-    interest_points_json=points,
-    interest_zones_json=lines,
-    interest_lines_json=zones,
-    all_images=all_images,
-    **app.config)
+    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",geojson_feature_type="",layer=""))
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
@@ -73,8 +78,7 @@ def interest_points_redirect():
     edit_id = request.args.get("edit-btn")
     del_id = request.args.get("delete-btn")
     if edit_id:
-        #render edit form here
-        pass
+        return show_ips_upload_form(schema.InterestPoints.query.get(edit_id))
     elif del_id:
         database.delete_ip(del_id)
         return redirect(url_for('interest_points_table'))
@@ -93,8 +97,7 @@ def images_redirect():
     edit_id = request.args.get("edit-btn")
     del_id = request.args.get("delete-btn")
     if edit_id:
-        #render edit form here
-        pass
+        return show_image_upload_form(schema.Images.query.get(edit_id))
     elif del_id:
         database.delete_image(del_id)
         return redirect(url_for('images_table'))

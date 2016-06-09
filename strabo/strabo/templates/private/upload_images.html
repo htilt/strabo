@@ -16,7 +16,7 @@
               <legend>Upload a New Image</legend>
 
             <div class="upload-wrapper">
-              <input type="file" id="img-input" name="file" required>
+              <input type="file" id="img-input" name="file">
               <br>
               <img id="img-preview" src="#" class="img-responsive" alt="your image"></img>
               <br>
@@ -25,7 +25,7 @@
 
             <div class="form-group">
               <label for="name">Image Description:</label><br>
-              <input class="form-control" type="text" name="description" placeholder="None">
+              <input class="form-control" type="text" name="description" value={{ image.description }}>
             </div>
 
             <input type="submit" value="Upload">
