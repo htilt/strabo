@@ -4,20 +4,15 @@ html, body {
   height: 100%;
 }
 
-/* map is rendering, but CSS is not ideal */
-
 #map {
-    position: absolute;
-    top: 50px; /* AVA */
-    bottom: 2em;
     width: 100%;
-}
-
-.header {
-  height: 50px; /* AVA */
+    position: absolute;
+    top: 4.5em;
+    bottom: 2em;
 }
 
 .popup-background {
+    /*if you change either position thing it doesn't work*/
     position: relative;
     position: fixed;
     top: 0;
@@ -32,12 +27,12 @@ html, body {
     width: 80%;
     height: 100%;
     background: #ebf5e4;
-    position: absolute; 
+    position: absolute;
     right: 10%;
     left: 10%;
     top: 0;
     margin: auto;
     padding: 1.25em;
     border: 1px solid #000000;
-    z-index: 100000; /* goes above leaflet link */ 
+    z-index: 100000; /* goes above leaflet link */
 }

@@ -1,14 +1,9 @@
+// The Admin Map 
 
 var drawMap = L.map('drawMap', {
-}).setView([lat_setting, long_setting], 17);
+}).setView([lat_setting, long_setting], initial_zoom);
 
-
-L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
-  maxZoom: 22,
-  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>'
-}).addTo(drawMap);
+L.tileLayer(tile_src,tile_attributes).addTo(drawMap);
 
 
 
@@ -27,6 +22,8 @@ var zone_features = L.geoJson(interest_zones, {
 var line_features = L.geoJson(interest_lines, {
   onEachFeature: onEachLine,
 }).addTo(drawMap);
+
+
 
 // set styles and popups for zones
 function onEachZone(feature, layer) {
@@ -50,6 +47,16 @@ function onEachLine(feature, layer) {
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.name);
+
+
+var myIcon = L.divIcon({
+      className: 'my-div-icon',
+      iconSize: [5, 5]
+    });
+                                                                                                                                                                                                                                                                                                       
+
+
+  
   // layer.setIcon(feature.properties['icon']);
 }
 
@@ -117,30 +124,19 @@ var shapeLayer;
 drawMap.on('draw:created', function (e) { //grabs layer of drawn item
   var type = e.layerType;
   shapeLayer = e.layer;
-  //if the layer type is a circle / marker, then we only have one set of latlngs to deal with, therefore different formula
-  if (type === 'polyline') {
-    drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON(); //creates JSON object
-  }
-  else if (type === 'marker') {
     drawnItems.addLayer(shapeLayer);
     obJSON = shapeLayer.toGeoJSON();
-  }
-  else if (type === 'polygon') {
-    obJSON = shapeLayer.toGeoJSON();
-   	drawnItems.addLayer(shapeLayer);
-  }
 
   drawControla.removeFrom(drawMap);
   drawMap.addControl(drawControlb);
 })
 
-drawMap.on('draw:deletestop', function (e) {
-  drawControlb.removeFrom(drawMap);
-  drawMap.addControl(drawControla);
-
+drawMap.on('draw:deleted', function (e) {
+    if (Object.keys(e.layers._layers).length > 0){
+        drawControlb.removeFrom(drawMap);
+        drawMap.addControl(drawControla);
+    }
 })
-
 
 drawMap.on('draw:edited', function (e) {
 
@@ -148,12 +144,8 @@ drawMap.on('draw:edited', function (e) {
   var type = e.layerType;
 
 
-
-
   editLayers.eachLayer(function (layer) {
     obJSON = layer.toGeoJSON();
-    console.log(obJSON);
-    console.log(shapeLayer);
     //shapeLayer.setStyle({color:'#2397EB'});
     //layer.setStyle({color:'#2397EB'})
     });
@@ -162,12 +154,10 @@ drawMap.on('draw:edited', function (e) {
 $(function()
 {
   var $e = $("#colorPick")
-  var $usrSelect = $("#colorPick :selected").text()
-  console.log($usrSelect);
+  var $usrSelect = $("#colorPick :selected").text();
 
   $e.change(function() {
     $usrSelect = $("#colorPick :selected").text();
-    console.log($usrSelect);
 
 
 
@@ -178,6 +168,10 @@ $(function()
     //var menuNum = this.value;
     //var menuParent = $('btn btn-default dropdown-toggle');
     //var msg = '';
+
+
+
+
 
     switch($usrSelect) {
       case 'Turquoise' :
@@ -226,10 +220,13 @@ $(function()
   });
 });
 
+
+
+
+
+
 $('#upload-btn').click(function (e) {
-  console.log(obJSON);
   var JSONobject = JSON.stringify(obJSON);
-  console.log(JSONobject);
   $('#geojson-field').attr("value", JSONobject);
 });
 

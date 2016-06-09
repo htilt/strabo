@@ -1,7 +1,7 @@
 //flickety object
 var flkty;
-var map; 
-// var map;
+//leafelet map object
+var map;
 
 //is called whenever a leafelet feature is clicked
 function whenClicked(e) {
@@ -10,11 +10,11 @@ function whenClicked(e) {
 
 function hide_popup(){
     $('.popup').hide();
-    $('.popup-background').hide();
+    $('.container-popup').hide();
 }
 function show_popup(){
     $('.popup').show();
-    $('.popup-background').show();
+    $('.container-popup').show();
 }
 
 //this function loads the text and images associated
@@ -93,6 +93,9 @@ function onEachZone(feature, layer) {
       click: whenClicked
   });
 }
+
+
+
 // set styles and popups for lines
 function onEachLine(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
@@ -100,69 +103,29 @@ function onEachLine(feature, layer) {
         weight: 4,
         color: feature.properties['marker-color'],
         dashArray: '',
+        fillOpacity: 1
   });
   layer.on({
       click: whenClicked
   });
 }
+
+
+
+
 // set styles and popups for points
 function onEachPoint(feature, layer) {
   layer.bindPopup(feature.geometry.db_id.toString());
+  //I am not sure why this doesn't work but it doesn't
+  /*layer.setStyle({
+        color: feature.properties['marker-color'],
+        fillOpacity: 1
+  })*/
   // layer.setIcon(feature.properties['icon']);
   layer.on({
       click: whenClicked
   });
 }
-
-//this function loads the text and images associated
-//with a selected interest point
-//example output:
-// <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download1.jpg"/></div><div class="carousel-cell"><img src= "static/thumbnails/download2.jpg"/></div>
-function get_carosel_html(filename,descrip){
-    var html = '<div class="carousel-cell">';
-    html += '<img src= "static/thumbnails/' + filename + '"/>';
-    html += '<p>' + descrip + '</p>';
-    html += '</div>';
-    return html;
-}
-function get_description_html(descrip){
-    return '<p>' + descrip + '</p>';
-}
-function get_title_html(title){
-    return '<p>' + descrip + '</p>';
-}
-function remove_all_carosel_entries(){
-    var $carousel = $("#carouselholder");
-    $carousel.flickity( 'remove', $carousel.flickity('getCellElements'));
-}
-function see_ip(db_id) {
-    $.post(
-        "/map/post",
-        {db_id:db_id},
-        function(data){
-            var imgs = data.images;
-            var ip_descrip = data.description;
-            var ip_title = data.title;
-
-            $('.popup').show();
-            $('.popup-background').show();
-
-            remove_all_carosel_entries();
-            
-            var carousel_html = "";
-            imgs.forEach(function(img){
-                var $cellElems = $(get_carosel_html(img.filename,img.description));
-                $("#carouselholder").flickity('append', $cellElems);
-            });
-            $("#ip_description").html(ip_descrip);
-            $("#ip_title").html(ip_title);
-
-
-            // resize after un-hiding Flickity
-            $("#carouselholder").flickity('resize');
-            $("#carouselholder").flickity('reposition');
-        });
-      }
 $(document).ready(function(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true}
@@ -195,6 +158,7 @@ $(document).ready(function(){
     }
     L.control.layers(null, overlays).addTo(map);
 
+    set_map_click(map);
 
     // Use GPS to locate you on the map.
 
@@ -221,8 +185,10 @@ $(document).ready(function(){
       L.marker(e.latlng).addTo(map)
         .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-      L.circle(e.latlng, radius).addTo(map);
+       L.circle(e.latlng, radius).addTo(map);
 
+// Attempting to center map on your location within
+// Reed campus area.
     }
     map.on('locationfound', onLocationFound);
 
@@ -232,33 +198,4 @@ $(document).ready(function(){
     }
 
     map.on('locationerror', onLocationError);
-
-    // Set layers and add toggle control menu for each layer
-    var overlays = {
-      "Interest Points": point_features,
-      "Lines": line_features,
-      "Zones": zone_features,
-    }
-    L.control.layers(null, overlays).addTo(map);
-
-
-    // Display the id of an interest point when clicked
-    function whenClicked(e) {
-     see_ip(e.target.feature.geometry.db_id);
-    }
-
-// Display latlng info for any place on the map when clicked
-    function onMapClick(e) {
-      L.popup()
-        .setLatLng(e.latlng)
-        .setContent(e.latlng.toString())
-        .openOn(map);
-}
-
-
-// Trigger onMapClick function whenever map is clickeddb_id
-map.on('click', onMapClick);
-
-
-    set_map_click(map);
 });
