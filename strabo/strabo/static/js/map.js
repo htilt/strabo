@@ -131,7 +131,7 @@ $(document).ready(function(){
         {imagesLoaded: true}
     );
 
-    map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
+    map = L.map('map',{touchZoom: true}).setView([lat_setting, long_setting], initial_zoom);
     
     L.tileLayer(tile_src, tile_attributes).addTo(map);
 
@@ -162,22 +162,21 @@ $(document).ready(function(){
 
     // Use GPS to locate you on the map.
 
-    map.locate({setView: false, maxZoom: 22});
+    map.locate({watch: true, maxZoom: 22});
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
     // map bounds. Not the ideal solution, but I think
     // it will work for now. 
 
-    var northWest = L.latlng(45.48469, -122.63892);
-    var southEast = L.latlng(45.47846, -122.62171);
+    // NOTE: GETS REAL WEIRD AND JUMPY IN SAFARI
+    // However, works fine in Google Chrome
+
+    var northWest = L.latLng(45.48469, -122.63892);
+    var southEast = L.latLng(45.47846, -122.62171);
     var bounds = L.latLngBounds(northWest, southEast);
 
     map.setMaxBounds(bounds);
-
-    // Popup will change later.
-
-    // Set up GPS location
 
     function onLocationFound(e) {
       var radius = e.accuracy / 2;
@@ -187,8 +186,6 @@ $(document).ready(function(){
 
        L.circle(e.latlng, radius).addTo(map);
 
-// Attempting to center map on your location within
-// Reed campus area.
     }
     map.on('locationfound', onLocationFound);
 
