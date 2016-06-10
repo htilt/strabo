@@ -162,7 +162,7 @@ $(document).ready(function(){
 
     // Use GPS to locate you on the map.
 
-    map.locate({watch: true, maxZoom: 22});
+    // map.locate({watch: true, maxZoom: 22});
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
