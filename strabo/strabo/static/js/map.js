@@ -125,8 +125,8 @@ $(document).ready(function(){
 
 
     // Test custom map markers
-    L.marker([45.48273, -122.63237], {icon: APIcon}).addTo(map);
-    L.marker([45.48185, -122.62594], {icon: sensitiveAreaIcon}).addTo(map).bindPopup("Caution: Lamprey");
+    // L.marker([45.48273, -122.63237], {icon: APIcon}).addTo(map);
+    // L.marker([45.48185, -122.62594], {icon: sensitiveAreaIcon}).addTo(map).bindPopup("Caution: Lamprey");
 
     set_map_click(map);
 
