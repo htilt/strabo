@@ -36,3 +36,21 @@ html, body {
     border: 1px solid #000000;
     z-index: 100000; /* goes above leaflet link */
 }
+
+.my-gallery {
+  width: 100%;
+  float: left;
+}
+.my-gallery img {
+  width: 100%;
+  height: auto;
+}
+.my-gallery figure {
+  display: block;
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 150px;
+}
+.my-gallery figcaption {
+  display: none;
+}
