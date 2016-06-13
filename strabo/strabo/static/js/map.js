@@ -87,7 +87,7 @@ function onEachPoint(feature, layer) {
     var purpleIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPurple.png'});
     var tealIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinTeal.png'});
     var yellowIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinYellow.png'});
-    var greyIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGrey.png'});
+    var grayIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGray.png'});
 
   // Initialize special icons
     var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
