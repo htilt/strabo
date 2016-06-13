@@ -41,7 +41,9 @@ def show_ips_upload_form(interest_point):
 
     all_ips = schema.InterestPoints.query.all()
     all_other_ips = all_ips#[ip for ip in all_ips if ip.id != interest_point.id]
-    my_ip_collection = get_features([interest_point.geojson_object]) if interest_point.id else False
+
+    my_ip_collection = geojson_wrapper.make_featureCollection([interest_point.geojson_object]) if interest_point.id else False
+
     points,lines, zones = get_features("Point"),get_features("LineString"),get_features("Polygon")
 
     #get all avaliable images
@@ -70,7 +72,6 @@ def upload_ips():
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
     ip_id =  request.form.get("ip_id")
-    print("\n\n",ip_id)
     if ip_id:
         ip = schema.InterestPoints.query.get(ip_id)
     else:

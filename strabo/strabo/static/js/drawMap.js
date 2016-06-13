@@ -1,4 +1,4 @@
-// The Admin Map 
+// The Admin Map
 
 var drawMap = L.map('drawMap', {
 }).setView([lat_setting, long_setting], initial_zoom);
@@ -71,7 +71,7 @@ var shapeLayer;
 
 if (edit_json){
     shapeLayer = L.geoJson(edit_json);
-    obJSON = shapeLayer.toGeoJSON();
+    obJSON = shapeLayer.toGeoJSON().features[0];
 }
 
 var options1 = {
@@ -119,7 +119,6 @@ var drawControla = new L.Control.Draw(options1);
 var drawControlb = new L.Control.Draw(options2);
 
 drawMap.addControl(drawControla);
-
 
 drawMap.on('draw:created', function (e) { //grab s layer of drawn item
     shapeLayer = e.layer;
