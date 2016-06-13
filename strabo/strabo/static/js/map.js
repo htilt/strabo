@@ -162,7 +162,7 @@ $(document).ready(function(){
 
     // Use GPS to locate you on the map.
 
-    // map.locate({watch: true, maxZoom: 22});
+    map.locate({watch: true});
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
@@ -179,15 +179,22 @@ $(document).ready(function(){
     map.setMaxBounds(bounds);
 
     function onLocationFound(e) {
-      var radius = e.accuracy / 2;
+      if (bounds.contains(e.latlng)) {
+        map.setView(e.latlng);
+        var radius = e.accuracy / 2;
 
-      L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.marker(e.latlng).addTo(map)
+          .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-       L.circle(e.latlng, radius).addTo(map);
+        L.circle(e.latlng, radius).addTo(map);
+
+      } else {
+        map.setView([lat_setting,long_setting]);
+      }
 
     }
     map.on('locationfound', onLocationFound);
+
 
     // Error if locating fails
     function onLocationError(e) {
