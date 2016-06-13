@@ -51,11 +51,7 @@ var myIcon = L.divIcon({
       className: 'my-div-icon',
       iconSize: [5, 5]
     });
-                                                                                                                                                                                                                                                                                                       
-
-
-  
-  // layer.setIcon(feature.properties['icon']);
+    // layer.setIcon(feature.properties['icon']);
 }
 
 var drawnItems = new L.FeatureGroup();
@@ -65,6 +61,16 @@ drawMap.addLayer(drawnItems);
 // Removes some toolbar things and also sets colors
 
 var shapeColorInit = '#2397EB';
+
+var obJSON; ////// THIS IS THE OBJECT U WANT
+var shapeLayer;
+
+//for adding editing capability
+
+if (edit_json){
+    shapeLayer = L.geoJson(edit_json);
+    obJSON = shapeLayer.toGeoJSON();
+}
 
 var options1 = {
 
@@ -105,31 +111,26 @@ var options2 = {
         }
       }
     }
-
 }
 
 var drawControla = new L.Control.Draw(options1);
 var drawControlb = new L.Control.Draw(options2);
 
-
-
 drawMap.addControl(drawControla);
 
 
-var obJSON; ////// THIS IS THE OBJECT U WANT
-var shapeLayer;
+drawMap.on('draw:created', function (e) { //grab s layer of drawn item
+    shapeLayer = e.layer;
 
-drawMap.on('draw:created', function (e) { //grabs layer of drawn item
-  var type = e.layerType;
-  shapeLayer = e.layer;
     drawnItems.addLayer(shapeLayer);
     obJSON = shapeLayer.toGeoJSON();
 
-  drawControla.removeFrom(drawMap);
-  drawMap.addControl(drawControlb);
+    drawControla.removeFrom(drawMap);
+    drawMap.addControl(drawControlb);
 })
 
 drawMap.on('draw:deleted', function (e) {
+    //awkward, test this in different browsers
     if (Object.keys(e.layers._layers).length > 0){
         drawControlb.removeFrom(drawMap);
         drawMap.addControl(drawControla);
@@ -137,10 +138,7 @@ drawMap.on('draw:deleted', function (e) {
 })
 
 drawMap.on('draw:edited', function (e) {
-
   var editLayers = e.layers;
-  var type = e.layerType;
-
 
   editLayers.eachLayer(function (layer) {
     obJSON = layer.toGeoJSON();
@@ -158,19 +156,11 @@ $(function()
     $usrSelect = $("#colorPick :selected").text();
 
 
-
-
-
   //console.log($dropDown);
 
     //var menuNum = this.value;
     //var menuParent = $('btn btn-default dropdown-toggle');
     //var msg = '';
-
-
-
-
-
     switch($usrSelect) {
       case 'Turquoise' :
         L.geoJson(obJSON, {
@@ -217,10 +207,6 @@ $(function()
     }
   });
 });
-
-
-
-
 
 
 $('#upload-btn').click(function (e) {

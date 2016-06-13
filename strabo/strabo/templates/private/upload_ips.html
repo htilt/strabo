@@ -16,10 +16,8 @@
 
           <div class="form-group">
             <label for="name">Location Title:</label><br>
-            <input class="form-control" type="text" name="title" placeholder="Untitled" value={{interest_point.title}} id="name">
+            <input class="form-control" type="text" name="title" placeholder="Untitled" value="{{interest_point.title}}" id="name">
           </div>
-
-
 
 
           <div id="drawMap" style="width: 100%; height: 400px">
@@ -53,6 +51,11 @@
 
             <p></p>
 
+            <!--Allows server to see image id if it is from an edit-->
+            <div class="form-group">
+              <input type="hidden" name="ip_id" value="{%if interest_point.id %}{{interest_point.id}}{%endif%}">
+            </div>
+
             <input id="upload-btn" type="submit" value="Upload">
           </div>
           <table class="table-bordered" margin="10px">
@@ -61,16 +64,20 @@
               <th>Image</th>
               <th>Description</th>
             </tr>
+            {% macro render_table(images,is_checked) %}
+                {% for img in images %}
+                    <tr>
+                      <td>
+                          <input type="checkbox" name='image_ids' value={{ img.id }} {%if is_checked%}checked{%endif%}>
+                      </td>
+                      <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                      <td>{{ img.description }}</td>
+                    </tr>
+                {% endfor %}
+            {% endmacro %}
 
-            {% for img in all_images %}
-                <tr>
-                  <td>
-                      <input type="checkbox" name='image_ids' value={{ img.id }}>
-                  </td>
-                  <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
-                  <td>{{ img.description }}</td>
-                </tr>
-            {% endfor %}
+            {{ render_table(taken_images,True) }}
+            {{ render_table(free_images,False) }}
           </table>
         </div>
       </form>
@@ -91,6 +98,7 @@
     var interest_points = {{ interest_points_json|tojson }};
     var interest_zones = {{ interest_zones_json|tojson }};
     var interest_lines = {{ interest_lines_json|tojson }};
+    var edit_json = {{my_ip_collection|tojson}};
 </script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}

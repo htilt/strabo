@@ -16,16 +16,21 @@
               <legend>Upload a New Image</legend>
 
             <div class="upload-wrapper">
-              <input type="file" id="img-input" name="file">
+              <input type="file" id="img-input" name="file" {% if not image.filename %} required {% endif %}>
               <br>
-              <img id="img-preview" src="#" class="img-responsive" alt="your image"></img>
+              <img id="img-preview" src={% if image.filename %} "{{NEW_DATA_DIRECTORY_RELPATH}}{{image.filename}}" {% else %} "#" {% endif %} class="img-responsive" alt="your image"></img>
               <br>
               <br>
             </div>
 
             <div class="form-group">
               <label for="name">Image Description:</label><br>
-              <input class="form-control" type="text" name="description" value={{ image.description }}>
+              <input class="form-control" type="text" name="description" value="{{ image.description }}">
+            </div>
+
+            <!--Allows server to see image id if it is from an edit-->
+            <div class="form-group">
+              <input type="hidden" name="img_id" value={%if image.filename%}{{image.id}}{%else%}""{%endif%}>
             </div>
 
             <input type="submit" value="Upload">
@@ -41,8 +46,6 @@
 {% block footer %}
     {{ super () }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/exif.js"></script>
-    <script type="text/javascript" src="/static/js/get_tags.js"></script>
     <script type="text/javascript">
 
 

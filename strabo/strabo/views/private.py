@@ -1,7 +1,7 @@
 import os, ast, sys
 from contextlib import closing
 from strabo import utils
-from strabo.geojson_wrapper import get_all_feature_collections
+from strabo import geojson_wrapper
 
 from flask import request, render_template, redirect, url_for
 
@@ -29,24 +29,36 @@ def upload_images():
 
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
-    img_obj = private_helper.make_image(request.files['file'],request.form['description'],request.form['interest_point'])
-    database.store_item(img_obj)
-    return redirect(url_for('index'))
+    img_id = request.form.get("img_id")
+    img_obj = schema.Images.query.get(img_id) if img_id else schema.Images()
+    private_helper.fill_image(img_obj,request.files['file'],request.form['description'])
+    db.session.commit()
+    return redirect(url_for('images_table'))
 
 def show_ips_upload_form(interest_point):
-    points,zones,lines = get_all_feature_collections()
+    def get_features(feature_type):
+        return geojson_wrapper.make_featureCollection([ip.geojson_object for ip in all_other_ips if ip.geojson_feature_type == feature_type])
+
+    all_ips = schema.InterestPoints.query.all()
+    all_other_ips = all_ips#[ip for ip in all_ips if ip.id != interest_point.id]
+    my_ip_collection = get_features([interest_point.geojson_object]) if interest_point.id else False
+    points,lines, zones = get_features("Point"),get_features("LineString"),get_features("Polygon")
 
     #get all avaliable images
-    all_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
+    free_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
     #makes most recently added images appear first
-    all_images.reverse()
+    free_images.reverse()
+
+    taken_images = interest_point.images
 
     return render_template("private/upload_ips.html",
         interest_points_json=points,
         interest_zones_json=lines,
         interest_lines_json=zones,
-        all_images=all_images,
+        free_images=free_images,
+        taken_images=taken_images,
         interest_point=interest_point,
+        my_ip_collection=my_ip_collection,
         **app.config)
 ###
 ###
@@ -57,14 +69,20 @@ def upload_ips():
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
-    ip = schema.InterestPoints()
-    db.session.add(ip)
-    db.session.flush()
+    ip_id =  request.form.get("ip_id")
+    print("\n\n",ip_id)
+    if ip_id:
+        ip = schema.InterestPoints.query.get(ip_id)
+    else:
+        ip = schema.InterestPoints()
+        db.session.add(ip)
+        db.session.flush()
+
     private_helper.fill_interest_point(ip,request.form.getlist('image_ids'),
         request.form['title'],request.form['description'],request.form['geojson'],
         request.form['layer'])
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('interest_points_table'))
 
 @app.route("/admin/edit_ips/")
 def interest_points_table():

@@ -23,26 +23,32 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.layer = app.config['LAYER_FIELD_ENUMS'][form_layer].value
     ip.images = [schema.Images.query.get(int(id)) for id in image_ids]
 
-#make image from flask file object
-#saves image and thumbnail in static
-#returns image database object
-def make_image(form_file_obj,form_descrip):
+#saves image and thumbnail using the given filenaem
+def save_image(form_file_obj,filename):
     #if no files is attached, then do nothing
     if not form_file_obj:
         return
-
     #if the file extension is not allowed,throw an error
     #todo: put this error in the frontend instead of here
     if not image_processing.allowed_file(form_file_obj.filename):
         raise RuntimeError("file extension not allowed")
 
-    secure_filename = werkzeug.secure_filename(form_file_obj.filename)
+    # Move the file from the temporary folder to the upload folder
+    form_file_obj.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # Make a thumbnail and store it in the thumbnails directory with the same filename
+    # will also be unique as there will be the same files in both
+    image_processing.make_thumbnail(filename,filename)
 
+#gives a safe filename that is not the same as any other in the uploads folder
+def make_filename(form_file_name):
+    secure_filename = werkzeug.secure_filename(form_file_name)
     # prepend unique id to ensure an unique filename
     unique_filename = utils.unique_filename(app.config['UPLOAD_FOLDER'],secure_filename)
-    # Move the file from the temporary folder to the upload folder
-    form_file_obj.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
-    # Make a thumbnail and store it in the thumbnails directory
-    image_processing.make_thumbnail(unique_filename)
+    return  unique_filename
 
-    return schema.Images(filename=unique_filename,description=form_descrip)
+def fill_image(image,form_file_obj,form_descrip):
+    image.description = form_descrip
+    
+    if form_file_obj:
+        image.filename = make_filename(form_file_obj.filename)
+        save_image(form_file_obj,image.filename)

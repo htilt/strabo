@@ -58,8 +58,8 @@ function ip_clicked(db_id) {
 
             add_carosel_entries(imgs);
 
-            $("#ip_description").html(ip_descrip);
-            $("#ip_title").html(ip_title);
+            $("#ip_description").text(ip_descrip);
+            $("#ip_title").text(ip_title);
 
             // resize after un-hiding Flickity
             flkty.resize();
@@ -128,7 +128,7 @@ function onEachPoint(feature, layer) {
 }
 $(document).ready(function(){
     flkty = new Flickity(document.getElementById("carouselholder"),
-        {imagesLoaded: true}
+        {imagesLoaded: true}//doesn't do anything right now
     );
 
     map = L.map('map').setView([lat_setting, long_setting], initial_zoom);
