@@ -202,7 +202,7 @@ $(function()
           }
         });
         shapeLayer.setStyle({color:'#8A9B0F'});
-        break
+        break;
       default:
         break;
     }
