@@ -60,7 +60,7 @@ def config_app(app):
 
     app.config['MAP_JS'] = 'map.js'
     app.config['ADMINMAP_JS'] = 'drawMap.js'
-
+    app.config['FAVICON'] = '../strabo/strabo/static/favicon.ico'
    
 
     ###### The following variables probably will not require configuration.
