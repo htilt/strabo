@@ -131,8 +131,8 @@ $(document).ready(function(){
     set_map_click(map);
 
     // Use GPS to locate you on the map and keeps watching
-    // your location.  
-    // map.locate({watch: true});
+    // your location. Set to watch: true to have it watch location.
+    map.locate({watch: false});
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
