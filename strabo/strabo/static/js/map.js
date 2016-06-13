@@ -66,6 +66,32 @@ function onEachPoint(feature, layer) {
   });
 }
 
+  var ColorIcon = L.Icon.extend({
+    options: {
+        shadowUrl: '/static/map_icons/MapPinShadow.png',
+        iconSize:     [30, 50],
+        shadowSize:   [30, 32],
+        iconAnchor:   [15, 50],
+        shadowAnchor: [2, 30],
+        popupAnchor:  [-3, -50]
+    }
+  });
+
+  // Initialize color icons
+    var greenIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinGreen.png'});
+    var blueIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinBlue.png'});
+    var maroonIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinMaroon.png'});
+    var oliveIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOlive.png'});
+    var orangeIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOrange.png'});
+    var pinkIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPink.png'});
+    var purpleIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPurple.png'});
+    var tealIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinTeal.png'});
+    var yellowIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinYellow.png'});
+
+  // Initialize special icons
+    var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
+    var APIcon = new ColorIcon({iconUrl: '/static/map_icons/APicon.png'});
+
 $(document).ready(function(){
     map = L.map('map',{touchZoom: true}).setView([lat_setting, long_setting], initial_zoom);
 
@@ -95,6 +121,11 @@ $(document).ready(function(){
       "Zones": zone_features,
     }
     L.control.layers(null, overlays).addTo(map);
+
+
+    // Test custom map markers
+    // L.marker([45.48273, -122.63237], {icon: APIcon}).addTo(map);
+    //L.marker([45.48185, -122.62594], {icon: sensitiveAreaIcon}).addTo(map).bindPopup("Caution: Lamprey");
 
     set_map_click(map);
 
