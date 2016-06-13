@@ -1,5 +1,7 @@
 //flickety object
 var flkty;
+var gallery;
+var imgs;
 
 function hide_popup(){
     $('.popup').hide();
@@ -41,7 +43,7 @@ function ip_clicked(db_id) {
         "/map/post",
         {db_id:db_id},
         function(data){
-            var imgs = data.images;
+            imgs = data.images;
             var ip_descrip = data.description;
             var ip_title = data.title;
 
@@ -64,8 +66,29 @@ function ip_clicked(db_id) {
 
 function set_flickety_click(){
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
-        console.log( 'Flickity select ' + cellIndex)
+        make_photoswipe(cellIndex);
     });
+}
+
+function make_photoswipe(pic_index){
+    // execute above function
+    var element = document.querySelectorAll('.pswp')[0];
+
+    var items = [];
+    imgs.forEach(function(img){
+        items.push({
+            src:'static/uploads/' + img.filename,
+            w:100,
+            h:100
+        });
+    });
+    var options = {
+        index:pic_index
+    };
+
+    gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);
+
+    gallery.init();
 }
 
 function flickety_init(){
