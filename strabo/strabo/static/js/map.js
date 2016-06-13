@@ -117,6 +117,9 @@ $(document).ready(function(){
     map.setMaxBounds(bounds);
 
     function onLocationFound(e) {
+      // If you are within the campus bounds, the map
+      // *should* center on your location and add a marker
+      // where you are. 
       if (bounds.contains(e.latlng)) {
         map.setView(e.latlng);
         var radius = e.accuracy / 2;
@@ -126,7 +129,11 @@ $(document).ready(function(){
 
         L.circle(e.latlng, radius).addTo(map);
 
-      } else {
+      } 
+      // If you are not on campus, the map should not care
+      // about your location, and it will just center on the
+      // canyon, leaving no marker of where you are
+      else {
         map.setView([lat_setting,long_setting]);
       }
 
