@@ -7,6 +7,7 @@ from flask import request, render_template, redirect, url_for
 
 from strabo import database
 from strabo import private_helper
+from strabo import config_canyon
 from strabo import schema
 from strabo import app
 from strabo import db
@@ -53,6 +54,8 @@ def show_ips_upload_form(interest_point):
 
     taken_images = interest_point.images
 
+    ip_lay_name = app.config["LAYER_FIELDS"][config_canyon.Layers(interest_point.layer)] if interest_point.layer else ""
+
     return render_template("private/upload_ips.html",
         interest_points_json=points,
         interest_zones_json=lines,
@@ -60,6 +63,7 @@ def show_ips_upload_form(interest_point):
         free_images=free_images,
         taken_images=taken_images,
         interest_point=interest_point,
+        interest_point_layer_name=ip_lay_name,
         my_ip_collection=my_ip_collection,
         **app.config)
 ###

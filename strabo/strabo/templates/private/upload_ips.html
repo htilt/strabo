@@ -35,14 +35,14 @@
             <select class="form-control" name="layer" id="colorPick">
                 <option>Select One</a></option>
                 {% for layer_name in LAYER_FIELD_ENUMS %}
-                <option>{{layer_name}}</option>
+                <option {%if layer_name == interest_point_layer_name%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
               </select>
           </div><br>
 
             <div class="form-group">
               <label for="description">Interest Point Description:</label><br>
-              <textarea class="form-control" rows='5' type="text" name="description" placeholder="None" ></textarea>
+              <textarea class="form-control" rows='5' type="text" name="description" placeholder="None">{{interest_point.descrip_body}}</textarea>
             </div>
 
             <div class="form-group">
