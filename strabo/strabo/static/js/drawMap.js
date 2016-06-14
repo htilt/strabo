@@ -1,60 +1,20 @@
 // The Admin Map
-
-var drawMap = L.map('drawMap', {
-}).setView([lat_setting, long_setting], initial_zoom);
-
-L.tileLayer(tile_src,tile_attributes).addTo(drawMap);
-
-
+var drawMap = make_map('drawMap');
+add_tile_to(drawMap);
 
 
 // add pre-existing points, zones, and lines to map
-// interest_points, zones, and lines variables from the
-// interest_points.js file
 var point_features = L.geoJson(interest_points, {
-  onEachFeature: onEachPoint,
+  onEachFeature: makeOnEachPoint(function(e){})
 }).addTo(drawMap);
 
 var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: onEachZone
+  onEachFeature: makeOnEachZone(function(e){})
 }).addTo(drawMap);
 
 var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachLine,
+  onEachFeature: makeOnEachLine(function(e){})
 }).addTo(drawMap);
-
-
-
-// set styles and popups for zones
-function onEachZone(feature, layer) {
-  layer.bindPopup(feature.geometry.name);
-  layer.setStyle({
-        weight: 1,
-        color: feature.properties['marker-color'],
-        dashArray: '',
-        fillOpacity: 0.3
-  });
-}
-// set styles and popups for lines
-function onEachLine(feature, layer) {
-  layer.bindPopup(feature.geometry.name);
-  layer.setStyle({
-        weight: 4,
-        color: feature.properties['marker-color'],
-        dashArray: '',
-  });
-}
-// set styles and popups for points
-function onEachPoint(feature, layer) {
-  layer.bindPopup(feature.geometry.name);
-
-
-var myIcon = L.divIcon({
-      className: 'my-div-icon',
-      iconSize: [5, 5]
-    });
-    // layer.setIcon(feature.properties['icon']);
-}
 
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);

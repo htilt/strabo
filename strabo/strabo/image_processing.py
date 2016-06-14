@@ -16,14 +16,16 @@ def make_thumbnail(image_filename,thumbnail_filename):
   img_fullpath = os.path.join(app.config['UPLOAD_FOLDER'],image_filename)
   img = Image.open(img_fullpath)
   # create a thumbnail from desired image
-  #todo: put this in config
-  size = 300, 300
-  img.thumbnail(size,Image.ANTIALIAS)
+  # the thumbnail will have dimentions of the same ratio as before, capped by
+  #the max dimention of max_size
+  max_size = app.config["THUMBNAIL_MAX_SIZE"]
+  img.thumbnail(max_size,Image.ANTIALIAS)
   # save the image under a new filename in thumbnails directory
   path = app.config['NEW_DATA_DIRECTORY']
   fullpath = os.path.join(path, thumbnail_filename)
   img.save(fullpath)
 
+#get dimentions of item in uploads folder with the given filename
 def get_dimentions(filename):
     with Image.open(os.path.join(app.config['UPLOAD_FOLDER'],filename)) as im:
         return im.size#width, height tuple

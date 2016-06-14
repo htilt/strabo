@@ -66,7 +66,9 @@ function ip_clicked(db_id) {
 
 function set_flickety_click(){
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
-        make_photoswipe(cellIndex);
+        if (cellElement) {
+            make_photoswipe(cellIndex);
+        }
     });
 }
 

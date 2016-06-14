@@ -1,4 +1,3 @@
-//leafelet map object
 var map;
 
 //is called whenever a leafelet feature is clicked
@@ -19,100 +18,24 @@ function set_map_click(map){
     map.on('click', onMapClick);
 }
 
-// set styles and popups for zones
-function onEachZone(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id.toString());
-  layer.setStyle({
-        weight: 1,
-        color: feature.properties['marker-color'],
-        dashArray: '',
-        fillOpacity: 0.3
-  });
-  layer.on({
-      click: whenClicked
-  });
-}
-
-
-
-// set styles and popups for lines
-function onEachLine(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id.toString());
-  layer.setStyle({
-        weight: 4,
-        color: feature.properties['marker-color'],
-        dashArray: '',
-        fillOpacity: 1
-  });
-  layer.on({
-      click: whenClicked
-  });
-}
-
-
-
-
-// set styles and popups for points
-function onEachPoint(feature, layer) {
-  layer.bindPopup(feature.geometry.db_id.toString());
-  //I am not sure why this doesn't work but it doesn't
-  /*layer.setStyle({
-        color: feature.properties['marker-color'],
-        fillOpacity: 1
-  })*/
-  // layer.setIcon(feature.properties['icon']);
-  layer.on({
-      click: whenClicked
-  });
-}
-
-  var ColorIcon = L.Icon.extend({
-    options: {
-        shadowUrl: '/static/map_icons/MapPinShadow.png',
-        iconSize:     [30, 50],
-        shadowSize:   [30, 32],
-        iconAnchor:   [15, 50],
-        shadowAnchor: [2, 30],
-        popupAnchor:  [-3, -50]
-    }
-  });
-
-  // Initialize color icons
-    var greenIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinGreen.png'});
-    var blueIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinBlue.png'});
-    var maroonIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinMaroon.png'});
-    var oliveIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOlive.png'});
-    var orangeIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOrange.png'});
-    var pinkIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPink.png'});
-    var purpleIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPurple.png'});
-    var tealIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinTeal.png'});
-    var yellowIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinYellow.png'});
-    var grayIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGray.png'});
-
-  // Initialize special icons
-    var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
-    var APIcon = new ColorIcon({iconUrl: '/static/map_icons/APicon.png'});
 
 $(document).ready(function(){
-    map = L.map('map',{touchZoom: true}).setView([lat_setting, long_setting], initial_zoom);
+    map = make_map('map');
+    add_tile_to(map);
 
-    flickety_init()
-
-    L.tileLayer(tile_src, tile_attributes).addTo(map);
+    flickety_init();
 
     // add pre-existing points, zones, and lines to map
-    // interest_points, zones, and lines variables from the
-    // interest_points.js file
     var point_features = L.geoJson(interest_points, {
-      onEachFeature: onEachPoint
-    }).addTo(map);
+      onEachFeature: makeOnEachPoint(whenClicked)
+  }).addTo(map);
 
     var zone_features = L.geoJson(interest_zones, {
-      onEachFeature: onEachZone
+      onEachFeature: makeOnEachZone(whenClicked)
     }).addTo(map);
 
     var line_features = L.geoJson(interest_lines, {
-      onEachFeature: onEachLine
+      onEachFeature: makeOnEachLine(whenClicked)
     }).addTo(map);
 
     // Set layers and add toggle control menu for each layer
@@ -151,7 +74,7 @@ $(document).ready(function(){
     function onLocationFound(e) {
       // If you are within the campus bounds, the map
       // *should* center on your location and add a marker
-      // where you are. 
+      // where you are.
       if (bounds.contains(e.latlng)) {
         map.setView(e.latlng);
         var radius = e.accuracy / 2;
@@ -161,7 +84,7 @@ $(document).ready(function(){
 
         L.circle(e.latlng, radius).addTo(map);
 
-      } 
+      }
       // If you are not on campus, the map should not care
       // about your location, and it will just center on the
       // canyon, leaving no marker of where you are

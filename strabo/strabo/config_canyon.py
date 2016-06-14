@@ -61,7 +61,7 @@ def config_app(app):
     app.config['MAP_JS'] = 'map.js'
     app.config['ADMINMAP_JS'] = 'drawMap.js'
     app.config['FAVICON'] = '../strabo/strabo/static/favicon.ico'
-   
+
 
     ###### The following variables probably will not require configuration.
     # set absolute and relative paths to the upload directory for images
@@ -90,7 +90,7 @@ def config_app(app):
 
     app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
 
-
+    app.config["THUMBNAIL_MAX_SIZE"] = (300,300)#mac_width, max_height
 
     ###### The following variables probably will not require configuration.
 
