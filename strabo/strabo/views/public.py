@@ -28,7 +28,10 @@ def map_post():
   ip_id = request.form['db_id']
   ip = schema.InterestPoints.query.get(int(ip_id))
 
-  filenames = [{"filename":img.filename,"description":img.description} for img in ip.images]
+  filenames = [{"filename":img.filename,
+                "description":img.description,
+                "width":img.width,
+                "height":img.height} for img in ip.images]
   js_data = {
     "images":filenames,
     "description":ip.descrip_body,

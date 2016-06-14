@@ -78,8 +78,8 @@ function make_photoswipe(pic_index){
     imgs.forEach(function(img){
         items.push({
             src:'static/uploads/' + img.filename,
-            w:100,
-            h:100
+            w:img.width,
+            h:img.height
         });
     });
     var options = {

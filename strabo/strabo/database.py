@@ -9,7 +9,6 @@ from sqlalchemy.sql.expression import func
 def get_row_by_id(table,id):
     return table.query.get(id)
 
-
 def remove_ip_refrences(images):
     for img in images:
         img.interest_point = None

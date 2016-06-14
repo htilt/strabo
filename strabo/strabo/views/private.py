@@ -31,7 +31,11 @@ def upload_images():
 @app.route("/admin/upload_images/post", methods=["POST"])
 def image_post():
     img_id = request.form.get("img_id")
-    img_obj = schema.Images.query.get(img_id) if img_id else schema.Images()
+    if img_id:
+        img_obj = schema.Images.query.get(img_id)
+    else:
+        img_obj = schema.Images()
+        db.session.add(img_obj)
     private_helper.fill_image(img_obj,request.files['file'],request.form['description'])
     db.session.commit()
     return redirect(url_for('images_table'))

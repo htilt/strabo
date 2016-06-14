@@ -18,8 +18,12 @@ def make_thumbnail(image_filename,thumbnail_filename):
   # create a thumbnail from desired image
   #todo: put this in config
   size = 300, 300
-  img.thumbnail(size)
+  img.thumbnail(size,Image.ANTIALIAS)
   # save the image under a new filename in thumbnails directory
   path = app.config['NEW_DATA_DIRECTORY']
   fullpath = os.path.join(path, thumbnail_filename)
   img.save(fullpath)
+
+def get_dimentions(filename):
+    with Image.open(os.path.join(app.config['UPLOAD_FOLDER'],filename)) as im:
+        return im.size#width, height tuple

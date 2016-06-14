@@ -36,6 +36,10 @@ class Images(db.Model,DataType):
 
     description = Column(db.Text)
 
+    #width and height in pixels, needed for photoswipe
+    width = Column(db.Integer)
+    height = Column(db.Integer)
+
 
 
 '''

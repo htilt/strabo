@@ -1,6 +1,6 @@
 import werkzeug
 import os
-from strabo.image_processing import make_thumbnail, allowed_file
+from strabo import image_processing
 
 from strabo import app
 from strabo import db
@@ -48,7 +48,8 @@ def make_filename(form_file_name):
 
 def fill_image(image,form_file_obj,form_descrip):
     image.description = form_descrip
-    
+
     if form_file_obj:
         image.filename = make_filename(form_file_obj.filename)
         save_image(form_file_obj,image.filename)
+        image.width,image.height = image_processing.get_dimentions(image.filename)
