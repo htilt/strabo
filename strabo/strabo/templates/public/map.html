@@ -19,6 +19,7 @@
         var interest_points = {{ interest_points_json|tojson }};
         var interest_zones = {{ interest_zones_json|tojson }};
         var interest_lines = {{ interest_lines_json|tojson }};
+        var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
     </script>
     <script src="../static/js/popup.js"></script>
     <script src="../static/js/map_info.js"></script>
@@ -35,23 +36,22 @@
 
 <div class="popup-background" hidden></div>
 <div class="popup" hidden>
-    <div class="row">
-        <div class="col-md-1">
-          <button type="button" class="close" onclick="hide_popup();" aria-hidden="true">&times;</button>
-        </div>
-        <!--- This exit button is the best solution so far.
-All other ways made it look super bad on mobile,
-so while it's not ideal on desktop, it looks good on mobile -->
-        <h2 id="ip_title" class="col-md-11">
+    <div class="top-section">
+        <h2 id="ip_title" class="col-xs-10">
         </h2>
+        <!--- This exit button is the best solution so far.
+        All other ways made it look super bad on mobile,
+        so while it's not ideal on desktop, it looks good on mobile -->
+        <div class="col-xs-2" style="text-align: right;">
+          <button type="button" class="close-button" onclick="hide_popup();" aria-hidden="true">&times;</button>
+        </div>
             <!--javascrip puts title item in here -->
-    </div>
-    <div class="row">
-        <p id="ip_description" class="col-md-12">
+
+        <p id="ip_description" class="col-xs-12">
             <!--javascrip puts description item here -->
         </p>
     </div>
-    <div class="row">
+    <div >
         <div id="carouselholder" class="carousel">
             <!--javascrip puts carosel items here -->
         </div>

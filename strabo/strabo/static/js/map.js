@@ -66,7 +66,7 @@ $(document).ready(function(){
     // However, works fine in Google Chrome
 
     var northWest = L.latLng(45.48469, -122.63892);
-    var southEast = L.latLng(45.47846, -122.62171);
+    var southEast = L.latLng(45.47897, -122.62268);
     var bounds = L.latLngBounds(northWest, southEast);
 
     map.setMaxBounds(bounds);
@@ -89,7 +89,7 @@ $(document).ready(function(){
       // about your location, and it will just center on the
       // canyon, leaving no marker of where you are
       else {
-        map.setView([lat_setting,long_setting]);
+        map.setView([lat_setting,long_setting], initial_zoom);
       }
 
     }
