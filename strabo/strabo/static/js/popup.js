@@ -25,7 +25,7 @@ function get_carosel_html(img,max_height){
     dim  = get_thumb_dim(img);
     html += "<div style=height:" + max_height + "px;>"
     html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
-    html += '<p>' + img.description + '</p>';
+    //html += '<p>' + img.description + '</p>';
     html += '</div>';
     html += '</div>';
     return html;
@@ -99,17 +99,24 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
-
-function flickety_init(){
-    flkty = new Flickity(document.getElementById("carouselholder"),
-        {imagesLoaded: true}//doesn't do anything right now
-    );
+function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
+        var img = imgs[flkty.selectedIndex];
+        
+        $("#img_description").text(img.description);
+
         var elmts = flkty.getCellElements();
         elmts.forEach(function(elmt){
             elmt.style.background = "Transparent";
         });
         flkty.selectedElement.style.background = "rgba(0,0,0,.5)"
     })
+}
+
+function flickety_init(){
+    flkty = new Flickity(document.getElementById("carouselholder"),
+        {imagesLoaded: true}//doesn't do anything right now
+    );
+    set_flickety_img_title();
     set_flickety_click();
 }
