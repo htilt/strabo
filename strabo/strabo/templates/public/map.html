@@ -36,26 +36,28 @@
 
 <div class="popup-background" hidden></div>
 <div class="popup" hidden>
-    <div class="top-section">
-        <h2 id="ip_title" class="col-xs-10">
-            <!--javascrip puts title item in here -->
-        </h2>
-        <!--- This exit button is the best solution so far.
-        All other ways made it look super bad on mobile,
-        so while it's not ideal on desktop, it looks good on mobile -->
-        <div class="col-xs-2" style="text-align: right;">
-          <button type="button" class="close-button" onclick="hide_popup();" aria-hidden="true">&times;</button>
-        </div>
+    <div class="popup-foreground">
+        <div class="top-section">
+            <h2 id="ip_title" class="col-xs-10">
+                <!--javascrip puts title item in here -->
+            </h2>
+            <!--- This exit button is the best solution so far.
+            All other ways made it look super bad on mobile,
+            so while it's not ideal on desktop, it looks good on mobile -->
+            <div class="col-xs-2" style="text-align: right;">
+              <button type="button" class="close-button" onclick="hide_popup();" aria-hidden="true">&times;</button>
+            </div>
 
-        <p id="ip_description" class="col-xs-12">
-            <!--javascrip puts description item here -->
-        </p>
-    </div>
-    <div class="text-section">
-        <p id="img_description">some text</p>
-    </div>
-    <div id="carouselholder" class="carousel">
-        <!--javascrip puts carosel items here -->
+            <p id="ip_description" class="col-xs-12">
+                <!--javascrip puts description item here -->
+            </p>
+        </div>
+        <div id="carouselholder" class="carousel">
+            <!--javascrip puts carosel items here -->
+        </div>
+        <div class="text-section">
+            <p id="img_description">some text</p>
+        </div>
     </div>
 
     <!-- Root element of PhotoSwipe. Must have class pswp. -->

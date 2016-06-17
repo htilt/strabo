@@ -102,7 +102,7 @@ function make_photoswipe(pic_index){
 function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
-        
+
         $("#img_description").text(img.description);
 
         var elmts = flkty.getCellElements();
@@ -115,7 +115,9 @@ function set_flickety_img_title(){
 
 function flickety_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
-        {imagesLoaded: true}//doesn't do anything right now
+        {imagesLoaded: true,
+        pageDots:false,
+        resize: true}
     );
     set_flickety_img_title();
     set_flickety_click();
