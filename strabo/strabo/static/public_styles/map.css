@@ -47,6 +47,7 @@ html, body {
     height:1em;
     width: 100%;
     text-align: center;
+    background: #ffffff;
 }
 .close-button{
     width: 1em;
