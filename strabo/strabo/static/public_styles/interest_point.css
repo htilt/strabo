@@ -1,0 +1,84 @@
+
+.popup-background {
+    /*if you change either position thing it doesn't work*/
+    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 20000;
+}
+
+.popup {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    /*padding: 1.25em;
+    border: 1px solid #000000;*/
+    z-index: 100000; /* goes above leaflet link */
+}
+.popup-foreground {
+    background: rgba(0,0,0,0.2);
+    height: 100%;
+    box-shadow: 0 0 10px 10px rgba(128,159,107,0.7);
+}
+.horizontal-center{
+    width: 100%;
+    margin: auto;
+}
+.vertical-center{
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+#carouselholder{
+}
+.top-section {
+    width:100%;
+    background: #ebf5e4;
+    z-index: 2000000000000;
+}
+.padded-pic{
+    padding: 0 20px 0 20px;
+    height: 100%;
+}
+@media (min-height: 800px) {
+  .text-section {
+      font-size: 45px;
+  }
+}
+@media (max-height: 800px) {
+  .text-section {
+      font-size: 5vh;
+  }
+}
+.text-section{
+    font: Arial;
+    /*font: normal 3em/normal Arial;*/
+    width: 100%;
+    text-align: center;
+    background: #ffffff;
+    z-index: 200000000000;
+}
+.close-button{
+    font: normal 4em/normal Arial;
+    width: 1em;
+    height: 1em;
+    /*makes button not look like a button*/
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
+}
