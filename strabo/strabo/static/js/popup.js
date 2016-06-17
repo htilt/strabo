@@ -1,7 +1,20 @@
 //flickety object
 var flkty;
+//photoswipe object
 var gallery;
+//list of image objects passed from post call in ip_clicked
 var imgs;
+//heigt of text section (in percent)
+var top_height = 49;
+//heigt of carousel section (in percent)
+var caro_height = 45;
+//popup max-width in pixels
+var popup_max_width = 700;
+//popup max-height in pixels
+var popup_max_height = 800;
+
+
+
 
 function hide_popup(){
     $('.popup').hide();
@@ -16,18 +29,29 @@ function get_thumb_dim(img){
     ratio = Math.min(THUMBNAIL_MAX_SIZE[0]/img.width,THUMBNAIL_MAX_SIZE[1]/img.height)
     return {width:ratio*img.width,height:ratio*img.height}
 }
+function transform(type,perc){
+    return type + ":translateY(" + perc + "%);";
+}
+function tranform_all(perc){
+    var all = transform("transform",perc);
+    all += transform("-ms-transform",perc);
+    all += transform("-webkit-transform",perc);
+    return all;
+}
 //this function loads the text and images associated
 //with a selected interest point
 //example output:
 // <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div>
-function get_carosel_html(img,max_height){
-    var html = '<div class="carousel-cell padded-pic" style="height:'+max_height+'px;">';
+function get_carosel_html(img){
+    var html = '<div class="carousel-cell padded-pic">';
     dim  = get_thumb_dim(img);
     html += '<div class="vertical-center">'
+    //html += '<div style="position:relative;top:' + (top_height+(caro_height/2)) + '%;'+tranform_all(-caro_height/2)+' ">'
     html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
     //html += '<p>' + img.description + '</p>';
     html += '</div>';
     html += '</div>';
+    console.log(html);
     return html;
 }
 function remove_all_carosel_entries(){
@@ -37,7 +61,7 @@ function remove_all_carosel_entries(){
 function add_carosel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
-        var $cellElems = $(get_carosel_html(img,THUMBNAIL_MAX_SIZE[1] + 20));
+        var $cellElems = $(get_carosel_html(img));
         flkty.append($cellElems);
     });
 }
@@ -99,6 +123,22 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
+function set_popup_sizes(){
+    $(".top-section").css("height","" + (top_height) + "%");
+    $(".carousel-wrapper").css("height","" + (caro_height) + "%");
+    //ar transform_dis =
+    //$(".carousel-wrapper").css("transform","translateY(" +  + "px)");
+    $("#carouselholder").addClass("vertical-center");
+    $("#carouselholder").css("height","" + (100) + "%");
+    //$("#carouselholder").css("top","" + (-caro_height/2) + "%");
+    /*$("#carouselholder").css("transform","translateY(" + (-caro_height/2) + "%");
+    $("#carouselholder").css("-ms-transform","translateY(" + (-caro_height/2) + "%");
+    $("#carouselholder").css("-webkit-transform","translateY(" + (-caro_height/2) + "%");*/
+
+    $(".text-section").css("height", "" + (100 - caro_height - top_height) + "%");
+    $(".popup-foreground").css("max-height", "" + popup_max_height + "px");
+    $(".popup-foreground").css("max-width", "" + popup_max_width + "px");
+}
 function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
@@ -117,7 +157,8 @@ function flickety_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
         pageDots:false,
-        resize: true}
+        resize: true,
+        setGallerySize: false}
     );
     set_flickety_img_title();
     set_flickety_click();

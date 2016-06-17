@@ -23,6 +23,7 @@ $(document).ready(function(){
     map = make_map('map');
     add_tile_to(map);
 
+    set_popup_sizes();
     flickety_init();
 
     // add pre-existing points, zones, and lines to map
