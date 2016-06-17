@@ -21,9 +21,9 @@ function get_thumb_dim(img){
 //example output:
 // <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div>
 function get_carosel_html(img,max_height){
-    var html = '<div class="carousel-cell" style="padding: 20px;">';
+    var html = '<div class="carousel-cell padded-pic" style="height:'+max_height+'px;">';
     dim  = get_thumb_dim(img);
-    html += "<div style=height:" + max_height + "px;>"
+    html += '<div class="vertical-center">'
     html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
     //html += '<p>' + img.description + '</p>';
     html += '</div>';
@@ -37,7 +37,7 @@ function remove_all_carosel_entries(){
 function add_carosel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
-        var $cellElems = $(get_carosel_html(img,THUMBNAIL_MAX_SIZE[1]));
+        var $cellElems = $(get_carosel_html(img,THUMBNAIL_MAX_SIZE[1] + 20));
         flkty.append($cellElems);
     });
 }
