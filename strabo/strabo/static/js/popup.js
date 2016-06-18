@@ -4,17 +4,6 @@ var flkty;
 var gallery;
 //list of image objects passed from post call in ip_clicked
 var imgs;
-//heigt of text section (in percent)
-var top_height = 49;
-//heigt of carousel section (in percent)
-var caro_height = 45;
-//popup max-width in pixels
-var popup_max_width = 700;
-//popup max-height in pixels
-var popup_max_height = 800;
-
-
-
 
 function hide_popup(){
     $('.popup').hide();
@@ -24,34 +13,20 @@ function show_popup(){
     $('.popup').show();
     $('.popup-background').show();
 }
-
+//calculates thumbnail size from the full size image size passed in.
 function get_thumb_dim(img){
-    ratio = Math.min(THUMBNAIL_MAX_SIZE[0]/img.width,THUMBNAIL_MAX_SIZE[1]/img.height)
-    return {width:ratio*img.width,height:ratio*img.height}
+    ratio = Math.min(THUMBNAIL_MAX_SIZE[0]/img.width,THUMBNAIL_MAX_SIZE[1]/img.height);
+    return {width:ratio*img.width,height:ratio*img.height};
 }
-function transform(type,perc){
-    return type + ":translateY(" + perc + "%);";
-}
-function tranform_all(perc){
-    var all = transform("transform",perc);
-    all += transform("-ms-transform",perc);
-    all += transform("-webkit-transform",perc);
-    return all;
-}
-//this function loads the text and images associated
-//with a selected interest point
-//example output:
-// <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div>
+//this function generates the flickity cell corresponding to
+//the specific image object passed in
 function get_carosel_html(img){
     var html = '<div class="carousel-cell padded-pic">';
     dim  = get_thumb_dim(img);
-    html += '<div class="vertical-center">'
-    //html += '<div style="position:relative;top:' + (top_height+(caro_height/2)) + '%;'+tranform_all(-caro_height/2)+' ">'
+    html += '<div class="vertical-center">';
     html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
-    //html += '<p>' + img.description + '</p>';
     html += '</div>';
     html += '</div>';
-    console.log(html);
     return html;
 }
 function remove_all_carosel_entries(){
@@ -122,22 +97,6 @@ function make_photoswipe(pic_index){
     gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);
 
     gallery.init();
-}
-function set_popup_sizes(){
-    $(".top-section").css("height","" + (top_height) + "%");
-    $(".carousel-wrapper").css("height","" + (caro_height) + "%");
-    //ar transform_dis =
-    //$(".carousel-wrapper").css("transform","translateY(" +  + "px)");
-    $("#carouselholder").addClass("vertical-center");
-    $("#carouselholder").css("height","" + (100) + "%");
-    //$("#carouselholder").css("top","" + (-caro_height/2) + "%");
-    /*$("#carouselholder").css("transform","translateY(" + (-caro_height/2) + "%");
-    $("#carouselholder").css("-ms-transform","translateY(" + (-caro_height/2) + "%");
-    $("#carouselholder").css("-webkit-transform","translateY(" + (-caro_height/2) + "%");*/
-
-    $(".text-section").css("height", "" + (100 - caro_height - top_height) + "%");
-    $(".popup-foreground").css("max-height", "" + popup_max_height + "px");
-    $(".popup-foreground").css("max-width", "" + popup_max_width + "px");
 }
 function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
