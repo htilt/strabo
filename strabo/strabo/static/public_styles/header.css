@@ -24,6 +24,16 @@
   border-radius: 0.285712386em; /* 4/14 */
 }
 
+.navbar-brand {
+  padding: 0em;
+}
+
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
+  padding-left: 0.285712386em; /* 4/14 */
+}
+
 span.icon-bar {
   background-color: #777;
 }
