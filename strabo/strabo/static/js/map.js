@@ -76,10 +76,10 @@ $(document).ready(function(){
       // *should* center on your location and add a marker
       // where you are.
       if (bounds.contains(e.latlng)) {
-        map.setView(e.latlng);
+        map.setView(e.latlng, 18); // Set view to location and zoom in
         var radius = e.accuracy / 2;
 
-        L.marker(e.latlng).addTo(map)
+        L.marker(e.latlng, {icon: locateIcon}).addTo(map)
           .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
         L.circle(e.latlng, radius).addTo(map);
