@@ -13,7 +13,7 @@ function show_popup(){
     $('.popup').show();
     $('.popup-background').show();
 }
-//calculates thumbnail size from the full size image size passed in.
+//calculates thumbnail size from the full size image size passed in
 function get_thumb_dim(img){
     ratio = Math.min(THUMBNAIL_MAX_SIZE[0]/img.width,THUMBNAIL_MAX_SIZE[1]/img.height);
     return {width:ratio*img.width,height:ratio*img.height};
