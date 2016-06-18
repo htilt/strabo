@@ -1,7 +1,7 @@
 // Initialize custom GPS location icon
 var locateIcon = L.icon({
     iconUrl: '/static/locationDot.png',
-    iconSize: [20,20],
+    iconSize: [20,20]
 });
 
 var ColorIcon = L.Icon.extend({
