@@ -25,11 +25,10 @@ var grayIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGray.png'});
 var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
 var APIcon = new ColorIcon({iconUrl: '/static/map_icons/APicon.png'});
 
-//leafelet map object
+// leaflet map object
 function make_map(map_cont){
     var map = L.map(map_cont, {
     }).setView([lat_setting, long_setting], initial_zoom);
-
 
     return map;
 }
