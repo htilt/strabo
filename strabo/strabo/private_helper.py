@@ -3,10 +3,10 @@ import os
 from strabo import image_processing
 
 from strabo import app
-from strabo import db
 from strabo import schema
 from strabo import geojson_wrapper
 from strabo import database
+from strabo import db
 
 from strabo import image_processing
 from strabo import utils
@@ -21,7 +21,7 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.geojson_object = geojson_wrapper.add_info(form_geo_obj,form_title,ip.id)
     ip.geojson_feature_type = str(geojson_wrapper.get_type(form_geo_obj))
     ip.layer = app.config['LAYER_FIELD_ENUMS'][form_layer].value
-    ip.images = [schema.Images.query.get(int(id)) for id in image_ids]
+    ip.images = [db.session.query(schema.Images).get(int(id)) for id in image_ids]
 
 #saves image and thumbnail using the given filenaem
 def save_image(form_file_obj,filename):
