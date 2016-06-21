@@ -36,7 +36,7 @@ def image_post():
     else:
         img_obj = schema.Images()
         db.session.add(img_obj)
-    private_helper.fill_image(img_obj,request.files['file'],request.form['description'])
+    private_helper.fill_image(img_obj,request.files['file'],request.form['description'],request.form['year'],request.form['month'],request.form['day'])
     db.session.commit()
     return redirect(url_for('images_table'))
 

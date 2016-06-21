@@ -29,10 +29,13 @@ def map_post():
   ip_id = request.form['db_id']
   ip = db.session.query(schema.InterestPoints).get(int(ip_id))
 
+  images = ip.images
+  images.sort(key=lambda img: img.taken_at)
+
   filenames = [{"filename":img.filename,
                 "description":img.description,
                 "width":img.width,
-                "height":img.height} for img in ip.images]
+                "height":img.height} for img in images]
   js_data = {
     "images":filenames,
     "description":ip.descrip_body,

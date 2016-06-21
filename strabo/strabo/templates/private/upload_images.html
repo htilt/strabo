@@ -34,6 +34,23 @@
             </div>
 
             <div class="form-group">
+            <label for="year">Date Taken:</label><br>
+              <div class="form-inline">
+                <div class="form-group">
+                  <input type="number" name="month" class="form-control" min="1" max="12" placeholder="mm" value="{{image.taken_at.month}}">
+                </div>
+                <span> - </span>
+                <div class="form-group">
+                  <input type="number" name="day" class="form-control" min="1" max="31" placeholder="dd" value="{{image.taken_at.day}}">
+                </div>
+                <span> - </span>
+                <div class="form-group">
+                  <input type="number" name="year" class="form-control" placeholder="yyyy"  value="{{image.taken_at.year}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label for="name">Image Description:</label><br>
               <input class="form-control" type="text" name="description" value="{{ image.description }}">
             </div>

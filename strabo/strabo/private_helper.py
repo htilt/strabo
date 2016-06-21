@@ -1,5 +1,6 @@
 import werkzeug
 import os
+import datetime
 from strabo import image_processing
 
 from strabo import app
@@ -46,7 +47,8 @@ def make_filename(form_file_name):
     unique_filename = utils.unique_filename(app.config['UPLOAD_FOLDER'],secure_filename)
     return  unique_filename
 
-def fill_image(image,form_file_obj,form_descrip):
+def fill_image(image,form_file_obj,form_descrip,year,month,day):
+    image.taken_at = datetime.date(int(year),int(month),int(day))
     image.description = form_descrip
 
     if form_file_obj:

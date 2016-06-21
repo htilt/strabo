@@ -33,6 +33,8 @@ class Images(Base,DataType):
     __tablename__ = 'images'
     filename = Column(Text)
 
+    taken_at = Column(DateTime)
+
     interest_point_id = Column(Integer, ForeignKey('interest_points.id'))
     interest_point = relationship("InterestPoints",back_populates="images")
 
