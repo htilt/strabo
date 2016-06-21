@@ -32,11 +32,11 @@ def upload_images():
 def image_post():
     img_id = request.form.get("img_id")
     if img_id:
-        img_obj = schema.Images.query.get(img_id)
+        img_obj = db.session.query(schema.Images).get(img_id)
     else:
         img_obj = schema.Images()
         db.session.add(img_obj)
-    private_helper.fill_image(img_obj,request.files['file'],request.form['description'])
+    private_helper.fill_image(img_obj,request.files['file'],request.form['description'],request.form['year'],request.form['month'],request.form['day'])
     db.session.commit()
     return redirect(url_for('images_table'))
 
@@ -44,7 +44,7 @@ def show_ips_upload_form(interest_point):
     def get_features(feature_type):
         return geojson_wrapper.make_featureCollection([ip.geojson_object for ip in all_other_ips if ip.geojson_feature_type == feature_type])
 
-    all_ips = schema.InterestPoints.query.all()
+    all_ips = db.session.query(schema.InterestPoints).all()
     all_other_ips = all_ips#[ip for ip in all_ips if ip.id != interest_point.id]
 
     my_ip_collection = geojson_wrapper.make_featureCollection([interest_point.geojson_object]) if interest_point.id else False
@@ -52,7 +52,7 @@ def show_ips_upload_form(interest_point):
     points,lines, zones = get_features("Point"),get_features("LineString"),get_features("Polygon")
 
     #get all avaliable images
-    free_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
+    free_images = db.session.query(schema.Images).filter(schema.Images.interest_point_id == None).all()
     #makes most recently added images appear first
     free_images.reverse()
 
@@ -81,7 +81,7 @@ def upload_ips():
 def interest_points_post():
     ip_id =  request.form.get("ip_id")
     if ip_id:
-        ip = schema.InterestPoints.query.get(ip_id)
+        ip = db.session.query(schema.InterestPoints).get(ip_id)
     else:
         ip = schema.InterestPoints()
         db.session.add(ip)
@@ -95,7 +95,7 @@ def interest_points_post():
 
 @app.route("/admin/edit_ips/")
 def interest_points_table():
-    interest_points = schema.InterestPoints.query.all()
+    interest_points = db.session.query(schema.InterestPoints).all()
     return render_template("private/edit_ips.html",
       interest_points=interest_points,
       **app.config)
@@ -105,7 +105,7 @@ def interest_points_redirect():
     edit_id = request.args.get("edit-btn")
     del_id = request.args.get("delete-btn")
     if edit_id:
-        return show_ips_upload_form(schema.InterestPoints.query.get(edit_id))
+        return show_ips_upload_form(db.session.query(schema.InterestPoints).get(edit_id))
     elif del_id:
         database.delete_ip(del_id)
         return redirect(url_for('interest_points_table'))
@@ -114,7 +114,7 @@ def interest_points_redirect():
 
 @app.route("/admin/edit_images/")
 def images_table():
-    images = schema.Images.query.all()
+    images = db.session.query(schema.Images).all()
     return render_template("private/edit_images.html",
       all_images=images,
       **app.config)
@@ -124,7 +124,7 @@ def images_redirect():
     edit_id = request.args.get("edit-btn")
     del_id = request.args.get("delete-btn")
     if edit_id:
-        return show_image_upload_form(schema.Images.query.get(edit_id))
+        return show_image_upload_form(db.session.query(schema.Images).get(edit_id))
     elif del_id:
         database.delete_image(del_id)
         return redirect(url_for('images_table'))

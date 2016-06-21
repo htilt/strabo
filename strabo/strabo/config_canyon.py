@@ -89,8 +89,10 @@ def config_app(app):
     }
 
     app.config['SQLALCHEMY_DATABASE_URI']  = "postgres://localhost/strabo"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']  = False
+    app.config['DEBUG']  = True
 
-    app.config["THUMBNAIL_MAX_SIZE"] = (300,250)#mac_width, max_height
+    app.config["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
 
     ###### The following variables probably will not require configuration.
 

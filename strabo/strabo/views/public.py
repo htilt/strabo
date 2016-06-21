@@ -3,9 +3,9 @@ from flask import request, render_template, url_for, redirect, session, jsonify
 from math import ceil
 from strabo import app
 from strabo import database
+from strabo import db
 from strabo import schema
 from strabo.geojson_wrapper import get_all_feature_collections
-from strabo.utils import prettify_columns, get_raw_column
 import copy
 from strabo import public_helper
 import werkzeug
@@ -26,12 +26,15 @@ def map():
 def map_post():
   # get the ip_value user has clicked
   ip_id = request.form['db_id']
-  ip = schema.InterestPoints.query.get(int(ip_id))
+  ip = db.session.query(schema.InterestPoints).get(int(ip_id))
+
+  images = ip.images
+  images.sort(key=lambda img: img.taken_at)
 
   filenames = [{"filename":img.filename,
                 "description":img.description,
                 "width":img.width,
-                "height":img.height} for img in ip.images]
+                "height":img.height} for img in images]
   js_data = {
     "images":filenames,
     "description":ip.descrip_body,
