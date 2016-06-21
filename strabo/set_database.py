@@ -48,9 +48,9 @@ geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordi
 
 img1 = make_image(mock_flask_file_obj("test_images","download.jpg"),"bird","1998","10","1")
 img2 = make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower","1989","10","11")
-img3 = make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers","1989","11","20")
+img3 = make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers","1989","11","")
 img4 = make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach","201","10","12")
-img5 = make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon","1998","10","1")
+img5 = make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon","1998","","1")
 img6 = make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone","1997","11","12")
 
 db.session.add(img1)

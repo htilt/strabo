@@ -48,7 +48,7 @@ def make_filename(form_file_name):
     return  unique_filename
 
 def fill_image(image,form_file_obj,form_descrip,year,month,day):
-    image.taken_at = datetime.date(int(year),int(month),int(day))
+    image.taken_at = datetime.date(utils.safe_pos_int_conv(year),utils.safe_pos_int_conv(month),utils.safe_pos_int_conv(day))
     image.description = form_descrip
 
     if form_file_obj:

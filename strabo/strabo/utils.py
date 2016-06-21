@@ -10,6 +10,9 @@ def clear_sel(inputstr):
 def safe_float_conv(inputstr):
     return  float(inputstr) if not inputstr == '' else 0.0
 
+def safe_pos_int_conv(inputstr):
+    return  int(inputstr) if not inputstr == '' else 1
+
 def extract_name_extention(filename):
     dot_loc = filename.rfind('.')
 
