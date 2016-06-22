@@ -107,3 +107,4 @@ def config_app(app):
 
 
     app.config['REVERSE_COLUMN_ALIASES'] = reverse_dict(app.config['COLUMN_ALIASES'])
+    print(app.config)
