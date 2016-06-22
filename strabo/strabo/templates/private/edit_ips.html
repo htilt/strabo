@@ -6,58 +6,29 @@
 
 {% block content %}
 <main>
-    <div id="filter-options">
-        <form class="form-inline" method="GET" action="/admin/edit_ips/" enctype="multipart/form-data">
-            <div class="form-group">
-                <p class="text-muted">Search for interest points by category:</p>
-            </div>
-            
-            <div class="form-group">
-              <select class="form-control" name='search_field'>
-                {% for field in fields %}
-                    <option name="field">{{field}}</option>
-                {% endfor %}  
-              </select>
-            </div>
-          
-            <div class="form-group">
-                <input class="form-control" type="text" name="search_term" placeholder="Add your search term here">
-            </div>
-
-            <div class="form-group">
-              <input type="submit" class="btn btn-info" value="Submit">
-            </div>
-        </form>
-    </div>
-    <p></p>
-    <p></p>
     <div id="form-field">
-        <form method="GET" action="/admin/edit_ips/" enctype="multipart/form-data">
+        <form method="GET" action="/admin/edit_ips/redirect" enctype="multipart/form-data">
             <div class="table">
                 <table class="table-bordered" margin="10px" id="preview">
                   <tr>
                     <th></th>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Creation Date/Time</th>
-                    <th>Coordinates</th>
-                    <th>Feature Type</th>
-                    <th>Additional Notes</th>
-                    <th>Tags</th>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Layer</th>
                   </tr>
 
                   {% for ip in interest_points %}
                       <tr>
                         <td>
-                            <button type="submit" name="edit-btn" value={{ ip['id'] }}>Edit</button>
+                            <button type="submit" name="edit-btn" value={{ ip.id }}>Edit</button>
                         </td>
-                        <td class="image_key">{{ ip['id'] }}</td>
-                        <td class="name">{{ ip['name'] | default("Untitled") }}</td>
-                        <td class="created_at">{{ ip['created_at'] }}</td> 
-                        <td class="coordinates">{{ ip['coordinates'] }}</td>
-                        <td class="feature_type">{{ ip['feature_type'] }}</td>
-                        <td class="notes">{{ ip['notes'] }}</td>
-                        <td class="tags">{{ ip['tags'] }}</td>
+                        <td>
+                            <button type="submit" name="delete-btn" value={{ ip.id }}>Delete</button>
+                        </td>
+                        <td>{{ ip.title }}</td>
+                        <td>{{ ip.descrip_body }}</td>
+                        <td>{{ ip.layer }}</td>
                       </tr>
                   {% endfor %}
                 </table>
@@ -70,7 +41,3 @@
 {% block footer %}
     {{ super () }}
 {% endblock %}
-
-
-
-

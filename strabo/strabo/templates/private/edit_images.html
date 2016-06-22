@@ -1,75 +1,32 @@
 {% extends "/private/base.html" %}
-{% set active_page = "edit_images" %}
+{% set active_page = "edit_ips" %}
 {% block head %}
     {{ super() }}
 {% endblock %}
 
 {% block content %}
 <main>
-    <div id="filter-options">
-        <form class="form-inline" method="GET" action="/admin/edit_images/" enctype="multipart/form-data">
-            <div class="form-group">
-                <p class="text-muted">Search for images by category:</p>
-            </div>
-            
-            <div class="form-group">
-              <select class="form-control" name='search_field'>
-                {% for field in fields %}
-                    <option name="field">{{field}}</option>
-                {% endfor %}  
-              </select>
-            </div>
-          
-            <div class="form-group">
-                <input class="form-control" type="text" name="search_term" placeholder="Add your search term here">
-            </div>
-
-            <div class="form-group">
-              <input type="submit" class="btn btn-info" value="Submit">
-            </div>
-        </form>
-    </div>
-    <p></p>
-    <p></p>
     <div id="form-field">
-        <form method="GET" action="/admin/edit_images/" enctype="multipart/form-data">
+        <form method="GET" action="/admin/edit_images/redirect" enctype="multipart/form-data">
             <div class="table">
                 <table class="table-bordered" margin="10px" id="preview">
                   <tr>
                     <th></th>
-                    <th>#</th>
+                    <th></th>
+                    <th>Caption</th>
                     <th>Thumbnail</th>
-                    <th>Title</th>
-                    <th>Image Description</th>
-                    <th>Creation Date/Time</th>
-                    <th>Upload Date</th> 
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Interest Point</th>
-                    <th>Period</th>
-                    <th>Notes</th>
-                    <th>Tags</th>
-                    <th>Filename</th>
                   </tr>
 
-                  {% for img in images %}
+                  {% for img in all_images %}
                       <tr>
                         <td>
-                            <button type="submit" name="edit-btn" value={{ img['id'] }}>Edit</button>
+                            <button type="submit" name="edit-btn" value={{ img.id }}>Edit</button>
                         </td>
-                        <td class="image_key">{{ img['id'] }}</td>
-                        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img['thumbnail_name'] }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
-                        <td class="image_title">{{ img['title'] | default("Untitled") }}</td>
-                        <td class="img_description">{{ img['img_description'] }}</td>
-                        <td class="date_created">{{ img['date_created'] }}</td> 
-                        <td class="created_at">{{ img['created_at'] }}</td> 
-                        <td class="latitude">{{ img['latitude'] }}</td>
-                        <td class="longitude">{{ img['longitude'] }}</td>
-                        <td class="interest_point">{{ img['interest_point'] }}</td>
-                        <td class="period">{{ img['period'] }}</td>
-                        <td class="notes">{{ img['notes'] }}</td>
-                        <td class="tags">{{ img['tags'] }}</td>
-                        <td class="file_name">{{ img['filename'] }}</td>
+                        <td>
+                            <button type="submit" name="delete-btn" value={{ img.id }}>Delete</button>
+                        </td>
+                        <td>{{ img.description }}</td>
+                        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                       </tr>
                   {% endfor %}
                 </table>
@@ -82,7 +39,3 @@
 {% block footer %}
     {{ super () }}
 {% endblock %}
-
-
-
-

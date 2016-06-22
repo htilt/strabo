@@ -1,116 +1,143 @@
 {% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-    <link href="{{PATH_TO_PUBLIC_STYLES}}{{MAP_CSS}}" rel="stylesheet">
-{% endblock %}
-
-{% block content %}
-<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
-        <div class="modal-content">
-            <div class="modal-body">
-                <img src="" alt="" />
-            </div>
-            <div class="modal-metadata">
-                <p></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--Map and Text Selection Row-->
-<div class="row">
-
-  <div id="map" class="col-md-12" style="height: 500px">
-  </div>
-
-  <div id="text-selection" class="hidden col-md-3" style="height:500px;border:1px solid #ccc;overflow:auto;">
-      <div class="row">
-        <div id="close-text"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size:1.8em;text-align:right;float:right;"></span></div>
-        <h2 id='book_num' style="padding-left: 10px;padding-top: 15px;display: inline"></h2>&nbsp
-        <h3 id='section_num' style="padding-top: 30px;display: inline;font-size: 1.4em;" class="text-muted"></h3>
-      </div>
-      <div class="row">
-        <p id="title" align="left" style="padding-top: 10px;padding-left: 10px;padding-right: 10px; font-style: italic; font-size:17px;"></p>
-      </div>
-      <div class="row">
-        <p id="text" align="justify" style="padding-left: 10px;padding-right: 10px;"></p>
-      </div>
-
-      <div class="row">
-        <p id="attribution" align="left" style="padding: 10px; font-style: italic;"></p>
-      </div>
-  </div>
-
-</div>
-<!--../Map and Text Selection Row-->
-
-<!--Gallery Row-->
-<div class="row" id="img-holder">
-  <div id="img-placeholder" class=''>
-      <p class="text-muted">Select an interest point to see associated images.</p>
-  </div>
-
-  <div id="gallery" class='hidden'>
-    <div id="link-wrapper" class="hidden">
-
-        <span class="text-muted">You are viewing images of the </span><span class="text-muted" id="img_id_msg"></span>
-        <span class="text-muted">Select another interest point or </span><a class="text-muted" style="color: blue;" id="ip_link" href=""></a>
-    </div>
-
-    <div class="hidden" id="image-gallery">
-      <div id="thumb-0" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-1" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-2" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-3" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-4" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-      <div id="thumb-5" class="hidden col-md-2 portfolio-item" data-toggle="modal" data-target="#lightbox">
-        <p><img class="img-responsive" src="" style="height:120px;width:180px;" alt="" data-fullsrc=""></p>
-        <div class="hidden img-metadata"></div>
-      </div>
-    </div>
-
-    <div>
-      <p id="no-img-msg" class="hidden text-muted">There are no images associated with this interest point. Please select another.</p>
-    </div>
-  </div>
-</div>
-<!--../Gallery Row-->
-
-{% endblock content %}
-
-{% block footer %}
-    {{ super() }}
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+  <link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css" media="screen">
+  <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
+  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css">
+  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css">
+    <link href="/static/public_styles/interest_point.css" rel="stylesheet">
+    <link href="/static/public_styles/photoswipe.css" rel="stylesheet">
+    <link href="/static/public_styles/map.css" rel="stylesheet">
+    <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
+    <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
+    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
+    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
         var lat_setting = {{ LAT_SETTING }};
         var long_setting = {{ LONG_SETTING }};
+        var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
-        var tile_attr1 = "{{ MAP_ATTR1 }}";
-        var subdomains = "{{ SUBDOMAINS }}";
-        var extension = "{{ EXTENSION }}";
+        var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
         var interest_points = {{ interest_points_json|tojson }};
         var interest_zones = {{ interest_zones_json|tojson }};
         var interest_lines = {{ interest_lines_json|tojson }};
+        var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
     </script>
+    <script src="../static/js/popup.js"></script>
+    <script src="../static/js/map_info.js"></script>
     <script src="../static/js/{{ MAP_JS }}"></script>
-    <script src="../static/js/gallery.js"></script>
+{% endblock head %}
+
+{% block content %}
+
+<div class="row">
+  <div id="map"></div>
+</div>
+
+
+<div class="popup" hidden>
+    <div class="popup-foreground horizontal-center vertical-center">
+        <div class="top-section">
+            <h2 id="ip_title" class="col-xs-10">
+                <!--javascrip puts title item in here -->
+            </h2>
+            <!--- Maybe not ideal on desktop
+            watch out for the button/andor title getting cut off on mobile-->
+            <div class="col-xs-2" style="text-align: right;">
+              <label class="close-button" onclick="hide_popup();">&times;</label>
+            </div>
+
+            <p id="ip_description" class="col-xs-12">
+                <!--javascrip puts description item here -->
+            </p>
+        </div>
+        <div class="carousel-space">
+            <div id="carouselholder" class="carousel vertical-center">
+                <!--javascrip puts carosel items here -->
+            </div>
+        </div>
+        <div class="text-section">
+            <p id="img_description">
+                <!--javascrip puts description item here -->
+            </p>
+        </div>
+    </div>
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element, as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+            <div class="pswp__container">
+                <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader-active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+              </div>
+
+            </div>
+    </div>
+</div>
+
+
+<!--../Map and Text Selection Row-->
+
+{% endblock content %}
+
+<!--Javascript files for Leaflet-->
+
+{% block footer %}
+    {{ super() }}
 {% endblock footer %}

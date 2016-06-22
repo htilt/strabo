@@ -1,7 +1,6 @@
 {% extends "/private/base.html" %}
 {% set active_page = "upload_ips" %}
 {% block head %}
-
     {{ super() }}
 {% endblock %}
 
@@ -10,56 +9,41 @@
   <div class="form">
     <fieldset>
       <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
+
         <div class="row">
-          <div class="form-wrapper col-lg-8">
-            <legend>Add a New Interest Point</legend>
+          <div class="form-wrapper col-md-8">
+            <legend>Add a New Point of Interest</legend>
 
-            <div class="form-group">
-              <label for="name">Location Name:</label><br>
-              <input class="form-control" type="text" name="name" placeholder="Untitled" id="name">
-            </div>
-            <!-- Altered from Canyon instance -->
-            <div class="form-group" >
-              <label for="books">Books:</label><br>
-              <input class="form-control" type="text" name="books"><br>
-            </div>
-            <!-- -->
-            <div id="drawMap" style="width: 100%; height: 400px">
-              <div class="container"></div>
-            </div><br>
-
-            <div class="form-group">
-              <label for="color">Color:</label><br>
-              <select class="form-control" name="color" id="colorPick">
-                  <option value="#00A0B0">Select One</a></option>
-                  <option value="#00A0B0">Turquoise</a></option>
-                  <option value="#6A4A3C">Brown</a></option>
-                  <option value="#CC333F">Red</a></option>
-                  <option value="#EB6841">Orange</a></option>
-                  <option value="#8A9B0F">Green</a></option>
-                </select>
-            </div><br>
-            <div class="form-group">
-                <label for="feature_type">Feature Type:</label><br>
-                <select class="form-control" name='feature_type'>
-                  <option selected name="ip_auto"> Select One </option>
-                  {% for feat_type in feat_types %}
-                  <option name="{{feat_type}}">{{feat_type}}</option>
-                  {% endfor %}
-                </select>
-                </select>
-            </div>
-            <div class="form-group">
-              <label for="notes">Additional Notes:</label><br>
-              <textarea class="form-control" rows='5' type="text" name="notes" placeholder="Add any additional notes for private reference."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="tags">Tags:</label><br>
-              <input class="form-control" type="text" name="tags" placeholder="Add tags separated by commas.">
-            </div>
+          <div class="form-group">
+            <label for="name">Location Title:</label><br>
+            <input class="form-control" type="text" name="title" placeholder="Untitled" value="{{interest_point.title}}" id="name">
+          </div>
 
 
+          <div id="drawMap" style="width: 100%; height: 400px">
+            <div class="container"></div>
+          </div><br>
+
+
+          <div class="form-group">
+            <!--allows the javascript to upload data in the form-->
+            <input id="geojson-field" type="hidden" name="geojson" value="">
+          </div>
+
+          <div class="form-group">
+            <label for="layer">Layer:</label><br>
+            <select class="form-control" name="layer" id="colorPick">
+                <option>Select One</a></option>
+                {% for layer_name in LAYER_FIELD_ENUMS %}
+                <option {%if layer_name == interest_point_layer_name%}selected{%endif%}>{{layer_name}}</option>
+                {% endfor %}
+              </select>
+          </div><br>
+
+            <div class="form-group">
+              <label for="description">Interest Point Description:</label><br>
+              <textarea class="form-control" rows='5' type="text" name="description" placeholder="None">{{interest_point.descrip_body}}</textarea>
+            </div>
 
             <div class="form-group">
               <input id="geojson-field" type="hidden" name="geojson" value="">
@@ -67,53 +51,55 @@
 
             <p></p>
 
+            <!--Allows server to see image id if it is from an edit-->
+            <div class="form-group">
+              <input type="hidden" name="ip_id" value="{%if interest_point.id %}{{interest_point.id}}{%endif%}">
+            </div>
+
             <input id="upload-btn" type="submit" value="Upload">
           </div>
+          <table class="table-bordered" margin="10px">
+            <tr>
+              <th></th>
+              <th>Image</th>
+              <th>Description</th>
+            </tr>
+            {% macro render_table(images,is_checked) %}
+                {% for img in images %}
+                    <tr>
+                      <td>
+                          <input type="checkbox" name='image_ids' value={{ img.id }} {%if is_checked%}checked{%endif%}>
+                      </td>
+                      <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                      <td>{{ img.description }}</td>
+                    </tr>
+                {% endfor %}
+            {% endmacro %}
+
+            {{ render_table(taken_images,True) }}
+            {{ render_table(free_images,False) }}
+          </table>
         </div>
       </form>
     </fieldset>
   </div>
-
-  <p></p>
-  <p></p>
-  <div class="table">
-    <table class="table-bordered" margin="10px" id="preview">
-      <tr>
-        <th>Name</th>
-        <th>Coordinates</th>
-        <th>Feature Type</th>
-        <th>GeoJSON Feature Type</th>
-        <th>Additional Notes</th>
-        <th>Tags</th>
-      </tr>
-
-      {% for ip in interest_points %}
-      <tr>
-        <td class="ip_name">{{ ip['name'] | default("Untitled") }}</td>
-        <td class="coordinates">{{ ip['coordinates'] }}</td>
-        <td class="feature_type">{{ ip['feature_type'] }}</td>
-        <td class="geojson_feature_type">{{ ip['geojson_feature_type'] }}</td>
-        <td class="notes">{{ ip['notes'] }}</td>
-        <td class="tags">{{ ip['tags'] }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
 </main>
 {% endblock %}
+
 
 {% block footer %}
     {{ super () }}
 <script>
     var lat_setting = {{ LAT_SETTING }};
     var long_setting = {{ LONG_SETTING }};
+    var initial_zoom = {{ INITIAL_ZOOM }};
     var tile_src = "{{ MAP_TILE_SRC }}";
-    var tile_attr1 = "{{ MAP_ATTR1 }}";
-    var subdomains = "{{ SUBDOMAINS }}";
-    var extension = "{{ EXTENSION }}";
+    var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
     var interest_points = {{ interest_points_json|tojson }};
     var interest_zones = {{ interest_zones_json|tojson }};
     var interest_lines = {{ interest_lines_json|tojson }};
+    var edit_json = {{my_ip_collection|tojson}};
 </script>
-<script src="/static/js/{{ DRAWMAP_JS }}"></script>
+<script src="/static/js/map_info.js"></script>
+<script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}

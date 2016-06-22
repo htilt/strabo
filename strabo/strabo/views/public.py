@@ -1,64 +1,43 @@
 import os
 from flask import request, render_template, url_for, redirect, session, jsonify
 from math import ceil
-
 from strabo import app
-from strabo.database import get_flex, get_column_names, \
-get_geojson, search, gallery_search
-from strabo.geojson_wrapper import make_geojsons
+from strabo import database
+from strabo import schema
+from strabo.geojson_wrapper import get_all_feature_collections
 from strabo.utils import prettify_columns, get_raw_column
 import copy
+from strabo import public_helper
+import werkzeug
 
+
+@app.route("/")
 @app.route("/map")
 def map():
-  template = os.path.join("public/", app.config['MAP_TEMPLATE'])
-  points,zones,lines = make_geojsons()
+  template = "public/map.html"
+  points,zones,lines = get_all_feature_collections()
   return render_template(template,
     interest_points_json=points,
     interest_zones_json=lines,
     interest_lines_json=zones,
      **app.config)
 
-@app.route('/map/post', methods=["POST", "GET"])
+@app.route('/map/post', methods=["POST"])
 def map_post():
   # get the ip_value user has clicked
-  ip_value = request.form.get('name')
-  # query db for corresponding images, text
-  images = search('images', 'interest_point', ip_value, 6)
-  text = search('text_selections', 'interest_point', ip_value)
-  ip_info = {
-    'images': images,
-    'text-selection': text
+  ip_id = request.form['db_id']
+  ip = schema.InterestPoints.query.get(int(ip_id))
+
+  filenames = [{"filename":img.filename,
+                "description":img.description,
+                "width":img.width,
+                "height":img.height} for img in ip.images]
+  js_data = {
+    "images":filenames,
+    "description":ip.descrip_body,
+    "title":ip.title
   }
-  return jsonify(ip_info)
-
-@app.route("/gallery", methods=["GET"])
-def gallery():
-  # get search fields
-  fields = prettify_columns(app.config['SEARCH_COLUMNS'])
-  # get user input for search
-  search_term, search_field = request.args.get('search_term'), request.args.get('search_field')
-  # if the specified column name is 'prettified', refert to raw column name
-  search_field = get_raw_column(search_field)
-
-  # if no search has been performed, show all images
-  if search_term == '' or search_term == None:
-    images = get_flex('images')
-  # or search in all fields
-  elif search_field == 'All Fields':
-    images = gallery_search('images', search_term, None)
-  # or search in specific field
-  else:
-    images = gallery_search('images', search_term, search_field)
-  return render_template("public/gallery.html", images=images,
-    fields=fields,**app.config)
-
-@app.route("/timeline")
-def timeline():
-  table_name = 'events'
-  events = get_flex(table_name, 100)
-  return render_template("public/under_construction.html",**app.config)
-  # return render_template("public/timeline.html", events=events,**app.config)
+  return jsonify(js_data)
 
 @app.route("/about")
 def about():

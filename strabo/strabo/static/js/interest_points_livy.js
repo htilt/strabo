@@ -1,9 +1,0 @@
-var lat_setting = 41.892695
-var long_setting = 12.495142
-var tile_src = "http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png"
-var tile_attr1 = "Map tiles by Stamen Design, Map data by OpenStreetMap"
-var subdomains = "abcd"
-var extension = "png"
-var interest_points = {"features": [{"geometry": {"coordinates": [12.473430633544922, 41.915818693496426], "name": "loc", "type": "Point"}, "properties": {"marker-color": "#00A0B0", "marker-size": "medium", "marker-symbol": ""}, "type": "Feature"}], "type": "FeatureCollection"}
-var interest_zones = {"features": [], "type": "FeatureCollection"}
-var interest_lines = {"features": [], "type": "FeatureCollection"}

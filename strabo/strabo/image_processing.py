@@ -2,38 +2,30 @@ import os, os.path, re
 from contextlib import closing
 
 from PIL import Image
-from PIL.ExifTags import TAGS
 
 from strabo import app
+from strabo import utils
 
 # For a given file, return whether it's an allowed type or not
 def allowed_file(filename):
-  return '.' in filename and \
-    filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+  return utils.get_extension(filename) in app.config['ALLOWED_EXTENSIONS']
 
 # This helper function uses PIL to make a new thumbnail of a given image
-def make_thumbnail(filename, this_id):
+def make_thumbnail(image_filename,thumbnail_filename):
   # import desired image from /uploads folder
-  img = Image.open(app.config['UPLOAD_FOLDER'] + '/' + filename)
+  img_fullpath = os.path.join(app.config['UPLOAD_FOLDER'],image_filename)
+  img = Image.open(img_fullpath)
   # create a thumbnail from desired image
-  size = 300, 300
-  img.thumbnail(size)
+  # the thumbnail will have dimentions of the same ratio as before, capped by
+  #the max dimention of max_size
+  max_size = app.config["THUMBNAIL_MAX_SIZE"]
+  img.thumbnail(max_size,Image.ANTIALIAS)
   # save the image under a new filename in thumbnails directory
-  imagename = filename.rsplit(".", 1)[0]
-  newfilename = imagename + "_thumbnail.jpeg"
   path = app.config['NEW_DATA_DIRECTORY']
-  fullpath = os.path.join(path, newfilename)
+  fullpath = os.path.join(path, thumbnail_filename)
   img.save(fullpath)
-  # return the filename for the thumbnail
-  return newfilename
 
-
-# This would be the desired implementation for server-side EXIF
-# extraction. Currently, tags are extracted in javascript.
-# def getEXIF(pathname, filename):
-#   # Get path to file
-#   total_pathname = os.path.join(pathname, filename)
-#   # Extract EXIF data
-#   date_created = Image.open(total_pathname)._getexif()[0x0132]
-#   print(date_created)
-#   return(date_created)
+#get dimentions of item in uploads folder with the given filename
+def get_dimentions(filename):
+    with Image.open(os.path.join(app.config['UPLOAD_FOLDER'],filename)) as im:
+        return im.size#width, height tuple

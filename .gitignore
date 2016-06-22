@@ -40,10 +40,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.cache
 
 # Images #
 ##########
-*.png
 *.jpg
 *.jpeg
 *.tiff
@@ -51,6 +51,7 @@ Thumbs.db
 *.TIFF
 *.JPG
 *.JPEG
+*.xcf
 
 # Virtual Environments #
 #######################
@@ -60,7 +61,4 @@ Thumbs.db
 # Livy-specific files/directories #
 ###################################
 
-#/thumbnails-livy
-#/uploads-livy
-#header-livy.html
 *.swp
