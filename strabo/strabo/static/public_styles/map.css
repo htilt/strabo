@@ -2,6 +2,8 @@
 
 html, body {
   height: 100%;
+  /*gets rid of scroll bar*/
+  overflow: hidden;
 }
 
 #map {
@@ -9,48 +11,4 @@ html, body {
     position: absolute;
     top: 4.5em;
     bottom: 2em;
-}
-
-.popup-background {
-    /*if you change either position thing it doesn't work*/
-    position: relative;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.5);
-    z-index: 20000;
-}
-
-.popup {
-    width: 80%;
-    height: 100%;
-    background: #ebf5e4;
-    position: absolute;
-    right: 10%;
-    left: 10%;
-    top: 0;
-    margin: auto;
-    padding: 1.25em;
-    border: 1px solid #000000;
-    z-index: 100000; /* goes above leaflet link */
-}
-
-.my-gallery {
-  width: 100%;
-  float: left;
-}
-.my-gallery img {
-  width: 100%;
-  height: auto;
-}
-.my-gallery figure {
-  display: block;
-  float: left;
-  margin: 0 5px 5px 0;
-  width: 150px;
-}
-.my-gallery figcaption {
-  display: none;
 }

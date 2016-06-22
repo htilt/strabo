@@ -1,25 +1,31 @@
 //flickety object
 var flkty;
+//photoswipe object
 var gallery;
+//list of image objects passed from post call in ip_clicked
 var imgs;
 
 function hide_popup(){
     $('.popup').hide();
-    $('.container-popup').hide();
+    $('.popup-background').hide();
 }
 function show_popup(){
     $('.popup').show();
-    $('.container-popup').show();
+    $('.popup-background').show();
 }
-
-//this function loads the text and images associated
-//with a selected interest point
-//example output:
-// <div class="carousel-cell"><img src= "static/thumbnails/download.jpg"/></div>
-function get_carosel_html(filename,descrip){
-    var html = '<div class="carousel-cell">';
-    html += '<img src="static/thumbnails/' + filename + '"/>';
-    html += '<p>' + descrip + '</p>';
+//calculates thumbnail size from the full size image size passed in
+function get_thumb_dim(img){
+    ratio = Math.min(THUMBNAIL_MAX_SIZE[0]/img.width,THUMBNAIL_MAX_SIZE[1]/img.height);
+    return {width:ratio*img.width,height:ratio*img.height};
+}
+//this function generates the flickity cell corresponding to
+//the specific image object passed in
+function get_carosel_html(img){
+    var html = '<div class="carousel-cell padded-pic">';
+    dim  = get_thumb_dim(img);
+    html += '<div class="vertical-center">';
+    html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
+    html += '</div>';
     html += '</div>';
     return html;
 }
@@ -30,7 +36,7 @@ function remove_all_carosel_entries(){
 function add_carosel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
-        var $cellElems = $(get_carosel_html(img.filename,img.description));
+        var $cellElems = $(get_carosel_html(img));
         flkty.append($cellElems);
     });
 }
@@ -92,10 +98,27 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
+function set_flickety_img_title(){
+    flkty.on( 'cellSelect', function() {
+        var img = imgs[flkty.selectedIndex];
+
+        $("#img_description").text(img.description);
+
+        var elmts = flkty.getCellElements();
+        elmts.forEach(function(elmt){
+            elmt.style.background = "Transparent";
+        });
+        flkty.selectedElement.style.background = "rgba(0,0,0,.5)"
+    })
+}
 
 function flickety_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
-        {imagesLoaded: true}//doesn't do anything right now
+        {imagesLoaded: true,
+        pageDots:false,
+        resize: true,
+        setGallerySize: false}
     );
+    set_flickety_img_title();
     set_flickety_click();
 }
