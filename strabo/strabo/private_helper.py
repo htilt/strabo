@@ -13,14 +13,14 @@ from strabo import utils
 
 #assigns entries in the InterestPoints accoring to text input from the admin interface
 #requires theadd_name_and_color
-def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer):
+def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer,form_icon):
     if not ip.id:
         raise RuntimeError("ip needs to be stored in database to be filled")
     ip.title = form_title
     ip.descrip_body = form_body
-    ip.geojson_object = geojson_wrapper.add_info(form_geo_obj,form_title,ip.id)
-    ip.geojson_feature_type = str(geojson_wrapper.get_type(form_geo_obj))
-    ip.layer = app.config['LAYER_FIELD_ENUMS'][form_layer].value
+    ip.geojson_object = form_geo_obj
+    ip.layer = form_layer
+    ip.icon = form_icon
     ip.images = [schema.Images.query.get(int(id)) for id in image_ids]
 
 #saves image and thumbnail using the given filenaem

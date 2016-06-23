@@ -1,6 +1,6 @@
 import geojson
-from strabo import database
-
+#from strabo import database
+'''
 # returns a feature's type (point/polygon/line/etc.)
 def get_type(feature):
   feature = geojson.loads(feature)
@@ -9,20 +9,24 @@ def get_type(feature):
 
 # adds and interest point's properties to that point's
 # geojson object and returns the geojson object.
-def add_info(feature, name,ip_id, color=None):
+def add_info(feature, name, ip_id, layer, color=None):
   feature = geojson.loads(feature)
-  feature.geometry['name'] = name
-  feature.geometry['db_id'] = ip_id
- # feature.geometry['db_id'] = ip_id
-  if color:
+  feature.properties['name'] = name
+  feature.properties['db_id'] = ip_id
+  feature.properties['layer'] = layer
+  if color != None:
     feature.properties['marker-color'] = color
 
-  # defaults for marker size and symbol
-  feature.properties['marker-size'] = 'medium'
-  feature.properties['marker-symbol'] = ''
-  feature = geojson.dumps(feature, sort_keys=True)
-  return feature
+  feature_json = geojson.dumps(feature)#, sort_keys=True)
+  return feature_json
+'''
+def make_other_attributes_properties(ip):
+    feature = geojson.loads(ip.geojson_object)
+    feature.properties = {"name":ip.title,"db_id":ip.id,"layer":ip.layer,"icon":ip.icon}
+    return feature
 
+
+'''
 # This function receives a list containing geojson strings.
 # It returns a geojson feature collection.
 def make_featureCollection(geojson_objs):
@@ -43,3 +47,4 @@ def get_all_feature_collections():
   zones = get_feature_collection('Polygon')
   lines = get_feature_collection('LineString')
   return points,zones,lines
+'''

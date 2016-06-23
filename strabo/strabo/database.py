@@ -49,6 +49,11 @@ def get_geo_objects(geojson_feature_type):
     obj_list = [ip.geojson_object for ip in feature_ips]
     return obj_list
 
+def get_all_geo_objects():
+    feature_ips = schema.InterestPoints.query.all()
+    obj_list = [ip.geojson_object for ip in feature_ips]
+    return obj_list
+
 #return all result objects of the table
 def get_all_rows(table):
     return table.query.all()

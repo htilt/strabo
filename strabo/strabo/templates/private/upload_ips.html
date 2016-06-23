@@ -34,8 +34,8 @@
             <label for="layer">Layer:</label><br>
             <select class="form-control" name="layer" id="colorPick">
                 <option>Select One</a></option>
-                {% for layer_name in LAYER_FIELD_ENUMS %}
-                <option {%if layer_name == interest_point_layer_name%}selected{%endif%}>{{layer_name}}</option>
+                {% for layer_name in LAYER_FIELDS %}
+                <option {%if layer_name == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
               </select>
           </div><br>
@@ -98,7 +98,7 @@
     var interest_points = {{ interest_points_json|tojson }};
     var interest_zones = {{ interest_zones_json|tojson }};
     var interest_lines = {{ interest_lines_json|tojson }};
-    var edit_json = {{my_ip_collection|tojson}};
+    var edit_json = {{my_ip_json|tojson}};
 </script>
 <script src="/static/js/map_info.js"></script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>

@@ -4,7 +4,6 @@ from strabo import database
 from strabo import image_processing
 from strabo import schema
 from strabo import utils
-from strabo.config_canyon import Layers
 from strabo import private_helper
 import shutil
 import werkzeug
@@ -14,8 +13,8 @@ import os
 #only use for development
 def recreate_postgres_db():
     os.system("dropdb strabo")
-    os.system("rm strabo/static/uploads/*")
-    os.system("rm strabo/static/thumbnails/*")
+    os.system("rm strabo/static/uploads/*.*")
+    os.system("rm strabo/static/thumbnails/*.*")
     os.system("createdb strabo")
     os.system("python initDB.py")
 
@@ -29,11 +28,11 @@ class mock_flask_file_obj:
     def save(self,new_file_path):
         shutil.copyfile(self.full_filename,new_file_path)
 
-def make_interest_point(image_ids,form_title,form_body,form_geo_obj,form_layer):
+def make_interest_point(image_ids,form_title,form_body,form_geo_obj,form_layer,form_icon):
     ip = schema.InterestPoints()
     db.session.add(ip)
     db.session.flush()
-    private_helper.fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer)
+    private_helper.fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer,form_icon)
     db.session.commit()
     return ip
 
@@ -62,7 +61,7 @@ db.session.add(img6)
 
 db.session.commit()
 
-ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][Layers.plant])
-ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][Layers.animal])
+ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][0],"MapPinMaroon.png")
+ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][1],"MapPinGreen.png")
 
 db.session.commit()

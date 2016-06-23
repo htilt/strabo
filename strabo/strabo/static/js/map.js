@@ -2,7 +2,7 @@ var map;
 
 //is called whenever a leafelet feature is clicked
 function whenClicked(e) {
-    ip_clicked(e.target.feature.geometry.db_id);
+    ip_clicked(e.target.feature.properties.db_id);
 }
 
 //sets the popup feature when you click a spot on the map
@@ -25,31 +25,41 @@ $(document).ready(function(){
 
     flickety_init();
 
-    // add pre-existing points, zones, and lines to map
-    var point_features = L.geoJson(interest_points, {
-      onEachFeature: makeOnEachPoint(whenClicked)
-  }).addTo(map);
+    var all_layers_group = L.geoJson(features,{});
+    var all_layers = all_layers_group.getLayers();
+    all_layers.forEach(function(layer){
+        layer.bindPopup(layer.feature.properties.db_id.toString());
+        layer.on({
+            click: whenClicked
+        });
+    });
 
-    var zone_features = L.geoJson(interest_zones, {
-      onEachFeature: makeOnEachZone(whenClicked)
-    }).addTo(map);
+    var points = all_layers.filter(function(lay){return lay.feature.geometry.type == "Point"});
+    var zones = all_layers.filter(function(lay){return lay.feature.geometry.type == "Polygon"});
 
-    var line_features = L.geoJson(interest_lines, {
-      onEachFeature: makeOnEachLine(whenClicked)
-    }).addTo(map);
+    zones.forEach(function(zone){
+        zone.setStyle({
+              weight: 1,
+              //color: zone.feature.properties['marker-color'],
+              dashArray: '',
+              fillOpacity: 0.3
+        });
+    });
+
+    points.forEach(function(point){
+        point.setIcon(icon_objs[point.feature.properties.icon]);
+    })
 
     // Set layers and add toggle control menu for each layer
-    var overlays = {
-      "Interest Points": point_features,
-      "Lines": line_features,
-      "Zones": zone_features,
-    }
+    var overlays = {};
+    LAYER_FIELDS.forEach(function(lay_name){
+        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
+        var laygroup = L.layerGroup(lays);
+        laygroup.addTo(map);
+        overlays[lay_name] = laygroup;
+    });
+
     L.control.layers(null, overlays).addTo(map);
-
-
-    // Test custom map markers
-    // L.marker([45.48273, -122.63237], {icon: APIcon}).addTo(map);
-    // L.marker([45.48185, -122.62594], {icon: sensitiveAreaIcon}).addTo(map).bindPopup("Caution: Lamprey");
 
     set_map_click(map);
 

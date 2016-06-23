@@ -20,10 +20,10 @@ class InterestPoints(db.Model,DataType):
     descrip_body = Column(db.Text)
 
     geojson_object = Column(db.Text)
-    geojson_feature_type = Column(db.Text)
 
     # for some weird reason, enums break this and I cannot figure it out.
-    layer = Column(db.Integer)
+    layer = Column(db.Text)
+    icon = Column(db.Text)
 
     images = db.relationship("Images",back_populates="interest_point")
 

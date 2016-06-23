@@ -15,21 +15,10 @@ var ColorIcon = L.Icon.extend({
     }
 });
 
-// Initialize color icons
-var greenIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinGreen.png'});
-var blueIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinBlue.png'});
-var maroonIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinMaroon.png'});
-var oliveIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOlive.png'});
-var orangeIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOrange.png'});
-var pinkIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPink.png'});
-var purpleIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPurple.png'});
-var tealIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinTeal.png'});
-var yellowIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinYellow.png'});
-var grayIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGray.png'});
-
-// Initialize special icons
-var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
-var APIcon = new ColorIcon({iconUrl: '/static/map_icons/APicon.png'});
+var icon_objs = {};
+MAP_ICONS.forEach(function(ico_name){
+    icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
+});
 
 // leaflet map object
 function make_map(map_cont){

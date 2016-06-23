@@ -30,8 +30,8 @@ var shapeLayer;
 //for adding editing capability
 
 if (edit_json){
-    shapeLayer = L.geoJson(edit_json);
-    obJSON = shapeLayer.toGeoJSON().features[0];
+    //shapeLayer = L.geoJson(edit_json);
+    //obJSON = shapeLayer.toGeoJSON().features[0];
 }
 
 var options1 = {
