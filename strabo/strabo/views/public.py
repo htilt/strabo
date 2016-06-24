@@ -8,7 +8,6 @@ from strabo import db
 from strabo import schema
 from strabo import geojson_wrapper
 import copy
-from strabo import public_helper
 import werkzeug
 import geojson
 
