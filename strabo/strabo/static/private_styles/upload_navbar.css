@@ -1,10 +1,27 @@
-.temp h2 {
-  padding-left: 30px;
-  padding-top: 30px;
+/* Admin Nav Bar */
+
+main { 
+  height: 100%;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
-main {
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+.temp h2 { /* Index Greeting */
+	padding-top: 1.5em;
+	padding-left: 2em;
+}
+
+.tab-active {
+	background-color: #e6e6e6;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #e6e6e6;
+}
+
+.container {
+    padding-right: 1em;
+    padding-left: 1em;
+    margin-right: auto;
+    margin-left: 2em;
 }

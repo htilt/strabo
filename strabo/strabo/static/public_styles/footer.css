@@ -1,10 +1,26 @@
-/* Footer */
+/* Sticky Footer */
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -2em; /* wrapper margin and footer push height must be the same value */
+}
+
+.footer, .push {
+  height: 2em;
+  float: left;
+}
+
 #footer {
-  border-top: 1px solid #ddd;
-  height: 60px;
-  background-color: #eee;
+  border-top: 0.071428571em solid #ffffff; /* 1/14 */
+  background-color: #ebf5e4;
 }
 
 #footer p {
-  padding-top:20px;
+  color: #6e4f31; /* Brown to match logo */ 
+  font-family: 'Futura', sans-serif;
+  font-weight: 200;
+  font-size: 0.857142857em; /* 12/14 */
+  padding: 0.071428571em; /* 1/14 */
 }

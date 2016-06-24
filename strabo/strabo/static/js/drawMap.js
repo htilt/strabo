@@ -1,73 +1,34 @@
-var drawMap = L.map('drawMap', {
-  
-  maxBounds: [
-  //southWest
-  [45.4793, -122.6416],
-  //northEast
-  [45.48409, -122.62264]
-  ],
-}).setView([45.48174, -122.631], 17 );
+// The Admin Map
+var drawMap = make_map('drawMap');
+add_tile_to(drawMap);
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  maxZoom: 18,
-  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-  id: 'mapbox.streets',
 
-}).addTo(drawMap);
-
-// add pre-existing points, zones, and lines to map
-var point_features = L.geoJson(interest_points, {
-  onEachFeature: onEachPoint,
-}).addTo(drawMap);
-
-var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: onEachZone
-}).addTo(drawMap);
-
-var line_features = L.geoJson(interest_lines, {
-  onEachFeature: onEachZone,
-}).addTo(drawMap);
-
-function onEachZone(feature, layer) {
-  layer.bindPopup(feature.geometry.name);
-  layer.setStyle({
-        weight: 1,
-        color: feature.properties['marker-color'],
-        dashArray: '',
-        fillOpacity: 0.3
-  });
-}
-
-function onEachPoint(feature, layer) {
-  layer.bindPopup(feature.geometry.name);
-  // layer.setIcon(feature.properties['icon']);
-}
-
-// var popup = L.popup();
-
-// function onMapClick(e) {
-//   popup
-//     .setLatLng(e.latlng)
-//     .setContent(e.latlng.toString())
-//     .openOn(drawMap);
-// }
-
-// drawMap.on('click', onMapClick);
-
+var all_layers_group = L.geoJson(features);
+set_styles(all_layers_group);
+bind_popups(all_layers_group);
+all_layers_group.addTo(drawMap);
 
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);
-
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 // Removes some toolbar things and also sets colors
 
 var shapeColorInit = '#2397EB';
 
+var obJSON; ////// THIS IS THE OBJECT U WANT
+var shapeLayer;
+
+//for adding editing capability
+
+if (edit_json){
+    console.log(edit_json);
+    shapeLayer = L.geoJson(edit_json);
+    obJSON = shapeLayer.toGeoJSON().features[0];
+}
+
 var options1 = {
-    
+
     draw : {
       polyline: {
         shapeOptions: {
@@ -105,62 +66,36 @@ var options2 = {
         }
       }
     }
-
 }
 
 var drawControla = new L.Control.Draw(options1);
 var drawControlb = new L.Control.Draw(options2);
 
-
-
 drawMap.addControl(drawControla);
 
+drawMap.on('draw:created', function (e) { //grab s layer of drawn item
+    shapeLayer = e.layer;
 
-var obJSON; ////// THIS IS THE OBJECT U WANT
-var shapeLayer;
-
-
-
-drawMap.on('draw:created', function (e) { //grabs layer of drawn item
-  var type = e.layerType;
-  shapeLayer = e.layer;
-  //if the layer type is a circle / marker, then we only have one set of latlngs to deal with, therefore different formula
-  if (type === 'polyline') {
     drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON(); //creates JSON object
-  }
-  else if (type === 'marker') {
-    drawnItems.addLayer(shapeLayer);
-    obJSON = shapeLayer.toGeoJSON();    
-  }
-  else if (type === 'polygon') {
     obJSON = shapeLayer.toGeoJSON();
-   	drawnItems.addLayer(shapeLayer);
-  }
 
-  drawControla.removeFrom(drawMap);
-  drawMap.addControl(drawControlb);
+    drawControla.removeFrom(drawMap);
+    drawMap.addControl(drawControlb);
 })
 
-drawMap.on('draw:deletestop', function (e) {
-  drawControlb.removeFrom(drawMap);
-  drawMap.addControl(drawControla);
-
+drawMap.on('draw:deleted', function (e) {
+    //awkward, test this in different browsers
+    if (Object.keys(e.layers._layers).length > 0){
+        drawControlb.removeFrom(drawMap);
+        drawMap.addControl(drawControla);
+    }
 })
-
 
 drawMap.on('draw:edited', function (e) {
-  
   var editLayers = e.layers;
-  var type = e.layerType;
-
-
-
 
   editLayers.eachLayer(function (layer) {
     obJSON = layer.toGeoJSON();
-    console.log(obJSON);
-    console.log(shapeLayer);
     //shapeLayer.setStyle({color:'#2397EB'});
     //layer.setStyle({color:'#2397EB'})
     });
@@ -169,15 +104,10 @@ drawMap.on('draw:edited', function (e) {
 $(function()
 {
   var $e = $("#colorPick")
-  var $usrSelect = $("#colorPick :selected").text()
-  console.log($usrSelect);
+  var $usrSelect = $("#colorPick :selected").text();
 
   $e.change(function() {
     $usrSelect = $("#colorPick :selected").text();
-    console.log($usrSelect); 
-  
-
-  
 
 
   //console.log($dropDown);
@@ -185,9 +115,8 @@ $(function()
     //var menuNum = this.value;
     //var menuParent = $('btn btn-default dropdown-toggle');
     //var msg = '';
-
     switch($usrSelect) {
-      case 'Turqoise' :
+      case 'Turquoise' :
         L.geoJson(obJSON, {
           style: {
             "color": '#00A0B0'
@@ -203,7 +132,7 @@ $(function()
         });
         shapeLayer.setStyle({color:'#6A4A3C'});
         break;
-      case "Father's Rage Red":
+      case "Red":
         L.geoJson(obJSON, {
           style: {
             "color": '#CC333F'
@@ -226,19 +155,18 @@ $(function()
           }
         });
         shapeLayer.setStyle({color:'#8A9B0F'});
-        break
+        break;
       default:
         break;
     }
   });
 });
 
+
 $('#upload-btn').click(function (e) {
-  console.log(obJSON);
   var JSONobject = JSON.stringify(obJSON);
-  console.log(JSONobject);
   $('#geojson-field').attr("value", JSONobject);
-}); 
+});
 
 
   // Returns an array of the points in the path.
