@@ -11,6 +11,8 @@ from strabo import config_canyon
 from strabo import schema
 from strabo import app
 from strabo import db
+
+
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
 def index():

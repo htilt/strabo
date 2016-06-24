@@ -38,20 +38,20 @@ def make_interest_point(image_ids,form_title,form_body,form_geo_obj,form_layer):
     return ip
 
 #returns image database object
-def make_image(form_file_obj,form_descrip):
+def make_image(form_file_obj,form_descrip,year,month,day):
     img = schema.Images()
-    private_helper.fill_image(img,form_file_obj,form_descrip)
+    private_helper.fill_image(img,form_file_obj,form_descrip,year,month,day)
     return img
 
 geo_obj1 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.63034939765929,45.48205499198348]}}'
 geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.630397,45.481851]}}'
 
-img1 = make_image(mock_flask_file_obj("test_images","download.jpg"),"bird")
-img2 = make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower")
-img3 = make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers")
-img4 = make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach")
-img5 = make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon")
-img6 = make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone")
+img1 = make_image(mock_flask_file_obj("test_images","download.jpg"),"bird","1998","10","1")
+img2 = make_image(mock_flask_file_obj("test_images","download1.jpg"),"flower","1989","10","11")
+img3 = make_image(mock_flask_file_obj("test_images","download2.jpg"),"small flowers","1989","11","")
+img4 = make_image(mock_flask_file_obj("test_images","download3.jpg"),"beach","201","10","12")
+img5 = make_image(mock_flask_file_obj("test_images","image with space.jpg"),"canyon","1998","","1")
+img6 = make_image(mock_flask_file_obj("test_images","phone_testing.png"),"phone","1997","11","12")
 
 db.session.add(img1)
 db.session.add(img2)
