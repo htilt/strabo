@@ -45,7 +45,7 @@ def image_post():
 def show_ips_upload_form(interest_point):
     all_ips = db.session.query(schema.InterestPoints).all()
 
-    my_ip_json = interest_point.geojson_object if interest_point.id else False
+    my_ip_json = geojson_wrapper.to_geo_obj(interest_point.geojson_object) if interest_point.id else False
 
     geo_features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in all_ips]
 

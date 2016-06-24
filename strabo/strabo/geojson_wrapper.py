@@ -20,8 +20,12 @@ def add_info(feature, name, ip_id, layer, color=None):
   feature_json = geojson.dumps(feature)#, sort_keys=True)
   return feature_json
 '''
+
+def to_geo_obj(geo_json):
+    return geojson.loads(geo_json)
+
 def make_other_attributes_properties(ip):
-    feature = geojson.loads(ip.geojson_object)
+    feature = to_geo_obj(ip.geojson_object)
     feature.properties = {"name":ip.title,"db_id":ip.id,"layer":ip.layer,"icon":ip.icon}
     return feature
 
