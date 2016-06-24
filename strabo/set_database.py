@@ -1,13 +1,10 @@
-from strabo import db, app
-from strabo import geojson_wrapper
-from strabo import database
-from strabo import image_processing
-from strabo import schema
-from strabo import utils
-from strabo import private_helper
 import shutil
-import werkzeug
 import os
+
+from strabo import schema
+from strabo import private_helper
+
+from strabo import db, app
 
 #hackish and bad way of reinniting the postgres database
 #only use for development

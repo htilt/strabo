@@ -1,10 +1,6 @@
-import os, ast, sys
-from contextlib import closing
-from strabo import utils
-from strabo import geojson_wrapper
-
 from flask import request, render_template, redirect, url_for
 
+from strabo import geojson_wrapper
 from strabo import database
 from strabo import private_helper
 from strabo import config_canyon

@@ -1,15 +1,9 @@
-import os
-from flask import request, render_template, url_for, redirect, session, jsonify
-from math import ceil
+from flask import request, render_template, jsonify
 from strabo import app
-from strabo import db
 from strabo import database
 from strabo import db
 from strabo import schema
 from strabo import geojson_wrapper
-import copy
-import werkzeug
-import geojson
 
 
 @app.route("/")

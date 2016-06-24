@@ -1,10 +1,9 @@
-import os, os.path, re
-from contextlib import closing
-
+import os
 from PIL import Image
 
-from strabo import app
 from strabo import utils
+
+from strabo import app
 
 # For a given file, return whether it's an allowed type or not
 def allowed_file(filename):

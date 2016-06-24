@@ -1,9 +1,10 @@
 from datetime import datetime
-from strabo import config_canyon
 
 from sqlalchemy import *
 import sqlalchemy
 from sqlalchemy.orm import relationship
+
+from strabo import config_canyon
 
 Base = sqlalchemy.ext.declarative.declarative_base()
 

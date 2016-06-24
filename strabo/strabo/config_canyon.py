@@ -1,4 +1,3 @@
-import enum
 import os
 
 # makes keys values and values keys

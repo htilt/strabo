@@ -1,10 +1,10 @@
 import os
-from contextlib import closing
+import sqlalchemy
+
+from strabo import schema
 
 from strabo import app
 from strabo import db
-from strabo import schema
-import sqlalchemy
 
 engine = sqlalchemy.create_engine(app.config["SQLALCHEMY_DATABASE_URI"], echo=app.config['DEBUG'])
 

@@ -1,16 +1,13 @@
 import werkzeug
 import os
 import datetime
-from strabo import image_processing
 
-from strabo import app
 from strabo import schema
-from strabo import geojson_wrapper
-from strabo import database
-from strabo import db
-
 from strabo import image_processing
 from strabo import utils
+
+from strabo import app
+from strabo import db
 
 #assigns entries in the InterestPoints accoring to text input from the admin interface
 #requires theadd_name_and_color

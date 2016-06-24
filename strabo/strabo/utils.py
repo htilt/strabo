@@ -1,8 +1,9 @@
 import random
 import os
 
-from strabo import app
 from strabo import schema
+
+from strabo import app
 
 def safe_pos_int_conv(inputstr):
     return  int(inputstr) if not inputstr == '' else 1
