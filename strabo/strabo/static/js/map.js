@@ -1,10 +1,3 @@
-var map;
-
-//is called whenever a leafelet feature is clicked
-function whenClicked(e) {
-    ip_clicked(e.target.feature.properties.db_id);
-}
-
 //sets the popup feature when you click a spot on the map
 function set_map_click(map){
     // Display latlng info for any place on the map when clicked
@@ -17,49 +10,26 @@ function set_map_click(map){
     // Trigger onMapClick function whenever map is clickeddb_id
     map.on('click', onMapClick);
 }
-
+function set_feature_click(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
+    all_layers.forEach(function(layer){
+        layer.on({
+            click: function(e){ip_clicked(e.target.feature.properties.db_id)}
+        });
+    });
+}
 
 $(document).ready(function(){
-    map = make_map('map');
+    var map = make_map('map');
     add_tile_to(map);
 
     flickety_init();
 
-    var all_layers_group = L.geoJson(features,{});
-    var all_layers = all_layers_group.getLayers();
-    all_layers.forEach(function(layer){
-        layer.bindPopup(layer.feature.properties.db_id.toString());
-        layer.on({
-            click: whenClicked
-        });
-    });
-
-    var points = all_layers.filter(function(lay){return lay.feature.geometry.type == "Point"});
-    var zones = all_layers.filter(function(lay){return lay.feature.geometry.type == "Polygon"});
-
-    zones.forEach(function(zone){
-        zone.setStyle({
-              weight: 1,
-              //color: zone.feature.properties['marker-color'],
-              dashArray: '',
-              fillOpacity: 0.3
-        });
-    });
-
-    points.forEach(function(point){
-        point.setIcon(icon_objs[point.feature.properties.icon]);
-    })
-
-    // Set layers and add toggle control menu for each layer
-    var overlays = {};
-    LAYER_FIELDS.forEach(function(lay_name){
-        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
-        var laygroup = L.layerGroup(lays);
-        laygroup.addTo(map);
-        overlays[lay_name] = laygroup;
-    });
-
-    L.control.layers(null, overlays).addTo(map);
+    var all_layers_group = L.geoJson(features);
+    set_styles(all_layers_group);
+    place_overlays_on(all_layers_group,map);
+    bind_popups(all_layers_group);
+    set_feature_click(all_layers_group);
 
     set_map_click(map);
 

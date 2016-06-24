@@ -30,46 +30,40 @@ function make_map(map_cont){
 function add_tile_to(map){
     L.tileLayer(tile_src,tile_attributes).addTo(map);
 }
+// Set layers and add toggle control menu for each layer
+function set_styles(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
 
-// set styles and popups for zones
-function makeOnEachZone(click_fn){
-    return function(feature, layer) {
-      layer.bindPopup(feature.geometry.db_id.toString());
-      layer.setStyle({
-            weight: 1,
-            color: feature.properties['marker-color'],
-            dashArray: '',
-            fillOpacity: 0.3
-      });
-      layer.on({
-          click: click_fn
-      });
-    }
-}
+    var points = all_layers.filter(function(lay){return lay.feature.geometry.type == "Point"});
+    var zones = all_layers.filter(function(lay){return lay.feature.geometry.type == "Polygon"});
 
-
-function makeOnEachLine(click_fn){
-// set styles and popups for lines
-    return function (feature, layer) {
-        layer.bindPopup(feature.geometry.db_id.toString());
-        layer.setStyle({
-            weight: 4,
-            color: feature.properties['marker-color'],
-            dashArray: '',
-            fillOpacity: 1
+    zones.forEach(function(zone){
+        zone.setStyle({
+              weight: 1,
+              //color: zone.feature.properties['marker-color'],
+              dashArray: '',
+              fillOpacity: 0.3
         });
-        layer.on({
-          click: click_fn
-        });
-    }
+    });
+    points.forEach(function(point){
+        point.setIcon(icon_objs[point.feature.properties.icon]);
+    })
 }
-
-function makeOnEachPoint(click_fn){
-    // set styles and popups for points
-    return function(feature, layer) {
-      layer.bindPopup(feature.geometry.db_id.toString());
-      layer.on({
-          click: click_fn
-      });
-    }
+// Set layers and add toggle control menu for each layer
+function place_overlays_on(all_layers_group,map){
+    var all_layers = all_layers_group.getLayers();
+    var overlays = {};
+    LAYER_FIELDS.forEach(function(lay_name){
+        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
+        var laygroup = L.layerGroup(lays);
+        laygroup.addTo(map);
+        overlays[lay_name] = laygroup;
+    });
+    L.control.layers(null, overlays).addTo(map);
+}
+function bind_popups(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
+    all_layers.forEach(function(layer){
+        layer.bindPopup(layer.feature.properties.db_id.toString());
+    });
 }

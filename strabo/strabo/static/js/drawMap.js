@@ -3,18 +3,10 @@ var drawMap = make_map('drawMap');
 add_tile_to(drawMap);
 
 
-// add pre-existing points, zones, and lines to map
-var point_features = L.geoJson(interest_points, {
-  onEachFeature: makeOnEachPoint(function(e){})
-}).addTo(drawMap);
-
-var zone_features = L.geoJson(interest_zones, {
-  onEachFeature: makeOnEachZone(function(e){})
-}).addTo(drawMap);
-
-var line_features = L.geoJson(interest_lines, {
-  onEachFeature: makeOnEachLine(function(e){})
-}).addTo(drawMap);
+var all_layers_group = L.geoJson(features);
+set_styles(all_layers_group);
+bind_popups(all_layers_group);
+all_layers_group.addTo(drawMap);
 
 var drawnItems = new L.FeatureGroup();
 drawMap.addLayer(drawnItems);

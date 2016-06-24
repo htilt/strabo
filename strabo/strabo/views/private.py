@@ -42,14 +42,11 @@ def image_post():
     return redirect(url_for('images_table'))
 
 def show_ips_upload_form(interest_point):
-    return [geojson_wrapper.make_other_attributes_properties(ip.geojson_object) for ip in all_ips]
-
     all_ips = schema.InterestPoints.query.all()
-    all_other_ips = all_ips#[ip for ip in all_ips if ip.id != interest_point.id]
 
     my_ip_json = interest_point.geojson_object if interest_point.id else False
 
-    points, lines, zones = get_features("Point"),get_features("LineString"),get_features("Polygon")
+    geo_features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in all_ips]
 
     #get all avaliable images
     free_images = schema.Images.query.filter(schema.Images.interest_point_id == None).all()
@@ -59,9 +56,7 @@ def show_ips_upload_form(interest_point):
     taken_images = interest_point.images
 
     return render_template("private/upload_ips.html",
-        interest_points_json=points,
-        interest_zones_json=lines,
-        interest_lines_json=zones,
+        geo_features=geo_features,
         free_images=free_images,
         taken_images=taken_images,
         interest_point=interest_point,
@@ -86,7 +81,7 @@ def interest_points_post():
 
     private_helper.fill_interest_point(ip,request.form.getlist('image_ids'),
         request.form['title'],request.form['description'],request.form['geojson'],
-        request.form['layer'])
+        request.form['layer'],request.form['icon'])
     db.session.commit()
     return redirect(url_for('interest_points_table'))
 
