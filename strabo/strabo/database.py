@@ -10,9 +10,6 @@ engine = sqlalchemy.create_engine(app.config["SQLALCHEMY_DATABASE_URI"], echo=ap
 
 get_session = sqlalchemy.orm.sessionmaker(bind=engine)
 
-def get_row_by_id(table,id):
-    return db.session.query(table).get(id)
-
 #deletes ip refrenced by id and clears the relationships it has with images
 def delete_ip(id):
     idquery = db.session.query(schema.InterestPoints).filter_by(id=id)
@@ -41,17 +38,10 @@ def delete_image(id):
     idquery.delete()
     db.session.commit()
 
-# Returns a list of dictionaries from collumn names to rows
-# All rows in list are of a given feature type
-def get_geo_objects(geojson_feature_type):
-    feature_ips = db.session.query(schema.InterestPoints).filter_by(geojson_feature_type=geojson_feature_type).all()
-    obj_list = [ip.geojson_object for ip in feature_ips]
-    return obj_list
-
-def get_all_geo_objects():
-    feature_ips = schema.InterestPoints.query.all()
-    obj_list = [ip.geojson_object for ip in feature_ips]
-    return obj_list
+#helper functions, currently unused
+'''
+def get_row_by_id(table,id):
+    return db.session.query(table).get(id)
 
 #return all result objects of the table
 def get_all_rows(table):
@@ -60,3 +50,4 @@ def get_all_rows(table):
 def store_item(row_obj):
     db.session.add(row_obj)
     db.session.commit()
+'''
