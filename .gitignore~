@@ -25,8 +25,6 @@
 ######################
 *.log
 *.git
-*.sqlite*
-*.db
 
 # OS generated files #
 ######################
@@ -39,15 +37,12 @@
 
 # Images #
 ##########
+*.png
 *.jpg
 *.jpeg
 *.tiff
 *.PGN
-*.png
 *.TIFF
 *.JPG
 *.JPEG
 *.xcf
-
-
-node_modules/

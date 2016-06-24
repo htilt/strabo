@@ -2,6 +2,36 @@
 {% set active_page = "upload_ips" %}
 {% block head %}
     {{ super() }}
+    <script>
+        function feature_drawn(){
+            return obJSON;
+        }
+        function entered_name(form){
+            return form.name.value != ""
+        }
+        function selected_layer(form){
+            return form.layer.selectedIndex != 0
+        }
+        function selected_icon(form){
+            return form.icon.selectedIndex != 0
+        }
+        function checkForm(form){
+            var form_valid = true;
+            /*if(!feature_drawn()){
+                form_valid = false;
+            }
+            if(!entered_name(form)) {
+                form_valid = false;
+            }
+            if(!selected_layer(form)){
+                form_valid = false;
+            }
+            if(!selected_icon(form)){
+                form_valid = false;
+            }*/
+            return form_valid;
+        }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -113,34 +143,4 @@
 </script>
 <script src="/static/js/map_info.js"></script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>
-<script>
-    function feature_drawn(){
-        return !obJSON;
-    }
-    function entered_name(form){
-        return form.name.value != ""
-    }
-    function selected_layer(form){
-        return form.layer.selectedIndex != 0
-    }
-    function selected_icon(form){
-        return form.icon.selectedIndex != 0
-    }
-    function checkForm(form){
-        var form_valid = true;
-        if(feature_drawn()){
-            form_valid = false;
-        }
-        if(entered_name(form)) {
-            form_valid = false;
-        }
-        if(selected_layer(form)){
-            form_valid = false;
-        }
-        if(selected_icon(form)){
-            form_valid = false;
-        }
-        return form_valid;
-    }
-</script>
 {% endblock %}
