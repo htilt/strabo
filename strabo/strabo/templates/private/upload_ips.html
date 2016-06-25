@@ -2,13 +2,43 @@
 {% set active_page = "upload_ips" %}
 {% block head %}
     {{ super() }}
+    <script>
+        function feature_drawn(){
+            return obJSON;
+        }
+        function entered_name(form){
+            return form.name.value != ""
+        }
+        function selected_layer(form){
+            return form.layer.selectedIndex != 0
+        }
+        function selected_icon(form){
+            return form.icon.selectedIndex != 0
+        }
+        function checkForm(form){
+            var form_valid = true;
+            /*if(!feature_drawn()){
+                form_valid = false;
+            }
+            if(!entered_name(form)) {
+                form_valid = false;
+            }
+            if(!selected_layer(form)){
+                form_valid = false;
+            }
+            if(!selected_icon(form)){
+                form_valid = false;
+            }*/
+            return form_valid;
+        }
+    </script>
 {% endblock %}
 
 {% block content %}
 <main class="container">
   <div class="form">
     <fieldset>
-      <form id="ip-upload"  method="POST" action="/admin/interest_points/post" enctype="multipart/form-data">
+      <form id="ip-upload"  method="POST" action="/admin/interest_points/post"  onsubmit="return checkForm(this);" enctype="multipart/form-data">
 
         <div class="row">
           <div class="form-wrapper col-md-8">
@@ -32,10 +62,21 @@
 
           <div class="form-group">
             <label for="layer">Layer:</label><br>
-            <select class="form-control" name="layer" id="colorPick">
+            <select class="form-control" name="layer">
                 <option>Select One</a></option>
-                {% for layer_name in LAYER_FIELD_ENUMS %}
-                <option {%if layer_name == interest_point_layer_name%}selected{%endif%}>{{layer_name}}</option>
+                {% for layer_name in LAYER_FIELDS %}
+                <option {%if layer_name == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
+                {% endfor %}
+              </select>
+          </div><br>
+
+          <div class="form-group">
+             <!-- to make this look better, use bootstrap-select library. -->
+            <label for="icon">Point Icon:</label><br>
+            <select class="form-control icon-menu" name="icon">
+                <option>Select One</a></option>
+                {% for ico_name in MAP_ICONS %}
+                <option {%if ico_name == interest_point.icon%}selected{%endif%}>{{ico_name}}</option>
                 {% endfor %}
               </select>
           </div><br>
@@ -95,10 +136,10 @@
     var initial_zoom = {{ INITIAL_ZOOM }};
     var tile_src = "{{ MAP_TILE_SRC }}";
     var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
-    var interest_points = {{ interest_points_json|tojson }};
-    var interest_zones = {{ interest_zones_json|tojson }};
-    var interest_lines = {{ interest_lines_json|tojson }};
-    var edit_json = {{my_ip_collection|tojson}};
+    var features = {{ geo_features|tojson }};
+    var edit_json = {{my_ip_json|tojson}};
+    var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
+    var MAP_ICONS = {{MAP_ICONS|tojson}};
 </script>
 <script src="/static/js/map_info.js"></script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>

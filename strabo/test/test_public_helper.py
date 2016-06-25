@@ -1,4 +1,4 @@
-import unittest
+'''import unittest
 from data_fixture import DatabaseFixture
 
 
@@ -9,3 +9,4 @@ class PostTest(DatabaseFixture):
 
 if __name__ == "__main__":
     unittest.main()
+'''

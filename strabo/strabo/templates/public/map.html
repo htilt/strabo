@@ -20,10 +20,10 @@
         var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
         var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
-        var interest_points = {{ interest_points_json|tojson }};
-        var interest_zones = {{ interest_zones_json|tojson }};
-        var interest_lines = {{ interest_lines_json|tojson }};
+        var features = {{ features_json|tojson }};
         var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
+        var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
+        var MAP_ICONS = {{ MAP_ICONS|tojson }};
     </script>
     <script src="../static/js/popup.js"></script>
     <script src="../static/js/map_info.js"></script>
@@ -37,8 +37,6 @@
 </div>
 
 
-
-<div class="popup-background" hidden></div>
 <div class="popup" hidden>
     <div class="popup-foreground horizontal-center vertical-center">
         <div class="top-section">
@@ -48,7 +46,7 @@
             <!--- Maybe not ideal on desktop
             watch out for the button/andor title getting cut off on mobile-->
             <div class="col-xs-2" style="text-align: right;">
-              <button type="button" class="close-button" onclick="hide_popup();" aria-hidden="true">&times;</button>
+              <label class="close-button" onclick="hide_popup();">&times;</label>
             </div>
 
             <p id="ip_description" class="col-xs-12">

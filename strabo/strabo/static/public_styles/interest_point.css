@@ -1,18 +1,3 @@
-
-.popup-background {
-    /*if you change either position assignment it doesn't work*/
-    position: relative;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom:0;
-    right:0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 20000;/* goes above leaflet link */
-}
-
 .popup {
     width: 100%;
     height: 100%;
@@ -21,8 +6,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    /*padding: 1.25em;
-    border: 1px solid #000000;*/
+    background: rgba(0,0,0,0.5);
     z-index: 100000; /* goes above leaflet link */
 }
 .popup-foreground {
@@ -80,11 +64,7 @@
     font: normal 4em/normal Arial;
     width: 1em;
     height: 1em;
-    /*makes button not look like a button*/
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    outline:none;
+    cursor: pointer; 
 }
 .horizontal-center{
     width: 100%;

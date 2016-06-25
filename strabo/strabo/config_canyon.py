@@ -1,21 +1,14 @@
-import enum
-# make a reverse dictionary of aliases
+import os
+
+# makes keys values and values keys
 def reverse_dict(forward_dict):
   return {v:k for k,v in forward_dict.items()}
-
-# set feature types for uploading interest points
-class Layers(enum.Enum):
-    plant = 1
-    animal = 2
-    hist = 3
-    cool = 4
 
 def config_app(app):
     #
     #
     #
     ###### The following variables require configuration.
-
     # set the latitude and longitude for the center of the map
     # these values will be passed into the js file that gets rewritten
     # each time interest points are updated by the administrator, so
@@ -25,15 +18,14 @@ def config_app(app):
     app.config['LONG_SETTING'] = -122.630397
     app.config['INITIAL_ZOOM'] = 17
 
-    app.config['LAYER_FIELDS'] = lay_fields = {
-            Layers.plant:"Plants",
-            Layers.animal:"Animals",
-            Layers.hist:"Interest Points",
-            Layers.cool:"Sensitive Areas"
-        }
+    app.config['LAYER_FIELDS'] = [
+        "Plants",
+        "Animals",
+        "Interest Points",
+        "Sensitive Areas"
+    ]
 
-    app.config['LAYER_FIELD_ENUMS'] = reverse_dict(lay_fields)
-
+    app.config['MAP_ICONS'] = [fname for fname in os.listdir("./strabo/static/map_icons/")]
 
     #
     ##### set preferred styles, website title, and headings
@@ -78,7 +70,7 @@ def config_app(app):
     app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
     app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
 
-    app.config['ALLOWED_EXTENSIONS'] = {'png','PNG','jpg', 'jpeg', 'JPG', 'JPEG'}
+    app.config['ALLOWED_EXTENSIONS'] = ['png','PNG','jpg', 'jpeg', 'JPG', 'JPEG']
 
     app.config["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
     app.config['LEAFLET_ATTRIBUTES'] = {
@@ -106,6 +98,5 @@ def config_app(app):
       'geojson_object':'Geojson Object',
       'geojson_feature_type': 'Geojson Feature Type'
       }
-
 
     app.config['REVERSE_COLUMN_ALIASES'] = reverse_dict(app.config['COLUMN_ALIASES'])

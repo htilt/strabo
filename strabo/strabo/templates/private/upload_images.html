@@ -24,16 +24,6 @@
             </div>
 
             <div class="form-group">
-              <label for="interest_point">Point of Interest:</label><br>
-              <select class="form-control" name='interest_point' >
-                <option selected name="ip_auto"> Select One </option>
-                {% for interest_point in interest_points %}
-                <option value="{{ interest_point.id }}"> {{ interest_point.title }} </option>
-                {% endfor %}
-              </select>
-            </div>
-
-            <div class="form-group">
             <label for="year">Date Taken:</label><br>
               <div class="form-inline">
                 <div class="form-group">

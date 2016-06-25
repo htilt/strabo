@@ -1,14 +1,14 @@
-"""nothing added
+"""test column
 
-Revision ID: 6620e14fa8ae
-Revises: 
-Create Date: 2016-06-19 19:31:54.525931
+Revision ID: e84d7f546b23
+Revises: 8e04929c2203
+Create Date: 2016-06-24 11:29:23.668387
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '6620e14fa8ae'
-down_revision = None
+revision = 'e84d7f546b23'
+down_revision = '8e04929c2203'
 branch_labels = None
 depends_on = None
 
@@ -17,8 +17,7 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    pass
-
+	pass
 
 def downgrade():
     pass

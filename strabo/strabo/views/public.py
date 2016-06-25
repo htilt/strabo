@@ -1,25 +1,19 @@
-import os
-from flask import request, render_template, url_for, redirect, session, jsonify
-from math import ceil
+from flask import request, render_template, jsonify
 from strabo import app
 from strabo import database
 from strabo import db
 from strabo import schema
-from strabo.geojson_wrapper import get_all_feature_collections
-import copy
-from strabo import public_helper
-import werkzeug
+from strabo import geojson_wrapper
 
 
 @app.route("/")
 @app.route("/map")
 def map():
   template = "public/map.html"
-  points,zones,lines = get_all_feature_collections()
+  features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in db.session.query(schema.InterestPoints).all()]
+  print({k:v for k,v in app.config.items()})
   return render_template(template,
-    interest_points_json=points,
-    interest_zones_json=lines,
-    interest_lines_json=zones,
+    features_json=features,
      **app.config)
 
 @app.route('/map/post', methods=["POST"])

@@ -1,16 +1,13 @@
-import os, ast, sys
-from contextlib import closing
-from strabo import utils
-from strabo import geojson_wrapper
-
 from flask import request, render_template, redirect, url_for
 
+from strabo import geojson_wrapper
 from strabo import database
 from strabo import private_helper
 from strabo import config_canyon
 from strabo import schema
 from strabo import app
 from strabo import db
+
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
 def index():
@@ -36,20 +33,17 @@ def image_post():
     else:
         img_obj = schema.Images()
         db.session.add(img_obj)
+
     private_helper.fill_image(img_obj,request.files['file'],request.form['description'],request.form['year'],request.form['month'],request.form['day'])
     db.session.commit()
     return redirect(url_for('images_table'))
 
 def show_ips_upload_form(interest_point):
-    def get_features(feature_type):
-        return geojson_wrapper.make_featureCollection([ip.geojson_object for ip in all_other_ips if ip.geojson_feature_type == feature_type])
-
     all_ips = db.session.query(schema.InterestPoints).all()
-    all_other_ips = all_ips#[ip for ip in all_ips if ip.id != interest_point.id]
 
-    my_ip_collection = geojson_wrapper.make_featureCollection([interest_point.geojson_object]) if interest_point.id else False
+    my_ip_json = geojson_wrapper.to_geo_obj(interest_point.geojson_object) if interest_point.id else False
 
-    points,lines, zones = get_features("Point"),get_features("LineString"),get_features("Polygon")
+    geo_features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in all_ips]
 
     #get all avaliable images
     free_images = db.session.query(schema.Images).filter(schema.Images.interest_point_id == None).all()
@@ -58,24 +52,19 @@ def show_ips_upload_form(interest_point):
 
     taken_images = interest_point.images
 
-    ip_lay_name = app.config["LAYER_FIELDS"][config_canyon.Layers(interest_point.layer)] if interest_point.layer else ""
-
     return render_template("private/upload_ips.html",
-        interest_points_json=points,
-        interest_zones_json=lines,
-        interest_lines_json=zones,
+        geo_features=geo_features,
         free_images=free_images,
         taken_images=taken_images,
         interest_point=interest_point,
-        interest_point_layer_name=ip_lay_name,
-        my_ip_collection=my_ip_collection,
+        my_ip_json=my_ip_json,
         **app.config)
 ###
 ###
 ### Views to add interest points to the db
 @app.route("/admin/upload_ips/")
 def upload_ips():
-    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",geojson_feature_type="",layer=""))
+    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",layer="",icon=""))
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
@@ -89,7 +78,7 @@ def interest_points_post():
 
     private_helper.fill_interest_point(ip,request.form.getlist('image_ids'),
         request.form['title'],request.form['description'],request.form['geojson'],
-        request.form['layer'])
+        request.form['layer'],request.form['icon'])
     db.session.commit()
     return redirect(url_for('interest_points_table'))
 
