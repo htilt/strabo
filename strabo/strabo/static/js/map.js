@@ -7,7 +7,7 @@ function set_map_click(map){
         .setContent(e.latlng.toString())
         .openOn(map);
     }
-    // Trigger onMapClick function whenever map is clickeddb_id
+    // Trigger onMapClick function whenever map is clicked
     map.on('click', onMapClick);
 }
 function set_feature_click(all_layers_group){

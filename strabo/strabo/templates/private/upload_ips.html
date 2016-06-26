@@ -2,36 +2,14 @@
 {% set active_page = "upload_ips" %}
 {% block head %}
     {{ super() }}
-    <script>
-        function feature_drawn(){
-            return obJSON;
-        }
-        function entered_name(form){
-            return form.name.value != ""
-        }
-        function selected_layer(form){
-            return form.layer.selectedIndex != 0
-        }
-        function selected_icon(form){
-            return form.icon.selectedIndex != 0
-        }
-        function checkForm(form){
-            var form_valid = true;
-            /*if(!feature_drawn()){
-                form_valid = false;
-            }
-            if(!entered_name(form)) {
-                form_valid = false;
-            }
-            if(!selected_layer(form)){
-                form_valid = false;
-            }
-            if(!selected_icon(form)){
-                form_valid = false;
-            }*/
-            return form_valid;
-        }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/static/js/upload_ips.js"></script>
+    <style>
+    .form-error {
+        color:#ff0000;
+        font-style: italic;
+    }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -46,13 +24,15 @@
 
           <div class="form-group">
             <label for="name">Location Title:</label><br>
-            <input class="form-control" type="text" name="title" placeholder="Untitled" value="{{interest_point.title}}" id="name">
+            <input class="form-control" type="text" name="title" placeholder="Untitled" value="{{interest_point.title}}" id="name"></input>
+            <p id="title-form-issue" class="form-error" hidden>Required</p>
           </div>
 
 
           <div id="drawMap" style="width: 100%; height: 400px">
             <div class="container"></div>
           </div><br>
+          <p id="map-form-issue" class="form-error" hidden>Must place a new object on the map.</p>
 
 
           <div class="form-group">
@@ -68,6 +48,7 @@
                 <option {%if layer_name == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
               </select>
+             <p id="layer-form-issue" class="form-error" hidden>Required</p>
           </div><br>
 
           <div class="form-group">
@@ -79,6 +60,7 @@
                 <option {%if ico_name == interest_point.icon%}selected{%endif%}>{{ico_name}}</option>
                 {% endfor %}
               </select>
+             <p id="icon-form-issue" class="form-error" hidden>Required</p>
           </div><br>
 
             <div class="form-group">
@@ -139,7 +121,7 @@
     var features = {{ geo_features|tojson }};
     var edit_json = {{my_ip_json|tojson}};
     var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
-    var MAP_ICONS = {{MAP_ICONS|tojson}};
+    var MAP_ICONS = {{ MAP_ICONS|tojson }};
 </script>
 <script src="/static/js/map_info.js"></script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>
