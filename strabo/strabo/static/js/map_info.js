@@ -15,10 +15,13 @@ var ColorIcon = L.Icon.extend({
     }
 });
 
-var icon_objs = {};
-MAP_ICONS.forEach(function(ico_name){
-    icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
-});
+var icon_objs = function(){
+    var icon_objs = {};
+    MAP_ICONS.forEach(function(ico_name){
+        icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
+    });
+    return icon_objs;
+}();
 
 // leaflet map object
 function make_map(map_cont){
@@ -30,7 +33,7 @@ function make_map(map_cont){
 function add_tile_to(map){
     L.tileLayer(tile_src,tile_attributes).addTo(map);
 }
-// Set layers and add toggle control menu for each layer
+// sets icon object for points and stlying for zones
 function set_styles(all_layers_group){
     var all_layers = all_layers_group.getLayers();
 
@@ -61,6 +64,7 @@ function place_overlays_on(all_layers_group,map){
     });
     L.control.layers(null, overlays).addTo(map);
 }
+//makes it so that popups appear when clicked with the interest point database id
 function bind_popups(all_layers_group){
     var all_layers = all_layers_group.getLayers();
     all_layers.forEach(function(layer){

@@ -4,7 +4,7 @@ var map_message;
 var title_message;
 
 function feature_drawn(){
-    return obJSON;
+    return shape_drawn;
 }
 function entered_name(form){
     return form.name.value != ""
@@ -34,7 +34,7 @@ function checkForm(form){
         icon_message.show();
         form_valid = false;
     }
-    return form_valid;
+    return form_valid;shape_drawn
 }
 function hide_all(){
     layer_message.hide();
