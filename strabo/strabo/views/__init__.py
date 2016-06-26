@@ -1,2 +1,2 @@
-import strabo.views.private
 import strabo.views.public
+import strabo.views.private

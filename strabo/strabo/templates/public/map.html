@@ -1,72 +1,143 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+{% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+  <link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css" media="screen">
+  <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
+  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css">
+  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css">
+    <link href="/static/public_styles/interest_point.css" rel="stylesheet">
+    <link href="/static/public_styles/photoswipe.css" rel="stylesheet">
+    <link href="/static/public_styles/map.css" rel="stylesheet">
+    <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
+    <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
+    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
+    <scrielementspt src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script>
+        var lat_setting = {{ LAT_SETTING }};
+        var long_setting = {{ LONG_SETTING }};
+        var initial_zoom = {{ INITIAL_ZOOM }};
+        var tile_src = "{{ MAP_TILE_SRC }}";
+        var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
+        var features = {{ features_json|tojson }};
+        var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
+        var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
+        var MAP_ICONS = {{ MAP_ICONS|tojson }};
+    </script>
+    <script src="../static/js/popup.js"></script>
+    <script src="../static/js/map_info.js"></script>
+    <script src="../static/js/{{ MAP_JS }}"></script>
+{% endblock head %}
 
-  <title>Mapping Practice Example</title>
+{% block content %}
 
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css' />
-  <link rel="stylesheet" type="text/css" href="../static/public_styles/map.css" />
-  <link rel="stylesheet" type="text/css" href="../static/public_styles/header.css" />
-  <link rel="stylesheet" type="text/css" href="../static/public_styles/footer.css" />
-</head>
+<div class="row">
+  <div id="map"></div>
+</div>
 
-<body>
 
-  <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
-          <div class="modal-content">
-              <div class="modal-body">
-                  <img src="" alt="" />
-              </div>
-              <div class="modal-metadata">
-                  <p></p>
-              </div>
-          </div>
-      </div>
-  </div>
+<div class="popup" hidden>
+    <div class="popup-foreground horizontal-center vertical-center">
+        <div class="top-section">
+            <h2 id="ip_title" class="col-xs-10">
+                <!--javascrip puts title item in here -->
+            </h2>
+            <!--- Maybe not ideal on desktop
+            watch out for the button/andor title getting cut off on mobile-->
+            <div class="col-xs-2" style="text-align: right;">
+              <label class="close-button" onclick="hide_popup();">&times;</label>
+            </div>
 
-  <div class="container-fluid">
-    <div id="wrap">
-
-      <div class="row">
-        <div class="header">
-          {% include "public/header.html" %}
+            <p id="ip_description" class="col-xs-12">
+                <!--javascrip puts description item here -->
+            </p>
         </div>
-      </div>
-
-      <div class="row">
-        <div id="map" style="width: 100%; height: 400px">
+        <div class="carousel-space">
+            <div id="carouselholder" class="carousel vertical-center">
+                <!--javascrip puts carosel items here -->
+            </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div id="img-wrapper"><p class="text-muted">Select an interest point to see associated images.</p>
+        <div class="text-section">
+            <p id="img_description">
+                <!--javascrip puts description item here -->
+            </p>
         </div>
-      </div>
-
-      <div class="row">
-        {% include "public/footer.html" %}
-      </div>
-
     </div>
-  </div>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- Load in personalize js and gejson object-->
-    <!-- // <script src="../static/js/interest_points.js"></script> -->
-    <script>document.write('<script src="/../static/js/interest_points.js?dev=' + Math.floor(Math.random() * 100) + '"\><\/script>');</script>
-    <script src="../static/js/map.js"></script>
-    <script src="../static/js/gallery.js"></script>
-</body>
-</html>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
+        <!-- Background of PhotoSwipe.
+             It's a separate element, as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+            <div class="pswp__container">
+                <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader-active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+              </div>
+
+            </div>
+    </div>
+</div>
+
+
+<!--../Map and Text Selection Row-->
+
+{% endblock content %}
+
+<!--Javascript files for Leaflet-->
+
+{% block footer %}
+    {{ super() }}
+{% endblock footer %}

@@ -23,16 +23,8 @@
 
 # Logs and databases #
 ######################
-<<<<<<< HEAD
 *.log
-*.sqlite3
-=======
 *.git
-*.log
-*.sqlite
-*.sqlite3
-*.sqlite3.cp
->>>>>>> d588c46f967770a7f5ec84416cb3795d8e63c58a
 
 # OS generated files #
 ######################
@@ -41,10 +33,7 @@
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
-Thumbs.db
-<<<<<<< HEAD
-=======
+.cache
 
 # Images #
 ##########
@@ -56,8 +45,4 @@ Thumbs.db
 *.TIFF
 *.JPG
 *.JPEG
-
-# Virtual Environment #
-#######################
-/straboenv
->>>>>>> d588c46f967770a7f5ec84416cb3795d8e63c58a
+*.xcf

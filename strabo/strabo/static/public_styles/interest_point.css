@@ -1,0 +1,79 @@
+.popup {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100000; /* goes above leaflet link */
+}
+.popup-foreground {
+    height: 100%;
+    /* size of box on larger screens
+    Dependencies: .text-section:font-size*/
+    max-height: 800px;
+    max-width: 700px;
+    /*differenciates slightly from normal background*/
+    background: rgba(0,0,0,0.2);
+    /* border around box on large screens
+     * pattern:  _ _ blur spread color*/
+    box-shadow: 0 0 10px 10px rgba(128,159,107,0.7);
+}
+
+.top-section {
+    width:100%;
+    background: #ebf5e4;
+    /*must add to 100 with .text-section:height and .carousel-space:height*/
+    height: 49%;
+}
+#carouselholder{
+    height: 100%;
+}
+.carousel-space{
+    /*must add to 100 with .top-section:height and .text-section:height*/
+    height:45%;
+}
+.padded-pic{
+    padding: 0 20px 0 20px;
+    height: 100%;
+}
+@media (min-height: 800px) {
+  .text-section {
+      /*Dependencies: text-section's percentage height, popup-foreground's max-width*/
+      font-size: 45px;
+  }
+}
+@media (max-height: 800px) {
+  .text-section {
+      /*Dependencies: text-section's percentage height*/
+      font-size: 5vh;
+  }
+}
+.text-section{
+    font: Arial;
+    width: 100%;
+    /*must add to 100 with .top-section:height and .carousel-space:height*/
+    height: 6%;
+
+    text-align: center;
+    background: #ffffff;
+}
+.close-button{
+    font: normal 4em/normal Arial;
+    width: 1em;
+    height: 1em;
+    cursor: pointer; 
+}
+.horizontal-center{
+    width: 100%;
+    margin: auto;
+}
+.vertical-center{
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
