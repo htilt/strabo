@@ -27,7 +27,7 @@
     width:100%;
     background: #ebf5e4;
     /*must add to 100 with .text-section:height and .carousel-space:height*/
-    height: 49%;
+    height: 43%;
 }
 
 .top-section h2 {
@@ -43,7 +43,7 @@
 }
 .carousel-space{
     /*must add to 100 with .top-section:height and .text-section:height*/
-    height:45%;
+    height: 49%;
 }
 .padded-pic{
     padding: 0 20px 0 20px;
@@ -69,7 +69,7 @@
 .text-section{
     width: 100%;
     /*must add to 100 with .top-section:height and .carousel-space:height*/
-    height: 6%;
+    height: 8%;
     text-align: center;
     background: #ebf5e4;
 }
