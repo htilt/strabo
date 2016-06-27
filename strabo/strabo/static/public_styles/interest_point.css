@@ -19,7 +19,7 @@
     background: rgba(0,0,0,0.2);
     /* border around box on large screens
      * pattern:  _ _ blur spread color*/
-    box-shadow: 0 0 10px 10px rgba(128,159,107,0.7);
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.4);
 }
 
 .top-section {
@@ -48,7 +48,7 @@
 @media (max-height: 800px) {
   .text-section {
       /*Dependencies: text-section's percentage height*/
-      font-size: 5vh;
+      font-size: 5vh; /* Means 5% of the view height */
   }
 }
 .text-section{
