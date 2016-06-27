@@ -1,9 +1,10 @@
 from datetime import datetime
-from strabo import config_canyon
 
 from sqlalchemy import *
 import sqlalchemy
 from sqlalchemy.orm import relationship
+
+from strabo import config_canyon
 
 Base = sqlalchemy.ext.declarative.declarative_base()
 
@@ -22,10 +23,10 @@ class InterestPoints(Base,DataType):
     descrip_body = Column(Text)
 
     geojson_object = Column(Text)
-    geojson_feature_type = Column(Text)
 
     # for some weird reason, enums break this and I cannot figure it out.
-    layer = Column(Integer)
+    layer = Column(Text)
+    icon = Column(Text)
 
     images = relationship("Images",back_populates="interest_point")
 

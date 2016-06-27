@@ -12,7 +12,7 @@
     <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
     <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
     <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
-    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
+    <scrielementspt src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
         var lat_setting = {{ LAT_SETTING }};
@@ -20,10 +20,10 @@
         var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
         var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
-        var interest_points = {{ interest_points_json|tojson }};
-        var interest_zones = {{ interest_zones_json|tojson }};
-        var interest_lines = {{ interest_lines_json|tojson }};
+        var features = {{ features_json|tojson }};
         var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
+        var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
+        var MAP_ICONS = {{ MAP_ICONS|tojson }};
     </script>
     <script src="../static/js/popup.js"></script>
     <script src="../static/js/map_info.js"></script>
