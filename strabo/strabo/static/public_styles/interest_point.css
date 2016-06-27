@@ -23,11 +23,21 @@
 }
 
 .top-section {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
     width:100%;
     background: #ebf5e4;
     /*must add to 100 with .text-section:height and .carousel-space:height*/
     height: 49%;
 }
+
+.top-section h2 {
+    font-weight: bold;
+}
+
+#ip_description {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+}
+
 #carouselholder{
     height: 100%;
 }
@@ -39,6 +49,11 @@
     padding: 0 20px 0 20px;
     height: 100%;
 }
+
+#img_description {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+}
+
 @media (min-height: 800px) {
   .text-section {
       /*Dependencies: text-section's percentage height, popup-foreground's max-width*/
@@ -52,13 +67,11 @@
   }
 }
 .text-section{
-    font: Arial;
     width: 100%;
     /*must add to 100 with .top-section:height and .carousel-space:height*/
     height: 6%;
-
     text-align: center;
-    background: #ffffff;
+    background: #ebf5e4;
 }
 .close-button{
     font: normal 4em/normal Arial;
