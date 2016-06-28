@@ -12,6 +12,8 @@ Contents:
    :maxdepth: 2
    
    readme.rst
+   strabo.rst
+   runserver.rst
 
 .. automodule:: database.py
 
