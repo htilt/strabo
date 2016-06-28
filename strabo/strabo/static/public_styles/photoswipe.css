@@ -15,3 +15,6 @@
 .my-gallery figcaption {
   display: none;
 }
+.z-above-popup {
+    z-index: 10000000;
+}

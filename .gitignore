@@ -25,6 +25,9 @@
 ######################
 *.log
 *.git
+*.sqlite
+*.sqlite3
+*.db
 
 # OS generated files #
 ######################
