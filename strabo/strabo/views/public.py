@@ -11,7 +11,6 @@ from strabo import geojson_wrapper
 def map():
   template = "public/map.html"
   features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in db.session.query(schema.InterestPoints).all()]
-  print({k:v for k,v in app.config.items()})
   return render_template(template,
     features_json=features,
      **app.config)

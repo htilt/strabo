@@ -5,6 +5,7 @@
     dnf install redhat-rpm-config #needed for python modules to be installed
     dnf install python3-devel   #needed for python modules to be installed
     dnf install vim #editing files remotely
+    dnf install emacs #editing files remotely
 
 ### Other configuration
 

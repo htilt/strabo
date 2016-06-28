@@ -15,7 +15,7 @@ def recreate_postgres_db():
     os.system("createdb strabo")
     os.system("python initDB.py")
 
-recreate_postgres_db()
+#recreate_postgres_db()
 
 class mock_flask_file_obj:
     def __init__(self,path,filename):

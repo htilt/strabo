@@ -15,12 +15,15 @@
     <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
+        var features = {{ features_json|tojson }};
+
+        //all these things come directly from the config file, so maybe there is a better way of making
+        //all the information in the config file avaliable to the javascript. 
         var lat_setting = {{ LAT_SETTING }};
         var long_setting = {{ LONG_SETTING }};
         var initial_zoom = {{ INITIAL_ZOOM }};
         var tile_src = "{{ MAP_TILE_SRC }}";
         var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
-        var features = {{ features_json|tojson }};
         var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
         var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
         var MAP_ICONS = {{ MAP_ICONS|tojson }};

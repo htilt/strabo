@@ -85,18 +85,3 @@ def config_app(app):
     app.config['DEBUG']  = True
 
     app.config["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
-
-    ###### The following variables probably will not require configuration.
-
-    # Provide aliases for column names
-    # Only edit column aliases if coulumns in schema.py have been altered.
-    app.config['COLUMN_ALIASES'] = {'id':'Integer ID', 'name':'Name',
-      'layer':'Layer Name',
-      'interest_point_id':'Interest Point',
-      'filename':'Filename',
-      'thumbnail_name':'Image Thumbnail Filename',
-      'geojson_object':'Geojson Object',
-      'geojson_feature_type': 'Geojson Feature Type'
-      }
-
-    app.config['REVERSE_COLUMN_ALIASES'] = reverse_dict(app.config['COLUMN_ALIASES'])
