@@ -68,6 +68,6 @@ function place_overlays_on(all_layers_group,map){
 function bind_popups(all_layers_group){
     var all_layers = all_layers_group.getLayers();
     all_layers.forEach(function(layer){
-        layer.bindPopup(layer.feature.properties.db_id.toString());
+        layer.bindPopup(layer.feature.properties.name);
     });
 }
