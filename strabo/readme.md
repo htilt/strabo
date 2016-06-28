@@ -10,10 +10,12 @@ Overview
 `strabo` is a tool designed to offer an administrator an easy method 
 for displaying three kinds of information on a website: interest points, images, and textual selections, and for visually relating these pieces of information. 
 
-An administrator can upload and locate interest points on an interactive map and associate images and textual descriptions with each point. 
+An administrator can locate interest points on an interactive map and associate textual descriptions and multiple images with each point. 
 Once information has been uploaded to the database, it will
 be available on a public end of the site. This public end
 includes an interactive map that displays interest point markers that, upon being clicked, open a popup with descriptive text and associated photos corresponding to the point of interest. 
+
+See the *Reed Canyon Map* for an example of a website developed using `strabo`.
 
 #
 
@@ -21,7 +23,7 @@ Contents
 ========
 The root directory `strabo` includes subdirectories corresponding to
 * `alembic`, a Python data migration tool 
-* `docs`, the collection of Sphinx- and JSDoc-generated documentation for the project
+* `docs`, the collection of Sphinx- and JSDoc-generated documentation for the project, including a link to outputted HTML pages
 * `test`, a repository of tests using PyTest, Mocha, and Chai
 
 #
@@ -53,7 +55,7 @@ associated metadata.***
 
 #
 
-_The data migration tool (Alembic) and documentation generating engines (Sphinx and JSDoc) must be installed and configured separately. See their docs for instructions on how to do so._
+_The data migration tool (Alembic) and documentation generating engines (Sphinx and JSDoc) must be installed and configured separately. See their websites for instructions on how to do so._
 
 #
 

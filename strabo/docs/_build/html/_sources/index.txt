@@ -10,6 +10,12 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   
+   readme.md
+
+.. autoclass:: Layers
+    :members:
+
 
 
 
