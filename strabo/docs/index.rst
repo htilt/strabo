@@ -11,10 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
    
-   readme.md
+   readme.rst
 
-.. autoclass:: Layers
-    :members:
+.. automodule:: database.py
 
 
 
