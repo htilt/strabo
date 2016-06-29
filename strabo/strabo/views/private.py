@@ -1,3 +1,17 @@
+'''
+The admin interface has 3 different core features:
+
+1. You can view an html table that corresponds directly with the database table.
+The interest_points_table and images_table functions collect information in the
+database and generate these html tables.
+
+2. There will be delete and edit options on that table. When these options are chosen
+in the html form, the images_redirect or interest_points_redirect functions are called,
+no matter which option is chosen. So these functions figure out which option was chosen,
+and act accordingly, deleting the item from the table and refreshing the page if
+"delete" was chosen, or bringing up an editing interface if "edit" is chosen.
+'''
+
 from flask import request, render_template, redirect, url_for
 
 from strabo import geojson_wrapper
@@ -39,6 +53,11 @@ def image_post():
     return redirect(url_for('images_table'))
 
 def show_ips_upload_form(interest_point):
+    '''
+    takes interest point (which can be blank, and does not have to be in the database)
+    and uses it to fill in fill in the empty entries in the html form, allowing for
+    nice editing of interest points.
+    '''
     all_ips = db.session.query(schema.InterestPoints).all()
 
     my_ip_json = geojson_wrapper.to_geo_obj(interest_point.geojson_object) if interest_point.id else False
