@@ -1,5 +1,6 @@
-from strabo import db
 from strabo import schema
+
+from strabo import db
 
 if __name__ == '__main__':
     # This function loads in the proper sql

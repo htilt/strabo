@@ -26,7 +26,8 @@ strabo/docs/_build/
 ######################
 *.log
 *.git
-*.sqlite*
+*.sqlite
+*.sqlite3
 *.db
 
 # OS generated files #
@@ -40,15 +41,14 @@ strabo/docs/_build/
 
 # Images #
 ##########
+*.png
 *.jpg
 *.jpeg
 *.tiff
 *.PGN
-*.png
 *.TIFF
 *.JPG
 *.JPEG
 *.xcf
-
 
 node_modules/

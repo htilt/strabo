@@ -15,21 +15,13 @@ var ColorIcon = L.Icon.extend({
     }
 });
 
-// Initialize color icons
-var greenIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinGreen.png'});
-var blueIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinBlue.png'});
-var maroonIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinMaroon.png'});
-var oliveIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOlive.png'});
-var orangeIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinOrange.png'});
-var pinkIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPink.png'});
-var purpleIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinPurple.png'});
-var tealIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinTeal.png'});
-var yellowIcon = new ColorIcon({iconUrl: '/static/map_icons/MapPinYellow.png'});
-var grayIcon = new ColorIcon ({iconUrl: 'static/map_icons/MapPinGray.png'});
-
-// Initialize special icons
-var sensitiveAreaIcon = new ColorIcon({iconUrl: '/static/map_icons/SensitiveAreaPin.png'});
-var APIcon = new ColorIcon({iconUrl: '/static/map_icons/APicon.png'});
+var icon_objs = function(){
+    var icon_objs = {};
+    MAP_ICONS.forEach(function(ico_name){
+        icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
+    });
+    return icon_objs;
+}();
 
 // leaflet map object
 function make_map(map_cont){
@@ -41,46 +33,41 @@ function make_map(map_cont){
 function add_tile_to(map){
     L.tileLayer(tile_src,tile_attributes).addTo(map);
 }
+// sets icon object for points and stlying for zones
+function set_styles(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
 
-// set styles and popups for zones
-function makeOnEachZone(click_fn){
-    return function(feature, layer) {
-      layer.bindPopup(feature.geometry.db_id.toString());
-      layer.setStyle({
-            weight: 1,
-            color: feature.properties['marker-color'],
-            dashArray: '',
-            fillOpacity: 0.3
-      });
-      layer.on({
-          click: click_fn
-      });
-    }
-}
+    var points = all_layers.filter(function(lay){return lay.feature.geometry.type == "Point"});
+    var zones = all_layers.filter(function(lay){return lay.feature.geometry.type == "Polygon"});
 
-
-function makeOnEachLine(click_fn){
-// set styles and popups for lines
-    return function (feature, layer) {
-        layer.bindPopup(feature.geometry.db_id.toString());
-        layer.setStyle({
-            weight: 4,
-            color: feature.properties['marker-color'],
-            dashArray: '',
-            fillOpacity: 1
+    zones.forEach(function(zone){
+        zone.setStyle({
+              weight: 1,
+              //color: zone.feature.properties['marker-color'],
+              dashArray: '',
+              fillOpacity: 0.3
         });
-        layer.on({
-          click: click_fn
-        });
-    }
+    });
+    points.forEach(function(point){
+        point.setIcon(icon_objs[point.feature.properties.icon]);
+    })
 }
-
-function makeOnEachPoint(click_fn){
-    // set styles and popups for points
-    return function(feature, layer) {
-      layer.bindPopup(feature.geometry.db_id.toString());
-      layer.on({
-          click: click_fn
-      });
-    }
+// Set layers and add toggle control menu for each layer
+function place_overlays_on(all_layers_group,map){
+    var all_layers = all_layers_group.getLayers();
+    var overlays = {};
+    LAYER_FIELDS.forEach(function(lay_name){
+        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
+        var laygroup = L.layerGroup(lays);
+        laygroup.addTo(map);
+        overlays[lay_name] = laygroup;
+    });
+    L.control.layers(null, overlays).addTo(map);
+}
+//makes it so that popups appear when clicked with the interest point database id
+function bind_popups(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
+    all_layers.forEach(function(layer){
+        layer.bindPopup(layer.feature.properties.name);
+    });
 }

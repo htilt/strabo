@@ -1,10 +1,3 @@
-var map;
-
-//is called whenever a leafelet feature is clicked
-function whenClicked(e) {
-    ip_clicked(e.target.feature.geometry.db_id);
-}
-
 //sets the popup feature when you click a spot on the map
 function set_map_click(map){
     // Display latlng info for any place on the map when clicked
@@ -14,42 +7,29 @@ function set_map_click(map){
         .setContent(e.latlng.toString())
         .openOn(map);
     }
-    // Trigger onMapClick function whenever map is clickeddb_id
+    // Trigger onMapClick function whenever map is clicked
     map.on('click', onMapClick);
 }
-
+function set_feature_click(all_layers_group){
+    var all_layers = all_layers_group.getLayers();
+    all_layers.forEach(function(layer){
+        layer.on({
+            click: function(e){ip_clicked(e.target.feature.properties.db_id)}
+        });
+    });
+}
 
 $(document).ready(function(){
-    map = make_map('map');
+    var map = make_map('map');
     add_tile_to(map);
 
     flickety_init();
 
-    // add pre-existing points, zones, and lines to map
-    var point_features = L.geoJson(interest_points, {
-      onEachFeature: makeOnEachPoint(whenClicked)
-  }).addTo(map);
-
-    var zone_features = L.geoJson(interest_zones, {
-      onEachFeature: makeOnEachZone(whenClicked)
-    }).addTo(map);
-
-    var line_features = L.geoJson(interest_lines, {
-      onEachFeature: makeOnEachLine(whenClicked)
-    }).addTo(map);
-
-    // Set layers and add toggle control menu for each layer
-    var overlays = {
-      "Interest Points": point_features,
-      "Lines": line_features,
-      "Zones": zone_features,
-    }
-    L.control.layers(null, overlays).addTo(map);
-
-
-    // Test custom map markers
-    // L.marker([45.48273, -122.63237], {icon: APIcon}).addTo(map);
-    // L.marker([45.48185, -122.62594], {icon: sensitiveAreaIcon}).addTo(map).bindPopup("Caution: Lamprey");
+    var all_layers_group = L.geoJson(features);
+    set_styles(all_layers_group);
+    place_overlays_on(all_layers_group,map);
+    bind_popups(all_layers_group);
+    set_feature_click(all_layers_group);
 
     set_map_click(map);
 
