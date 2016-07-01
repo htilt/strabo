@@ -18,7 +18,12 @@ def show_image_upload_form(image):
     image=image,
     **app.config)
 
+@app.route("/login/")
+def login():
+  return render_template("/authorization/login.html",**app.config)
+
 ###
+
 ###
 ### Views to upload images to db
 @app.route("/admin/upload_images/")

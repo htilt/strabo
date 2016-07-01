@@ -37,9 +37,15 @@ def config_app(app):
     app.config['MAP_CSS'] = "map.css"
     app.config['GALLERY_CSS'] = "gallery.css"
     app.config['ABOUT_CSS'] = 'about.css'
+    app.config['LOGIN_CSS'] = "login.css"
 
     app.config['WEBSITE_TITLE'] = 'Discover the Reed College Canyon'
     app.config['INDEX_GREETING'] = "Select a tab to begin adding content to the Canyon."
+
+    app.config['LOGIN_HEADER'] = 'Strabo Login'
+    app.config['LOGIN_GREETING'] = 'Login to continue adding content to the Canyon.'
+    app.config['REGISTER_HEADER'] = 'Register for Strabo'
+    app.config['REGISTER_GREETING'] = 'Register to begin adding content to the Canyon.'
 
     # set title and subtitle for image gallery
     app.config['GALLERY_TITLE'] = "Image Gallery"
@@ -69,6 +75,8 @@ def config_app(app):
     # set absolute and relative paths to styles
     app.config['PATH_TO_PUBLIC_STYLES'] = "../static/public_styles/"
     app.config['RELPATH_TO_PUBLIC_TEMPLATES'] = "public/"
+    app.config['PATH_TO_PRIVATE_STYLES'] = "../static/private_styles/"
+    app.config['RELPATH_TO_PRIVATE_TEMPLATES'] = "private/"
 
     app.config['ALLOWED_EXTENSIONS'] = ['png','PNG','jpg', 'jpeg', 'JPG', 'JPEG']
 
