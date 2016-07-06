@@ -18,9 +18,9 @@
 }
 
 #footer p {
-  color: #6e4f31; /* Brown to match logo */ 
+  color: #999999; /* #6e4f31; /* Brown to match logo */ 
   font-family: 'Futura', sans-serif;
   font-weight: 200;
-  font-size: 0.857142857em; /* 12/14 */
+  font-size: 0.957142857em; /* 12/14 + 0.1 */
   padding: 0.071428571em; /* 1/14 */
 }
