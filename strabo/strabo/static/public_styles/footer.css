@@ -4,11 +4,11 @@
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -2em; /* wrapper margin and footer push height must be the same value */
+  margin: 0 auto -1.5em; /* wrapper margin and footer push height must be the same value */
 }
 
 .footer, .push {
-  height: 2em;
+  height: 1.5em;
   float: left;
 }
 

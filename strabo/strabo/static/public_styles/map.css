@@ -10,5 +10,5 @@ html, body {
     width: 100%;
     position: absolute;
     top: 4.5em;
-    bottom: 2em;
+    bottom: 1.5em; /*2em*/
 }
