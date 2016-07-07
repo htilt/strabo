@@ -3,6 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+=============================================
 Welcome to Strabo Canyon Map's documentation!
 =============================================
 
@@ -20,24 +21,26 @@ General Docs
    :maxdepth: 2
    :titlesonly:
 
-   readme
+   readme.rst
 
-Database Docs
-=============
-   initDB
-   runserver
+
+
 
 Public Interface
 ================
 
+.. toctree::
+	:maxdepth: 2
+	
+   initDB
+   runserver
    modules
    private_test
    strabo
    set_database
    strabo.views
 
-Private Interface
-=================
+
 
 .. automodule:: database.py
 

@@ -11,7 +11,7 @@ Last Updated: June 26, 2016
 Overview
 --------
 Strabo is a tool designed to offer an administrator an easy method 
-for displaying three kinds of information on a website: interest points, images, and textual selections, and for visually relating these pieces of information. 
+for displaying three kinds of information on a website - interest points, images, and textual selections - and for visually relating these pieces of information. 
 
 An administrator can locate interest points on an interactive map and associate textual descriptions and multiple images with each point. 
 Once information has been uploaded to the database, it will
