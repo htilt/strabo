@@ -55,7 +55,7 @@ associated metadata.***
 
 #
 
-_The data migration tool (Alembic) and documentation generating engines (Sphinx and JSDoc) must be installed and configured separately. See their websites for instructions on how to do so._
+_The data migration tool (Alembic) and documentation generating engine (Sphinx) must be installed and configured separately. See their websites for instructions on how to do so._
 
 #
 
