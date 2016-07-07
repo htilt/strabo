@@ -4,6 +4,11 @@ import os
 def reverse_dict(forward_dict):
   return {v:k for k,v in forward_dict.items()}
 
+# Remove extension from filename
+def remove_ext(fname):
+    filename = os.path.splitext(fname)[0]
+    return filename
+
 def config_app(app):
     #
     #
@@ -25,7 +30,7 @@ def config_app(app):
         "Sensitive Areas"
     ]
 
-    app.config['MAP_ICONS'] = [fname for fname in os.listdir("./strabo/static/map_icons/")]
+    app.config['MAP_ICONS'] = [remove_ext(fname) for fname in os.listdir("./strabo/static/map_icons/") if not fname.startswith('.')]
 
     #
     ##### set preferred styles, website title, and headings

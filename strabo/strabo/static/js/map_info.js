@@ -15,12 +15,6 @@ var ColorIcon = L.Icon.extend({
     }
 });
 
-// Extract filename without extension (doesn't work for extensions
-// longer than 4 characters)
-function extractFileName(icon_name){
-    return icon_name.slice(0,-4);
-}
-
 var icon_objs = function(){
     var icon_objs = {};
     MAP_ICONS.forEach(function(icon_name){
