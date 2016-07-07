@@ -22,13 +22,15 @@ See the **Reed Canyon Map** for an example of a website developed using Strabo.
 
 #
 
-Contents
---------
+Strabo Contents
+---------------
 The root directory **strabo** includes subdirectories corresponding to
 
 - ``alembic``, a Python data migration tool 
 
-- ``docs``, the collection of Sphinx- and JSDoc-generated documentation for the project, including a link to outputted HTML pages
+- ``docs``, the collection of Sphinx-generated documentation for the project, which can be found at **Read the Docs**
+
+- ``strabo``, the directory of HTML, CSS, Python, and Javascript that set up the website
 
 - ``test``, a repository of tests using PyTest, Mocha, and Chai
 
