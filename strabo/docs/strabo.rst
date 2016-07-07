@@ -11,6 +11,14 @@ Subpackages
 Submodules
 ----------
 
+strabo.add_database module
+--------------------------
+
+.. automodule:: strabo.add_database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 strabo.config_canyon module
 ---------------------------
 
@@ -23,6 +31,14 @@ strabo.database module
 ----------------------
 
 .. automodule:: strabo.database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+strabo.file_writing module
+--------------------------
+
+.. automodule:: strabo.file_writing
     :members:
     :undoc-members:
     :show-inheritance:
@@ -51,13 +67,20 @@ strabo.private_helper module
     :undoc-members:
     :show-inheritance:
 
-strabo.schema module
---------------------
+
+
+
+schema.py
+---------
 
 .. automodule:: strabo.schema
     :members:
     :undoc-members:
     :show-inheritance:
+
+.. autoclass:: InterestPoints
+
+
 
 strabo.utils module
 -------------------

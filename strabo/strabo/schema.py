@@ -18,6 +18,9 @@ class DataType(IdPrimaryKeyMixin, DateTimeMixin):
     pass
 
 class InterestPoints(Base,DataType):
+    """
+    This creates a table for the interest points.
+    """
     __tablename__ = 'interest_points'
     title = Column(Text)
     descrip_body = Column(Text)
@@ -41,6 +44,6 @@ class Images(Base,DataType):
 
     description = Column(Text)
 
-    #width and height in pixels, needed for photoswipe
+    # width and height in pixels, needed for photoswipe
     width = Column(Integer)
     height = Column(Integer)

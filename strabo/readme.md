@@ -6,7 +6,7 @@ making an interactive map incorporating text and images.
 
 Last Updated: June 26, 2016
 
-
+#
 
 Overview
 --------
@@ -20,7 +20,7 @@ includes an interactive map that displays interest point markers that, upon bein
 
 See the **Reed Canyon Map** for an example of a website developed using Strabo.
 
-
+#
 
 Contents
 --------
@@ -32,7 +32,7 @@ The root directory **strabo** includes subdirectories corresponding to
 
 - ``test``, a repository of tests using PyTest, Mocha, and Chai
 
-
+#
 
 Website Set-Up
 --------------
@@ -46,7 +46,7 @@ the SQL database, but rather in a separate folder on the server.
 Image filenames are stored in the database, along with their 
 associated metadata.***
 
-3. Edit config.py with your website's specifications.
+3. Edit ``config.py`` with your website's specifications.
 
 4. Run ``initDB.py``
 
@@ -56,7 +56,7 @@ associated metadata.***
 
 *The data migration tool (Alembic) and documentation generating engine (Sphinx) must be installed and configured separately. See their websites for instructions on how to do so.*
 
-
+#
 
 License
 -------

@@ -11,7 +11,7 @@ Here you will find documentation for the public and private ends of the Reed Can
 
 ** *This is a work in progress.* **
 
-All credit goes to Reed College, 2016.
+All credit to Reed College.
 
 
 General Docs
@@ -21,26 +21,14 @@ General Docs
    :maxdepth: 2
    :titlesonly:
 
-   readme.rst
-
-
-
 
 Public Interface
 ================
 
 .. toctree::
 	:maxdepth: 2
-	
-   initDB
-   runserver
+
    modules
-   private_test
-   strabo
-   set_database
-   strabo.views
-
-
 
 .. automodule:: database.py
 
