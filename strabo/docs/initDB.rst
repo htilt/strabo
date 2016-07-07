@@ -1,7 +1,4 @@
-initDB module
-=============
+initDB.py
+=========
 
-.. automodule:: initDB
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Initializes the database.

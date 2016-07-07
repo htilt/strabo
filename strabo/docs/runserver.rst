@@ -1,7 +1,4 @@
-runserver module
-================
+runserver.py
+============
 
-.. automodule:: runserver
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Initializes map server on website.

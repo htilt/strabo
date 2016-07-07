@@ -3,13 +3,6 @@ import os
 
 # makes keys values and values keys
 def reverse_dict(forward_dict):
-    """ This function makes keys values and values keys for editing.
-
-    :param name: Forward_dict
-    :type name: dictionary.
-    :returns: reversed dictionary.
-    :raises: Errors.
-    """
   return {v:k for k,v in forward_dict.items()}
 
 # set feature types for uploading interest points

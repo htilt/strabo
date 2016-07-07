@@ -6,26 +6,38 @@
 Welcome to Strabo Canyon Map's documentation!
 =============================================
 
-Here you will find documentation for the public and private ends of the Canyon Map implementation of the Strabo project.
+Here you will find documentation for the public and private ends of the Reed Canyon Map project.
 
 ** *This is a work in progress.* **
 
-Currently no automodule feature, index, or module index.
+All credit goes to Reed College, 2016.
 
 
-Contents:
+General Docs
+============
 
 .. toctree::
    :maxdepth: 2
+   :titlesonly:
 
+   readme
+
+Database Docs
+=============
    initDB
+   runserver
+
+Public Interface
+================
+
    modules
    private_test
    strabo
-   runserver
    set_database
    strabo.views
 
+Private Interface
+=================
 
 .. automodule:: database.py
 
