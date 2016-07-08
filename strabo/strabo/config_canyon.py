@@ -30,7 +30,9 @@ def config_app(app):
         "Sensitive Areas"
     ]
 
-    app.config['MAP_ICONS'] = [remove_ext(fname) for fname in os.listdir("./strabo/static/map_icons/") if not fname.startswith('.')]
+    app.config['MAP_ICONS'] = [fname for fname in os.listdir("./strabo/static/map_icons/")]
+    # This list contains what the dropdown menu should say
+    #app.config['MAP_ICON_OPTIONS'] = [remove_ext(fname) for fname in os.listdir("./strabo/static/map_icons/") if not fname.startswith('.')]
 
     #
     ##### set preferred styles, website title, and headings
@@ -63,6 +65,7 @@ def config_app(app):
 
     app.config['MAP_JS'] = 'map.js'
     app.config['ADMINMAP_JS'] = 'drawMap.js'
+    app.config['LOGIN_JS'] = 'login.js'
     app.config['FAVICON'] = '../strabo/strabo/static/favicon.ico'
 
 
