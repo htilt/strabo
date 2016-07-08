@@ -9,28 +9,26 @@ Welcome to Strabo Canyon Map's documentation!
 
 Here you will find documentation for the public and private ends of the Reed Canyon Map project.
 
-** *This is a work in progress.* **
+.. note::
+	** *This is a work in progress.* **
 
 All credit to Reed College.
 
 
-General Docs
-============
-
-.. toctree::
-   :maxdepth: 2
-   :titlesonly:
-
-
-Public Interface
-================
+Setup
+======
 
 .. toctree::
 	:maxdepth: 2
 
-   modules
+	setup
 
-.. automodule:: database.py
+Strabo
+======
+.. toctree::
+	:maxdepth: 2
+
+	strabo
 
 
 

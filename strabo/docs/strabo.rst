@@ -72,14 +72,17 @@ strabo.private_helper module
 
 schema.py
 ---------
+Here I am saying something interesting.
 
 .. automodule:: strabo.schema
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. autoclass:: InterestPoints
+.. autoclass:: IdPrimaryKeyMixin
+   :members: 
 
+.. autoclass:: InterestPoints
 
 
 strabo.utils module

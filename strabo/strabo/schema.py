@@ -18,9 +18,7 @@ class DataType(IdPrimaryKeyMixin, DateTimeMixin):
     pass
 
 class InterestPoints(Base,DataType):
-    """
-    This creates a table for the interest points.
-    """
+
     __tablename__ = 'interest_points'
     title = Column(Text)
     descrip_body = Column(Text)
