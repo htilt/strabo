@@ -7,3 +7,4 @@ config_canyon.config_app(app)
 db = SQLAlchemy(app)
 
 import strabo.views
+

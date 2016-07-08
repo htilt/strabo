@@ -20,7 +20,7 @@ strabo.add_database module
     :show-inheritance:
 
 strabo.config_canyon module
----------------------------
+----------------------------------
 
 .. automodule:: strabo.config_canyon
     :members:

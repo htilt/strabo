@@ -18,7 +18,7 @@ add_database.py
 Temporary development setup for database. Includes five images and interest points.
 
 strabo.config_canyon.py
-----------------
+------------------------------
 Configuration file for the Canyon implementation.
 
 
