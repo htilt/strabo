@@ -1,3 +1,8 @@
+"""
+.. module:: utils
+   :synopsis: A module for utilities.
+"""
+
 import os
 
 def safe_pos_int_conv(inputstr):

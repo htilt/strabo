@@ -19,8 +19,12 @@
 #
 import os
 import sys
-#sys.path.insert(0, os.path.abspath('../strabo'))
-os.path.abspath('../strabo')
+sys.path.insert(0, os.path.abspath('../'))
+print("############################")
+print(sys.path)
+print("############################")
+
+#os.path.abspath('../strabo')
 
 
 # -- General configuration ------------------------------------------------
