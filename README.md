@@ -1,5 +1,3 @@
-README
-======
 
 This is the README for *Strabo*, a database-backed website for
 making an interactive map incorporating text and images. 
