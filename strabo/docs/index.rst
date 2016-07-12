@@ -15,21 +15,14 @@ Here you will find documentation for the public and private ends of the Reed Can
 Credit Reed College, 2016.
 
 
-Setup
-======
-
+Documentation
+=============
 .. toctree::
 	:maxdepth: 2
 
-	setup
-
-Strabo
-======
-.. toctree::
-	:maxdepth: 2
-
+	setup 
 	strabo
-
+	strabo.views
 
 
 Indices and tables

@@ -1,30 +1,19 @@
-strabo.views package
-====================
+strabo.views
+============
 
-Submodules
+private.py
 ----------
-
-strabo.views.private module
----------------------------
 
 .. automodule:: strabo.views.private
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.views.public module
---------------------------
+public.py
+---------
 
 .. automodule:: strabo.views.public
     :members:
     :undoc-members:
     :show-inheritance:
 
-
-Module contents
----------------
-
-.. automodule:: strabo.views
-    :members:
-    :undoc-members:
-    :show-inheritance:

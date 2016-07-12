@@ -25,7 +25,6 @@ class mock_flask_file_obj:
         #path = sys.path[-1]
         self.full_filename = os.path.join(path,filename)
 
-
     def save(self,new_file_path):
         shutil.copyfile(self.full_filename,new_file_path)
 

@@ -1,78 +1,64 @@
-strabo package
-==============
+strabo 
+======
 
-Subpackages
------------
-
-.. toctree::
-
-    strabo.views
-
-Submodules
-----------
-
-strabo.add_database module
---------------------------
+add_database.py
+---------------
 
 .. automodule:: strabo.add_database
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.config_canyon module
-----------------------------------
+config_canyon.py
+----------------
 
 .. automodule:: strabo.config_canyon
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.database module
-----------------------
+database.py
+-----------
 
 .. automodule:: strabo.database
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.file_writing module
---------------------------
+file_writing.py
+---------------
 
 .. automodule:: strabo.file_writing
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.geojson_wrapper module
------------------------------
+geojson_wrapper.py
+------------------
 
 .. automodule:: strabo.geojson_wrapper
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.image_processing module
-------------------------------
+image_processing.py
+-------------------
 
 .. automodule:: strabo.image_processing
     :members:
     :undoc-members:
     :show-inheritance:
 
-strabo.private_helper module
-----------------------------
+private_helper.py
+-----------------
 
 .. automodule:: strabo.private_helper
     :members:
     :undoc-members:
     :show-inheritance:
 
-
-
-
 schema.py
 ---------
-Here I am saying something interesting.
 
 .. automodule:: strabo.schema
     :members:
@@ -85,19 +71,10 @@ Here I am saying something interesting.
 .. autoclass:: InterestPoints
 
 
-strabo.utils module
--------------------
+utils.py
+--------
 
 .. automodule:: strabo.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: strabo
     :members:
     :undoc-members:
     :show-inheritance:
