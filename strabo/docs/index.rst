@@ -23,6 +23,7 @@ Table of Contents
 	setup 
 	strabo
 	strabo.views
+	js
 
 
 Indices and tables
