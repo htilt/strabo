@@ -1,6 +1,5 @@
-"""
-.. module:: utils
-   :synopsis: A module for utilities.
+""" 
+This file contains utilities. 
 """
 
 import os
