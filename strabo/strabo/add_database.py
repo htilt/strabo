@@ -1,5 +1,6 @@
 import shutil
 import os
+import sys
 
 from strabo import schema
 from strabo import private_helper
@@ -8,6 +9,7 @@ from strabo import db, app
 
 # hackish and bad way of reinniting the postgres database
 # only use for development
+
 def recreate_postgres_db():
     os.system("dropdb strabo")
     os.system("rm strabo/static/uploads/*.*")
@@ -19,7 +21,10 @@ def recreate_postgres_db():
 class mock_flask_file_obj:
     def __init__(self,path,filename):
         self.filename = filename
+        #sys.path.append(os.path.realpath('../test_images/'))
+        #path = sys.path[-1]
         self.full_filename = os.path.join(path,filename)
+
 
     def save(self,new_file_path):
         shutil.copyfile(self.full_filename,new_file_path)

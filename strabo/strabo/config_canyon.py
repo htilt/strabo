@@ -34,9 +34,9 @@ def config_app(app):
         "Sensitive Areas"
     ]
 
-    app.config['MAP_ICONS'] = [fname for fname in os.listdir("/Users/avakamb/strabo/strabo/strabo/static/map_icons/")]
-
-    #app.config['MAP_ICONS'] = [fname for fname in os.listdir("./strabo/static/map_icons/")]
+    # Finds the location of the /strabo/static file
+    app.config['MAP_ICONS'] = [fname for fname in os.listdir(os.path.dirname(os.path.realpath("../strabo/static/map_icons")))]
+    #app.config['MAP_ICONS'] = [fname for fname in os.listdir("/Users/avakamb/strabo/strabo/strabo/static/map_icons/")]
 
     #
     ##### set preferred styles, website title, and headings

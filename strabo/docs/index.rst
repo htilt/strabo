@@ -12,7 +12,7 @@ Here you will find documentation for the public and private ends of the Reed Can
 .. note::
 	** *This is a work in progress.* **
 
-All credit to Reed College.
+Credit Reed College, 2016.
 
 
 Setup
