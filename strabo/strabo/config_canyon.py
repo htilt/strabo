@@ -7,7 +7,6 @@ def reverse_dict(forward_dict):
 
 # set feature types for uploading interest points
 class Layers(enum.Enum):
-    """ This is a test class """
     plant = 1
     animal = 2
     hist = 3

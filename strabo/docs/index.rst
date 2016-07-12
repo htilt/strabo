@@ -20,10 +20,10 @@ Table of Contents
 .. toctree::
 	:maxdepth: 2
 
+	sphinx_markup
 	setup 
 	strabo
 	strabo.views
-	js
 
 
 Indices and tables
