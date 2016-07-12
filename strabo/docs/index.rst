@@ -15,8 +15,8 @@ Here you will find documentation for the public and private ends of the Reed Can
 Credit Reed College, 2016.
 
 
-Documentation
-=============
+Table of Contents
+=================
 .. toctree::
 	:maxdepth: 2
 
