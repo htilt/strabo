@@ -7,6 +7,7 @@
 *.o
 *.so
 *.pyc
+strabo/docs/_build/
 
 # Packages #
 ############
@@ -49,3 +50,5 @@
 *.JPG
 *.JPEG
 *.xcf
+
+node_modules/

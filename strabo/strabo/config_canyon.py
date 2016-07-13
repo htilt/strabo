@@ -1,8 +1,16 @@
+import enum
 import os
 
 # makes keys values and values keys
 def reverse_dict(forward_dict):
   return {v:k for k,v in forward_dict.items()}
+
+# set feature types for uploading interest points
+class Layers(enum.Enum):
+    plant = 1
+    animal = 2
+    hist = 3
+    cool = 4
 
 def config_app(app):
     #
@@ -25,7 +33,9 @@ def config_app(app):
         "Sensitive Areas"
     ]
 
-    app.config['MAP_ICONS'] = [fname for fname in os.listdir("./strabo/static/map_icons/")]
+    # Finds the location of the /strabo/static file
+    app.config['MAP_ICONS'] = [fname for fname in os.listdir(os.path.dirname(os.path.realpath("../strabo/static/map_icons")))]
+    #app.config['MAP_ICONS'] = [fname for fname in os.listdir("/Users/avakamb/strabo/strabo/strabo/static/map_icons/")]
 
     #
     ##### set preferred styles, website title, and headings
