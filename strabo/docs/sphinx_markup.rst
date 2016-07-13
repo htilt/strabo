@@ -11,8 +11,10 @@ While in the ``strabo/docs/`` folder...
 2. Add filenames to ``index.rst`` under the main Table of Contents.
 3. Save changes.
 4. Type into terminal: ``make html``. (You can also type ``make clean`` to remove all of the previous _build files and ``make html`` to remake them. This is useful if changes aren't showing up, or if you have deleted a file.)
-5. Visit the page on your local server to see the documentation in HTML.
-6. Ta-da!
+5. Visit the page on your local server to see the documentation in HTML. The local documentation will be in ``/_build/html/index.html``.
+6. If everying looks right, push your changes to the master branch on GitHub.
+7. Read the Docs should automatically update the documentation. Check it `here <http://strabo.readthedocs.io/en/latest/>`_.
+8. Ta-da!
 
 
 Python
@@ -25,7 +27,7 @@ At the top of each file create a docstring that describes the main function of t
   This file prints the numbers 1 to 10. 
   """
 
-You can also write docstrings (enclosed by triple-quotes) at the top of classes or methods. *Docstrings will show up on the final Sphinx document.* 
+You can also write docstrings (enclosed by triple-quotes) at the top of classes or methods. **Docstrings will show up on the final Sphinx document.** 
 
 Block comments (begun with a #) will not show up on the final Sphinx document. Use these for programmer notes.
 
