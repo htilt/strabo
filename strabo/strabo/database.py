@@ -7,10 +7,6 @@ from strabo import app
 from strabo import db
 from strabo import image_processing
 
-engine = sqlalchemy.create_engine(app.config["SQLALCHEMY_DATABASE_URI"], echo=app.config['DEBUG'])
-
-get_session = sqlalchemy.orm.sessionmaker(bind=engine)
-
 #deletes ip refrenced by id and clears the relationships it has with images
 def delete_ip(id):
     idquery = db.session.query(schema.InterestPoints).filter_by(id=id)
