@@ -1,3 +1,7 @@
+""" 
+This file contains utilities. 
+"""
+
 import os
 
 def safe_pos_int_conv(inputstr):

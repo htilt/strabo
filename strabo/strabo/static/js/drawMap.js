@@ -1,5 +1,7 @@
 var shape_drawn = false;
 var shapeLayer;
+
+
 $(function()
 {
 // The Admin Map
