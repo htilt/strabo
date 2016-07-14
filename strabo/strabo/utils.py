@@ -1,5 +1,5 @@
-""" 
-This file contains utilities. 
+"""
+This file contains utilities.
 """
 
 import os
@@ -20,3 +20,11 @@ def remove_extension(filename):
 
 def get_extension(filename):
     return extract_name_extention(filename)[1]
+
+def fill_dict_with(_to,_from):
+    for k,v in _from.items():
+        _to[k] = v
+
+# makes keys values and values keys
+def reverse_dict(forward_dict):
+  return {v:k for k,v in forward_dict.items()}

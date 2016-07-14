@@ -9,6 +9,7 @@ from strabo.config_canyon import Layers
 from strabo import private_helper
 import os
 from strabo import app
+from strabo import straboconfig
 import shutil
 
 app.config['SQLALCHEMY_DATABASE_URI']  = "sqlite:///../test_sqlalchemy_data.sqlite3"
@@ -36,8 +37,8 @@ class DatabaseFixture(unittest.TestCase):
         geo_obj1 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.63034939765929,45.48205499198348]}}'
         geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.630397,45.481851]}}'
 
-        ip1 = private_helper.make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][Layers.plant])
-        ip2 = private_helper.make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][Layers.animal])
+        ip1 = private_helper.make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,straboconfig['LAYER_FIELDS'][Layers.plant])
+        ip2 = private_helper.make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,straboconfig['LAYER_FIELDS'][Layers.animal])
 
         db.session.add(ip1)
         db.session.add(ip2)

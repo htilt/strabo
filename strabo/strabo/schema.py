@@ -4,8 +4,6 @@ from sqlalchemy import *
 import sqlalchemy
 from sqlalchemy.orm import relationship
 
-from strabo import config_canyon
-
 Base = sqlalchemy.ext.declarative.declarative_base()
 
 class IdPrimaryKeyMixin:

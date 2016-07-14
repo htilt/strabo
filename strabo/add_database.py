@@ -61,7 +61,7 @@ db.session.add(img6)
 
 db.session.commit()
 
-ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][0],"MapPinMaroon.png")
-ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][1],"MapPinGreen.png")
+ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,straboconfig['LAYER_FIELDS'][0],"MapPinMaroon.png")
+ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,straboconfig['LAYER_FIELDS'][1],"MapPinGreen.png")
 
 db.session.commit()

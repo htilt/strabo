@@ -9,12 +9,13 @@ from strabo import image_processing
 from strabo import utils
 
 from strabo import app
+from strabo import straboconfig
 
 def get_image_path(filename):
-    return os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    return os.path.join(straboconfig['UPLOAD_FOLDER'], filename)
 
 def get_thumbnail_path(filename):
-    return os.path.join(app.config['NEW_DATA_DIRECTORY'], filename)
+    return os.path.join(straboconfig['NEW_DATA_DIRECTORY'], filename)
 
 #generates a filename which does not yet iexist in the folder specified by path
 def make_unique_filename(path,filename):
@@ -32,7 +33,7 @@ def make_unique_filename(path,filename):
 def make_filename(form_file_name):
     secure_filename = werkzeug.secure_filename(form_file_name)
     # prepend unique id to ensure an unique filename
-    unique_filename = make_unique_filename(app.config['UPLOAD_FOLDER'],secure_filename)
+    unique_filename = make_unique_filename(straboconfig['UPLOAD_FOLDER'],secure_filename)
     return  unique_filename
 
 #saves image and thumbnail using the given filenaem
