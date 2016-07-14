@@ -63,4 +63,4 @@ Another example: ::
 
 reST
 ----
-See `here <http://www.sphinx-doc.org/en/stable/rest.html>`_ for the Sphinx reStructuredText Primer.
+See `this page <http://www.sphinx-doc.org/en/stable/rest.html>`_ for the Sphinx reStructuredText Primer.
