@@ -1,7 +1,7 @@
-{% extends straboconfig["RELPATH_TO_PUBLIC_TEMPLATES"] ~ straboconfig["BASE_TEMPLATE"] %}
+{% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
-    <link href="{{straboconfig["PATH_TO_PUBLIC_STYLES"]}}{{straboconfig["GALLERY_CSS"]}}" rel="stylesheet">
+    <link href="{{PATH_TO_PUBLIC_STYLES}}{{GALLERY_CSS}}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -27,8 +27,8 @@
         <!-- Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 id="gallery-header">{{straboconfig["GALLERY_TITLE"]}}
-                    <small>{{straboconfig["GALLERY_SUBTITLE"]}}</small>
+                <h1 id="gallery-header">{{GALLERY_TITLE}}
+                    <small>{{GALLERY_SUBTITLE}}</small>
                 </h1>
             </div>
         </div>
@@ -65,10 +65,10 @@
 
                     <div class="caption">
                         <h4 class="headline">{{img['title']}}</h4><br>
-                         <p><a href="{{straboconfig["UPLOAD_FOLDER_RELPATH"]}}{{ img['filename']}}" download="{{ img['filename']}}" class="btn btn-primary btn-xs" title="Download now">Download</a></p>
+                         <p><a href="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename']}}" download="{{ img['filename']}}" class="btn btn-primary btn-xs" title="Download now">Download</a></p>
                     </div>
 
-                    <img class="img-responsive " src="{{straboconfig["THUMBNAIL_FOLDER_RELPATH"]}}{{ img['thumbnail_name'] }}" data-fullsrc="{{straboconfig["UPLOAD_FOLDER_RELPATH"]}}{{ img['filename']}}" alt="{{ img['title'] }}" width="500" height="309" border="0">
+                    <img class="img-responsive " src="{{THUMBNAIL_FOLDER_RELPATH}}{{ img['thumbnail_name'] }}" data-fullsrc="{{UPLOAD_FOLDER_RELPATH}}{{ img['filename']}}" alt="{{ img['title'] }}" width="500" height="309" border="0">
 
 
                     <div class="hidden img-metadata">

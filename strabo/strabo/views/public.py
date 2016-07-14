@@ -15,7 +15,8 @@ def map():
   features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in db.session.query(schema.InterestPoints).all()]
   return render_template(template,
     features_json=features,
-     straboconfig=straboconfig)
+     straboconfig=straboconfig,
+     **straboconfig)
 
 @app.route('/map/post', methods=["POST"])
 def map_post():
@@ -39,4 +40,4 @@ def map_post():
 
 @app.route("/about")
 def about():
-  return render_template("public/about.html",straboconfig=straboconfig)
+  return render_template("public/about.html",**straboconfig)

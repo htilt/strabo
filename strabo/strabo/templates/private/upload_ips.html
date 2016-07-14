@@ -47,7 +47,7 @@
             <label for="layer">Layer:</label><br>
             <select class="form-control" name="layer">
                 <option>Select One</a></option>
-                {% for layer_name in straboconfig["LAYER_FIELDS"] %}
+                {% for layer_name in LAYER_FIELDS %}
                 <option {%if layer_name == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
               </select>
@@ -59,7 +59,7 @@
             <label for="icon">Point Icon:</label><br>
             <select class="form-control icon-menu" name="icon">
                 <option>Select One</a></option>
-                {% for ico_name in straboconfig["MAP_ICONS"] %}
+                {% for ico_name in MAP_ICONS %}
                 <option {%if ico_name == interest_point.icon%}selected{%endif%}>{{ico_name}}</option>
                 {% endfor %}
               </select>
@@ -98,7 +98,7 @@
                       <td>
                           <input type="checkbox" name='image_ids' value={{ img.id }} {%if is_checked%}checked{%endif%}>
                       </td>
-                      <td><img src="{{ straboconfig["NEW_DATA_DIRECTORY_RELPATH"] }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                      <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                       <td>{{ img.description }}</td>
                     </tr>
                 {% endfor %}
@@ -123,5 +123,5 @@
     var edit_json = {{ my_ip_json|tojson }};
 </script>
 <script src="/static/js/map_info.js"></script>
-<script src="/static/js/{{ straboconfig["ADMINMAP_JS"] }}"></script>
+<script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}

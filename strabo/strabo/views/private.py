@@ -11,12 +11,12 @@ from strabo import straboconfig
 # Landing page allows viewer to select amoung tabs to start editing
 @app.route("/admin/", methods=["GET"])
 def index():
-  return render_template("private/base.html",straboconfig=straboconfig)
+  return render_template("private/base.html",**straboconfig)
 
 def show_image_upload_form(image):
     return render_template("private/upload_images.html",
     image=image,
-    straboconfig=straboconfig)
+    **straboconfig)
 
 ###
 ###
@@ -58,7 +58,8 @@ def show_ips_upload_form(interest_point):
         taken_images=taken_images,
         interest_point=interest_point,
         my_ip_json=my_ip_json,
-        straboconfig=straboconfig)
+        straboconfig=straboconfig,
+        **straboconfig)
 ###
 ###
 ### Views to add interest points to the db
@@ -87,7 +88,7 @@ def interest_points_table():
     interest_points = db.session.query(schema.InterestPoints).all()
     return render_template("private/edit_ips.html",
       interest_points=interest_points,
-      straboconfig=straboconfig)
+      **straboconfig)
 
 @app.route("/admin/edit_ips/redirect")
 def interest_points_redirect():
@@ -106,7 +107,7 @@ def images_table():
     images = db.session.query(schema.Images).all()
     return render_template("private/edit_images.html",
       all_images=images,
-      straboconfig=straboconfig)
+      **straboconfig)
 
 @app.route("/admin/edit_images/redirect")
 def images_redirect():
