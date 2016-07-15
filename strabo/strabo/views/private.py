@@ -135,6 +135,10 @@ def show_ips_upload_form(interest_point):
         straboconfig=straboconfig,
         **straboconfig)
 
+@app.route("/admin/upload_ips/")
+def upload_ips():
+    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",layer="",icon=""))
+
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
     ip_id =  request.form.get("ip_id")
@@ -149,15 +153,4 @@ def interest_points_post():
         request.form['title'],request.form['description'],request.form['geojson'],
         request.form['layer'],request.form['icon'])
     db.session.commit()
-    return redirect(url_for('interest_points_table')
-
-@app.route("/admin/upload_ips/")
-def upload_ips():
-    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",layer="",icon=""))
-
-@app.route("/admin/edit_ips/")
-def interest_points_table():
-    interest_points = db.session.query(schema.InterestPoints).all()
-    return render_template("private/edit_ips.html",
-      interest_points=interest_points,
-      **straboconfig)
+    return redirect(url_for('interest_points_table'))
