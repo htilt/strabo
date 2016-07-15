@@ -37,8 +37,8 @@ class DatabaseFixture(unittest.TestCase):
         geo_obj1 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.63034939765929,45.48205499198348]}}'
         geo_obj2 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.630397,45.481851]}}'
 
-        ip1 = private_helper.make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,straboconfig['LAYER_FIELDS'][Layers.plant])
-        ip2 = private_helper.make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,straboconfig['LAYER_FIELDS'][Layers.animal])
+        ip1 = private_helper.make_interest_point("Interest Point 1","This is a descriptions of something",geo_obj1,"Plants")
+        ip2 = private_helper.make_interest_point("Interest Point 2","This is a descriptions of something else",geo_obj2,"Animals")
 
         db.session.add(ip1)
         db.session.add(ip2)

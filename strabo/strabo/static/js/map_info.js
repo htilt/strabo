@@ -56,12 +56,13 @@ function set_styles(all_layers_group){
 function place_overlays_on(all_layers_group,map){
     var all_layers = all_layers_group.getLayers();
     var overlays = {};
-    straboconfig["LAYER_FIELDS"].forEach(function(lay_name){
-        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
+    for(var lay_num in straboconfig["LAYER_FIELDS"]){
+        var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_num});
         var laygroup = L.layerGroup(lays);
         laygroup.addTo(map);
+        var lay_name = straboconfig["LAYER_FIELDS"][lay_num];
         overlays[lay_name] = laygroup;
-    });
+    }
     L.control.layers(null, overlays).addTo(map);
 }
 //makes it so that popups appear when clicked with the interest point database id
