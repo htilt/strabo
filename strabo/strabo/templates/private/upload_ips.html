@@ -118,15 +118,9 @@
 {% block footer %}
     {{ super () }}
 <script>
-    var lat_setting = {{ LAT_SETTING }};
-    var long_setting = {{ LONG_SETTING }};
-    var initial_zoom = {{ INITIAL_ZOOM }};
-    var tile_src = "{{ MAP_TILE_SRC }}";
-    var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
+    var straboconfig = {{ straboconfig|tojson }};
     var features = {{ geo_features|tojson }};
-    var edit_json = {{my_ip_json|tojson}};
-    var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
-    var MAP_ICONS = {{ MAP_ICONS|tojson }};
+    var edit_json = {{ my_ip_json|tojson }};
 </script>
 <script src="/static/js/map_info.js"></script>
 <script src="/static/js/{{ ADMINMAP_JS }}"></script>

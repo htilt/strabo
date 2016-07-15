@@ -17,7 +17,7 @@ var ColorIcon = L.Icon.extend({
 
 var icon_objs = function(){
     var icon_objs = {};
-    MAP_ICONS.forEach(function(ico_name){
+    straboconfig["MAP_ICONS"].forEach(function(ico_name){
         icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
     });
     return icon_objs;
@@ -26,12 +26,12 @@ var icon_objs = function(){
 // leaflet map object
 function make_map(map_cont){
     var map = L.map(map_cont, {
-    }).setView([lat_setting, long_setting], initial_zoom);
+    }).setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
 
     return map;
 }
 function add_tile_to(map){
-    L.tileLayer(tile_src,tile_attributes).addTo(map);
+    L.tileLayer(straboconfig["MAP_TILE_SRC"],straboconfig["LEAFLET_ATTRIBUTES"]).addTo(map);
 }
 // sets icon object for points and stlying for zones
 function set_styles(all_layers_group){
@@ -56,7 +56,7 @@ function set_styles(all_layers_group){
 function place_overlays_on(all_layers_group,map){
     var all_layers = all_layers_group.getLayers();
     var overlays = {};
-    LAYER_FIELDS.forEach(function(lay_name){
+    straboconfig["LAYER_FIELDS"].forEach(function(lay_name){
         var lays = all_layers.filter(function(lay){return lay.feature.properties.layer == lay_name});
         var laygroup = L.layerGroup(lays);
         laygroup.addTo(map);

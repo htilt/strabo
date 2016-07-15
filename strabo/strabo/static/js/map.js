@@ -69,7 +69,7 @@ $(document).ready(function(){
       // about your location, and it will just center on the
       // canyon, leaving no marker of where you are
       else {
-        map.setView([lat_setting,long_setting], initial_zoom);
+        map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
       }
 
     }

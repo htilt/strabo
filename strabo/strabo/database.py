@@ -2,10 +2,10 @@ import os
 import sqlalchemy
 
 from strabo import schema
+from strabo import file_writing
 
 from strabo import app
 from strabo import db
-from strabo import image_processing
 
 #deletes ip refrenced by id and clears the relationships it has with images
 def delete_ip(id):
@@ -22,7 +22,7 @@ def delete_ip(id):
 def delete_image(id):
     idquery = db.session.query(schema.Images).filter_by(id=id)
     img = idquery.one()
-    image_processing.delete_image_data(img.filename,img.filename)
+    file_writing.delete_image_files(img.filename,img.filename)
     idquery.delete()
     db.session.commit()
 
