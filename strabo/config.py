@@ -1,12 +1,6 @@
 import enum
 import os
-
-# set feature types for uploading interest points
-class Layers(enum.Enum):
-    plant = 1
-    animal = 2
-    hist = 3
-    cool = 4
+from strabo import utils
 
 def get_config_info():
     config_info = dict()
@@ -16,25 +10,21 @@ def get_config_info():
     #
     ###### The following variables require configuration.
     # set the latitude and longitude for the center of the map
-    # these values will be passed into the js file that gets rewritten
-    # each time interest points are updated by the administrator, so
-    # changes here will not be reflected until an interest point is
-    # added, edited, or deleted.
     config_info['LAT_SETTING'] = 45.481851
     config_info['LONG_SETTING'] = -122.630397
     config_info['INITIAL_ZOOM'] = 17
 
-    config_info['LAYER_FIELDS'] = [
-        "Plants",
-        "Animals",
-        "Interest Points",
-        "Sensitive Areas"
-    ]
+    '''you can change the names of these, but do not change the numbers!
+    If any items with the changed number are stored in the database strabo will break.'''
+    config_info['LAYER_FIELDS'] = {
+        1:"Plants",
+        2:"Animals",
+        3:"Interest Points",
+        4:"Sensitive Areas"
+    }
 
-    # Finds the location of the /strabo/static file
-    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.realpath("./strabo/static/map_icons/"))]
 
-    #config_info['MAP_ICONS'] = [fname for fname in os.listdir("/Users/avakamb/strabo/strabo/strabo/static/map_icons/")]
+    config_info['REVERSE_LAYER_FIELDS'] = utils.reverse_dict(config_info['LAYER_FIELDS'])
 
     #
     ##### set preferred styles, website title, and headings
@@ -88,6 +78,9 @@ def get_config_info():
         "maxZoom": 22,
         "ext": 'png'
     }
+
+    # Finds the location of the /strabo/static file
+    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.realpath("./strabo/static/map_icons/"))]
 
     config_info["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
 

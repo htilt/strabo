@@ -12,6 +12,7 @@ from strabo import file_writing
 
 from strabo import app
 from strabo import db
+from strabo import straboconfig
 
 def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_layer,form_icon):
     if not ip.id:
@@ -19,7 +20,7 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.title = form_title
     ip.descrip_body = form_body
     ip.geojson_object = form_geo_obj
-    ip.layer = form_layer
+    ip.layer = straboconfig["REVERSE_LAYER_FIELDS"][form_layer]
     ip.icon = form_icon
     ip.images = [db.session.query(schema.Images).get(int(id)) for id in image_ids]
 
