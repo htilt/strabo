@@ -1,4 +1,4 @@
-{% extends (straboconfig["RELPATH_TO_PUBLIC_TEMPLATES"]) ~ (straboconfig["BASE_TEMPLATE"]) %}
+{% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
@@ -20,7 +20,7 @@
     </script>
     <script src="../static/js/popup.js"></script>
     <script src="../static/js/map_info.js"></script>
-    <script src="../static/js/{{ straboconfig["MAP_JS"] }}"></script>
+    <script src="../static/js/{{MAP_JS}}"></script>
 {% endblock head %}
 
 {% block content %}
