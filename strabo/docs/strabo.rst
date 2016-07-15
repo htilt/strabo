@@ -9,14 +9,6 @@ add_database.py
     :undoc-members:
     :show-inheritance:
 
-config_canyon.py
-----------------
-
-.. automodule:: strabo.config_canyon
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 database.py
 -----------
 

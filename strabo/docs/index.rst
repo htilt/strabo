@@ -22,8 +22,12 @@ Table of Contents
 
 	sphinx_markup
 	setup 
+	config
+	initDB
+	runserver
 	strabo
 	strabo.views
+
 
 
 Indices and tables
