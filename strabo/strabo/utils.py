@@ -1,46 +1,30 @@
-import re
+"""
+This file contains utilities.
+"""
 
-def set_id(pagination_event, image_ids):
-  if pagination_event == 'next':
-    id_num = 1
-    for image_id in image_ids:
-      if int(image_id) > id_num:
-        id_num = int(image_id)
-  elif pagination_event == 'previous':
-    id_num = 10000000
-    for image_id in image_ids:
-      if int(image_id) < id_num:
-        id_num = int(image_id)
-  else: # no pagination event
-    id_num = None
-  return id_num
+import os
 
-def list_years():
-  years = []
-  for x in reversed(range(1930,2015)):
-    years.append(x)
-  return years
+def safe_pos_int_conv(inputstr):
+    return  int(inputstr) if not inputstr == '' else 1
 
-# This function returns a date string properly formatted for sqlite.
-def make_date(month, day, year):
-  if day == '':
-    day = '01'
-  if month == '':
-    month = '01'
-  if year == '':
-    date = ''
-  date = str(year) + '-' + str(month) + '-' + str(day)
-  return date
+def extract_name_extention(filename):
+    dot_loc = filename.rfind('.')
 
-# Compatible with multiple phone types?
-def DMS_to_Dec(lst):
-  degrees = lst[0]
-  minutes = lst[1]
-  seconds = lst[2]
-  dec = (seconds/3600) + (minutes/60) + degrees
-  return(dec)
+    find_not_found_value = -1
+    dot_idx = dot_loc if dot_loc != find_not_found_value else len(filename) - 1
 
-def clean_date(date_string):
-  date_string = re.findall(r"[\w']+", date_string)
-  print(date_string)
-  return date_string
+    return filename[:dot_idx], filename[dot_idx+1:]
+
+def remove_extension(filename):
+    return extract_name_extention(filename)[0]
+
+def get_extension(filename):
+    return extract_name_extention(filename)[1]
+
+def fill_dict_with(_to,_from):
+    for k,v in _from.items():
+        _to[k] = v
+
+# makes keys values and values keys
+def reverse_dict(forward_dict):
+  return {v:k for k,v in forward_dict.items()}

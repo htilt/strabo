@@ -1,29 +1,14 @@
+/* Page Styling */
+
 html, body {
   height: 100%;
-}
-
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -60px;
-  padding: 0 0 60;
+  /*gets rid of scroll bar*/
+  overflow: hidden;
 }
 
 #map {
-  height: 100%;
-}
-
-.header {
-  height: 80px;
-}
-
-#img-wrapper {
-  padding-bottom: 10px;
-  padding-left: 60px;
-}
-
-#img-wrapper p {
-  padding: 10px;
-  padding-top: 20px;
+    width: 100%;
+    position: absolute;
+    top: 4.5em;
+    bottom: 1.5em; /*2em*/
 }

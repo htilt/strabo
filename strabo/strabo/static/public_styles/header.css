@@ -1,33 +1,68 @@
 /* Navbar */
+
 .navbar {
-  background-color: #F0F0F0  ;
-  border-bottom: 1px solid #ddd;
+  background-color: #126a7c; /* #ffffff; */
+  border-bottom: 0.071428571em solid #ddd;
   opacity: 1;
-  
-  font-family: 'Oswald', sans-serif;
-  font-weight: 300;
-  
-  font-size: 17px;
-  padding: 15px;
+  padding: 0.071428571em;
 }
-
-p {
-  z-index: 12;
-}
-
+/*
 .navbar-header a {
   float: left;
-  color: black;
+  color: #006666;
+  font-family: 'Century Gothic','Lucida-Sans', sans-serif;
+  font-weight: 700;
+  font-size: 2.142857143em; /* 30/14 
+} */
+
+.navbar-toggle {
+  position: relative;
+  float: right;
+  background-color: #126a7c; /* #ffffff; */
+  background-image: none;
+  border: 0.071428571em solid #ffffff; /* #777;*/
+  border-radius: 0.285712386em; /* 4/14 */
 }
 
-/* Navbar Menu */ 
-.menu > li {
+.navbar-brand {
+  padding: 0em;
+}
+
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
+  padding-left: 0.285712386em; /* 4/14 */
+}
+
+span.icon-bar {
+  background-color: #ffffff; /* #777; */
+}
+
+/* Navbar Menu */
+
+.header .menu {
+  float: right;
+  list-style: none;
+  margin-top: 0em;
+}
+
+.menu > li { 
   display: inline;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: black;
+  padding-left: 1.428571429em; /* 20/14 */
+  padding-right: 1.428571429em;
 }
 
 .menu a {
-  color: black;
+  color: #ffffff; /* #6e4f31; /* Brown to match logo */
+  /* color: #006666; (forest green) */
+  font-family: 'Futura', sans-serif;
+  font-variant: small-caps;
+  font-weight: normal;
+  font-size: 1.5em; /*1.428571429em;*/
+} 
+
+ /* Change the color of the hover background on the navbar menu */ 
+.nav>li>a:focus, .nav>li>a:hover {
+    /* background-color: #ebf5e4; */ /* Leaving this commented out in case we want to change back */
+    background-color: #137386; /* #ffffd7;  /* Pale yellow to match logo */
 }
