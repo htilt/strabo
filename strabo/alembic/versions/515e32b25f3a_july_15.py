@@ -1,14 +1,14 @@
-"""base
+"""july_15
 
-Revision ID: 0baa7b79af79
-Revises: 1295df14fff1
-Create Date: 2016-06-24 14:19:25.288863
+Revision ID: 515e32b25f3a
+Revises: b6e707a13bb4
+Create Date: 2016-07-15 16:15:00.436782
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '0baa7b79af79'
-down_revision = '1295df14fff1'
+revision = '515e32b25f3a'
+down_revision = 'b6e707a13bb4'
 branch_labels = None
 depends_on = None
 
