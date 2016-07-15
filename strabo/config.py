@@ -73,7 +73,7 @@ def get_config_info():
 
     config_info["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
     config_info['LEAFLET_ATTRIBUTES'] = {
-        "attribution":'Map tiles by Thunderforest, Map data by OpenStreetMap',
+        "attribution":'Tiles by Thunderforest, Data by OpenStreetMap',
         "minZoom": 14,
         "maxZoom": 22,
         "ext": 'png'
