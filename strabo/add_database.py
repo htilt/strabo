@@ -2,13 +2,17 @@ import shutil
 import os
 import sys
 
+from strabo import utils
+import config
 from strabo import schema
 from strabo import private_helper
 
-from strabo import db, app
+from strabo import db, app,straboconfig
 
 # hackish and bad way of reinniting the postgres database
 # only use for development
+
+utils.fill_dict_with(straboconfig,config.get_config_info())
 
 def recreate_postgres_db():
     os.system("dropdb strabo")
@@ -61,7 +65,7 @@ db.session.add(img6)
 
 db.session.commit()
 
-ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,straboconfig['LAYER_FIELDS'][0],"MapPinMaroon.png")
-ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,straboconfig['LAYER_FIELDS'][1],"MapPinGreen.png")
+ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,"Plants","MapPinMaroon.png")
+ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,"Animals","MapPinGreen.png")
 
 db.session.commit()

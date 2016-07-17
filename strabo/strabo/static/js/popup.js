@@ -70,11 +70,15 @@ function ip_clicked(db_id) {
         }
     );
 }
-
 function set_flickety_click(){
+    var photoswipe_fetched = false;
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
-        if (cellElement) {
-            make_photoswipe(cellIndex);
+        if (cellElement && !photoswipe_fetched) {
+            photoswipe_fetched = true;
+            window.setTimeout(function(){
+                make_photoswipe(cellIndex);
+                photoswipe_fetched = false;
+            },100);
         }
     });
 }
@@ -94,9 +98,10 @@ function make_photoswipe(pic_index){
     var options = {
         index:pic_index,
         loop:false,
+        closeOnVerticalDrag:false,
+        clickToCloseNonZoomable: true,
         pinchToClose:false,
-        closeOnScroll:false,
-        closeOnVerticalDrag:false
+        closeOnScroll:false
     };
 
     gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);
