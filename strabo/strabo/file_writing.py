@@ -58,6 +58,7 @@ def save_image_files(form_file_obj,filename):
     image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
 
 #delete image helper functions
-def delete_image_files(filename,thumbnail_name):
+def delete_image_files(filename):
     os.remove(get_image_path(filename))
     os.remove(get_thumbnail_path(filename))
+    os.remove(get_mobile_img_path(filename))
