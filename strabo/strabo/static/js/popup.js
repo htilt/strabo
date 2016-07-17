@@ -92,7 +92,11 @@ function make_photoswipe(pic_index){
         });
     });
     var options = {
-        index:pic_index
+        index:pic_index,
+        loop:false,
+        pinchToClose:false,
+        closeOnScroll:false,
+        closeOnVerticalDrag:false
     };
 
     gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);

@@ -25,8 +25,7 @@ var icon_objs = function(){
 
 // leaflet map object
 function make_map(map_cont){
-    var map = L.map(map_cont, {
-    }).setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
+    var map = L.map(map_cont, {}).setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
 
     return map;
 }
