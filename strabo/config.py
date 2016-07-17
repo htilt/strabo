@@ -59,8 +59,11 @@ def get_config_info():
     config_info['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads/'
     config_info['UPLOAD_FOLDER_RELPATH'] = '/static/uploads/'
     # set absolute and relative paths to the upload directory for thumbnails
-    config_info['NEW_DATA_DIRECTORY'] = '../strabo/strabo/static/thumbnails/'
-    config_info['NEW_DATA_DIRECTORY_RELPATH'] = '/static/thumbnails/'
+    config_info['MOBILE_IMG_DIR'] = '../strabo/strabo/static/mobile_imgs/'
+    config_info['MOBILE_IM_DIR_RELPATH'] = '/static/mobile_imgs/'
+    # set absolute and relative paths to the upload directory for
+    config_info['THUMB_DIR'] = '../strabo/strabo/static/thumbnails/'
+    config_info['THUMB_DIR_RELPATH'] = '/static/thumbnails/'
     # set folder name for javascript
     config_info['JS_FOLDER'] = '../strabo/strabo/static/js/'
 
@@ -81,8 +84,10 @@ def get_config_info():
 
     # Finds the location of the /strabo/static file
     config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.realpath("./strabo/static/map_icons/"))]
-
+    #needs to correspond with popup view size
     config_info["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
+    #larger images will make for slower animations and upload when navigating photoswipe
+    config_info["MOBILE_SERV_MAX_SIZE"] = (1200,1200)#max_width, max_height
 
     return config_info
 

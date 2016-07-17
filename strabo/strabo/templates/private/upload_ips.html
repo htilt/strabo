@@ -98,7 +98,7 @@
                       <td>
                           <input type="checkbox" name='image_ids' value={{ img.id }} {%if is_checked%}checked{%endif%}>
                       </td>
-                      <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                      <td><img src="{{ THUMB_DIR_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                       <td>{{ img.description }}</td>
                     </tr>
                 {% endfor %}

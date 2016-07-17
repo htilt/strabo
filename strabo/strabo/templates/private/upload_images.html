@@ -18,7 +18,7 @@
             <div class="upload-wrapper">
               <input type="file" id="img-input" name="file" {% if not image.filename %} required {% endif %}>
               <br>
-              <img id="img-preview" src={% if image.filename %} "{{NEW_DATA_DIRECTORY_RELPATH}}{{image.filename}}" {% else %} "#" {% endif %} class="img-responsive" alt="your image"></img>
+              <img id="img-preview" src={% if image.filename %} "{{THUMB_DIR_RELPATH}}{{image.filename}}" {% else %} "#" {% endif %} class="img-responsive" alt="your image"></img>
               <br>
               <br>
             </div>

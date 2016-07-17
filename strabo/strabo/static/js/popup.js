@@ -14,16 +14,19 @@ function show_popup(){
     $('.popup-background').show();
 }
 //calculates thumbnail size from the full size image size passed in
-function get_thumb_dim(img){
-    max_dim  = straboconfig["THUMBNAIL_MAX_SIZE"]
+function get_shrunk_dim(img,max_dim){
     ratio = Math.min(max_dim[0]/img.width,max_dim[1]/img.height);
-    return {width:ratio*img.width,height:ratio*img.height};
+    shrink_ratio = Math.min(ratio,1.0)
+    return {
+        width:shrink_ratio*img.width,
+        height:shrink_ratio*img.height
+    };
 }
 //this function generates the flickity cell corresponding to
 //the specific image object passed in
 function get_carosel_html(img){
     var html = '<div class="carousel-cell padded-pic">';
-    dim  = get_thumb_dim(img);
+    dim  = get_shrunk_dim(img,straboconfig["THUMBNAIL_MAX_SIZE"]);
     html += '<div class="vertical-center">';
     html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
     html += '</div>';
@@ -33,7 +36,7 @@ function get_carosel_html(img){
 function remove_all_carosel_entries(){
     flkty.remove(flkty.getCellElements());
 }
-//adds all the imag data to the garosel in the oder
+//adds all the imag data to the garosel in the odersrc
 function add_carosel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
@@ -70,6 +73,30 @@ function ip_clicked(db_id) {
         }
     );
 }
+function objToString (obj) {
+    var str = '';
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            str += p + '::' + obj[p] + '\n';
+        }
+    }
+    return str;
+}
+/*
+Purpose:
+When Flickity cell is clicked, a photoswipe gallery is pulled up.
+
+Details:
+On android, there is problem where tapping on flickety cell makes photoswipe flash open for a
+second, and close immidiately. Setting closeOnVerticalDrag to false seems to help marginally, but
+not fix the problem.
+
+So I fixed the problem by making a delay from when the cell is clicked to when photoswipe is opened,
+while making sure that photoswipe is not opened twice.
+
+The delay is the second argument to window.setTimeout in units of milliseconds. This can be played with,
+but very small values like 1 do not work very well.
+*/
 function set_flickety_click(){
     var photoswipe_fetched = false;
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
@@ -89,19 +116,29 @@ function make_photoswipe(pic_index){
 
     var items = [];
     imgs.forEach(function(img){
+        /*currently serves only images with size maxed out by MOBILE_SERV_MAX_SIZE
+        This means that the original, maximum size images never get seen at all.
+        In order to get them seen, perhaps on larger screens, you will need to look
+        at the size of the screenand add image sources and sizes depending on the size
+        of the screen. PhotoSwipe has an unnecessarily complicated example of how to do this
+        at http://photoswipe.com/documentation/responsive-images.html */
+        mobile_dim = get_shrunk_dim(img,straboconfig['MOBILE_SERV_MAX_SIZE'])
         items.push({
-            src:'static/uploads/' + img.filename,
-            w:img.width,
-            h:img.height
+            src:straboconfig['MOBILE_IM_DIR_RELPATH'] + img.filename,
+            w:mobile_dim.width,
+            h:mobile_dim.height
         });
     });
     var options = {
         index:pic_index,
+        //flickty does not loop, so neither does this
         loop:false,
+        //on android, "true" will cause this to close when you wouldn't want it to
         closeOnVerticalDrag:false,
-        clickToCloseNonZoomable: true,
-        pinchToClose:false,
-        closeOnScroll:false
+        //I don't think drastically differnt interfaces between small and large pictures is a good idea.
+        clickToCloseNonZoomable: false
+        //if image loading is too slow try this. It makes switching between images even slower though.
+        //preloaderEl: false,
     };
 
     gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);

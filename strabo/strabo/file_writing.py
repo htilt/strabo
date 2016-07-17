@@ -14,8 +14,11 @@ from strabo import straboconfig
 def get_image_path(filename):
     return os.path.join(straboconfig['UPLOAD_FOLDER'], filename)
 
+def get_mobile_img_path(filename):
+    return os.path.join(straboconfig['MOBILE_IMG_DIR'], filename)
+
 def get_thumbnail_path(filename):
-    return os.path.join(straboconfig['NEW_DATA_DIRECTORY'], filename)
+    return os.path.join(straboconfig['THUMB_DIR'], filename)
 
 #generates a filename which does not yet iexist in the folder specified by path
 def make_unique_filename(path,filename):
@@ -50,7 +53,9 @@ def save_image_files(form_file_obj,filename):
     form_file_obj.save(get_image_path(filename))
     # Make a thumbnail and store it in the thumbnails directory with the same filename
     # will also be unique as there will be the same files in both
-    image_processing.save_as_thumbnail(get_image_path(filename),get_thumbnail_path(filename))
+    image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
+    #do the same with different dimentions to mobile_imgs
+    image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
 
 #delete image helper functions
 def delete_image_files(filename,thumbnail_name):
