@@ -53,11 +53,12 @@ def get_config_info():
     config_info['ADMINMAP_JS'] = 'drawMap.js'
     config_info['FAVICON'] = '../strabo/strabo/static/favicon.ico'
 
- #####Login and Register stuff
+ #####Login and Register stuff ##################
     config_info['LOGIN_HEADER'] = 'Strabo Login'
     config_info['LOGIN_GREETING'] = 'Login to continue adding content to the Canyon.'
     config_info['REGISTER_HEADER'] = 'Register for Strabo'
     config_info['REGISTER_GREETING'] = 'Register to begin adding content to the Canyon.'
+    config_info['LOGIN_CSS'] = "login.css"
 
 
     ###### The following variables probably will not require configuration.
