@@ -67,6 +67,7 @@
     cursor: pointer;
 }
 .carousel-cell.is-selected {
+    /*the styling of the carousel cell that flickety centers on*/
     background: rgba(0,0,0,.5);
 }
 .button-parent{
