@@ -31,10 +31,12 @@
 }
 
 .top-section h2 {
+    color: #422C1E;
     font-weight: bold;
 }
 
 #ip_description {
+    color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
 
@@ -51,6 +53,7 @@
 }
 
 #img_description {
+    color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
 
@@ -74,6 +77,7 @@
     background: #ebf5e4;
 }
 .close-button{
+    color: #422C1E;
     font: normal 4em/normal Arial;
     width: 1em;
     height: 1em;
