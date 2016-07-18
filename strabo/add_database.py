@@ -2,13 +2,17 @@ import shutil
 import os
 import sys
 
+from strabo import utils
+import config
 from strabo import schema
 from strabo import private_helper
 
-from strabo import db, app
+from strabo import db, app,straboconfig
 
 # hackish and bad way of reinniting the postgres database
 # only use for development
+
+utils.fill_dict_with(straboconfig,config.get_config_info())
 
 def recreate_postgres_db():
     os.system("dropdb strabo")
@@ -69,8 +73,8 @@ db.session.commit()
 
 ip3_description = "Reed Lake was created sometime near the turn of the century by the construction of a 10-foot-high dam across Reed Creek. The creation of the dam blocked fish passage, as the creek was re-routed through a culvert system that discharged to a steep waterfall. \n \n Over the summer and fall of 2001, Reed College constructed a fish ladder to re-establish connectivity between Reed Lake and the lower creek for resident and anadromous fish."
 
-ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,straboconfig['LAYER_FIELDS'][0],"Navy.png")
-ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,straboconfig['LAYER_FIELDS'][1],"Green.png")
+ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,"Plants","Navy.png")
+ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,"Animals","Green.png")
 
 
 db.session.commit()
