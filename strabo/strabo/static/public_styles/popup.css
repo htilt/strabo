@@ -66,6 +66,9 @@
     height: 1em;
     cursor: pointer;
 }
+.carousel-cell.is-selected {
+    background: rgba(0,0,0,.5);
+}
 .button-parent{
     text-align: right;
 }

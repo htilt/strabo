@@ -73,15 +73,6 @@ function ip_clicked(db_id) {
         }
     );
 }
-function objToString (obj) {
-    var str = '';
-    for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-            str += p + '::' + obj[p] + '\n';
-        }
-    }
-    return str;
-}
 /*
 Purpose:
 When Flickity cell is clicked, a photoswipe gallery is pulled up.
@@ -153,12 +144,6 @@ function set_flickety_img_title(){
         var img = imgs[flkty.selectedIndex];
 
         $("#img_description").text(img.description);
-
-        var elmts = flkty.getCellElements();
-        elmts.forEach(function(elmt){
-            elmt.style.background = "Transparent";
-        });
-        flkty.selectedElement.style.background = "rgba(0,0,0,.5)"
     })
 }
 
