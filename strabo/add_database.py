@@ -71,6 +71,6 @@ ip3_description = "Reed Lake was created sometime near the turn of the century b
 
 ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,app.config['LAYER_FIELDS'][0],"MapPinMaroon.png")
 ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,app.config['LAYER_FIELDS'][1],"MapPinGreen.png")
-ip3 = make_interest_point([7,8],"Fish Ladder",ip3_description,geo_obj3,app.config['LAYER_FIELDS'][2],"MapPinTeal.png")
+
 
 db.session.commit()
