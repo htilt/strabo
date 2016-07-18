@@ -39,6 +39,15 @@ def make_filename(form_file_name):
     unique_filename = make_unique_filename(straboconfig['UPLOAD_FOLDER'],secure_filename)
     return  unique_filename
 
+
+def save_shrunken_images_with(filename):
+    '''Make a thumbnail and mobile_imgs and store it in the appropriate directory
+    using the same filename as the original image. '''
+    image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
+    #do the same with different dimentions to mobile_imgs
+    image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
+
+
 #saves image and thumbnail using the given filenaem
 def save_image_files(form_file_obj,filename):
     #if no files is attached, then do nothing
@@ -51,11 +60,8 @@ def save_image_files(form_file_obj,filename):
 
     # Move the file from the temporary folder to the upload folder
     form_file_obj.save(get_image_path(filename))
-    # Make a thumbnail and store it in the thumbnails directory with the same filename
-    # will also be unique as there will be the same files in both
-    image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
-    #do the same with different dimentions to mobile_imgs
-    image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
+    #note that unique filename in uploads folder will also be unique filename in other folders
+    save_shrunken_images_with(filename)
 
 #delete image helper functions
 def delete_image_files(filename):

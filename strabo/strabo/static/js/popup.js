@@ -98,6 +98,9 @@ The delay is the second argument to window.setTimeout in units of milliseconds. 
 but very small values like 1 do not work very well.
 */
 function set_flickety_click(){
+    var timeout_sec = 0.1;
+    var SECS_PER_MILSEC = 1000;
+
     var photoswipe_fetched = false;
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
         if (cellElement && !photoswipe_fetched) {
@@ -105,7 +108,7 @@ function set_flickety_click(){
             window.setTimeout(function(){
                 make_photoswipe(cellIndex);
                 photoswipe_fetched = false;
-            },100);
+            },SECS_PER_MILSEC*timeout_sec);
         }
     });
 }
