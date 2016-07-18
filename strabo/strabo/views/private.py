@@ -75,7 +75,7 @@ def show_image_upload_form(image):
 ###
 @app.route("/login/")
 def login():
-  return render_template("/public/login.html",**app.config)
+  return render_template("/public/login.html",**straboconfig)
 
 ###
 
