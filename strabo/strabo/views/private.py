@@ -73,9 +73,9 @@ def show_image_upload_form(image):
 ### Views for login page
 ###
 ###
-@app.route("/login/")
+@app.route("/login/", methods=["GET"])
 def login():
-  return render_template("/public/login.html",**app.config)
+  return render_template("/public/login.html",**straboconfig)
 
 ###
 
