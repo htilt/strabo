@@ -15,19 +15,12 @@
     <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
-        var lat_setting = {{ LAT_SETTING }};
-        var long_setting = {{ LONG_SETTING }};
-        var initial_zoom = {{ INITIAL_ZOOM }};
-        var tile_src = "{{ MAP_TILE_SRC }}";
-        var tile_attributes = {{ LEAFLET_ATTRIBUTES|tojson }};
         var features = {{ features_json|tojson }};
-        var THUMBNAIL_MAX_SIZE = {{ THUMBNAIL_MAX_SIZE|tojson }};
-        var LAYER_FIELDS = {{ LAYER_FIELDS|tojson }};
-        var MAP_ICONS = {{ MAP_ICONS|tojson }};
+        var straboconfig = {{ straboconfig|tojson }};
     </script>
     <script src="../static/js/popup.js"></script>
     <script src="../static/js/map_info.js"></script>
-    <script src="../static/js/{{ MAP_JS }}"></script>
+    <script src="../static/js/{{MAP_JS}}"></script>
 {% endblock head %}
 
 {% block content %}

@@ -7,13 +7,14 @@
 }
 
 #page-header {
-    padding: 1.428571429em; /* 20/14 */
+    padding: 0.5em; /*1.428571429em; /* 20/14 */
 }
 
 #page-header h1 {
   font-family: serif;
   font-weight: 300;
-  font-size: 2.5em; /* 35/14 */
+  font-variant: small-caps;
+  font-size: 2em; /*2.5em; /* 35/14 */
   padding: 0.428571429em; /* 15/35 */
 }
 
@@ -23,7 +24,9 @@
 }
 
 #page-header p {
-  font-weight: 300;
-  font-size: 1.285714286em; /* 18/14 */
+  font-family: 'Futura', sans-serif;
+  font-weight: 200;
+  font-size: 1em; /* 1.285714286em; /* 18/14 */
   padding-left: 1.071428571em; /* 15/14 */
+  color: #4d4d4d;
 }

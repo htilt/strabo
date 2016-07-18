@@ -77,7 +77,13 @@
     font: normal 4em/normal Arial;
     width: 1em;
     height: 1em;
-    cursor: pointer; 
+    cursor: pointer;
+}
+.button-parent{
+    text-align: right;
+}
+.ip-descrip{
+    white-space: pre-wrap;
 }
 .horizontal-center{
     width: 100%;

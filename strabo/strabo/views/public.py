@@ -1,9 +1,11 @@
 from flask import request, render_template, jsonify
-from strabo import app
 from strabo import database
-from strabo import db
 from strabo import schema
 from strabo import geojson_wrapper
+
+from strabo import app
+from strabo import db
+from strabo import straboconfig
 
 
 @app.route("/")
@@ -11,10 +13,10 @@ from strabo import geojson_wrapper
 def map():
   template = "public/map.html"
   features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in db.session.query(schema.InterestPoints).all()]
-  print({k:v for k,v in app.config.items()})
   return render_template(template,
     features_json=features,
-     **app.config)
+     straboconfig=straboconfig,
+     **straboconfig)
 
 @app.route('/map/post', methods=["POST"])
 def map_post():
@@ -38,4 +40,4 @@ def map_post():
 
 @app.route("/about")
 def about():
-  return render_template("public/about.html",**app.config)
+  return render_template("public/about.html",**straboconfig)

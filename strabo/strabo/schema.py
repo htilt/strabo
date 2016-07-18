@@ -2,9 +2,8 @@ from datetime import datetime
 
 from sqlalchemy import *
 import sqlalchemy
+import config
 from sqlalchemy.orm import relationship
-
-from strabo import config_canyon
 
 Base = sqlalchemy.ext.declarative.declarative_base()
 
@@ -18,6 +17,7 @@ class DataType(IdPrimaryKeyMixin, DateTimeMixin):
     pass
 
 class InterestPoints(Base,DataType):
+
     __tablename__ = 'interest_points'
     title = Column(Text)
     descrip_body = Column(Text)
@@ -25,7 +25,8 @@ class InterestPoints(Base,DataType):
     geojson_object = Column(Text)
 
     # for some weird reason, enums break this and I cannot figure it out.
-    layer = Column(Text)
+    layer = Column(Integer)
+    #stores the filename of the icon
     icon = Column(Text)
 
     images = relationship("Images",back_populates="interest_point")
@@ -41,6 +42,6 @@ class Images(Base,DataType):
 
     description = Column(Text)
 
-    #width and height in pixels, needed for photoswipe
+    # width and height in pixels, needed for photoswipe
     width = Column(Integer)
     height = Column(Integer)
