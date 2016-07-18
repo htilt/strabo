@@ -68,6 +68,19 @@ def show_image_upload_form(image):
     image=image,
     **straboconfig)
 
+###
+###
+### Views for login page
+###
+###
+@app.route("/login/", methods=["GET"])
+def login():
+  return render_template("/public/login.html",**straboconfig)
+
+###
+
+###
+### Views to upload images to db
 @app.route("/admin/upload_images/")
 def upload_images():
     return show_image_upload_form(schema.Images(filename="",description=""))

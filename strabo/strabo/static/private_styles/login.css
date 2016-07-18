@@ -1,0 +1,92 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+  background: #ebf5e4; 
+  font-family: "Roboto", sans-serif;   
+}
+
+.login-page {
+  width: 100%;
+  /* width: 25.7142857em;     /* 360/14 */
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  width: 100%;
+  max-width: 28.5714286em;     /* 400/14 */ 
+  margin: 0 auto 7.14285714em; /* 100/14 */
+  padding: 3.21428571em;       /* 45/14 */
+  text-align: center;
+  box-shadow: 0 0 1.42857143em 0 rgba(0, 0, 0, 0.2), 0 0.357142857em 0.357142857em 0 rgba(0, 0, 0, 0.24); /* 20/14, 5/14 */
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  color: #6e4f31;
+  outline: 0;
+  background: #ffffee;
+  width: 100%;
+  border: 0;
+  margin: 0 0 1.07142857em; /* 15/14 */
+  padding: 1.07142857em;    /* 15/14 */
+  box-sizing: border-box;
+  font-size: 1em;           /* 14/14 */
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #422C1E;
+  width: 100%;
+  border: 0;
+  padding: 1.07142857em; /* 15/14 */
+  color: #ffffd7;
+  font-size: 1em;       /* 14/14 */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+/* Format the header text on the login and register pages */
+.form-header {
+  font-family: 'Futura', sans-serif;
+  font-size: 2em;       /* 28/14 */
+  color: #422C1E;
+}
+
+.form-greeting {
+  font-family: 'Roboto','Futura', sans-serif;
+  font-size: 1em;
+  color: #578F7A;
+}
+
+#login {
+  font-family: 'Futura', sans-serif;
+  font-size: 1em;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+  background: #ffffd7;
+  color: #422C1E;
+}
+.form .message {
+  font-family: 'Roboto', 'Futura', sans-serif;
+  margin: 1.07142857em 0 0 ; /* 15/14 */
+  color: #422C1E;
+  font-size: 0.857142857em;  /* 12/14 */ 
+}
+.form .message a {
+  color: #578F7A;
+  text-decoration: none;
+}
+
+.form .message a:hover, .form .message a:active {
+  color: #C29034;
+}
+.form .register-form {
+  display: none;
+}

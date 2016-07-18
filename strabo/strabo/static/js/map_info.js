@@ -17,8 +17,8 @@ var ColorIcon = L.Icon.extend({
 
 var icon_objs = function(){
     var icon_objs = {};
-    straboconfig["MAP_ICONS"].forEach(function(ico_name){
-        icon_objs[ico_name] = new ColorIcon({iconUrl:'/static/map_icons/' + ico_name});
+        straboconfig["MAP_ICONS"].forEach(function(icon_name){
+        icon_objs[icon_name] = new ColorIcon({iconUrl:'/static/map_icons/' + icon_name});
     });
     return icon_objs;
 }();
