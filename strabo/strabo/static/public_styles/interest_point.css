@@ -19,26 +19,41 @@
     background: rgba(0,0,0,0.2);
     /* border around box on large screens
      * pattern:  _ _ blur spread color*/
-    box-shadow: 0 0 10px 10px rgba(128,159,107,0.7);
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.4);
 }
 
 .top-section {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
     width:100%;
     background: #ebf5e4;
     /*must add to 100 with .text-section:height and .carousel-space:height*/
-    height: 49%;
+    height: 43%;
 }
+
+.top-section h2 {
+    font-weight: bold;
+}
+
+#ip_description {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+}
+
 #carouselholder{
     height: 100%;
 }
 .carousel-space{
     /*must add to 100 with .top-section:height and .text-section:height*/
-    height:45%;
+    height: 49%;
 }
 .padded-pic{
     padding: 0 20px 0 20px;
     height: 100%;
 }
+
+#img_description {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+}
+
 @media (min-height: 800px) {
   .text-section {
       /*Dependencies: text-section's percentage height, popup-foreground's max-width*/
@@ -48,17 +63,15 @@
 @media (max-height: 800px) {
   .text-section {
       /*Dependencies: text-section's percentage height*/
-      font-size: 5vh;
+      font-size: 5vh; /* Means 5% of the view height */
   }
 }
 .text-section{
-    font: Arial;
     width: 100%;
     /*must add to 100 with .top-section:height and .carousel-space:height*/
-    height: 6%;
-
+    height: 8%;
     text-align: center;
-    background: #ffffff;
+    background: #ebf5e4;
 }
 .close-button{
     font: normal 4em/normal Arial;
