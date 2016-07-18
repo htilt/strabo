@@ -15,14 +15,13 @@ def allowed_file(filename):
     return utils.get_extension(filename) in straboconfig['ALLOWED_EXTENSIONS']
 
 # This helper function uses PIL to make a new thumbnail of a given image
-def save_as_thumbnail(image_path,thumbnail_path):
+def save_shrunken_image(image_path,thumbnail_path,max_dim):
     # import desired image from /uploads folder
     img = Image.open(image_path)
     # create a thumbnail from desired image
     # the thumbnail will have dimentions of the same ratio as before, capped by
-    # the max dimention of max_size
-    max_size = straboconfig["THUMBNAIL_MAX_SIZE"]
-    img.thumbnail(max_size,Image.ANTIALIAS)
+    # the limiting dimention of max_dim
+    img.thumbnail(max_dim,Image.ANTIALIAS)
     # save the image under a new filename in thumbnails directory
     img.save(thumbnail_path)
 

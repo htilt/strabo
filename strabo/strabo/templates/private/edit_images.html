@@ -26,7 +26,7 @@
                             <button type="submit" name="delete-btn" value={{ img.id }}>Delete</button>
                         </td>
                         <td>{{ img.description }}</td>
-                        <td><img src="{{ NEW_DATA_DIRECTORY_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
+                        <td><img src="{{ THUMB_DIR_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
                       </tr>
                   {% endfor %}
                 </table>
