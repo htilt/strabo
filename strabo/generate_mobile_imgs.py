@@ -6,12 +6,16 @@ Use whenever the dimentions specified by THUMBNAIL_MAX_SIZE or MOBILE_SERV_MAX_S
 have been changed.
 '''
 
+import os
+
 from strabo import utils
 import config
 from strabo import file_writing
 from strabo import image_processing
 
-straboconfig = config.get_config_info()
+from strabo import straboconfig
+
+utils.fill_dict_with(straboconfig,config.get_config_info())
 
 for filename in os.listdir(os.path.realpath("./strabo/static/uploads/")):
     if image_processing.allowed_file(filename):
