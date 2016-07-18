@@ -23,7 +23,7 @@ def get_thumbnail_path(filename):
 #generates a filename which does not yet iexist in the folder specified by path
 def make_unique_filename(path,filename):
     def gen_new_name():
-        name,ext = utils.extract_name_extention(filename)
+        name,ext = utils.extract_name_extension(filename)
         return name+str(random.randint(0,1000000000000000)) + '.' + ext
 
     uniq_name = filename
