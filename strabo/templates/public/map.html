@@ -3,16 +3,14 @@
     {{ super() }}
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
   <link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css" media="screen">
-  <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
-  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css">
-  <link rel="stylesheet" href="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css">
+  <link rel="stylesheet" href="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css">
     <link href="/static/public_styles/popup.css" rel="stylesheet">
     <link href="/static/public_styles/photoswipe.css" rel="stylesheet">
     <link href="/static/public_styles/map.css" rel="stylesheet">
     <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
-    <!--rawgit.com NOT SUITABLE FOR PRODUCTION-->
-    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
-    <script src="http://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
+    <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
+    <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script>
         var features = {{ features_json|tojson }};
