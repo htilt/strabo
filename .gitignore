@@ -7,7 +7,7 @@
 *.o
 *.so
 *.pyc
-strabo/docs/_build/
+docs/_build/
 
 # Packages #
 ############

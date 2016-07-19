@@ -20,8 +20,15 @@ def get_mobile_img_path(filename):
 def get_thumbnail_path(filename):
     return os.path.join(straboconfig['THUMB_DIR'], filename)
 
-#generates a filename which does not yet iexist in the folder specified by path
 def make_unique_filename(path,filename):
+    '''generates a filename with the given properties
+
+    #. The new filename does not exist yet in the folder specified by ``path``.
+    #. The filename has the same file extension as the ``filename`` argument.
+
+    Note that the uniqueness is only gaurenteed if the app is run in a single thread/process
+    , but it really ought to be fine in any case.
+    '''
     def gen_new_name():
         name,ext = utils.extract_name_extension(filename)
         return name+str(random.randint(0,1000000000000000)) + '.' + ext
@@ -32,8 +39,10 @@ def make_unique_filename(path,filename):
 
     return uniq_name
 
-#gives a safe filename that is not the same as any other in the uploads folder
 def make_filename(form_file_name):
+    '''
+    uses make_unique_filename to make a safe filename that is not the same as any other in the uploads folder
+    '''
     secure_filename = werkzeug.secure_filename(form_file_name)
     # prepend unique id to ensure an unique filename
     unique_filename = make_unique_filename(straboconfig['UPLOAD_FOLDER'],secure_filename)
@@ -41,8 +50,12 @@ def make_filename(form_file_name):
 
 
 def save_shrunken_images_with(filename):
-    '''Make a thumbnail and mobile_imgs and store it in the appropriate directory
-    using the same filename as the original image. '''
+    '''
+    Assumes that ``filename`` is a image file already stored in the uploads directory.
+
+    Generates a thumbnail and mobile_img and saves them under ``filename``
+    in their appropriate directory.
+    '''
     image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
     #do the same with different dimentions to mobile_imgs
     image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
@@ -50,6 +63,13 @@ def save_shrunken_images_with(filename):
 
 #saves image and thumbnail using the given filenaem
 def save_image_files(form_file_obj,filename):
+    '''
+    Checks saves ``form_file_obj``
+    under ``uploads/<filename>``.
+
+    Throws an error if form_file_obj is of not an allowed file extension.
+    Ideally, this possibility would be not be allowed through form validation.
+    '''
     #if no files is attached, then do nothing
     if not form_file_obj:
         return
@@ -63,8 +83,10 @@ def save_image_files(form_file_obj,filename):
     #note that unique filename in uploads folder will also be unique filename in other folders
     save_shrunken_images_with(filename)
 
-#delete image helper functions
 def delete_image_files(filename):
+    '''
+    Deletes uploaded image and all images generated from it.
+    '''
     os.remove(get_image_path(filename))
     os.remove(get_thumbnail_path(filename))
     os.remove(get_mobile_img_path(filename))
