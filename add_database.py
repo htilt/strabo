@@ -73,8 +73,9 @@ db.session.commit()
 
 ip3_description = "Reed Lake was created sometime near the turn of the century by the construction of a 10-foot-high dam across Reed Creek. The creation of the dam blocked fish passage, as the creek was re-routed through a culvert system that discharged to a steep waterfall. \n \n Over the summer and fall of 2001, Reed College constructed a fish ladder to re-establish connectivity between Reed Lake and the lower creek for resident and anadromous fish."
 
-ip1 = make_interest_point([1,2,3],"Interest Point 1","This is a descriptions of something",geo_obj1,"Plants","Navy.png")
-ip2 = make_interest_point([4],"Interest Point 2","This is a descriptions of something else",geo_obj2,"Animals","Green.png")
+ip1 = make_interest_point([img1.id,img2.id,img3.id],"Interest Point 1","This is a descriptions of something",geo_obj1,"Plants","Navy.png")
+ip2 = make_interest_point([img4.id],"Interest Point 2","This is a descriptions of something else",geo_obj2,"Animals","Green.png")
+ip3 = make_interest_point([img7.id,img8.id],"Fish Ladder",ip3_description,geo_obj3,"Interest Points","Green.png")
 
 
 db.session.commit()

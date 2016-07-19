@@ -51,7 +51,7 @@ def get_config_info():
 
     config_info['MAP_JS'] = 'map.js'
     config_info['ADMINMAP_JS'] = 'drawMap.js'
-    config_info['FAVICON'] = '../strabo/strabo/static/favicon.ico'
+    config_info['FAVICON'] = '/static/favicon.ico'
 
  #####Login and Register stuff ##################
     config_info['LOGIN_HEADER'] = 'Strabo Login'

@@ -6,7 +6,7 @@ var locateIcon = L.icon({
 
 var ColorIcon = L.Icon.extend({
     options: {
-        shadowUrl: '/static/map_icons/MapPinShadow.png',
+        shadowUrl: '/static/MapPinShadow.png',
         iconSize:     [30, 50],
         shadowSize:   [30, 32],
         iconAnchor:   [15, 50],
