@@ -15,8 +15,9 @@ from strabo import app
 from strabo import db
 
 def delete_ip(id):
-    '''Deletes ip refrenced by id
-    All images associated with the ip are unaffected, they simply.'''
+    '''Deletes ip refrenced by id.
+
+    All images associated with the ip are unaffected, they simply lose their connection with the interest_point.'''
     idquery = db.session.query(schema.InterestPoints).filter_by(id=id)
     ip = idquery.one()
 
@@ -27,7 +28,7 @@ def delete_ip(id):
     db.session.commit()
 
 def delete_image(id):
-    '''deletes the images and all files associated with it'''
+    '''Deletes the images and all files associated with it.'''
     idquery = db.session.query(schema.Images).filter_by(id=id)
     img = idquery.one()
     file_writing.delete_image_files(img.filename)

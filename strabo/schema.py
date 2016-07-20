@@ -24,9 +24,8 @@ class InterestPoints(Base,DataType):
 
     geojson_object = Column(Text)
 
-    # for some weird reason, enums break this and I cannot figure it out.
     layer = Column(Integer)
-    #stores the filename of the icon
+
     icon = Column(Text)
 
     images = relationship("Images",back_populates="interest_point")
