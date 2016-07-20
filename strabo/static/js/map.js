@@ -18,6 +18,49 @@ function set_feature_click(all_layers_group){
         });
     });
 }
+function centerLocation(map,latlng,bounds){
+    if (bounds.contains(latlng)) {
+        map.setView(latlng, 18); // Set view to location and zoom in
+    }
+}
+var CenterControl = L.Control.extend({
+    //
+    //taken from the leafelet docs using the Zoom control as a basis
+    //
+    initialize: function (bounds,options) {
+        this.centerBounds = bounds
+        this.latLng = null
+        L.Util.setOptions(this, options);
+    },
+    onAdd: function (map) {
+        // create the control container with a particular class name
+        var $container = $('<div class="leaflet-control-zoom leaflet-bar"></div>');
+        $container.html('<a class="leaflet-control-zoom-in focus_button">&#9679;</a>');
+        var mythis = this;
+
+		$container
+		    .on('click', L.DomEvent.stopPropagation)
+		    .on('mousedown', L.DomEvent.stopPropagation)
+		    .on('dblclick', L.DomEvent.stopPropagation)
+		    .on('click', L.DomEvent.preventDefault)
+            .on('click',map.getContainer().focus)
+            .on('click',function(){
+                console.log("clicked!!");
+                console.log(mythis.latLng);
+                if(!(mythis.latLng == null)){
+                    console.log("clicked!!!!!!!!!!!!!!!s");
+                    centerLocation(map,mythis.latLng,mythis.centerBounds);
+                }
+            })
+
+        return $container[0];
+    },
+    locationGotten:function(latLng){
+        console.log(latLng);
+        console.log(this.centerBounds);
+        this.latLng = latLng
+    }
+});
 
 $(document).ready(function(){
     var map = make_map('map');
@@ -51,34 +94,37 @@ $(document).ready(function(){
 
     map.setMaxBounds(bounds);
 
+    var zoom_to = new CenterControl(bounds,{position:"topleft"});
+    zoom_to.addTo(map);
+
+    var location_was_found = false;
     function onLocationFound(e) {
       // If you are within the campus bounds, the map
       // *should* center on your location and add a marker
       // where you are.
+      zoom_to.locationGotten(e.latlng);
       if (bounds.contains(e.latlng)) {
-        map.setView(e.latlng, 18); // Set view to location and zoom in
+          centerLocation(map,e.latlng,bounds)
         var radius = e.accuracy / 2;
 
         L.marker(e.latlng, {icon: locateIcon}).addTo(map)
           .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
         L.circle(e.latlng, radius).addTo(map);
-
       }
-      // If you are not on campus, the map should not care
-      // about your location, and it will just center on the
-      // canyon, leaving no marker of where you are
-      else {
-        map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
+      else{
+          if(location_was_found){
+              map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
+          }
       }
-
+      location_was_found = true;
     }
     map.on('locationfound', onLocationFound);
 
 
     // Error if locating fails
     function onLocationError(e) {
-      alert(e.message);
+        alert(e.message);
     }
 
     map.on('locationerror', onLocationError);

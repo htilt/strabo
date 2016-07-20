@@ -12,3 +12,6 @@ html, body {
     top: 4.5em;
     bottom: 1.5em; /*2em*/
 }
+.focus_button{
+    cursor:pointer;
+}
