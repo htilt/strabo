@@ -22,10 +22,13 @@ function centerLocation(map,latlng,bounds){
     if (bounds.contains(latlng)) {
         map.setView(latlng, 18); // Set view to location and zoom in
     }
+    else{
+        map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
+    }
 }
 var CenterControl = L.Control.extend({
     //
-    //taken from the leafelet docs using the Zoom control as a basis
+    //taken from the leafelet IControl docs
     //
     initialize: function (bounds,options) {
         this.centerBounds = bounds
@@ -33,9 +36,12 @@ var CenterControl = L.Control.extend({
         L.Util.setOptions(this, options);
     },
     onAdd: function (map) {
-        // create the control container with a particular class name
+        //
+        //Much of this is taken directly from the leaflet source code (L.Control.Zoom declaration)
+        //
+        var html_img_code = "&#9679";
         var $container = $('<div class="leaflet-control-zoom leaflet-bar"></div>');
-        $container.html('<a class="leaflet-control-zoom-in focus_button">&#9679;</a>');
+        $container.html('<a class="leaflet-control-zoom-in focus_button">'+html_img_code+'</a>');
         var mythis = this;
 
 		$container
@@ -45,10 +51,7 @@ var CenterControl = L.Control.extend({
 		    .on('click', L.DomEvent.preventDefault)
             .on('click',map.getContainer().focus)
             .on('click',function(){
-                console.log("clicked!!");
-                console.log(mythis.latLng);
                 if(!(mythis.latLng == null)){
-                    console.log("clicked!!!!!!!!!!!!!!!s");
                     centerLocation(map,mythis.latLng,mythis.centerBounds);
                 }
             })
@@ -56,11 +59,31 @@ var CenterControl = L.Control.extend({
         return $container[0];
     },
     locationGotten:function(latLng){
-        console.log(latLng);
-        console.log(this.centerBounds);
         this.latLng = latLng
     }
 });
+var LocationGraphic = function(){
+    this.marker = null;
+    this.circle = null;
+    this.removeGraphicsFrom =  function(map){
+        if(this.marker != null){
+            map.removeLayer(this.marker);
+            this.marker = null;
+        }
+        if(this.circle != null){
+            map.removeLayer(this.circle);
+            this.circle = null;
+        }
+    }
+    this.addGraphicsTo = function(map,latlng,accuracy){
+        var radius = accuracy / 2;
+
+        this.marker = L.marker(latlng, {icon: locateIcon}).addTo(map);
+        //                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+        this.circle = L.circle(latlng, radius).addTo(map);
+    }
+}
 
 $(document).ready(function(){
     var map = make_map('map');
@@ -78,7 +101,7 @@ $(document).ready(function(){
 
     // Use GPS to locate you on the map and keeps watching
     // your location. Set to watch: true to have it watch location.
-    map.locate({watch: false});
+    map.locate({watch: true});
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
@@ -96,28 +119,24 @@ $(document).ready(function(){
 
     var zoom_to = new CenterControl(bounds,{position:"topleft"});
     zoom_to.addTo(map);
+    var location = new LocationGraphic(bounds);
 
     var location_was_found = false;
     function onLocationFound(e) {
-      // If you are within the campus bounds, the map
-      // *should* center on your location and add a marker
-      // where you are.
-      zoom_to.locationGotten(e.latlng);
-      if (bounds.contains(e.latlng)) {
-          centerLocation(map,e.latlng,bounds)
-        var radius = e.accuracy / 2;
+        // If you are within the campus bounds, the map
+        // *should* center on your location and add a marker
+        // where you are.
+        zoom_to.locationGotten(e.latlng);
 
-        L.marker(e.latlng, {icon: locateIcon}).addTo(map)
-          .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        if(!location_was_found){
+            centerLocation(map,e.latlng,bounds)
+        }
+        location_was_found = true;
 
-        L.circle(e.latlng, radius).addTo(map);
-      }
-      else{
-          if(location_was_found){
-              map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
-          }
-      }
-      location_was_found = true;
+        location.removeGraphicsFrom(map);
+        if (bounds.contains(e.latlng)) {
+            location.addGraphicsTo(map,e.latlng,e.accuracy);
+        }
     }
     map.on('locationfound', onLocationFound);
 
