@@ -115,8 +115,8 @@ var LocationGraphic = function(){
         */
         var radius = accuracy / 2;
 
-        this.marker = L.marker(latlng, {icon: locateIcon}).addTo(map);
-        //                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        this.marker = L.marker(latlng, {icon: locateIcon}).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point");
 
         this.circle = L.circle(latlng, radius).addTo(map);
     }
