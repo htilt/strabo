@@ -9,7 +9,7 @@ def safe_pos_int_conv(inputstr):
     in instead of a number '''
     return  int(inputstr) if not inputstr == '' else 1
 
-def _extract_name_extension(filename):
+def extract_name_extension(filename):
     '''Splits filename into name and extension.
 
     Returns name as the first argument and extension as the second.'''
@@ -21,10 +21,10 @@ def _extract_name_extension(filename):
     return filename[:dot_idx], filename[dot_idx+1:]
 
 def remove_extension(filename):
-    return _extract_name_extension(filename)[0]
+    return extract_name_extension(filename)[0]
 
 def get_extension(filename):
-    return _extract_name_extension(filename)[1]
+    return extract_name_extension(filename)[1]
 
 def fill_dict_with(_to,_from):
     for k,v in _from.items():
