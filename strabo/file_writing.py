@@ -83,10 +83,15 @@ def save_image_files(form_file_obj,filename):
     #note that unique filename in uploads folder will also be unique filename in other folders
     save_shrunken_images_with(filename)
 
+def safe_file_remove(filepath):
+    '''If the file exists, then delete it, else do nothing.'''
+    if os.path.isfile(filepath):
+        os.remove(filepath)
+        
 def delete_image_files(filename):
     '''
     Deletes uploaded image and all images generated from it.
     '''
-    os.remove(get_image_path(filename))
-    os.remove(get_thumbnail_path(filename))
-    os.remove(get_mobile_img_path(filename))
+    safe_file_remove(get_image_path(filename))
+    safe_file_remove(get_thumbnail_path(filename))
+    safe_file_remove(get_mobile_img_path(filename))
