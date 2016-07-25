@@ -5,13 +5,13 @@ html, body {
   /*gets rid of scroll bar*/
   overflow: hidden;
 }
-
 #map {
     width: 100%;
     position: absolute;
     top: 4.5em;
     bottom: 1.5em; /*2em*/
 }
-.focus_button{
+.focus-button{
+    text-align: center;
     cursor:pointer;
 }

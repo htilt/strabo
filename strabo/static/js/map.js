@@ -57,7 +57,7 @@ var CenterControl = L.Control.extend({
         this.latLng = null
         L.Util.setOptions(this, options);
     },
-    onAdd: function (map) {
+    onAdd: function (map){
         /*
         Creates an html div that is the button icon.
 
@@ -67,7 +67,7 @@ var CenterControl = L.Control.extend({
         */
         var html_img_code = "&#9679";
         var $container = $('<div class="leaflet-control-zoom leaflet-bar"></div>');
-        $container.html('<a class="leaflet-control-zoom-in focus_button">'+html_img_code+'</a>');
+        $container.html('<a class="leaflet-control-zoom-in focus-button">'+html_img_code+'</a>');
 
         var mythis = this;//hackish way to get ``this`` into the internal function.
 
@@ -122,15 +122,6 @@ var LocationGraphic = function(){
     }
 }
 function set_geolocation(map){
-    /*
-    Geolocation operates in the following way:
-
-    The first time location of the device is found, the map centers on that location (or the center of the canyon if the location is not in the bounds).
-
-    Any time afterwards, when the browser updates your geolocation, it changes the marker marking your location on the map and updates a value storing the latlng position of the device, but does not center the picture.
-
-    When you click the center button, it zooms to the latest latlng position.
-    */
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
@@ -145,6 +136,16 @@ function set_geolocation(map){
     var bounds = L.latLngBounds(northWest, southEast);
 
     map.setMaxBounds(bounds);
+
+    /*
+    Geolocation operates in the following way:
+
+    The first time location of the device is found, the map centers on that location (or the center of the canyon if the location is not in the bounds).
+
+    Any time afterwards, when the browser updates your geolocation, it changes the marker marking your location on the map and updates a value storing the latlng position of the device, but does not center the picture.
+
+    When you click the center button, it zooms to the latest latlng position.
+    */
 
     var zoom_to = new CenterControl(bounds,{position:"topleft"});
     zoom_to.addTo(map);
