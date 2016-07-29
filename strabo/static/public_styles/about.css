@@ -1,6 +1,10 @@
 /* About Page */
 
 .banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+
   width: 100%;
   height: 20em;
   background: #ebf5e4;
@@ -30,6 +34,10 @@
   border-bottom: 1px solid #ddd;
   letter-spacing: .107142857em;
   background-image: url('../uploads/frogs.jpg')!important;
+
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 .content p {
