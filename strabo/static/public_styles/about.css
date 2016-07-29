@@ -21,7 +21,7 @@
 
 .content h2 {
   font-size: 1em;
-  color: #ccc;
+  color: #ffffff;
   text-align: center;
   font-family: 'Helvetica Neue';
   font-size: 2em;
@@ -29,8 +29,7 @@
   padding-bottom: 1em;
   border-bottom: 1px solid #ddd;
   letter-spacing: .107142857em;
-  background-image: url('../uploads/hummingbird.png')!important;
-  text-decoration: underline;
+  background-image: url('../uploads/frogs.jpg')!important;
 }
 
 .content p {
