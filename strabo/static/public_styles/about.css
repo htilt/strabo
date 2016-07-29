@@ -2,7 +2,7 @@
 
 .banner {
   width: 100%;
-  height: 20em;
+  height: 10em;
   background: #ebf5e4;
   background-repeat: no-repeat;
   background-size: cover;
@@ -11,27 +11,44 @@
 .page {
   width: 100%;
   background-image: url('../uploads/hummingbird.png')!important;
-  background-color: #000000;
+  background-color: #ebf5e4;
 } 
+
+
 
 .content {
   background-color: #ffffff;
+  border: 1px solid #ddd;
 }
 
 .content h2 {
-  font-size: 1.5em;
-  color: #006666;
+  font-size: 1em;
+  color: #ccc;
   text-align: center;
   font-family: 'Helvetica Neue';
   font-size: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #ddd;
+  letter-spacing: .107142857em;
+  background-image: url('../uploads/hummingbird.png')!important;
+
+}
+
+.content p {
+  font-family: 'Helvetica Neue';
+  font-size: 1.5em;
+  text-align: center;
+  font-color: #646464;
+  padding: 0.3em;
 }
 
 #purpose {
-  background-color: #ffffd8;
+  background-color: #ebf5e4;
 }
 
 #people {
-  background-color: #ffffff;
+  background-color: #ebf5e4;
 }
 
  .page-header {
@@ -51,6 +68,7 @@
   font-size: 2.5em; /* 35/14 */
   padding: 0.428571429em; /* 15/35 */
   color: #ffffff;
+  font-style: bold;
 }
 
 #page-header span {
