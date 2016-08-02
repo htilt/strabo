@@ -2,19 +2,19 @@
 This is the README for *Strabo*, a database-backed website for
 making an interactive map incorporating text and images. 
 
-Last Updated: June 26, 2016
+Last Updated: August 1, 2016
 
 #
 
 Overview
 --------
 Strabo is a tool designed to offer an administrator an easy method 
-for displaying three kinds of information on a website - interest points, images, and textual selections - and for visually relating these pieces of information. 
+for displaying three kinds of information on a website - points of interest, images, and texts - and for visually relating these pieces of information. 
 
-An administrator can locate interest points on an interactive map and associate textual descriptions and multiple images with each point. 
+An administrator can locate points of interest on an interactive map and associate textual descriptions and images with each point. 
 Once information has been uploaded to the database, it will
 be available on a public end of the site. This public end
-includes an interactive map that displays interest point markers that, upon being clicked, open a popup with descriptive text and associated photos corresponding to the point of interest. 
+includes an interactive map that displays interest point markers that, upon being clicked, open a popup with descriptive text and  photos corresponding to the point of interest. 
 
 See the **Reed Canyon Map** for an example of a website developed using Strabo.
 
@@ -26,7 +26,7 @@ The root directory **strabo** includes subdirectories corresponding to
 
 - ``alembic``, a Python data migration tool 
 
-- ``docs``, the collection of Sphinx-generated documentation for the project, which can be found at **Read the Docs**
+- ``docs``, the collection of Sphinx-generated documentation for the project, which can be found at [Read the Docs](http://strabo.readthedocs.io/en/latest/)
 
 - ``strabo``, the directory of HTML, CSS, Python, and Javascript that set up the website
 
