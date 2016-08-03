@@ -3,6 +3,10 @@
 /* The code here is a little janky and could use editing 
   But well it works */
 
+body {
+  overflow-x: hidden;
+}
+
 .banner {
   position: absolute;
   left: 0;
