@@ -6,13 +6,11 @@ body {
 
 /* Banner */
 .banner {
-  position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
   height: 20em;
   background: #ebf5e4;
 }
- 
+
  /* Banner image */
 .background {
   width: 100%;
@@ -20,7 +18,7 @@ body {
   background-color: #ebf5e4;
   background-repeat: no-repeat;
   background-size: cover;
-} 
+}
 
 /* Header text */
 #page-header {
@@ -46,14 +44,14 @@ body {
 }
 
 /* Content Header Text*/
-.content h2 {
+h2 {
   color: #ffffff;
   text-align: center;
   font-family: Helvetica, sans-serif;
   font-size: 2em;
   font-weight: 200;
 
-  margin-top: 2.5em;
+  //margin-top: 2.5em;
 
   padding-top: 1em;
   padding-bottom: 1em;
@@ -65,18 +63,14 @@ body {
 .purpose > h2{
   background-color: #78866b;
   /*background-image: url('../uploads/about/frogs.jpg')!important;*/
-  position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
 }
 
 /* People header background */
 .people > h2 {
   background-color: #78866b;
   /*background-image: url('../uploads/about/night.jpg')!important;*/
-  position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
 }
 
 /* Content text */
@@ -86,15 +80,24 @@ body {
   font-size: 1.2em;
   text-align: center;
   padding: 0.3em;
-  padding-top: 11em; /* moves text below image heading */
 }
 
-.about img {
+@media (min-width: 470px) {
+    .inline-img{
+        display:inline;
+        padding: 1em;
+    }
+}
+@media (max-width: 470px) {
+    .inline-img{
+        display:inline;
+        width: 100%;
+        text-align: center;
+    }
+}
+.right-img{
   float: right;
-  padding: 1em;
 }
-
-.purpose img {
+.left-img{
   float: left;
 }
-
