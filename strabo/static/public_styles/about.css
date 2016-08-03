@@ -1,5 +1,8 @@
 /* About Page */
 
+/* The code here is a little janky and could use editing 
+  But well it works */
+
 .banner {
   position: absolute;
   left: 0;
@@ -56,6 +59,9 @@
   font-family: Helvetica, sans-serif;
   font-size: 2em;
   font-weight: 200;
+
+  margin-top: 2.5em;
+
   padding-top: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #ddd;
@@ -68,7 +74,7 @@
   font-size: 1.2em;
   text-align: center;
   padding: 0.3em;
-  padding-top: 7em; /* moves text below image heading */
+  padding-top: 11em; /* moves text below image heading */
 }
 
 .purpose > h2{
