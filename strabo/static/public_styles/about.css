@@ -22,6 +22,7 @@
 
 /* Header text */
 #page-header {
+  padding: 1.3em;
     padding-top: 4.428571429em;  /*20/14 */
 }
 
@@ -75,23 +76,14 @@ h2 {
 .content p {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
-
-
-  font-size: 1.5em; /*4vw;*/
-
-
+  font-size: 1.2em;
   text-align: center;
-<<<<<<< HEAD
-  padding: 0.3em;
-  padding-top: 10em; /* moves text below image heading */
-=======
-  padding: 1.2em;
->>>>>>> 7341c0638610a692fb3dff72253a00001c72d445
+  padding: 1.3em;
 }
 
 @media (min-width: 1024px) {
-    /*if screen is too wide, put max on text size and center it on the
-    screen*/
+    /* if screen is too wide, put max on text size and center it on the
+    screen */
     .content p{
         max-width: 1024px;
         margin: auto;
@@ -101,8 +93,8 @@ h2 {
     padding: 1em;
 }
 @media (max-width: 470px) {
-    /*if screen is too small, then make sure text does not go around
-    the images and center the image*/
+    /* if screen is too small, then make sure text does not go around
+    the images and center the image */
     .inline-img{
         width: 100%;
         text-align: center;
@@ -113,5 +105,4 @@ h2 {
 }
 .left-img{
   float: left;
-  padding: 1em;
 }
