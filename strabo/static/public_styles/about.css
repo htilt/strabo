@@ -1,6 +1,6 @@
 /* About Page */
 
-body {
+.no-horz-scroll {
   overflow-x: hidden;
 }
 
