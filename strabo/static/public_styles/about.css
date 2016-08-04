@@ -83,10 +83,14 @@ body {
 .content p {
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 200;
-  font-size: 1.2em;
+
+
+  font-size: 1.5em; /*4vw;*/
+
+
   text-align: center;
   padding: 0.3em;
-  padding-top: 11em; /* moves text below image heading */
+  padding-top: 10em; /* moves text below image heading */
 }
 
 .about img {
@@ -96,5 +100,6 @@ body {
 
 .purpose img {
   float: left;
+  padding: 1em;
 }
 
