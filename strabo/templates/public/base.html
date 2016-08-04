@@ -22,26 +22,29 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
     {% endblock head %}
 </head>
 
 
 <body>
-    <div class="container-fluid wrapper">
+    <div class="wrapper">
         <div class="row">
             <div class="header">
-              {% include RELPATH_TO_PUBLIC_TEMPLATES ~ HEADER_TEMPLATE %} <!--this includes the HTML file header.html-->
+              {% include RELPATH_TO_PUBLIC_TEMPLATES ~ HEADER_TEMPLATE %}
             </div>
         </div>
 
         {% block content %}
         {% endblock content %}
 
-        <div class="push"></div> <!--this makes the footer stick to the bottom of the page-->
+        <div class="push"></div>
     </div>
 
     <div class="footer row">
-      {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %} <!--this includes the HTML file header.html-->
+      {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %}
+    </div>
     </div>
 </body>
 
