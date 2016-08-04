@@ -14,7 +14,7 @@
  /* Banner image */
 .background {
   width: 100%;
-  background-image: url('../uploads/about/hummingbird.png')!important;
+  background-image: url('../about/hummingbird.png')!important;
   background-color: #ebf5e4;
   background-repeat: no-repeat;
   background-size: cover;
@@ -60,14 +60,14 @@ h2 {
 /* Purpose header background */
 .purpose > h2{
   background-color: #78866b;
-  /*background-image: url('../uploads/about/frogs.jpg')!important;*/
+  /*background-image: url('../about/frogs.jpg')!important;*/
   width: 100%;
 }
 
 /* People header background */
 .people > h2 {
   background-color: #78866b;
-  /*background-image: url('../uploads/about/night.jpg')!important;*/
+  /*background-image: url('../about/night.jpg')!important;*/
   width: 100%;
 }
 
