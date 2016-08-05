@@ -41,7 +41,6 @@ docs/_build/
 
 # Images #
 ##########
-*.png
 *.jpg
 *.jpeg
 *.tiff
