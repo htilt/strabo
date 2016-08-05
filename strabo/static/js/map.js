@@ -1,12 +1,5 @@
 //sets the popup feature when you click a spot on the map
 function set_map_click(map){
-    // Display latlng info for any place on the map when clicked
-    function onMapClick(e) {
-       L.popup()
-        .setLatLng(e.latlng)
-        .setContent(e.latlng.toString())
-        .openOn(map);
-    }
     // Trigger onMapClick function whenever map is clicked
     map.on('click', onMapClick);
 }
