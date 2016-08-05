@@ -14,4 +14,5 @@ html, body {
 .focus-button{
     text-align: center;
     cursor:pointer;
+    background-color: rgba(0,0,255,0.3);
 }
