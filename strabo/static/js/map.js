@@ -178,5 +178,5 @@ function set_geolocation(map){
 
     // Use GPS to locate you on the map and keeps watching
     // your location. Set to watch: true to have it watch location.
-    map.locate({watch: true});
+    map.locate({watch: true,enableHighAccuracy:true});
 }
