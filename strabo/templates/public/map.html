@@ -1,7 +1,7 @@
 {% extends RELPATH_TO_PUBLIC_TEMPLATES ~ BASE_TEMPLATE %}
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+   <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
   <link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.min.css" media="screen">
   <link rel="stylesheet" href="https://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css">
   <link rel="stylesheet" href="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css">
@@ -11,7 +11,7 @@
     <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
     <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
     <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
     <script>
         var features = {{ features_json|tojson }};
         var straboconfig = {{ straboconfig|tojson }};
