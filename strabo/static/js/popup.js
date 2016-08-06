@@ -174,7 +174,6 @@ function flickety_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
         pageDots:false,
-        resize: true,
         setGallerySize: false}
     );
     set_flickety_img_title();
