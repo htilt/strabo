@@ -1,5 +1,5 @@
 //sets the popup feature when you click a spot on the map
-function set_map_click(map){
+//function set_map_click(map){
 
     // Display latlng info for any place on the map when clicked
     // function onMapClick(e) {
@@ -9,8 +9,8 @@ function set_map_click(map){
     //    .openOn(map);
     // }
     // Trigger onMapClick function whenever map is clicked
-    map.on('click', onMapClick);
-}
+  //  map.on('click', onMapClick);
+//}
 function set_feature_click(all_layers_group){
     var all_layers = all_layers_group.getLayers();
     all_layers.forEach(function(layer){
@@ -32,7 +32,7 @@ $(document).ready(function(){
     bind_popups(all_layers_group);
     set_feature_click(all_layers_group);
 
-    set_map_click(map);
+    //set_map_click(map);
 
     // Use GPS to locate you on the map and keeps watching
     // your location. Set to watch: true to have it watch location.
