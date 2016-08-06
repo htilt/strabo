@@ -4,7 +4,6 @@ information when interest points are clicked.
 
 Also renders the about page.
 '''
-
 from flask import request, render_template, jsonify
 from strabo import database
 from strabo import schema

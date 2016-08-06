@@ -11,9 +11,6 @@
 
     <title>{{WEBSITE_TITLE}}</title>
 
-    <!--- favicon -->
-    <link rel="icon" type="image/png" href="{{FAVICON}}"  />
-
     <!-- Bootstrap Core CSS -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -22,26 +19,36 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--Favicons generated at https://realfavicongenerator.net -->
+    <link rel="apple-touch-icon" sizes="180x180" href="static/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="static/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="static/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="static/favicons/manifest.json">
+    <link rel="mask-icon" href="static/favicons/safari-pinned-tab.svg" color="#ff0000">
+    <meta name="theme-color" content="#ffffff">
+
     {% endblock head %}
 </head>
 
 
 <body>
-    <div class="container-fluid wrapper">
+    <div class="wrapper">
         <div class="row">
             <div class="header">
-              {% include RELPATH_TO_PUBLIC_TEMPLATES ~ HEADER_TEMPLATE %} <!--this includes the HTML file header.html-->
+              {% include RELPATH_TO_PUBLIC_TEMPLATES ~ HEADER_TEMPLATE %}
             </div>
         </div>
 
         {% block content %}
         {% endblock content %}
 
-        <div class="push"></div> <!--this makes the footer stick to the bottom of the page-->
+        <div class="push"></div>
     </div>
 
     <div class="footer row">
-      {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %} <!--this includes the HTML file header.html-->
+      {% include RELPATH_TO_PUBLIC_TEMPLATES ~ FOOTER_TEMPLATE %}
+    </div>
     </div>
 </body>
 

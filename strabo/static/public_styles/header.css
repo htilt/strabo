@@ -3,7 +3,7 @@
 .navbar {
   background-color: #422C1E;
   /* background-color: #006666; */
-  border-bottom: 0.071428571em solid #ddd;
+  border-bottom: 0.071428571em solid #2e1e15;
   opacity: 1;
   padding: 0.071428571em;
 }
@@ -13,7 +13,7 @@
   color: #006666;
   font-family: 'Century Gothic','Lucida-Sans', sans-serif;
   font-weight: 700;
-  font-size: 2.142857143em; /* 30/14 
+  font-size: 2.142857143em; /* 30/14
 } */
 
 .navbar-toggle {
@@ -47,7 +47,7 @@ span.icon-bar {
   margin-top: 0em;
 }
 
-.menu > li { 
+.menu > li {
   display: inline;
   padding-left: 1.428571429em; /* 20/14 */
   padding-right: 1.428571429em;
@@ -58,9 +58,9 @@ span.icon-bar {
   font-family: 'Futura', sans-serif;
   font-weight: 300;
   font-size: 1.428571429em;
-} 
+}
 
- /* Change the color of the hover background on the navbar menu */ 
+ /* Change the color of the hover background on the navbar menu */
 .nav>li>a:focus, .nav>li>a:hover {
     /* background-color: #ebf5e4; */ /* Leaving this commented out in case we want to change back */
     /* background-color: #425e8a; */
