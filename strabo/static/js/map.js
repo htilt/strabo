@@ -59,7 +59,23 @@ function set_geolocation(map){
             map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
             control.stop();
         },
-        keepCurrentZoomLevel:true
+        keepCurrentZoomLevel:true,
+        circleStyle:{},
+        circleStyle: {
+            color: '#136AEC',
+            fillColor: '#136AEC',
+            fillOpacity: 0.15,
+            weight: 4,
+            opacity: 0.5
+        },
+        markerStyle: {
+            color: '#ffffff',
+            fillColor: '#2A93EE',
+            fillOpacity: 0.7,
+            weight: 2,
+            opacity: 0.9,
+            radius: 10
+        },
     }).addTo(map)
       .start();//starts looking for your location when page loads, instead of waiting for button to be clicked
 }
