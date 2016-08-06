@@ -151,12 +151,12 @@ function liniar_text_width(text){
     //.text-measure css class is 10px because really small text renders differently.
     // and so this is more accurate.
     var measured_width = 10.0;
-    return width / measured_width;
+    return width / (measured_width * 0.9);
 }
 function get_img_desc_font_size(imgdescr){
-    var $container = $("#text-section")
+    var $container = $("#img-text-section")
     var text_width_max = $container.width() / liniar_text_width(imgdescr);
-    var text_height_max = $container.height() / 1.25;
+    var text_height_max = $container.height() / 1.25;//makes sure bottom of text is not cut off
     return Math.min(text_width_max, text_height_max);
 }
 function set_flickety_img_title(){

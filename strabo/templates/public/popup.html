@@ -3,16 +3,13 @@ Organzes the popup
 -->
 <div class="popup" hidden>
     <div class="popup-foreground horizontal-center vertical-center">
+        <div id="button-section">
+            <label class="close-button" onclick="hide_popup();">&times;</label>
+        </div>
         <div id="top-section">
-            <h2 id="ip_title" class="col-xs-10">
+            <h2 id="ip_title" class="col-xs-10"><!--col-xs-10 gives close button some room.-->
                 <!--javascrip puts title item in here -->
             </h2>
-            <!--- Maybe not ideal on desktop
-            watch out for the button/andor title getting cut off on mobile-->
-            <div class="col-xs-2 button-parent">
-              <label class="close-button" onclick="hide_popup();">&times;</label>
-            </div>
-
             <p id="ip_description" class="col-xs-12 ip-descrip">
                 <!--javascrip puts description item here -->
             </p>
@@ -22,7 +19,7 @@ Organzes the popup
                 <!--javascrip puts carosel items here -->
             </div>
         </div>
-        <div id="text-section">
+        <div id="img-text-section">
             <p class="img-description vertical-center" id="img-descr">
                 <!--javascrip puts description item here -->
             </p>

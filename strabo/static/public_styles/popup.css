@@ -20,23 +20,22 @@
     /* border around box on large screens
      * pattern:  _ _ blur spread color*/
     box-shadow: 0 0 10px 10px rgba(0,0,0,0.4);
+    overflow: hidden;
 }
 
 #top-section {
-    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
     width:100%;
     background: #ebf5e4;
-    /*must add to 100 with #text-section:height and #carousel-space:height*/
+    /*must add to 100 with #img-text-section:height and #carousel-space:height*/
     position: absolute;
     top: 0;
     height:43%;
+    overflow-y:auto;
 }
-
-#top-section h2 {
+#ip_title {
     color: #422C1E;
     font-weight: bold;
 }
-
 #ip_description {
     color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
@@ -46,7 +45,7 @@
     height: 100%;
 }
 #carousel-space{
-    /*must add to 100 with #top-section:height and #text-section:height*/
+    /*must add to 100 with #top-section:height and #img-text-section:height*/
     position: absolute;
     top:43%;
     height: 49%;
@@ -65,7 +64,7 @@
     color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
-#text-section{
+#img-text-section{
     /*must add to 100 with #top-section:height and #carousel-space:height*/
     position: absolute;
     top: 92%;
@@ -75,14 +74,23 @@
     background: #ebf5e4;
 }
 .close-button{
-    color: #422C1E;
     font: normal 4em/normal Arial;
-    width: 1em;
-    height: 1em;
+    color: #422C1E;
     cursor: pointer;
+    pointer-events:auto;
+    padding-right: 0.1em;
 }
-.button-parent{
+#button-section{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
     text-align: right;
+    z-index: 1;/*positioned on top of other sections*/
+    pointer-events:none;
 }
 .ip-descrip{
     white-space: pre-wrap;
