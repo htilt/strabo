@@ -39,8 +39,7 @@ function set_geolocation(map){
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
-    // map bounds. Not the ideal solution, but I think
-    // it will work for now.
+    // map bounds. Also vital to leaflet-locatecontrol.
 
     // NOTE: GETS REAL WEIRD AND JUMPY IN SAFARI
     // However, works fine in Google Chrome
@@ -50,16 +49,6 @@ function set_geolocation(map){
     var bounds = L.latLngBounds(northWest, southEast);
 
     map.setMaxBounds(bounds);
-
-    /*
-    Geolocation operates in the following way:
-
-    The first time location of the device is found, the map centers on that location (or the center of the canyon if the location is not in the bounds).
-
-    Any time afterwards, when the browser updates your geolocation, it changes the marker marking your location on the map and updates a value storing the latlng position of the device, but does not center the picture.
-
-    When you click the center button, it zooms to the latest latlng position.
-    */
 
     L.control.locate({
         locateOptions:{enableHighAccuracy:true},

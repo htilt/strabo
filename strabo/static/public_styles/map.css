@@ -11,8 +11,3 @@ html, body {
     top: 4.5em;
     bottom: 1.5em; /*2em*/
 }
-.focus-button{
-    text-align: center;
-    cursor:pointer;
-    background-color: rgba(0,0,255,0.3);
-}
