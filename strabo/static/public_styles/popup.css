@@ -11,8 +11,7 @@
 }
 .popup-foreground {
     height: 100%;
-    /* size of box on larger screens
-    Dependencies: .text-section:font-size*/
+    /* size of box on larger screens*/
     max-height: 800px;
     max-width: 700px;
     /*differenciates slightly from normal background*/
@@ -22,15 +21,15 @@
     box-shadow: 0 0 10px 10px rgba(0,0,0,0.4);
 }
 
-.top-section {
+#top-section {
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
     width:100%;
     background: #ebf5e4;
-    /*must add to 100 with .text-section:height and .carousel-space:height*/
+    /*must add to 100 with #text-section:height and #carousel-space:height*/
     height: 43%;
 }
 
-.top-section h2 {
+#top-section h2 {
     color: #422C1E;
     font-weight: bold;
 }
@@ -43,35 +42,35 @@
 #carouselholder{
     height: 100%;
 }
-.carousel-space{
-    /*must add to 100 with .top-section:height and .text-section:height*/
+#carousel-space{
+    /*must add to 100 with #top-section:height and #text-section:height*/
     height: 49%;
 }
 .padded-pic{
     padding: 0 20px 0 20px;
     height: 100%;
 }
-
-#img_description {
+.carousel-cell.is-selected img{
+    /*highlighting around centered flickty image*/
+    /* pattern:  _ _ blur spread color*/
+    box-shadow: 0 0 20px 20px rgba(0,0,0,0.6);
+}
+.img-description {
     color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
-
-@media (min-height: 800px) {
-  .text-section {
-      /*Dependencies: text-section's percentage height, popup-foreground's max-width*/
-      font-size: 45px;
-  }
+.text-measure{
+    /*used by js function liniar_text_width(text)*/
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:-10000;
+    font-size: 10px;`
 }
-@media (max-height: 800px) {
-  .text-section {
-      /*Dependencies: text-section's percentage height*/
-      font-size: 5vh; /* Means 5% of the view height */
-  }
-}
-.text-section{
+#text-section{
     width: 100%;
-    /*must add to 100 with .top-section:height and .carousel-space:height*/
+    /*must add to 100 with #top-section:height and #carousel-space:height*/
     height: 8%;
     text-align: center;
     background: #ebf5e4;
@@ -82,10 +81,6 @@
     width: 1em;
     height: 1em;
     cursor: pointer;
-}
-.carousel-cell.is-selected {
-    /*the styling of the carousel cell that flickety centers on*/
-    background: rgba(0,0,0,.5);
 }
 .button-parent{
     text-align: right;

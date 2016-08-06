@@ -139,11 +139,34 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
+function liniar_text_width(text){
+    /*Returns width of text (in pixels) if it never wraps, assuming a font size of a
+    single pixel.*/
+    var $imgmeas = $('<div class="img-description text-measure"></div>')
+    $("body").append($imgmeas);
+    var $span = $("<p>"+text+"</p>");
+    $imgmeas.append($span);
+    var width = $span.width();
+    $imgmeas.remove()
+    //.text-measure css class is 10px because really small text renders differently.
+    // and so this is more accurate.
+    var measured_width = 10.0;
+    return width / measured_width;
+}
+function get_img_desc_font_size(imgdescr){
+    var $container = $("#text-section")
+    var text_width_max = $container.width() / liniar_text_width(imgdescr);
+    var text_height_max = $container.height() / 1.25;
+    return Math.min(text_width_max, text_height_max);
+}
 function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
 
-        $("#img_description").text(img.description);
+        var imgdesc = document.getElementById("img-descr");
+        var font_size = get_img_desc_font_size(img.description);
+        imgdesc.style.fontSize = font_size+"px";
+        imgdesc.innerHTML = img.description;
     })
 }
 
