@@ -49,7 +49,7 @@ function set_geolocation(map){
     var southEast = L.latLng(45.47897, -122.62268);
     var bounds = L.latLngBounds(northWest, southEast);
 
-    //map.setMaxBounds(bounds);
+    map.setMaxBounds(bounds);
 
     /*
     Geolocation operates in the following way:
@@ -66,7 +66,11 @@ function set_geolocation(map){
         icon: "fa fa-crosshairs",
         iconElementTag:"a",
         onLocationOutsideMapBounds:function(control){
+            //when outside of bounds, it centers over canyon when button is clicked.
+            map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
             control.stop();
-        }
-    }).addTo(map);
+        },
+        keepCurrentZoomLevel:true
+    }).addTo(map)
+      .start();//starts looking for your location when page loads, instead of waiting for button to be clicked
 }
