@@ -1,3 +1,21 @@
+/*
+General layout of css for popup:
+
+.popup is gray background
+.popup-foreground is the space the actual popup takes.
+
+In there, there are 4 differnt sections, each of which placed absolutely (*-section classes).
+3 of them are placed in a normal liniar layout:
+
+#top-section: Contains main title and text, needs to be absolute for scolling to work on it.
+#carousel-section: Contains flickety carousel, translucent background, needs to be absolute because flickety breaks easily if it is not.
+#img-text-section: Contains image description, does not need to be absolute, but is for consistency.
+
+Because they are in a normal layout, but absolutely positioned, one must be careful that
+the "top" attribute corresonds to the bottom of the section above it.
+
+Then there is the #button-section, which floats above the other sections.
+*/
 .popup {
     width: 100%;
     height: 100%;
@@ -26,10 +44,9 @@
 #top-section {
     width:100%;
     background: #ebf5e4;
-    /*must add to 100 with #img-text-section:height and #carousel-space:height*/
     position: absolute;
     top: 0;
-    height:43%;
+    height:43%;/*must equal top of carousel-section*/
     overflow-y:auto;
 }
 #ip_title {
@@ -44,11 +61,11 @@
 #carouselholder{
     height: 100%;
 }
-#carousel-space{
-    /*must add to 100 with #top-section:height and #img-text-section:height*/
+#carousel-section{
     position: absolute;
-    top:43%;
-    height: 49%;
+    /*must add to 100 with #top-section:height and #img-text-section:height*/
+    top:43%;/*must equal height of top-section*/
+    height: 49%;/*height + top must equal top of img-text-section*/
     width: 100%;
 }
 .padded-pic{
@@ -65,9 +82,9 @@
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
 #img-text-section{
-    /*must add to 100 with #top-section:height and #carousel-space:height*/
+    /*must add to 100 with #top-section:height and #carousel-section:height*/
     position: absolute;
-    top: 92%;
+    top: 92%;/*must equal height + top of carousel-section*/
     height: 8%;
     width: 100%;
     text-align: center;
@@ -90,7 +107,7 @@
 
     text-align: right;
     z-index: 1;/*positioned on top of other sections*/
-    pointer-events:none;
+    pointer-events: none;
 }
 .ip-descrip{
     white-space: pre-wrap;

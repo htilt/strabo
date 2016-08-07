@@ -142,31 +142,43 @@ function make_photoswipe(pic_index){
 function liniar_text_width(text){
     /*Returns width of text (in pixels) if it never wraps, assuming a font size of a
     single pixel.*/
-    var $imgmeas = $('<div class="img-description text-measure"></div>')
-    $("body").append($imgmeas);
+
+    //adds a really wide temporary div to screen to allow for measurement of long text
+    var $meas_space = $('<div class="img-description text-measure"></div>')
+    $("body").append($meas_space);
+    //adds text to div for measurement.
     var $span = $("<p>"+text+"</p>");
-    $imgmeas.append($span);
+    $meas_space.append($span);
+
     var width = $span.width();
-    $imgmeas.remove()
+
+    $meas_space.remove()
     //.text-measure css class is 10px because really small text renders differently.
-    // and so this is more accurate.
+    //and so this is more accurate.
     var measured_width = 10.0;
-    return width / (measured_width * 0.9);
+    //gives room for 10% error in text size calculation
+    var measured_error = 1.1;
+    return (width*measured_error) / measured_width;
 }
 function get_img_desc_font_size(imgdescr){
     var $container = $("#img-text-section")
+
     var text_width_max = $container.width() / liniar_text_width(imgdescr);
-    var text_height_max = $container.height() / 1.25;//makes sure bottom of text is not cut off
+    //makes sure bottom of text is not cut off
+    var text_height_max = $container.height() / 1.25;
+
     return Math.min(text_width_max, text_height_max);
 }
 function set_flickety_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
 
-        var imgdesc = document.getElementById("img-descr");
+        var img_desc = document.getElementById("img-descr");
+        //sets font size of the text to the max size that can fit in the area.
         var font_size = get_img_desc_font_size(img.description);
-        imgdesc.style.fontSize = font_size+"px";
-        imgdesc.innerHTML = img.description;
+        img_desc.style.fontSize = font_size+"px";
+        //sets the text.
+        img_desc.innerHTML = img.description;
     })
 }
 
