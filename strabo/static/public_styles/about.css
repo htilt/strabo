@@ -23,7 +23,7 @@
 /* Header text */
 #page-header {
   padding: 1.3em;
-    padding-top: 4.428571429em;  /*20/14 */
+  padding-top: 4.428571429em;  /*20/14 */
 }
 
 /* Header text font */
@@ -92,6 +92,7 @@ h2 {
 .inline-img{
     padding: 1em;
 }
+
 @media (max-width: 470px) {
     /* if screen is too small, then make sure text does not go around
     the images and center the image */
@@ -100,6 +101,7 @@ h2 {
         text-align: center;
     }
 }
+
 .right-img{
   float: right;
 }

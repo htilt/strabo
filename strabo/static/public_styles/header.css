@@ -11,15 +11,33 @@
 .navbar-brand {
   padding: 0em;
 }
-
 .navbar-brand>img {
   height: 100%;
   width: auto;
   padding-left: 0.857142857em; /* 12/14 */
 }
 
+/* Navbar Menu Items */
+.header .menu {
+  float: right;
+  list-style: none;
+  margin-top: 0em;
+}
+.menu > li {
+  display: inline;
+  padding-left: 1.428571429em; /* 20/14 */
+  padding-right: 1.428571429em;
+}
+.menu a {
+  color: #ffffd8;
+  font-family: 'Futura', sans-serif;
+  font-size: 1.428571429em;
+}
 
-
+ /* Hover background on navbar menu */
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #583a28;
+}
 
 /* Toggle Button */
 .navbar-toggle {
@@ -30,7 +48,6 @@
   border: 0.071428571em solid #ffffff; 
   border-radius: 0.285712386em; /* 4/14 */
 }
-
 span.icon-bar {
   background-color: #ffffff; 
 }
@@ -38,27 +55,22 @@ span.icon-bar {
 
 
 
-/* Navbar Menu Items */
-.header .menu {
-  float: right;
-  list-style: none;
-  margin-top: 0em;
+@media (max-width: 767px){
+  .navbar{
+    background-color: rgba(66,44,30,0.5);
+  } 
+  .navbar-header {
+    background-color: rgba(66,44,30,1);
+  }
+
+  /*ul {
+    background: #422C1E;
+  }*/
 }
 
-.menu > li {
-  display: inline;
-  padding-left: 1.428571429em; /* 20/14 */
-  padding-right: 1.428571429em;
-}
 
-.menu a {
-  color: #ffffd8;
-  font-family: 'Futura', sans-serif;
-  font-weight: 300;
-  font-size: 1.428571429em;
-}
 
- /* Hover background on navbar menu */
-.nav>li>a:focus, .nav>li>a:hover {
-    background-color: #583a28;
-}
+
+
+
+
