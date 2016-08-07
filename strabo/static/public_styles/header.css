@@ -53,19 +53,19 @@ span.icon-bar {
 }
 
 
-
-
 @media (max-width: 767px){
   .navbar{
-    background-color: rgba(66,44,30,0.5);
+    background-color: rgba(66,44,30,0.5); /* #422C1E with 0.5 opacity */
   } 
   .navbar-header {
-    background-color: rgba(66,44,30,1);
+    background-color: rgba(66,44,30,1); /* #422C1E */
   }
-
   /*ul {
-    background: #422C1E;
-  }*/
+    background: rgba(66,44,30,0.5);*/
+  }
+  li {
+    text-decoration: underline;
+  }
 }
 
 
