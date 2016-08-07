@@ -33,7 +33,7 @@ Then there is the #button-section, which floats above the other sections.
     /* size of box on larger screens*/
     max-height: 800px;
     max-width: 700px;
-    /*differenciates slightly from normal background*/
+    /*differenciates popup background slightly from normal background*/
     background: rgba(0,0,0,0.2);
     /* border around box on large screens
      * pattern:  _ _ blur spread color*/
@@ -63,7 +63,6 @@ Then there is the #button-section, which floats above the other sections.
 }
 #carousel-section{
     position: absolute;
-    /*must add to 100 with #top-section:height and #img-text-section:height*/
     top:43%;/*must equal height of top-section*/
     height: 49%;/*height + top must equal top of img-text-section*/
     width: 100%;
@@ -82,7 +81,6 @@ Then there is the #button-section, which floats above the other sections.
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
 #img-text-section{
-    /*must add to 100 with #top-section:height and #carousel-section:height*/
     position: absolute;
     top: 92%;/*must equal height + top of carousel-section*/
     height: 8%;
