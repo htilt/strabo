@@ -55,7 +55,7 @@ span.icon-bar {
 
 @media (max-width: 767px){
   .navbar{
-    background-color: rgba(66,44,30,0.5); /* #422C1E with 0.5 opacity */
+    background-color: rgba(66,44,30,0.7); /* #422C1E with opacity */
   } 
   .navbar-header {
     background-color: rgba(66,44,30,1); /* #422C1E */
