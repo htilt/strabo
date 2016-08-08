@@ -3,6 +3,13 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_tool.css">
+    <script>
+        $(document).ready(function(){
+            var today = new Date();//today's date
+            $(document).find('[name="month"]').attr('placeholder',today.getMonth()+1);
+            $(document).find('[name="year"]').attr('placeholder',today.getFullYear());
+        })
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -24,15 +31,11 @@
             </div>
 
             <div class="form-group">
-            <label for="year">Date Taken:</label><br>
+            <label for="year">Date Taken [mm]-[yyyy]:</label><br>
             <i>Images are ordered by date when displayed.</i>
               <div class="form-inline">
                 <div class="form-group">
                   <input type="number" name="month" class="form-control" min="1" max="12" placeholder="mm" value="{{image.taken_at.month}}">
-                </div>
-                <span> - </span>
-                <div class="form-group">
-                  <input type="number" name="day" class="form-control" min="1" max="31" placeholder="dd" value="{{image.taken_at.day}}">
                 </div>
                 <span> - </span>
                 <div class="form-group">

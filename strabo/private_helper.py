@@ -24,11 +24,29 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.icon = form_icon
     ip.images = [db.session.query(schema.Images).get(int(id)) for id in image_ids]
 
-def fill_image(image,form_file_obj,form_descrip,year,month,day):
+def make_date(form_year,form_month):
     '''
-    if a flask.files object is passed in, then  
+    :param string form_year: Year value passed in from form. Is a string decimal
+        representation of a year or en empty string if that part of the form was
+        left empty.
+
+    :param string form_month: Month value, follows same format as year.
+
+    If month and year are valid values,returns a date with specied month and year.
+
+    If not, then it uses today's date as a default.
     '''
-    image.taken_at = datetime.date(utils.safe_pos_int_conv(year),utils.safe_pos_int_conv(month),utils.safe_pos_int_conv(day))
+    default_day = 1
+    year = int(form_year) if form_year else datetime.date.today().year
+    month = int(form_month) if form_month else datetime.date.today().month
+
+    return  datetime.date(year,month,default_day)
+
+def fill_image(image,form_file_obj,form_descrip,year,month):
+    '''
+    if a flask.files object is passed in, then
+    '''
+    image.taken_at = make_date(year,month)
     image.description = form_descrip
 
     if form_file_obj:

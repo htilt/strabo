@@ -34,7 +34,7 @@ function checkForm(form){
         icon_message.show();
         form_valid = false;
     }
-    return form_valid;shape_drawn
+    return form_valid;
 }
 function hide_all(){
     layer_message.hide();
