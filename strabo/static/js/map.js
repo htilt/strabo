@@ -24,6 +24,8 @@ $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
 
+    map.addControl( new L.Control.Compass() );/////////////////////////////////
+
     flickety_init();
 
     var all_layers_group = L.geoJson(features);
