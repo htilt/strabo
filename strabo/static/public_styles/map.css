@@ -12,6 +12,11 @@ html, body {
     bottom: 1.5em; /*2em*/
 }
 
+/* compass stays right even when layers are opened */
+.leaflet-control.leaflet-compass {
+  float: right;
+}
+
 /* on smaller screen, change the appearance of the icon */
 @media (max-width: 767px){
 	.leaflet-control.leaflet-compass {
