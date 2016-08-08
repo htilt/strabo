@@ -23,6 +23,8 @@ function set_feature_click(all_layers_group){
 $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
+    
+    map.addControl( new L.Control.Compass() );/////////////////////////////////
 
     flickety_init();
 
@@ -83,4 +85,8 @@ $(document).ready(function(){
     }
 
     map.on('locationerror', onLocationError);
-});
+  });
+
+
+
+
