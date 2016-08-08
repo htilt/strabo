@@ -52,7 +52,7 @@ span.icon-bar {
   background-color: #ffffff; 
 }
 
-
+/* Change the appearance of the navbar on mobile */
 @media (max-width: 767px){
   .navbar{
     /*background-color: rgba(66,44,30,0.7); /* #422C1E with opacity */
@@ -65,7 +65,7 @@ span.icon-bar {
     pointer-events: auto;
   }
   ul {
-    background: #422C1E;
+    background: rgba(66,44,30,0.9); /*#422C1E;*/
     pointer-events: auto;
   }
   li {
@@ -73,10 +73,5 @@ span.icon-bar {
     pointer-events: auto;
   }
 }
-
-
-
-
-
 
 
