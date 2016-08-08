@@ -5,10 +5,22 @@ html, body {
   /*gets rid of scroll bar*/
   overflow: hidden;
 }
-
 #map {
     width: 100%;
     position: absolute;
     top: 4.5em;
     bottom: 1.5em; /*2em*/
+}
+
+/* compass stays right even when layers are opened */
+.leaflet-control.leaflet-compass {
+  float: right;
+}
+
+/* on smaller screen, change the appearance of the icon */
+@media (max-width: 767px){
+	.leaflet-control.leaflet-compass {
+		box-shadow: 0 0 0 rgba(0,0,0,1);
+		border: 2px solid rgba(0, 0, 0, 0.3); 
+	}
 }
