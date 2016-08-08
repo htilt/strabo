@@ -5,10 +5,10 @@ General layout of css for popup:
 .popup-foreground is the space the actual popup takes.
 
 In there, there are 4 differnt sections, each of which placed absolutely (*-section classes).
-3 of them are placed in a normal liniar layout:
+3 of them are placed in a normal linear layout:
 
 #top-section: Contains main title and text, needs to be absolute for scolling to work on it.
-#carousel-section: Contains flickety carousel, translucent background, needs to be absolute because flickety breaks easily if it is not.
+#carousel-section: Contains flickity carousel, translucent background, needs to be absolute because flickity breaks easily if it is not.
 #img-text-section: Contains image description, does not need to be absolute, but is for consistency.
 
 Because they are in a normal layout, but absolutely positioned, one must be careful that
@@ -122,7 +122,7 @@ Then there is the #button-section, which floats above the other sections.
     transform: translateY(-50%);
 }
 .text-measure{
-    /*used by js function liniar_text_width(text)*/
+    /*used by js function linear_text_width(text)*/
     position: absolute;
     top:0;
     bottom:0;

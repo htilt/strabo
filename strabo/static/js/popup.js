@@ -1,4 +1,4 @@
-//flickety object
+//flickity object
 var flkty;
 //photoswipe object
 var gallery;
@@ -78,7 +78,7 @@ Purpose:
 When Flickity cell is clicked, a photoswipe gallery is pulled up.
 
 Details:
-On android, there is problem where tapping on flickety cell makes photoswipe flash open for a
+On android, there is problem where tapping on flickity cell makes photoswipe flash open for a
 second, and close immidiately. Setting closeOnVerticalDrag to false seems to help marginally, but
 not fix the problem.
 
@@ -88,7 +88,7 @@ while making sure that photoswipe is not opened twice.
 The delay is the second argument to window.setTimeout in units of milliseconds. This can be played with,
 but very small values like 1 do not work very well.
 */
-function set_flickety_click(){
+function set_flickity_click(){
     var timeout_sec = 0.1;
     var SECS_PER_MILSEC = 1000;
 
@@ -139,7 +139,7 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
-function liniar_text_width(text){
+function linear_text_width(text){
     /*Returns width of text (in pixels) if it never wraps, assuming a font size of a
     single pixel.*/
 
@@ -163,13 +163,13 @@ function liniar_text_width(text){
 function get_img_desc_font_size(imgdescr){
     var $container = $("#img-text-section")
 
-    var text_width_max = $container.width() / liniar_text_width(imgdescr);
+    var text_width_max = $container.width() / linear_text_width(imgdescr);
     //makes sure bottom of text is not cut off
     var text_height_max = $container.height() / 1.25;
 
     return Math.min(text_width_max, text_height_max);
 }
-function set_flickety_img_title(){
+function set_flickity_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
 
@@ -182,12 +182,12 @@ function set_flickety_img_title(){
     })
 }
 
-function flickety_init(){
+function flickity_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
         pageDots:false,
         setGallerySize: false}
     );
-    set_flickety_img_title();
-    set_flickety_click();
+    set_flickity_img_title();
+    set_flickity_click();
 }

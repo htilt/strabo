@@ -24,7 +24,7 @@ $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
 
-    flickety_init();
+    flickity_init();
 
     var all_layers_group = L.geoJson(features);
     set_styles(all_layers_group);
