@@ -16,7 +16,15 @@
     <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.min.js"></script>
     <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js"></script>
     <script src="http://cdn.rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.js"></script>
+
+    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+
     <script src="https://cdn.rawgit.com/stefanocudini/leaflet-compass/master/dist/leaflet-compass.min.js"></script>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.52.0/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.52.0/L.Control.Locate.min.js"></script>
+
     <script>
         var features = {{ features_json|tojson }};
         var straboconfig = {{ straboconfig|tojson }};

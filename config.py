@@ -12,7 +12,7 @@ def get_config_info():
     # set the latitude and longitude for the center of the map
     config_info['LAT_SETTING'] = 45.481851
     config_info['LONG_SETTING'] = -122.630397
-    config_info['INITIAL_ZOOM'] = 17
+    config_info['INITIAL_ZOOM'] = 17   #zoom if you are out of the canyon and in admin interface
 
     '''you can change the names of these, but do not change the numbers!
     If any items with the changed number are stored in the database strabo will break.'''
