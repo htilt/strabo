@@ -61,7 +61,6 @@ function set_geolocation(map){
             control.stop();
         },
         keepCurrentZoomLevel:true,
-        circleStyle:{},
         circleStyle: {
             color: '#136AEC',
             fillColor: '#136AEC',
@@ -76,6 +75,9 @@ function set_geolocation(map){
             weight: 2,
             opacity: 0.9,
             radius: 10
+        },
+        strings: {
+            popup: "You are within {distance} {unit} of this point"
         },
     }).addTo(map)
       .start();//starts looking for your location when page loads, instead of waiting for button to be clicked
