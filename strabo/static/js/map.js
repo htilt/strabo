@@ -34,14 +34,13 @@ $(document).ready(function(){
 
     //set_map_click(map);
 
-    // Use GPS to locate you on the map and keeps watching
-    // your location. Set to watch: true to have it watch location.
-    map.locate({watch: false});
+    set_geolocation(map);
+});
+function set_geolocation(map){
 
     // Current solution to keep geoLocation only
     // relevant in the campus/canyon area is to set
-    // map bounds. Not the ideal solution, but I think
-    // it will work for now.
+    // map bounds. Also vital to leaflet-locatecontrol.
 
     // NOTE: GETS REAL WEIRD AND JUMPY IN SAFARI
     // However, works fine in Google Chrome
@@ -52,35 +51,34 @@ $(document).ready(function(){
 
     map.setMaxBounds(bounds);
 
-    function onLocationFound(e) {
-      // If you are within the campus bounds, the map
-      // *should* center on your location and add a marker
-      // where you are.
-      if (bounds.contains(e.latlng)) {
-        map.setView(e.latlng, 18); // Set view to location and zoom in
-        var radius = e.accuracy / 2;
-
-        L.marker(e.latlng, {icon: locateIcon}).addTo(map)
-          .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-        L.circle(e.latlng, radius).addTo(map);
-
-      }
-      // If you are not on campus, the map should not care
-      // about your location, and it will just center on the
-      // canyon, leaving no marker of where you are
-      else {
-        map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
-      }
-
-    }
-    map.on('locationfound', onLocationFound);
-
-
-    // Error if locating fails
-    function onLocationError(e) {
-      alert(e.message);
-    }
-
-    map.on('locationerror', onLocationError);
-});
+    L.control.locate({
+        locateOptions:{enableHighAccuracy:true},
+        icon: "fa fa-crosshairs",
+        iconElementTag:"a",
+        onLocationOutsideMapBounds:function(control){
+            //when outside of bounds, it centers over canyon when button is clicked.
+            map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
+            control.stop();
+        },
+        keepCurrentZoomLevel:true,
+        circleStyle: {
+            color: '#136AEC',
+            fillColor: '#136AEC',
+            fillOpacity: 0.15,
+            weight: 4,
+            opacity: 0.5
+        },
+        markerStyle: {
+            color: '#ffffff',
+            fillColor: '#2A93EE',
+            fillOpacity: 0.7,
+            weight: 2,
+            opacity: 0.9,
+            radius: 10
+        },
+        strings: {
+            popup: "You are within {distance} {unit} of this point"
+        },
+    }).addTo(map)
+      .start();//starts looking for your location when page loads, instead of waiting for button to be clicked
+}

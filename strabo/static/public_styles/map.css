@@ -5,7 +5,6 @@ html, body {
   /*gets rid of scroll bar*/
   overflow: hidden;
 }
-
 #map {
     width: 100%;
     position: absolute;
