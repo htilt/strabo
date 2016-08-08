@@ -1,25 +1,22 @@
 <link href="{{PATH_TO_PUBLIC_STYLES}}{{HEADER_CSS}}" rel="stylesheet" >
 
-<!-- Navigation -->
-<nav class="navbar navbar-fixed-top" role="navigation"> <!--bootstrap navbar--> <!--navbar-fixed-top stays at the top of the page, navbar-inverse??? I deleted it and stuff changed lol-->
-  <div class="container-fluid"> <!--container is a fixed width container, container-fluid spans the width of your viewport. Haley had container, I'm doing container-fluid because it seems like what we want-->
+<nav class="navbar navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
 
-    <div class="navbar-header"> <!--when the navbar is seen on mobile-->
-
+    <div class="navbar-header"> 
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
-        <!--icon bars for image-->
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
        </button>
 
-       <a class="navbar-brand" href="/">
-       <img src="/static/leafylogo.png" />
-       </a>
+        <a class="navbar-brand" href="/">
+        <img src="/static/leafylogo.png">
+        </a>
     </div>
 
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse navbar-transparent">
       <ul class="nav navbar-nav menu">
         <li><a href="/">Map</a></li>
         <li><a href="/about">About</a></li>
