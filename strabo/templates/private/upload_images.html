@@ -3,13 +3,6 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="/static/private_styles/upload_tool.css">
-    <script>
-        $(document).ready(function(){
-            var today = new Date();//today's date
-            $(document).find('[name="month"]').attr('placeholder',today.getMonth()+1);
-            $(document).find('[name="year"]').attr('placeholder',today.getFullYear());
-        })
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -39,7 +32,7 @@
                 </div>
                 <span> - </span>
                 <div class="form-group">
-                  <input type="number" name="year" class="form-control" min="1900" max="2100" placeholder="yyyy"  value="{{image.taken_at.year}}">
+                  <input type="number" name="year" class="form-control" min="1900" max="2100" placeholder="yyyy"  value="{{image.taken_at.year}}" required>
                 </div>
               </div>
             </div>
