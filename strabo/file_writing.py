@@ -57,7 +57,7 @@ def save_shrunken_images_with(filename):
     in their appropriate directory.
     '''
     image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
-    #do the same with different dimentions to mobile_imgs
+    #do the same with different dimensions to mobile_imgs
     image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
 
 
@@ -87,7 +87,7 @@ def safe_file_remove(filepath):
     '''If the file exists, then delete it, else do nothing.'''
     if os.path.isfile(filepath):
         os.remove(filepath)
-        
+
 def delete_image_files(filename):
     '''
     Deletes uploaded image and all images generated from it.
