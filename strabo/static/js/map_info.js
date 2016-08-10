@@ -4,6 +4,7 @@ var locateIcon = L.icon({
     iconSize: [20,20]
 });
 
+// Create custom leaflet icons
 var ColorIcon = L.Icon.extend({
     options: {
         shadowUrl: '/static/MapPinShadow.png',
@@ -32,7 +33,7 @@ function make_map(map_cont){
 function add_tile_to(map){
     L.tileLayer(straboconfig["MAP_TILE_SRC"],straboconfig["LEAFLET_ATTRIBUTES"]).addTo(map);
 }
-// sets icon object for points and stlying for zones
+// sets icon object for points and styling for zones
 function set_styles(all_layers_group){
     var all_layers = all_layers_group.getLayers();
 
