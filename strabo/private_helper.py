@@ -24,14 +24,19 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.icon = form_icon
     ip.images = [db.session.query(schema.Images).get(int(id)) for id in image_ids]
 
-def fill_image(image,form_file_obj,form_descrip,year,month,day):
+def fill_image(image,form_file,form_descrip,year,month):
     '''
-    if a flask.files object is passed in, then  
+    If a flask.files object (see `here <http://flask.pocoo.org/docs/0.11/patterns/fileuploads/>`_ for more information)
+    is passed in, then it saves the new file and stores the new information in the database.
+    If the image row already stored information about an old image (the image was edited), then that old image is deleted.
     '''
-    image.taken_at = datetime.date(utils.safe_pos_int_conv(year),utils.safe_pos_int_conv(month),utils.safe_pos_int_conv(day))
+    image.taken_at = datetime.date(utils.safe_pos_int_conv(year),utils.safe_pos_int_conv(month),1)
     image.description = form_descrip
 
-    if form_file_obj:
-        image.filename = file_writing.make_filename(form_file_obj.filename)
-        file_writing.save_image_files(form_file_obj,image.filename)
-        image.width,image.height = image_processing.get_dimentions(image.filename)
+    if form_file:
+        if image.filename:
+            file_writing.delete_image_files(image.filename)
+
+        image.filename = file_writing.make_filename(form_file.filename)
+        file_writing.save_image_files(form_file,image.filename)
+        image.width,image.height = image_processing.get_dimensions(image.filename)

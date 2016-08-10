@@ -24,19 +24,15 @@
             </div>
 
             <div class="form-group">
-            <label for="year">Date Taken:</label><br>
-            <i>Images are ordered by date when displayed.</i>
+            <label for="year">Date Taken [mm]-[yyyy]:</label><br>
+            <i>Images are displayed chronologically by year.</i>
               <div class="form-inline">
                 <div class="form-group">
                   <input type="number" name="month" class="form-control" min="1" max="12" placeholder="mm" value="{{image.taken_at.month}}">
                 </div>
                 <span> - </span>
                 <div class="form-group">
-                  <input type="number" name="day" class="form-control" min="1" max="31" placeholder="dd" value="{{image.taken_at.day}}">
-                </div>
-                <span> - </span>
-                <div class="form-group">
-                  <input type="number" name="year" class="form-control" min="1900" max="2100" placeholder="yyyy"  value="{{image.taken_at.year}}">
+                  <input type="number" name="year" class="form-control" min="1900" max="2100" placeholder="yyyy"  value="{{image.taken_at.year}}" required>
                 </div>
               </div>
             </div>

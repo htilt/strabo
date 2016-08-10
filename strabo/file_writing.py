@@ -30,8 +30,8 @@ def make_unique_filename(path,filename):
     , but it really ought to be fine in any case.
     '''
     def gen_new_name():
-        name,ext = utils.extract_name_extension(filename)
-        return name+str(random.randint(0,1000000000000000)) + '.' + ext
+        name,ext = os.path.splitext(filename)
+        return name + str(random.randint(0,1000000000000000)) + ext
 
     uniq_name = filename
     while os.path.isfile(os.path.join(path,uniq_name)):
@@ -57,29 +57,29 @@ def save_shrunken_images_with(filename):
     in their appropriate directory.
     '''
     image_processing.save_shrunken_image(get_image_path(filename),get_thumbnail_path(filename),straboconfig["THUMBNAIL_MAX_SIZE"])
-    #do the same with different dimentions to mobile_imgs
+    #do the same with different dimensions to mobile_imgs
     image_processing.save_shrunken_image(get_image_path(filename),get_mobile_img_path(filename),straboconfig["MOBILE_SERV_MAX_SIZE"])
 
 
 #saves image and thumbnail using the given filenaem
-def save_image_files(form_file_obj,filename):
+def save_image_files(form_file,filename):
     '''
-    Checks saves ``form_file_obj``
+    Checks saves ``form_file``
     under ``uploads/<filename>``.
 
-    Throws an error if form_file_obj is of not an allowed file extension.
+    Throws an error if form_file is of not an allowed file extension.
     Ideally, this possibility would be not be allowed through form validation.
     '''
     #if no files is attached, then do nothing
-    if not form_file_obj:
+    if not form_file:
         return
     #if the file extension is not allowed,throw an error
     #todo: put this error in the frontend instead of here
-    if not image_processing.allowed_file(form_file_obj.filename):
+    if not image_processing.allowed_file(form_file.filename):
         raise RuntimeError("file extension not allowed")
 
     # Move the file from the temporary folder to the upload folder
-    form_file_obj.save(get_image_path(filename))
+    form_file.save(get_image_path(filename))
     #note that unique filename in uploads folder will also be unique filename in other folders
     save_shrunken_images_with(filename)
 
@@ -87,7 +87,7 @@ def safe_file_remove(filepath):
     '''If the file exists, then delete it, else do nothing.'''
     if os.path.isfile(filepath):
         os.remove(filepath)
-        
+
 def delete_image_files(filename):
     '''
     Deletes uploaded image and all images generated from it.

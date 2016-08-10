@@ -2,7 +2,7 @@
 Overwrites thumbnails and mobile_imgs files with files of size specified in
 configuration.
 
-Use whenever the dimentions specified by THUMBNAIL_MAX_SIZE or MOBILE_SERV_MAX_SIZE
+Use whenever the dimensions specified by THUMBNAIL_MAX_SIZE or MOBILE_SERV_MAX_SIZE
 have been changed.
 '''
 
