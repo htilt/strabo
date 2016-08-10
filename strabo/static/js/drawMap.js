@@ -29,11 +29,7 @@ if (edit_json){
 var options1 = {
 
     draw : {
-      polyline: {
-        shapeOptions: {
-          color: shapeColorInit
-        }
-      },
+      polyline: false,
       polygon: {
         shapeOptions: {
           color: shapeColorInit
