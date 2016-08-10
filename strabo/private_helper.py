@@ -21,7 +21,7 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
     ip.descrip_body = form_body
     ip.geojson_object = form_geo_obj
     ip.layer = straboconfig["REVERSE_LAYER_FIELDS"][form_layer]
-    ip.icon = form_icon
+    ip.icon = form_icon + ".png" # adds back icon extension (png) from admin input form
     ip.images = [db.session.query(schema.Images).get(int(id)) for id in image_ids]
 
 def fill_image(image,form_file_obj,form_descrip,year,month,day):
