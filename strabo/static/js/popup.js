@@ -73,23 +73,22 @@ function ip_clicked(db_id) {
         }
     );
 }
-/*
-Purpose:
-When Flickity cell is clicked, a photoswipe gallery is pulled up.
-
-Details:
-On android, there is problem where tapping on flickity cell makes photoswipe flash open for a
-second, and close immidiately. Setting closeOnVerticalDrag to false seems to help marginally, but
-not fix the problem.
-
-So I fixed the problem by making a delay from when the cell is clicked to when photoswipe is opened,
-while making sure that photoswipe is not opened twice.
-
-The delay is the second argument to window.setTimeout in units of milliseconds. This can be played with,
-but very small values like 1 do not work very well.
-*/
 function set_flickity_click(){
-    var timeout_sec = 0.1;
+    /*
+    Purpose:
+    When Flickity cell is clicked, a photoswipe gallery is pulled up displaying a larger version of the same image.
+
+    Details:
+    On android, there is problem where tapping on flickity cell makes photoswipe flash open for a
+    second, and close immidiately, making the photoswipe feature useless. Setting closeOnVerticalDrag to false
+    seems to help marginally, but does not fix the problem.
+
+    I fixed the problem by adding a delay between when the cell is clicked to when photoswipe is opened.
+    I also ensure that photoswipe is not opened twice. I don't know why it works, but it does.
+
+    Note that smaller values of timeout_seconds do not work as well.
+    */
+    var timeout_seconds = 0.1;
     var SECS_PER_MILSEC = 1000;
 
     var photoswipe_fetched = false;
@@ -99,7 +98,7 @@ function set_flickity_click(){
             window.setTimeout(function(){
                 make_photoswipe(cellIndex);
                 photoswipe_fetched = false;
-            },SECS_PER_MILSEC*timeout_sec);
+            },SECS_PER_MILSEC*timeout_seconds);
         }
     });
 }
@@ -173,7 +172,7 @@ function set_flickity_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
 
-        var img_desc = document.getElementById("img-descr");
+        var img_desc = document.getElementById("img-desc");
         //sets font size of the text to the max size that can fit in the area.
         var font_size = get_img_desc_font_size(img.description);
         img_desc.style.fontSize = font_size+"px";

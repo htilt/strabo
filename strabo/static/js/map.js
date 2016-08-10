@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     flickity_init();
 
-    map.addControl( new L.Control.Compass() );/////////////////////////////////
+    map.addControl( new L.Control.Compass() );//compass will not work if the devices does not have a compasss.
 
     var all_layers_group = L.geoJson(features);
     set_styles(all_layers_group);
