@@ -1,5 +1,5 @@
 '''
-Handles interaction with PIL library, including thumbnail creation, dimention getting, and
+Handles interaction with PIL library, including thumbnail creation, dimension getting, and
 image processing capabilities, including allowed file extensions.
 '''
 import os
@@ -23,7 +23,7 @@ def save_shrunken_image(image_path,thumbnail_path,max_dim):
     with Image.open(image_path) as img:
         # create a thumbnail from desired image
         # the thumbnail will have dimensions of the same ratio as before, capped by
-        # the limiting dimention of max_dim
+        # the limiting dimension of max_dim
         img.thumbnail(max_dim,Image.ANTIALIAS)
         # save the image under a new filename in thumbnails directory
         img.save(thumbnail_path)

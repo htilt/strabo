@@ -30,8 +30,8 @@ def make_unique_filename(path,filename):
     , but it really ought to be fine in any case.
     '''
     def gen_new_name():
-        name,ext = utils.extract_name_extension(filename)
-        return name+str(random.randint(0,1000000000000000)) + '.' + ext
+        name,ext = os.path.splitext(filename)
+        return name + str(random.randint(0,1000000000000000)) + ext
 
     uniq_name = filename
     while os.path.isfile(os.path.join(path,uniq_name)):
