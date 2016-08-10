@@ -99,7 +99,6 @@ drawMap.on('draw:deleted', function (e) {
 });*/
 });
 
-
 $('#upload-btn').click(function (e) {
     var JSONobject = JSON.stringify(shapeLayer.toGeoJSON());
     $('#geojson-field').attr("value", JSONobject);
