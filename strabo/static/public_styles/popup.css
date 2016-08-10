@@ -1,3 +1,21 @@
+/*
+General layout of css for popup:
+
+.popup is gray background
+.popup-foreground is the space the actual popup takes.
+
+In there, there are 4 differnt sections, each of which placed absolutely (*-section classes).
+3 of them are placed in a normal linear layout:
+
+#top-section: Contains main title and text, needs to be absolute for scolling to work on it.
+#carousel-section: Contains flickity carousel, translucent background, needs to be absolute because flickity breaks easily if it is not.
+#img-text-section: Contains image description, does not need to be absolute, but is for consistency.
+
+Because they are in a normal layout, but absolutely positioned, one must be careful that
+the "top" attribute corresonds to the bottom of the section above it.
+
+Then there is the #button-section, which floats above the other sections.
+*/
 .popup {
     width: 100%;
     height: 100%;
@@ -10,31 +28,31 @@
     z-index: 100000; /* goes above leaflet link */
 }
 .popup-foreground {
+    position:absolute;
     height: 100%;
-    /* size of box on larger screens
-    Dependencies: .text-section:font-size*/
+    /* size of box on larger screens*/
     max-height: 800px;
     max-width: 700px;
-    /*differentiates slightly from normal background*/
+    /*differentiates popup background slightly from normal background*/
     background: rgba(0,0,0,0.2);
     /* border around box on large screens
      * pattern:  _ _ blur spread color*/
     box-shadow: 0 0 10px 10px rgba(0,0,0,0.4);
+    overflow: hidden;
 }
 
-.top-section {
-    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+#top-section {
     width:100%;
     background: #ebf5e4;
-    /*must add to 100 with .text-section:height and .carousel-space:height*/
-    height: 43%;
+    position: absolute;
+    top: 0;
+    height:43%;/*must equal top of carousel-section*/
+    overflow-y:auto;
 }
-
-.top-section h2 {
+#ip_title {
     color: #422C1E;
     font-weight: bold;
 }
-
 #ip_description {
     color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
@@ -43,52 +61,51 @@
 #carouselholder{
     height: 100%;
 }
-.carousel-space{
-    /*must add to 100 with .top-section:height and .text-section:height*/
-    height: 49%;
+#carousel-section{
+    position: absolute;
+    top:43%;/*must equal height of top-section*/
+    height: 49%;/*height + top must equal top of img-text-section*/
+    width: 100%;
 }
 .padded-pic{
     padding: 0 20px 0 20px;
     height: 100%;
 }
-
-#img_description {
+.carousel-cell.is-selected img{
+    /*highlighting around centered flickty image*/
+    /* pattern:  _ _ blur spread color*/
+    box-shadow: 0 0 20px 20px rgba(0,0,0,0.6);
+}
+.img-description {
     color: #422C1E;
     font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
 }
-
-@media (min-height: 800px) {
-  .text-section {
-      /*Dependencies: text-section's percentage height, popup-foreground's max-width*/
-      font-size: 45px;
-  }
-}
-@media (max-height: 800px) {
-  .text-section {
-      /*Dependencies: text-section's percentage height*/
-      font-size: 5vh; /* Means 5% of the view height */
-  }
-}
-.text-section{
-    width: 100%;
-    /*must add to 100 with .top-section:height and .carousel-space:height*/
+#img-text-section{
+    position: absolute;
+    top: 92%;/*must equal height + top of carousel-section*/
     height: 8%;
+    width: 100%;
     text-align: center;
     background: #ebf5e4;
 }
 .close-button{
-    color: #422C1E;
     font: normal 4em/normal Arial;
-    width: 1em;
-    height: 1em;
+    color: #422C1E;
     cursor: pointer;
+    pointer-events:auto;
+    padding-right: 0.1em;
 }
-.carousel-cell.is-selected {
-    /*the styling of the carousel cell that flickety centers on*/
-    background: rgba(0,0,0,.5);
-}
-.button-parent{
+#button-section{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
     text-align: right;
+    z-index: 1;/*positioned on top of other sections*/
+    pointer-events: none;
 }
 .ip-descrip{
     white-space: pre-wrap;
@@ -103,4 +120,13 @@
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+.text-measure{
+    /*used by js function linear_text_width(text)*/
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:-10000;
+    font-size: 10px;`
 }

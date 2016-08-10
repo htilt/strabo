@@ -1,4 +1,4 @@
-//flickety object
+//flickity object
 var flkty;
 //photoswipe object
 var gallery;
@@ -73,23 +73,22 @@ function ip_clicked(db_id) {
         }
     );
 }
-/*
-Purpose:
-When Flickity cell is clicked, a photoswipe gallery is pulled up.
+function set_flickity_click(){
+    /*
+    Purpose:
+    When Flickity cell is clicked, a photoswipe gallery is pulled up displaying a larger version of the same image.
 
-Details:
-On android, there is problem where tapping on flickety cell makes photoswipe flash open for a
-second, and close immidiately. Setting closeOnVerticalDrag to false seems to help marginally, but
-not fix the problem.
+    Details:
+    On android, there is problem where tapping on flickity cell makes photoswipe flash open for a
+    second, and close immidiately, making the photoswipe feature useless. Setting closeOnVerticalDrag to false
+    seems to help marginally, but does not fix the problem.
 
-So I fixed the problem by making a delay from when the cell is clicked to when photoswipe is opened,
-while making sure that photoswipe is not opened twice.
+    I fixed the problem by adding a delay between when the cell is clicked to when photoswipe is opened.
+    I also ensure that photoswipe is not opened twice. I don't know why it works, but it does.
 
-The delay is the second argument to window.setTimeout in units of milliseconds. This can be played with,
-but very small values like 1 do not work very well.
-*/
-function set_flickety_click(){
-    var timeout_sec = 0.1;
+    Note that smaller values of timeout_seconds do not work as well.
+    */
+    var timeout_seconds = 0.1;
     var SECS_PER_MILSEC = 1000;
 
     var photoswipe_fetched = false;
@@ -99,7 +98,7 @@ function set_flickety_click(){
             window.setTimeout(function(){
                 make_photoswipe(cellIndex);
                 photoswipe_fetched = false;
-            },SECS_PER_MILSEC*timeout_sec);
+            },SECS_PER_MILSEC*timeout_seconds);
         }
     });
 }
@@ -139,21 +138,55 @@ function make_photoswipe(pic_index){
 
     gallery.init();
 }
-function set_flickety_img_title(){
+function linear_text_width(text){
+    /*Returns width of text (in pixels) if it never wraps, assuming a font size of a
+    single pixel.*/
+
+    //adds a really wide temporary div to screen to allow for measurement of long text
+    var $meas_space = $('<div class="img-description text-measure"></div>')
+    $("body").append($meas_space);
+    //adds text to div for measurement.
+    var $span = $("<p>"+text+"</p>");
+    $meas_space.append($span);
+
+    var width = $span.width();
+
+    $meas_space.remove()
+    //.text-measure css class is 10px because really small text renders differently.
+    //and so this is more accurate.
+    var measured_width = 10.0;
+    //gives room for 10% error in text size calculation
+    var measured_error = 1.1;
+    return (width*measured_error) / measured_width;
+}
+function get_img_desc_font_size(imgdescr){
+    var $container = $("#img-text-section")
+
+    var text_width_max = $container.width() / linear_text_width(imgdescr);
+    //makes sure bottom of text is not cut off
+    var text_height_max = $container.height() / 1.25;
+
+    return Math.min(text_width_max, text_height_max);
+}
+function set_flickity_img_title(){
     flkty.on( 'cellSelect', function() {
         var img = imgs[flkty.selectedIndex];
 
-        $("#img_description").text(img.description);
+        var img_desc = document.getElementById("img-desc");
+        //sets font size of the text to the max size that can fit in the area.
+        var font_size = get_img_desc_font_size(img.description);
+        img_desc.style.fontSize = font_size+"px";
+        //sets the text.
+        img_desc.innerHTML = img.description;
     })
 }
 
-function flickety_init(){
+function flickity_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
         pageDots:false,
-        resize: true,
         setGallerySize: false}
     );
-    set_flickety_img_title();
-    set_flickety_click();
+    set_flickity_img_title();
+    set_flickity_click();
 }

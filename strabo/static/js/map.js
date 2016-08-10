@@ -24,9 +24,9 @@ $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
 
-    map.addControl( new L.Control.Compass() );/////////////////////////////////
+    flickity_init();
 
-    flickety_init();
+    map.addControl( new L.Control.Compass() );//compass will not work if the devices does not have a compasss.
 
     var all_layers_group = L.geoJson(features);
     set_styles(all_layers_group);
