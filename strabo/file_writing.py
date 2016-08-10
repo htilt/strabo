@@ -62,24 +62,24 @@ def save_shrunken_images_with(filename):
 
 
 #saves image and thumbnail using the given filenaem
-def save_image_files(form_file_obj,filename):
+def save_image_files(form_file,filename):
     '''
-    Checks saves ``form_file_obj``
+    Checks saves ``form_file``
     under ``uploads/<filename>``.
 
-    Throws an error if form_file_obj is of not an allowed file extension.
+    Throws an error if form_file is of not an allowed file extension.
     Ideally, this possibility would be not be allowed through form validation.
     '''
     #if no files is attached, then do nothing
-    if not form_file_obj:
+    if not form_file:
         return
     #if the file extension is not allowed,throw an error
     #todo: put this error in the frontend instead of here
-    if not image_processing.allowed_file(form_file_obj.filename):
+    if not image_processing.allowed_file(form_file.filename):
         raise RuntimeError("file extension not allowed")
 
     # Move the file from the temporary folder to the upload folder
-    form_file_obj.save(get_image_path(filename))
+    form_file.save(get_image_path(filename))
     #note that unique filename in uploads folder will also be unique filename in other folders
     save_shrunken_images_with(filename)
 

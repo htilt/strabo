@@ -52,9 +52,9 @@ def make_interest_point(image_ids,form_title,form_body,form_geo_obj,form_layer,f
     return ip
 
 #returns image database object
-def make_image(form_file_obj,form_descrip,year,month):
+def make_image(form_file,form_descrip,year,month):
     img = schema.Images()
-    private_helper.fill_image(img,form_file_obj,form_descrip,year,month)
+    private_helper.fill_image(img,form_file,form_descrip,year,month)
     return img
 
 geo_obj1 = '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-122.63034939765929,45.48205499198348]}}'
