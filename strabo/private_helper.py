@@ -26,8 +26,9 @@ def fill_interest_point(ip,image_ids,form_title,form_body,form_geo_obj,form_laye
 
 def fill_image(image,form_file,form_descrip,year,month):
     '''
-    If a flask.files object is passed in, then it saves the new file and stores the new information in the database.
-    If the image row already stored infromation about an old image (the image was edited), then that old image is deleted.
+    If a flask.files object (see `here <http://flask.pocoo.org/docs/0.11/patterns/fileuploads/>`_ for more information)
+    is passed in, then it saves the new file and stores the new information in the database.
+    If the image row already stored information about an old image (the image was edited), then that old image is deleted.
     '''
     image.taken_at = datetime.date(utils.safe_pos_int_conv(year),utils.safe_pos_int_conv(month),1)
     image.description = form_descrip
