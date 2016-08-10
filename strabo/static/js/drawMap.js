@@ -1,13 +1,12 @@
+// The Admin Map
+
 var shape_drawn = false;
 var shapeLayer;
 
 
-$(function()
-{
-// The Admin Map
+$(function(){
 var drawMap = make_map('drawMap');
 add_tile_to(drawMap);
-
 
 var all_layers_group = L.geoJson(features);
 set_styles(all_layers_group);
@@ -22,7 +21,6 @@ drawMap.addLayer(drawnItems);
 
 var shapeColorInit = '#2397EB';
 
-//This place
 if (edit_json){
     shape_drawn = true;
     shapeLayer = L.geoJson(edit_json).getLayers()[0];
@@ -100,6 +98,8 @@ drawMap.on('draw:deleted', function (e) {
     $usrSelect = $("#colorPick :selected").text();
 });*/
 });
+
+
 $('#upload-btn').click(function (e) {
     var JSONobject = JSON.stringify(shapeLayer.toGeoJSON());
     $('#geojson-field').attr("value", JSONobject);
