@@ -20,12 +20,13 @@ function init_map(){
 function set_draw_controls(drawMap,drawnItems){
     /*
     Sets controls which allow one to add a polygon or a point. The control mechanics
-    have two.
+    (options and events) conspire to create an editing enviornment where only
+    one feature can ever be placed on the map in one form. The form control the ensures
+    that at least one feature was placed, so that exactly one feature will be submitted
+    with the interest point, as desired.
     */
-    // Initialise the draw control and pass it the FeatureGroup of editable layers
 
     var shapeColorInit = '#2397EB';
-
     var addControl = new L.Control.Draw({
         draw : {
           polyline: false,
