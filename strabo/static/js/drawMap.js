@@ -97,7 +97,7 @@ function init_geojson_setter(drawnItems){
         shape_drawn = true;
         shapeLayer = L.geoJson(edit_json).getLayers()[0];
         shapeLayer.addTo(drawnItems);
-        shapeLayer.bindPopup("Current point").openPopup()
+        shapeLayer.bindPopup("You are editing this point.").openPopup()
     }
     $('#upload-btn').click(function (e) {
         var JSONobject = shape_drawn ? JSON.stringify(shapeLayer.toGeoJSON()) : "";
