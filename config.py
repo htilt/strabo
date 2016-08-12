@@ -1,4 +1,3 @@
-import enum
 import os
 from strabo import utils
 
