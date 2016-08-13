@@ -4,25 +4,28 @@
     {{ super() }}
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.css' rel='stylesheet' />
+    <link href='/static/private_styles/upload_ips.css' rel='stylesheet' />
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="/static/js/upload_ips.js"></script>
 
-    <style>
-    .form-error {
-        color:#ff0000;
-        font-style: italic;
-    }
-    </style>
+    <script>
+        var straboconfig = {{ straboconfig|tojson }};
+        var features = {{ geo_features|tojson }};
+        var edit_json = {{ my_ip_json|tojson }};
+        var ip_images = {{ ip_images|tojson }};
+    </script>
+    <script src="/static/js/upload_ips.js"></script>
+    <script src="/static/js/map_info.js"></script>
+    <script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}
 
 {% block content %}
 <main class="container">
   <div class="form">
     <fieldset>
-      <form id="ip-upload"  method="POST" action="/admin/interest_points/post"  onsubmit="return checkForm(this);" enctype="multipart/form-data">
+      <form method="POST" action="/admin/interest_points/post"  onsubmit="return checkForm(this);" enctype="multipart/form-data">
 
         <div class="row">
           <div class="form-wrapper col-md-8">
@@ -49,7 +52,7 @@
           <div class="form-group">
             <label for="layer">Layer:</label><br>
             <select class="form-control" name="layer">
-                <option>Select One</a></option>
+                <option>Select One</option>
                 {% for layer_num,layer_name in LAYER_FIELDS.items() %}
                 <option {%if layer_num == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
@@ -61,11 +64,11 @@
              <!-- to make this look better, use bootstrap-select library. -->
             <label for="icon">Point Icon:</label><br>
             <select class="form-control icon-menu" name="icon">
-                <option>Select One</a></option>
-
+                <option>Select One</option>
                 {% for icon_name in MAP_ICONS %}
-                <option {%if icon_name == interest_point.icon%}selected{%endif%}>
-                {{icon_name[:-4]}}</a></option>
+                    <option {%if icon_name == interest_point.icon%}selected{%endif%}>
+                        {{icon_name[:-4]}}
+                    </option>
                 {% endfor %}
               </select>
              <p id="icon-form-issue" class="form-error" hidden>Required</p>
@@ -73,60 +76,42 @@
 
             <div class="form-group">
               <label for="description">Interest Point Description:</label><br>
-              <textarea class="form-control" rows='5' type="text" name="description">{{interest_point.descrip_body}}</textarea>
-            </div>
-
-            <div class="form-group">
-              <input id="geojson-field" type="hidden" name="geojson" value="">
+              <textarea class="form-control" rows='5' name="description">{{interest_point.descrip_body}}</textarea>
             </div>
 
             <p></p>
             <!--Allows server to see image id if it is from an edit-->
-            <div class="form-group">
-              <input type="hidden" name="ip_id" value="{%if interest_point.id %}{{interest_point.id}}{%endif%}">
-            </div>
-
-            <input id="upload-btn" type="submit" value="Upload">
-          </div>
+            <input type="hidden" name="ip_id" value="{%if interest_point.id %}{{interest_point.id}}{%endif%}">
 
           <br><br>
+        <div class="row">
+            <label for="description">Images:</label><br>
+            <div class="col-md-8">
 
-          <table class="table-bordered" margin="10px">
-            <tr>
-              <th></th>
-              <th>Image</th>
-              <th>Description</th>
-            </tr>
-            {% macro render_table(images,is_checked) %}
-                {% for img in images %}
-                    <tr>
-                      <td>
-                          <input type="checkbox" name='image_ids' value={{ img.id }} {%if is_checked%}checked{%endif%}>
-                      </td>
-                      <td><img src="{{ THUMB_DIR_RELPATH }}{{ img.filename }}" alt="thumbnail" style="width:100px;height:100px;"></img></td>
-                      <td>{{ img.description }}</td>
-                    </tr>
-                {% endfor %}
-            {% endmacro %}
+            <div class="button-space">
+                <button type="button" class="add-button" id="root-add-button" >Add Image Below</button>
+            </div>
 
-            {{ render_table(taken_images,True) }}
-            {{ render_table(free_images,False) }}
-          </table>
+            <div id="img-start">
+
+            </div>
+
+            <br><br><br>
+            <input id="upload-btn" type="submit" value="Upload">
+          </div>
+        </div>
+      </div>
         </div>
       </form>
     </fieldset>
   </div>
 </main>
+
+{% include "private/upload_img_model.html" %}
+
 {% endblock %}
 
 
 {% block footer %}
     {{ super () }}
-<script>
-    var straboconfig = {{ straboconfig|tojson }};
-    var features = {{ geo_features|tojson }};
-    var edit_json = {{ my_ip_json|tojson }};
-</script>
-<script src="/static/js/map_info.js"></script>
-<script src="/static/js/{{ ADMINMAP_JS }}"></script>
 {% endblock %}

@@ -8,6 +8,7 @@ from flask import request, render_template, jsonify
 from strabo import database
 from strabo import schema
 from strabo import geojson_wrapper
+from strabo import private_helper
 
 from strabo import app
 from strabo import db
@@ -30,15 +31,8 @@ def map_post():
   ip_id = request.form['db_id']
   ip = db.session.query(schema.InterestPoints).get(int(ip_id))
 
-  images = ip.images
-  images.sort(key=lambda img: img.taken_at)
-
-  filenames = [{"filename":img.filename,
-                "description":img.description,
-                "width":img.width,
-                "height":img.height} for img in images]
   js_data = {
-    "images":filenames,
+    "images":database.jsonifyable_rows(private_helper.get_ordered_images(ip)),
     "description":ip.descrip_body,
     "title":ip.title
   }

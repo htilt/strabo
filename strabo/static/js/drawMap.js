@@ -93,9 +93,9 @@ drawMap.on('draw:deleted', function (e) {
   $e.change(function() {
     $usrSelect = $("#colorPick :selected").text();
 });*/
-});
 
 $('#upload-btn').click(function (e) {
     var JSONobject = JSON.stringify(shapeLayer.toGeoJSON());
     $('#geojson-field').attr("value", JSONobject);
+});
 });
