@@ -15,7 +15,7 @@ function show_popup(){
 }
 //calculates thumbnail size from the full size image size passed in
 function get_shrunk_dim(img,max_dim){
-    ratio = Math.min(max_dim[0]/img.width,max_dim[1]/img.height);
+    ratio = Math.min($("#carouselholder").width()/img.width,$("#carouselholder").height()/img.height);
     shrink_ratio = Math.min(ratio,1.0)
     return {
         width:shrink_ratio*img.width,
