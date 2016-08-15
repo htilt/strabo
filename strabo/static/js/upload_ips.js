@@ -110,7 +110,7 @@ function make_img_div(img,$last_div){
     $img_div.find('[name="file"]').removeAttr('required');
     return $img_div;
 }
-function initalize_edit_images(){
+function initialize_edit_images(){
     var $last_img_div = $("#img-start");
     ip_images.forEach(function(img){
         $last_img_div = make_img_div(img,$last_img_div);
@@ -120,5 +120,5 @@ $(document).ready(function(){
     $("#root-add-button").click(function(){
         add_new_after($("#img-start"))
     })
-    initalize_edit_images();
+    initialize_edit_images();
 });
