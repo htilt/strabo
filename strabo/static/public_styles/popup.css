@@ -24,7 +24,7 @@ Then there is the #button-section, which floats above the other sections.
     left: 0;
     top: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.7);
     z-index: 100000; /* goes above leaflet link */
 }
 .popup-foreground {
@@ -74,7 +74,7 @@ Then there is the #button-section, which floats above the other sections.
 .carousel-cell.is-selected img{
     /*highlighting around centered flickty image*/
     /* pattern:  _ _ blur spread color*/
-    box-shadow: 0 0 20px 20px rgba(0,0,0,0.6);
+    /* box-shadow: 0 0 20px 20px rgba(0,0,0,0.6); */
 }
 .img-description {
     color: #422C1E;
