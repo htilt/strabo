@@ -36,17 +36,17 @@ def delete_image(id):
     db.session.commit()
 
 
-def delete_unrefrenced_images(old_images,images):
+def delete_unreferenced_images(old_images,images):
     '''deletes images in old_images which are not in images'''
     for old_img in old_images:
         if all(old_img.id != img.id for img in images):
             delete_image(old_img.id)
 
-def jsonifyable_row(sql_row):
+def jsonifiable_row(sql_row):
     return {col.name:getattr(sql_row,col.name) for col in sql_row.__class__.__table__.columns}
 
-def jsonifyable_rows(sql_rows):
-    return [jsonifyable_row(row) for row in sql_rows]
+def jsonifiable_rows(sql_rows):
+    return [jsonifiable_row(row) for row in sql_rows]
 
 #helper functions, currently unused
 '''

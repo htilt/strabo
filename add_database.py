@@ -23,7 +23,7 @@ def recreate_postgres_db():
     by deleting the entire thing and starting over.
     only use for development.'''
     os.system("dropdb strabo")
-    #deletes all files in folder specified except hiden files and those with no file extension.
+    #deletes all files in folder specified except hidden files and those with no file extension.
     os.system("rm strabo/static/uploads/*$.*")
     os.system("rm strabo/static/thumbnails/*$.*")
     os.system("createdb strabo")

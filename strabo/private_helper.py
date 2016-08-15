@@ -22,7 +22,7 @@ def make_interest_point(form_ip_id,images,form_title,form_body,form_geo_obj,form
 
     ip = db.session.query(schema.InterestPoints).get(form_ip_id) if form_ip_id != "" else schema.InterestPoints()
 
-    database.delete_unrefrenced_images(ip.images,images)
+    database.delete_unreferenced_images(ip.images,images)
 
     ip.title = form_title
     ip.descrip_body = form_body

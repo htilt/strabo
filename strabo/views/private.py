@@ -89,7 +89,7 @@ def show_ips_upload_form(interest_point):
 
     #gets images that the current interest point already owns
     ip_images = private_helper.get_ordered_images(interest_point)
-    jsonifiable_ip_images = [utils.concatenate_dicts(database.jsonifyable_row(img),{'month':img.taken_at.month,'year':img.taken_at.year}) for img in ip_images]
+    jsonifiable_ip_images = [utils.concatenate_dicts(database.jsonifiable_row(img),{'month':img.taken_at.month,'year':img.taken_at.year}) for img in ip_images]
 
     return render_template("private/upload_ips.html",
         geo_features=geo_features,

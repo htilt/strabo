@@ -32,7 +32,7 @@ def map_post():
   ip = db.session.query(schema.InterestPoints).get(int(ip_id))
 
   js_data = {
-    "images":database.jsonifyable_rows(private_helper.get_ordered_images(ip)),
+    "images":database.jsonifiable_rows(private_helper.get_ordered_images(ip)),
     "description":ip.descrip_body,
     "title":ip.title
   }
