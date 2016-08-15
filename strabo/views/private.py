@@ -126,11 +126,10 @@ def interest_points_redirect():
 
 def show_ips_upload_form(interest_point):
     #Gets all interest points, so that they can be displayed on the leaflet map.
-    all_ips = db.session.query(schema.InterestPoints).all()
+    all_ips = db.session.query(schema.InterestPoints).filter(schema.InterestPoints.id != interest_point.id).all()
     geo_features = [geojson_wrapper.make_other_attributes_properties(ip) for ip in all_ips]
     #gets the geojson object corrsponding to the current interest point so that the html form caontains a default values for the geojson
     my_ip_json = geojson_wrapper.to_geo_obj(interest_point.geojson_object) if interest_point.id else False
-
 
     #get all avaliable images
     free_images = db.session.query(schema.Images).filter(schema.Images.interest_point_id == None).all()
