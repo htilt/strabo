@@ -26,12 +26,22 @@ $(document).ready(function(){
 
     flickity_init();
 
-    map.addControl( new L.Control.Compass() );//compass will not work if the devices does not have a compasss.
+    map.addControl( new L.Control.Compass() ); //compass feature will not work on devices that do not have a compass
 
     var all_layers_group = L.geoJson(features);
+    
     set_styles(all_layers_group);
     place_overlays_on(all_layers_group,map);
+
+
+// Active and inactive layers groups. Active layer groups have images associated with them and 
+// are clickable. Inactive layers groups (like sensitive areas and access points) are not
+// clickable. 
+
     bind_popups(all_layers_group);
+
+
+
     set_feature_click(all_layers_group);
 
     //set_map_click(map);

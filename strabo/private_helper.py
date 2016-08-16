@@ -1,5 +1,5 @@
 '''
-Assigns entries in the table accoring to text input from the admin interface.
+Assigns entries in the table according to text input from the admin interface.
 '''
 import datetime
 import copy

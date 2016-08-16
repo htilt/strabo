@@ -2,6 +2,7 @@
 {% set active_page = "edit_ips" %}
 {% block head %}
     {{ super() }}
+    <link href='/static/private_styles/edit_ips.css' rel='stylesheet' />
 {% endblock %}
 
 {% block content %}
@@ -11,11 +12,13 @@
             <div class="table">
                 <table class="table-bordered" margin="10px" id="preview">
                   <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Layer</th>
+                    <th>Icon</th>
+                    <th>Images</th>
                   </tr>
 
                   {% for ip in interest_points %}
@@ -28,7 +31,14 @@
                         </td>
                         <td>{{ ip.title }}</td>
                         <td>{{ ip.descrip_body }}</td>
-                        <td>{{ ip.layer }}</td>
+                        <td>{{LAYER_FIELDS[ip.layer]}}</td>
+                        <td>
+                            <img src={{ url_for('static', filename="map_icons/")}}{{ip.icon}}>
+                        </td> 
+
+
+
+                        <td>
                       </tr>
                   {% endfor %}
                 </table>
