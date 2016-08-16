@@ -74,9 +74,8 @@ Then there is the #button-section, which floats above the other sections.
 .carousel-cell.is-selected img{
     /*highlighting around centered flickty image*/
     /* pattern:  _ _ blur spread color*/
-    /* box-shadow: 0 0 20px 20px rgba(0,0,0,0.6); */
     border-style: solid;
-    border-width: 0.3em;
+    border-width: 0.25em;
     border-color: #ebf5e4;
 }
 
