@@ -35,6 +35,7 @@ class Images(Base,DataType):
     filename = Column(Text)
 
     taken_at = Column(DateTime)
+    ip_order_idx = Column(Integer)
 
     interest_point_id = Column(Integer, ForeignKey('interest_points.id'))
     interest_point = relationship("InterestPoints",back_populates="images")

@@ -23,3 +23,8 @@ def fill_dict_with(_to,_from):
 def reverse_dict(forward_dict):
     '''makes keys values and values keys'''
     return {v:k for k,v in forward_dict.items()}
+
+def concatenate_dicts(d1,d2):
+    con = d1.copy()
+    con.update(d2)
+    return con

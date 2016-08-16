@@ -5,24 +5,24 @@ In future versions, this will handle all database interactions,
 including gets, sets, updates.
 '''
 
-import os
 import sqlalchemy
 
 from strabo import schema
 from strabo import file_writing
 
-from strabo import app
 from strabo import db
 
 def delete_ip(id):
     '''Deletes ip refrenced by id.
 
-    All images associated with the ip are unaffected, they simply lose their connection with the interest_point.'''
+    All images associated with the ip are deleted!'''
     idquery = db.session.query(schema.InterestPoints).filter_by(id=id)
     ip = idquery.one()
 
-    ip.images = []#clears image ForeignKeys
-    db.session.commit()
+    for img in ip.images:
+        file_writing.delete_image_files(img.filename)
+
+    db.session.query(schema.Images).filter_by(interest_point_id=ip.id).delete()
 
     idquery.delete()
     db.session.commit()
@@ -34,6 +34,19 @@ def delete_image(id):
     file_writing.delete_image_files(img.filename)
     idquery.delete()
     db.session.commit()
+
+
+def delete_unreferenced_images(old_images,images):
+    '''deletes images in old_images which are not in images'''
+    for old_img in old_images:
+        if all(old_img.id != img.id for img in images):
+            delete_image(old_img.id)
+
+def jsonifiable_row(sql_row):
+    return {col.name:getattr(sql_row,col.name) for col in sql_row.__class__.__table__.columns}
+
+def jsonifiable_rows(sql_rows):
+    return [jsonifiable_row(row) for row in sql_rows]
 
 #helper functions, currently unused
 '''
