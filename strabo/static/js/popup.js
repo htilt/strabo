@@ -47,7 +47,7 @@ function add_carousel_entries(imgs){
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //brings up popup associated with feature ip
 function ip_clicked(db_id) {
-    //sends a request to the server tp return the information associated with the
+    //sends a request to the server to return the information associated with the
     // database feature id
     $.post(
         "/map/post",
@@ -56,10 +56,9 @@ function ip_clicked(db_id) {
             imgs = data.images;
             var ip_descrip = data.description;
             var ip_title = data.title;
-
+            if (data.images.length != 0){
             //renders the popup
             show_popup();
-
             remove_all_carousel_entries();
 
             add_carousel_entries(imgs);
@@ -70,6 +69,7 @@ function ip_clicked(db_id) {
             // resize after un-hiding Flickity
             flkty.resize();
             flkty.reposition();
+        }
         }
     );
 }

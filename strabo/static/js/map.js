@@ -11,16 +11,10 @@ function set_feature_click(all_layers_group){
 $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
-////////////////////////////////////////////////////////////////////////////////
+
     var all_layers_group = L.geoJson(features);
-    var all_layers = all_layers_group.getLayers();
-    var active_layers_group = all_layers.filter(function(lay){return lay.feature.properties.layer != "4"}); // 4=Sensitive Area
 
-    console.log(active_layers_group)
-////////////////////////////////////////////////////////////////////////////////
     flickity_init();
-
-/////////////////////////////////////////////////////////////////////////////////////
     map.addControl( new L.Control.Compass() ); //compass feature will not work on devices that do not have a compass
 
     set_styles(all_layers_group);
