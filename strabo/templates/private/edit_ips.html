@@ -30,13 +30,13 @@
                             <button type="submit" name="delete-btn" value={{ ip.id }}>Delete</button>
                         </td>
                         <td>{{ ip.title }}</td>
-                        <td>{{ ip.descrip_body }}</td>
+                        <td id="description">{{ ip.descrip_body }} </td>
                         <td>{{LAYER_FIELDS[ip.layer]}}</td>
                         <td>
                             <img src={{ url_for('static', filename="map_icons/")}}{{ip.icon}}>
                             {{ip.icon[:-4]}}
                         </td> 
-                        <td>
+                        <td id="images">
                             {% for image in ip.images %}
                                 <img src={{ url_for('static', filename="uploads/")}}{{image.filename}} width="250px">
                                 <br>

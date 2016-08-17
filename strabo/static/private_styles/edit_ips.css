@@ -1,5 +1,6 @@
 .table {
 	padding-left: 2em;
+	width:98%;
 }
 th {
 	text-align: center;
@@ -9,3 +10,12 @@ td {
 	padding: 0.5em;
 	vertical-align: top;
 }
+
+#description {
+	width: 400px; /* non responsive */
+}
+
+.td #images {
+	display: inline;
+}
+
