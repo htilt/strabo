@@ -29,6 +29,8 @@ def get_config_info():
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
 
+    config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
+
     config_info['BASE_CSS'] = "canyon_base.css"
     config_info['HEADER_CSS'] = "header.css"
     config_info['FOOTER_CSS'] = "footer.css"
@@ -61,16 +63,14 @@ def get_config_info():
 
     ###### The following variables probably will not require configuration.
     # set absolute and relative paths to the upload directory for images
-    config_info['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads/'
+    config_info['UPLOAD_FOLDER'] = os.path.join(strabo_abs_path,'strabo/static/uploads/')
     config_info['UPLOAD_FOLDER_RELPATH'] = '/static/uploads/'
     # set absolute and relative paths to the upload directory for thumbnails
-    config_info['MOBILE_IMG_DIR'] = './strabo/static/mobile_imgs/'
+    config_info['MOBILE_IMG_DIR'] = os.path.join(strabo_abs_path,'strabo/static/mobile_imgs/')
     config_info['MOBILE_IM_DIR_RELPATH'] = '/static/mobile_imgs/'
     # set absolute and relative paths to the upload directory for
-    config_info['THUMB_DIR'] = './strabo/static/thumbnails/'
+    config_info['THUMB_DIR'] = os.path.join(strabo_abs_path,'strabo/static/thumbnails/')
     config_info['THUMB_DIR_RELPATH'] = '/static/thumbnails/'
-    # set folder name for javascript
-    config_info['JS_FOLDER'] = '../strabo/strabo/static/js/'
 
 
     # set absolute and relative paths to styles
@@ -88,7 +88,7 @@ def get_config_info():
     }
 
     # Finds the location of the /strabo/static file
-    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.realpath("./strabo/static/map_icons/"))]
+    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.join(strabo_abs_path,"strabo/static/map_icons/"))]
     #needs to correspond with popup view size
     config_info["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
     #larger images will make for slower animations and upload when navigating photoswipe

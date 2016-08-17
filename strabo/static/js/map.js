@@ -23,6 +23,7 @@ $(document).ready(function(){
 
     set_feature_click(all_layers_group);
     set_geolocation(map);
+
 });
 
 function set_geolocation(map){
