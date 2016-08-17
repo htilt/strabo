@@ -18,6 +18,7 @@
                     <th>Description</th>
                     <th>Layer</th>
                     <th>Icon</th>
+                    <th>Images</th>
                   </tr>
 
                   {% for ip in interest_points %}
@@ -35,8 +36,14 @@
                             <img src={{ url_for('static', filename="map_icons/")}}{{ip.icon}}>
                             {{ip.icon[:-4]}}
                         </td> 
-
-
+                        <td>
+                            {% for image in ip.images %}
+                                <img src={{ url_for('static', filename="uploads/")}}{{image.filename}} width="250px">
+                                <br>
+                                {{image.description}}
+                                <br><br>
+                            {% endfor %}
+                        </td>
 
                       </tr>
                   {% endfor %}
