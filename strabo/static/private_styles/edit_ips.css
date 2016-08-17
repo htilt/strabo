@@ -13,9 +13,9 @@ td {
 
 #description {
 	width: 400px; /* non responsive */
+	white-space: pre-wrap;
 }
 
-.td #images {
-	display: inline;
+.images {
+	display:table-cell;
 }
-

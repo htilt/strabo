@@ -36,12 +36,13 @@
                             <img src={{ url_for('static', filename="map_icons/")}}{{ip.icon}}>
                             {{ip.icon[:-4]}}
                         </td> 
-                        <td id="images">
+                        <td>
                             {% for image in ip.images %}
+                            <div class="images">
                                 <img src={{ url_for('static', filename="uploads/")}}{{image.filename}} width="250px">
                                 <br>
                                 {{image.description}}
-                                <br><br>
+                            </div>
                             {% endfor %}
                         </td>
 
