@@ -68,8 +68,7 @@ function set_draw_controls(drawMap,drawnItems){
     else{
         drawMap.addControl(addControl);
     }
-
-
+    
     drawMap.on('draw:created', function (e) { //grab s layer of drawn item
         shapeLayer = e.layer;
         shape_drawn = true;

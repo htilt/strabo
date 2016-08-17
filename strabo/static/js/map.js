@@ -1,16 +1,4 @@
-//sets the popup feature when you click a spot on the map
-//function set_map_click(map){
 
-    // Display latlng info for any place on the map when clicked
-    // function onMapClick(e) {
-    //   L.popup()
-    //    .setLatLng(e.latlng)
-    //    .setContent(e.latlng.toString())
-    //    .openOn(map);
-    // }
-    // Trigger onMapClick function whenever map is clicked
-  //  map.on('click', onMapClick);
-//}
 function set_feature_click(all_layers_group){
     var all_layers = all_layers_group.getLayers();
     all_layers.forEach(function(layer){
@@ -23,23 +11,26 @@ function set_feature_click(all_layers_group){
 $(document).ready(function(){
     var map = make_map('map');
     add_tile_to(map);
+////////////////////////////////////////////////////////////////////////////////
+    var all_layers_group = L.geoJson(features);
+    var all_layers = all_layers_group.getLayers();
+    var active_layers_group = all_layers.filter(function(lay){return lay.feature.properties.layer != "4"}); // 4=Sensitive Area
 
+    console.log(active_layers_group)
+////////////////////////////////////////////////////////////////////////////////
     flickity_init();
 
+/////////////////////////////////////////////////////////////////////////////////////
     map.addControl( new L.Control.Compass() ); //compass feature will not work on devices that do not have a compass
 
-    var all_layers_group = L.geoJson(features);
-    
     set_styles(all_layers_group);
     place_overlays_on(all_layers_group,map);
     bind_popups(all_layers_group);
 
     set_feature_click(all_layers_group);
-
-    //set_map_click(map);
-
     set_geolocation(map);
 });
+
 function set_geolocation(map){
 
     // Current solution to keep geoLocation only
@@ -60,7 +51,7 @@ function set_geolocation(map){
         icon: "fa fa-crosshairs",
         iconElementTag:"a",
         onLocationOutsideMapBounds:function(control){
-            //when outside of bounds, it centers over canyon when button is clicked.
+            // When outside of bounds, centers on the Canyon the button is clicked
             map.setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
             control.stop();
         },
@@ -84,5 +75,5 @@ function set_geolocation(map){
             popup: "You are within {distance} {unit} of this point"
         },
     }).addTo(map)
-      .start();//starts looking for your location when page loads, instead of waiting for button to be clicked
+      .start(); // Starts looking for your location when page loads, instead of waiting for button to be clicked
 }

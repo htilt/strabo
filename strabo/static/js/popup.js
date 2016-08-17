@@ -40,11 +40,11 @@ function remove_all_carousel_entries(){
 function add_carousel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
-        var $cellElems = $(get_carosel_html(img));
+        var $cellElems = $(get_carousel_html(img));
         flkty.append($cellElems);
     });
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
 //brings up popup associated with feature ip
 function ip_clicked(db_id) {
     //sends a request to the server tp return the information associated with the
@@ -60,9 +60,9 @@ function ip_clicked(db_id) {
             //renders the popup
             show_popup();
 
-            remove_all_carosel_entries();
+            remove_all_carousel_entries();
 
-            add_carosel_entries(imgs);
+            add_carousel_entries(imgs);
 
             $("#ip_description").text(ip_descrip);
             $("#ip_title").text(ip_title);
@@ -73,7 +73,9 @@ function ip_clicked(db_id) {
         }
     );
 }
-function set_flickity_click(){
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+function set_flickity_click(){ 
     /*
     Purpose:
     When Flickity cell is clicked, a photoswipe gallery is pulled up displaying a larger version of the same image.
@@ -92,6 +94,8 @@ function set_flickity_click(){
     var SECS_PER_MILSEC = 1000;
 
     var photoswipe_fetched = false;
+
+
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
         if (cellElement && !photoswipe_fetched) {
             photoswipe_fetched = true;
@@ -102,6 +106,7 @@ function set_flickity_click(){
         }
     });
 }
+
 
 function make_photoswipe(pic_index){
     // execute above function
@@ -181,6 +186,8 @@ function set_flickity_img_title(){
     })
 }
 
+
+
 function flickity_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
@@ -190,3 +197,4 @@ function flickity_init(){
     set_flickity_img_title();
     set_flickity_click();
 }
+
