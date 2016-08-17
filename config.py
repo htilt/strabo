@@ -29,7 +29,7 @@ def get_config_info():
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
 
-    strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
+    config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
 
     config_info['BASE_CSS'] = "canyon_base.css"
     config_info['HEADER_CSS'] = "header.css"
