@@ -43,6 +43,7 @@ $(document).ready(function(){
 $(document).keyup(function(e) {
     if (e.keyCode==27) { //if ESC key is hit
         hide_popup();
+        gallery.close();
     }
 });
 

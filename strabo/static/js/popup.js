@@ -130,9 +130,10 @@ function make_photoswipe(pic_index){
         //on android, "true" will cause this to close when you wouldn't want it to
         closeOnVerticalDrag:false,
         //I don't think drastically differnt interfaces between small and large pictures is a good idea.
-        clickToCloseNonZoomable: false
+        clickToCloseNonZoomable: false,
         //if image loading is too slow try this. It makes switching between images even slower though.
         //preloaderEl: false,
+        escKey: false
     };
 
     gallery = new PhotoSwipe(element, PhotoSwipeUI_Default, items, options);
