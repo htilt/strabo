@@ -25,6 +25,6 @@ config.config_app(app)
 
 db = SQLAlchemy(app)
 
-straboconfig = dict()#is populated in runserver.py
+straboconfig = config.get_config_info()
 
 import strabo.views

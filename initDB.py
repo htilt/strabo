@@ -1,5 +1,4 @@
 from strabo import schema
-from strabo import database
 
 from strabo import db
 
