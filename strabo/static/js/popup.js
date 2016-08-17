@@ -192,3 +192,23 @@ function flickity_init(){
     set_flickity_img_title();
     set_flickity_click();
 }
+
+
+
+$(document).keyup(function(e) {
+    if (e.keyCode==27) { //if ESC key is hit
+        hide_popup();
+        if (gallery){
+            gallery.close();
+        }
+    }
+});
+
+$(document).mouseup(function(e){
+        var popup = $(".popup");
+        var popup_foreground = $(".popup-foreground");
+        if (popup.is(e.target) && !popup_foreground.is(e.target)){
+            hide_popup();
+        }
+});
+

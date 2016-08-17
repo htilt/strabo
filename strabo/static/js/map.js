@@ -40,21 +40,6 @@ $(document).ready(function(){
 
 });
 
-$(document).keyup(function(e) {
-    if (e.keyCode==27) { //if ESC key is hit
-        hide_popup();
-        gallery.close();
-    }
-});
-
-$(document).mouseup(function(e){
-        var popup = $(".popup");
-        var popup_foreground = $(".popup-foreground");
-        if (popup.is(e.target) && popup.has(e.target).length===0 && !popup_foreground.is(e.target)){
-            hide_popup();
-        }
-});
-
 function set_geolocation(map){
 
     // Current solution to keep geoLocation only
