@@ -37,7 +37,9 @@ $(document).ready(function(){
     //set_map_click(map);
 
     set_geolocation(map);
+
 });
+
 function set_geolocation(map){
 
     // Current solution to keep geoLocation only
