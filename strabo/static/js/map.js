@@ -32,15 +32,7 @@ $(document).ready(function(){
     
     set_styles(all_layers_group);
     place_overlays_on(all_layers_group,map);
-
-
-// Active and inactive layers groups. Active layer groups have images associated with them and 
-// are clickable. Inactive layers groups (like sensitive areas and access points) are not
-// clickable. 
-
     bind_popups(all_layers_group);
-
-
 
     set_feature_click(all_layers_group);
 
