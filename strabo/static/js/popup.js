@@ -206,8 +206,7 @@ $(document).keyup(function(e) {
 
 $(document).mouseup(function(e){
         var popup = $(".popup");
-        var popup_foreground = $(".popup-foreground");
-        if (popup.is(e.target) && !popup_foreground.is(e.target)){
+        if (popup.is(e.target)){
             hide_popup();
         }
 });
