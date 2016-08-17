@@ -37,7 +37,24 @@ $(document).ready(function(){
     //set_map_click(map);
 
     set_geolocation(map);
+
+
+
 });
+
+$(document).keyup(function(e) {
+    if (e.keyCode==27) { //if ESC key is hit
+        hide_popup();
+    }
+});
+
+//$(document).mouseup(function(e) {
+ //   var popup = $("popup");
+ //   if (!popup.is(e.target) && popup.has(e.target).length===0){
+ //   hide_popup();
+//}
+//});
+
 function set_geolocation(map){
 
     // Current solution to keep geoLocation only

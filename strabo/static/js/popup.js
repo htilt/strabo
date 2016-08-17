@@ -72,6 +72,7 @@ function ip_clicked(db_id) {
             flkty.reposition();
         }
     );
+
 }
 function set_flickity_click(){
     /*
