@@ -38,8 +38,6 @@ $(document).ready(function(){
 
     set_geolocation(map);
 
-
-
 });
 
 $(document).keyup(function(e) {
@@ -48,12 +46,13 @@ $(document).keyup(function(e) {
     }
 });
 
-//$(document).mouseup(function(e) {
- //   var popup = $("popup");
- //   if (!popup.is(e.target) && popup.has(e.target).length===0){
- //   hide_popup();
-//}
-//});
+$(document).mouseup(function(e){
+        var popup = $(".popup");
+        var popup_foreground = $(".popup-foreground");
+        if (popup.is(e.target) && popup.has(e.target).length===0 && !popup_foreground.is(e.target)){
+            hide_popup();
+        }
+});
 
 function set_geolocation(map){
 
