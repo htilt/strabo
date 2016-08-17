@@ -24,7 +24,7 @@ function get_shrunk_dim(img,max_dim){
 }
 //this function generates the flickity cell corresponding to
 //the specific image object passed in
-function get_carosel_html(img){
+function get_carousel_html(img){
     var html = '<div class="carousel-cell padded-pic">';
     dim  = get_shrunk_dim(img,straboconfig["THUMBNAIL_MAX_SIZE"]);
     html += '<div class="vertical-center">';
@@ -33,11 +33,11 @@ function get_carosel_html(img){
     html += '</div>';
     return html;
 }
-function remove_all_carosel_entries(){
+function remove_all_carousel_entries(){
     flkty.remove(flkty.getCellElements());
 }
-//adds all the imag data to the garosel in the odersrc
-function add_carosel_entries(imgs){
+//adds all the image data to the carousel
+function add_carousel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
         var $cellElems = $(get_carosel_html(img));
