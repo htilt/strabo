@@ -18,10 +18,13 @@ var ColorIcon = L.Icon.extend({
 
 var icon_objs = function(){
     var icon_objs = {};
-        straboconfig["MAP_ICONS"].forEach(function(icon_name){
-        icon_objs[icon_name] = new ColorIcon({iconUrl:'/static/map_icons/' + icon_name});
-    });
+    for (icon_name in straboconfig["COLOR_ICON"]){
+            icon_file = straboconfig["COLOR_ICON"][icon_name];
+            icon_objs[icon_name] = new ColorIcon({iconUrl:'/static/map_icons/' + icon_file});
+        }
+    //console.log(icon_objs)
     return icon_objs;
+
 }();
 
 // leaflet map object
@@ -33,7 +36,7 @@ function add_tile_to(map){
     L.tileLayer(straboconfig["MAP_TILE_SRC"],straboconfig["LEAFLET_ATTRIBUTES"]).addTo(map);
 }
 
-// Set icon object for points and color for zones
+// sets icon object for points and styling for zones
 function set_styles(all_layers_group){
     var all_layers = all_layers_group.getLayers();
 
@@ -43,13 +46,16 @@ function set_styles(all_layers_group){
     zones.forEach(function(zone){
         zone.setStyle({
               weight: 1,
-              //color: zone.feature.properties['marker-color'],
+              color: straboconfig["COLOR_HEX"][zone.feature.properties.style], 
               dashArray: '',
               fillOpacity: 0.3
         });
     });
+
     points.forEach(function(point){
-        point.setIcon(icon_objs[point.feature.properties.icon]);
+        //console.log(point.feature.properties.style)
+        //console.log(icon_objs[point.feature.properties.style])
+        point.setIcon(icon_objs[point.feature.properties.style]);
     })
 }
 
@@ -70,6 +76,7 @@ function place_overlays_on(all_layers_group,map){
 // Popups with the name of the interest point appear when clicked
 function bind_popups(all_layers_group){
     var all_layers = all_layers_group.getLayers();
+
     all_layers.forEach(function(layer){
         layer.bindPopup(layer.feature.properties.name);
     });
