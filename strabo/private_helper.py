@@ -12,7 +12,7 @@ from strabo import database
 from strabo import db
 from strabo import straboconfig
 
-def make_interest_point(form_ip_id,images,form_title,form_body,form_geo_obj,form_layer,form_icon):
+def make_interest_point(form_ip_id,images,form_title,form_body,form_geo_obj,form_layer,form_style):
     '''
     Creates interest point (or if form_ip_id is defined, gets old one from database), and fills it in
     with inputs from form.
@@ -28,7 +28,11 @@ def make_interest_point(form_ip_id,images,form_title,form_body,form_geo_obj,form
     ip.descrip_body = form_body
     ip.geojson_object = form_geo_obj
     ip.layer = straboconfig["REVERSE_LAYER_FIELDS"][form_layer]
-    ip.icon = form_icon + ".png"
+##################################################################################################################
+    print("E")
+    ip.style = form_style
+    print("D")
+##################################################################################################################
     ip.images = images
 
     return ip

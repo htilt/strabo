@@ -21,15 +21,69 @@ def get_config_info():
         3:"Interest Points",
         4:"Sensitive Areas"
     }
-
-
     config_info['REVERSE_LAYER_FIELDS'] = utils.reverse_dict(config_info['LAYER_FIELDS'])
+
+
+###########################################################################################################
+    config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
+    # Finds the location of the /strabo/static file
+    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.join(strabo_abs_path,"strabo/static/map_icons/"))]
+
+
+# Color Icons for Interest Points
+    config_info['COLOR_ICON'] = {
+        "red": "Red.png",
+        "orange": "Orange.png",
+        "yellow": "Yellow.png",
+        "green": "Green.png",
+        "turquoise": "Turquoise.png",
+        "navy": "Navy.png",
+        "purple": "Purple.png",
+        "magenta": "Magenta.png",
+        "coral": "Coral.png",
+        "evergreen": "Evergreen.png",
+        "accesspoint": "AccessPoint.png",
+        "sensitivearea": "SensitiveArea.png",
+    }
+
+# Color hex codes for Interest Zones
+    config_info['COLOR_HEX'] = {
+        "red": "#F40000",
+        "orange": "#FF9955",
+        "yellow": "#FFDD55",
+        "green": "#00B100",
+        "turquoise": "#00E3E3",
+        "navy": "#002B66",
+        "purple": "#EAB8F5",
+        "magenta": "#CC0077",
+        "coral": "#FF393D",
+        "evergreen": "#006666",
+        "accesspoint": "#A7001E",
+        "sensitivearea": "#606800"
+    }
+
+# Color names for representation in drop down menu on admin end
+    config_info['COLOR_REP'] = {
+        "red": "Red",
+        "orange": "Orange",
+        "yellow": "Yellow",
+        "green": "Green",
+        "turquoise": "Turquoise",
+        "navy": "Navy",
+        "purple": "Purple",
+        "magenta": "Magenta",
+        "coral": "Coral",
+        "evergreen": "Evergreen",
+        "accesspoint": "AccessPoint",
+        "sensitivearea": "SensitiveArea",
+    }
+
+##################################################################################################################
 
     #
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
 
-    config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
 
     config_info['BASE_CSS'] = "canyon_base.css"
     config_info['HEADER_CSS'] = "header.css"
@@ -87,8 +141,6 @@ def get_config_info():
         "ext": 'png'
     }
 
-    # Finds the location of the /strabo/static file
-    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.join(strabo_abs_path,"strabo/static/map_icons/"))]
     #needs to correspond with popup view size
     config_info["THUMBNAIL_MAX_SIZE"] = (300,250)#max_width, max_height
     #larger images will make for slower animations and upload when navigating photoswipe
