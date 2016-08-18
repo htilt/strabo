@@ -39,7 +39,7 @@
                         <td>
                             {% for image in ip.images %}
                             <div class="images">
-                                <img src={{ url_for('static', filename="uploads/")}}{{image.filename}} width="250px">
+                                <img src={{ url_for('static', filename="thumbnails/")}}{{image.filename}}>
                                 <br>
                                 {{image.description}}
                             </div>
