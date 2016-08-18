@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/static/private_styles/upload_navbar.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!--favicons generated at https://realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/static/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/static/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/static/favicons/manifest.json">
+<link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#ff0000">
+<meta name="theme-color" content="#ffffff">
+
+<!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
+<!--link href="assets/css/bootstrap-responsive.css" rel="stylesheet"-->
+
+
+
+<title>{{WEBSITE_TITLE}}</title>
+{% endblock head %}
+
+<body>
+<!--set href, id, and caption for tabs in nav bar-->
+    {% set navigation_bar = [
+    ('/admin/upload_ips/', 'upload_ips', 'Add Point of Interest'),
+
+    ('/admin/edit_ips/', 'edit_ips', 'Edit/Delete Points of Interest'),
+
+    ('/', 'canyon_home', 'Canyon Map HOME')
+    ] -%}
+
+<!--temporary link to the canyon map home public ^-->
+
+    {% set active_page = active_page|default('upload-images') -%}
+
+    <ul id="navigation" class="nav nav-tabs">
+        {% for href, id, caption in navigation_bar %}
+        <li role="presentation" {% if id == active_page %} class="tab-active" {% else %} class="tab"{% endif
+            %}><a href="{{ href|e }}">{{ caption|e }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="body-wrapper">
+        {% block content %}
+        <div class="temp">
+            <h2 class="text-muted">{{INDEX_GREETING}}</h2>
+        </div>
+        {% endblock content %}
+    </div>
+
+    <div id="footer">
+        {% block footer %}
+        {% endblock  footer %}
+    </div>
+
+</body>
+</html>

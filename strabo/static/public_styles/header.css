@@ -1,0 +1,77 @@
+/* Navbar */
+
+.navbar {
+  background-color: #422C1E;
+  border-bottom: 0.071428571em solid #2e1e15;
+  opacity: 1;
+  padding: 0.071428571em;
+}
+
+/* Logo */
+.navbar-brand {
+  padding: 0em;
+}
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
+  padding-left: 0.857142857em; /* 12/14 */
+}
+
+/* Navbar Menu Items */
+.header .menu {
+  float: right;
+  list-style: none;
+  margin-top: 0em;
+}
+.menu > li {
+  display: inline;
+  padding-left: 1.428571429em; /* 20/14 */
+  padding-right: 1.428571429em;
+}
+.menu a {
+  color: #ffffd8;
+  font-family: 'Futura', sans-serif;
+  font-size: 1.428571429em;
+}
+
+ /* Hover background on navbar menu */
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #583a28;
+}
+
+/* Toggle Button */
+.navbar-toggle {
+  position: relative;
+  float: right;
+  background-color: #422C1E;
+  background-image: none;
+  border: 0.071428571em solid #ffffff; 
+  border-radius: 0.285712386em; /* 4/14 */
+}
+span.icon-bar {
+  background-color: #ffffff; 
+}
+
+/* Change the appearance of the navbar on mobile */
+@media (max-width: 767px){
+  .navbar{
+    /*background-color: rgba(66,44,30,0.7); /* #422C1E with opacity */
+    background: transparent;
+    border: transparent;
+    pointer-events: none;
+  } 
+  .navbar-header {
+    background-color: #422C1E;
+    pointer-events: auto;
+  }
+  ul {
+    background: rgba(66,44,30,0.9); /*#422C1E;*/
+    pointer-events: auto;
+  }
+  li {
+    text-decoration: underline;
+    pointer-events: auto;
+  }
+}
+
+
