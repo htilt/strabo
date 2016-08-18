@@ -2,11 +2,11 @@
 {% set active_page = "upload_ips" %}
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.css' rel='stylesheet' />
     <link href='/static/private_styles/upload_ips.css' rel='stylesheet' />
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -53,6 +53,7 @@
             <label for="layer">Layer:</label><br>
             <select class="form-control" name="layer">
                 <option>Select One</option>
+                
                 {% for layer_num,layer_name in LAYER_FIELDS.items() %}
                 <option {%if layer_num == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
@@ -62,16 +63,16 @@
 
           <div class="form-group">
              <!-- to make this look better, use bootstrap-select library. -->
-            <label for="icon">Point Icon:</label><br>
-            <select class="form-control icon-menu" name="icon">
+            <label for="style"> Style:</label><br>
+            <select class="form-control style-menu" name="style">
                 <option>Select One</option>
-                {% for icon_name in MAP_ICONS %}
-                    <option {%if icon_name == interest_point.icon%}selected{%endif%}>
-                        {{icon_name[:-4]}}
+                {% for color in COLOR_REP %}
+                    <option {%if color == interest_point.style%}selected{%endif%}>
+                        {{COLOR_REP[color]}}
                     </option>
                 {% endfor %}
               </select>
-             <p id="icon-form-issue" class="form-error" hidden>Required</p>
+             <p id="style-form-issue" class="form-error" hidden>Required</p>
           </div><br>
 
             <div class="form-group">

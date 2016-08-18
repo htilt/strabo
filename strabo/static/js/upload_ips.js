@@ -13,8 +13,8 @@ var validators = [
     new InputField("#map-form-issue",function(form){
         return form.geojson.value != "";
     }),
-    new InputField("#icon-form-issue",function(form){
-        return form.icon.selectedIndex != 0
+    new InputField("#style-form-issue",function(form){
+        return form.style.selectedIndex != 0
     }),
     new InputField("#title-form-issue",function(form){
         return form.name.value != ""

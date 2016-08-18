@@ -109,7 +109,7 @@ def upload_ips():
     that the function produces a completely empty upload form. In this case, it
     means empty strings for most values.
     '''
-    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",layer="",icon=""))
+    return show_ips_upload_form(schema.InterestPoints(title="",descrip_body="",geojson_object="",layer="",style=""))
 
 @app.route("/admin/interest_points/post", methods=["POST"])
 def interest_points_post():
@@ -128,7 +128,7 @@ def interest_points_post():
 
     ip = private_helper.make_interest_point(request.form.get("ip_id"),imgs,
         request.form['title'],request.form['description'],request.form['geojson'],
-        request.form['layer'],request.form['icon'])
+        request.form['layer'],request.form['style'])
 
     db.session.add(ip)
     db.session.commit()

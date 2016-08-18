@@ -26,7 +26,7 @@ class InterestPoints(Base,DataType):
 
     layer = Column(Integer)
 
-    icon = Column(Text)
+    style = Column(Text)
 
     images = relationship("Images",back_populates="interest_point")
 

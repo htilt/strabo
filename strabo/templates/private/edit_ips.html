@@ -2,6 +2,7 @@
 {% set active_page = "edit_ips" %}
 {% block head %}
     {{ super() }}
+    <link href='/static/private_styles/edit_ips.css' rel='stylesheet' />
 {% endblock %}
 
 {% block content %}
@@ -11,11 +12,13 @@
             <div class="table">
                 <table class="table-bordered" margin="10px" id="preview">
                   <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Layer</th>
+                    <th>Style</th>
+                    <th>Images</th>
                   </tr>
 
                   {% for ip in interest_points %}
@@ -27,8 +30,23 @@
                             <button type="submit" name="delete-btn" value={{ ip.id }}>Delete</button>
                         </td>
                         <td>{{ ip.title }}</td>
-                        <td>{{ ip.descrip_body }}</td>
-                        <td>{{ ip.layer }}</td>
+                        <td id="description">{{ ip.descrip_body }} </td>
+                        <td>{{LAYER_FIELDS[ip.layer]}}</td>
+                        <td>
+                            <img src={{ url_for('static', filename="map_icons/")}}{{COLOR_ICON[ip.style]}}>
+                            <br>
+                            {{COLOR_REP[ip.style]}}
+                        </td> 
+                        <td>
+                            {% for image in ip.images %}
+                            <div class="images">
+                                <img src={{ url_for('static', filename="thumbnails/")}}{{image.filename}}>
+                                <br>
+                                {{image.description}}
+                            </div>
+                            {% endfor %}
+                        </td>
+
                       </tr>
                   {% endfor %}
                 </table>

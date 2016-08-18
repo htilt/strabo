@@ -4,9 +4,6 @@ from strabo import utils
 def get_config_info():
     config_info = dict()
 
-    #
-    #
-    #
     ###### The following variables require configuration.
     # set the latitude and longitude for the center of the map
     config_info['LAT_SETTING'] = 45.481851
@@ -21,11 +18,61 @@ def get_config_info():
         3:"Interest Points",
         4:"Sensitive Areas"
     }
-
-
     config_info['REVERSE_LAYER_FIELDS'] = utils.reverse_dict(config_info['LAYER_FIELDS'])
 
-    #
+    config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
+    
+# Color Icons for Interest Points
+    config_info['COLOR_ICON'] = {
+        "red": "Red.png",
+        "orange": "Orange.png",
+        "yellow": "Yellow.png",
+        "green": "Green.png",
+        "turquoise": "Turquoise.png",
+        "navy": "Navy.png",
+        "purple": "Purple.png",
+        "magenta": "Magenta.png",
+        "coral": "Coral.png",
+        "evergreen": "Evergreen.png",
+        "accesspooint": "AccessPoint.png",
+        "sensitivearea": "SensitiveArea.png",
+    }
+
+# Color hex codes for Interest Zones
+    config_info['COLOR_HEX'] = {
+        "red": "#F40000",
+        "orange": "#FF9955",
+        "yellow": "#FFDD55",
+        "green": "#00B100",
+        "turquoise": "#00E3E3",
+        "navy": "#002B66",
+        "purple": "#EAB8F5",
+        "magenta": "#CC0077",
+        "coral": "#FF393D",
+        "evergreen": "#006666",
+        "accesspoint": "#606800",
+        "sensitivearea": "#A7001E"
+    }
+
+# Color names for representation in drop down menu on admin end
+    config_info['COLOR_REP'] = {
+        "red": "Red",
+        "orange": "Orange",
+        "yellow": "Yellow",
+        "green": "Green",
+        "turquoise": "Turquoise",
+        "navy": "Navy",
+        "purple": "Purple",
+        "magenta": "Magenta",
+        "coral": "Coral",
+        "evergreen": "Evergreen",
+        "accesspoint": "Access Point",
+        "sensitivearea": "Sensitive Area",
+    }
+
+# Colors stored in the database
+    config_info['REVERSE_COLOR_REP'] = utils.reverse_dict(config_info['COLOR_REP'])
+
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
 
@@ -61,16 +108,14 @@ def get_config_info():
 
     ###### The following variables probably will not require configuration.
     # set absolute and relative paths to the upload directory for images
-    config_info['UPLOAD_FOLDER'] = '../strabo/strabo/static/uploads/'
+    config_info['UPLOAD_FOLDER'] = os.path.join(strabo_abs_path,'strabo/static/uploads/')
     config_info['UPLOAD_FOLDER_RELPATH'] = '/static/uploads/'
     # set absolute and relative paths to the upload directory for thumbnails
-    config_info['MOBILE_IMG_DIR'] = './strabo/static/mobile_imgs/'
+    config_info['MOBILE_IMG_DIR'] = os.path.join(strabo_abs_path,'strabo/static/mobile_imgs/')
     config_info['MOBILE_IM_DIR_RELPATH'] = '/static/mobile_imgs/'
     # set absolute and relative paths to the upload directory for
-    config_info['THUMB_DIR'] = './strabo/static/thumbnails/'
+    config_info['THUMB_DIR'] = os.path.join(strabo_abs_path,'strabo/static/thumbnails/')
     config_info['THUMB_DIR_RELPATH'] = '/static/thumbnails/'
-    # set folder name for javascript
-    config_info['JS_FOLDER'] = '../strabo/strabo/static/js/'
 
 
     # set absolute and relative paths to styles
@@ -79,7 +124,7 @@ def get_config_info():
 
     config_info['ALLOWED_EXTENSIONS'] = ['png','PNG','jpg', 'jpeg', 'JPG', 'JPEG']
 
-    config_info["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
+    config_info["MAP_TILE_SRC"] = 'https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
     config_info['LEAFLET_ATTRIBUTES'] = {
         "attribution":'Thunderforest tiles, OpenStreetMap data',
         "minZoom": 14,
@@ -87,8 +132,6 @@ def get_config_info():
         "ext": 'png'
     }
 
-    # Finds the location of the /strabo/static file
-    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.realpath("./strabo/static/map_icons/"))]
     #needs to correspond with popup view size
     config_info["THUMBNAIL_MAX_SIZE"] = (500,500)#max_width, max_height
     #larger images will make for slower animations and upload when navigating photoswipe

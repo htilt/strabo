@@ -1,0 +1,23 @@
+.table {
+	padding-left: 2em;
+	width:98%;
+}
+th {
+	text-align: center;
+	padding: 1em;
+}
+td {
+	padding: 0.5em;
+	vertical-align: top;
+}
+
+#description {
+	min-width: 400px; /* non responsive */
+	max-width: 800px;
+	white-space: pre-wrap;
+}
+
+.images {
+	display:table-cell;
+	padding: 0.5em;
+}
