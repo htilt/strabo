@@ -16,17 +16,16 @@ var ColorIcon = L.Icon.extend({
     }
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
 var icon_objs = function(){
     var icon_objs = {};
-        straboconfig["MAP_ICONS"].forEach(function(icon_name){
-        icon_objs[icon_name] = new ColorIcon({iconUrl:'/static/map_icons/' + icon_name});
-    });
+    for (icon_name in straboconfig["COLOR_ICON"]){
+            icon_file = straboconfig["COLOR_ICON"][icon_name];
+            icon_objs[icon_name] = new ColorIcon({iconUrl:'/static/map_icons/' + icon_file});
+        }
+    //console.log(icon_objs)
     return icon_objs;
+
 }();
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
 
 // leaflet map object
 function make_map(map_cont){
@@ -36,10 +35,6 @@ function make_map(map_cont){
 function add_tile_to(map){
     L.tileLayer(straboconfig["MAP_TILE_SRC"],straboconfig["LEAFLET_ATTRIBUTES"]).addTo(map);
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 // sets icon object for points and styling for zones
 function set_styles(all_layers_group){
@@ -51,26 +46,18 @@ function set_styles(all_layers_group){
     zones.forEach(function(zone){
         zone.setStyle({
               weight: 1,
-              color: straboconfig["COLOR_HEX"][zone.feature.properties.style], ///////////////////////////////////
+              color: straboconfig["COLOR_HEX"][zone.feature.properties.style], 
               dashArray: '',
               fillOpacity: 0.3
         });
     });
 
     points.forEach(function(point){
-        point.setIcon(straboconfig["COLOR_ICON"][point.feature.properties.style])
-        //hi = straboconfig["COLOR_ICON"][point.feature.properties.style];
-        //point.setIcon(icon_objs[hi]);/////////////////
+        //console.log(point.feature.properties.style)
+        //console.log(icon_objs[point.feature.properties.style])
+        point.setIcon(icon_objs[point.feature.properties.style]);
     })
 }
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
 // Set layers and add toggle control menu for each layer
 function place_overlays_on(all_layers_group,map){

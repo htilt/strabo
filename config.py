@@ -22,26 +22,22 @@ def get_config_info():
 
 ###########################################################################################################
     config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
-    # Finds the location of the /strabo/static file
-    config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.join(strabo_abs_path,"strabo/static/map_icons/"))]
-
+    
 # Color Icons for Interest Points
     config_info['COLOR_ICON'] = {
-        "Red": "Red",
-        "orange": "Orange.png",
-        "yellow": "Yellow.png",
-        "green": "Green.png",
-        "turquoise": "Turquoise.png",
-        "navy": "Navy.png",
-        "purple": "Purple.png",
-        "magenta": "Magenta.png",
-        "coral": "Coral.png",
-        "evergreen": "Evergreen.png",
-        "accesspoint": "AccessPoint.png",
+        "Red": "Red.png",
+        "Orange": "Orange.png",
+        "Yellow": "Yellow.png",
+        "Green": "Green.png",
+        "Turquoise": "Turquoise.png",
+        "Navy": "Navy.png",
+        "Purple": "Purple.png",
+        "Magenta": "Magenta.png",
+        "Coral": "Coral.png",
+        "Evergreen": "Evergreen.png",
+        "Access Point": "AccessPoint.png",
         "Sensitive Area": "SensitiveArea.png",
     }
-
-###########################################################################################################
 
 # Color hex codes for Interest Zones
     config_info['COLOR_HEX'] = {
@@ -55,8 +51,8 @@ def get_config_info():
         "Magenta": "#CC0077",
         "Coral": "#FF393D",
         "Evergreen": "#006666",
-        "Access Point": "#A7001E",
-        "Sensitive Area": "#606800"
+        "Access Point": "#606800",
+        "Sensitive Area": "#A7001E"
     }
 
 # Color names for representation in drop down menu on admin end
