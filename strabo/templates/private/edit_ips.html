@@ -17,7 +17,7 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Layer</th>
-                    <th>Icon</th>
+                    <th>Style</th>
                     <th>Images</th>
                   </tr>
 
@@ -34,6 +34,7 @@
                         <td>{{LAYER_FIELDS[ip.layer]}}</td>
                         <td>
                             <img src={{ url_for('static', filename="map_icons/")}}{{COLOR_ICON[ip.style]}}>
+                            <br>
                             {{COLOR_REP[ip.style]}}
                         </td> 
                         <td>
