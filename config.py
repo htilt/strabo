@@ -24,34 +24,34 @@ def get_config_info():
     
 # Color Icons for Interest Points
     config_info['COLOR_ICON'] = {
-        "Red": "Red.png",
-        "Orange": "Orange.png",
-        "Yellow": "Yellow.png",
-        "Green": "Green.png",
-        "Turquoise": "Turquoise.png",
-        "Navy": "Navy.png",
-        "Purple": "Purple.png",
-        "Magenta": "Magenta.png",
-        "Coral": "Coral.png",
-        "Evergreen": "Evergreen.png",
-        "Access Point": "AccessPoint.png",
-        "Sensitive Area": "SensitiveArea.png",
+        "red": "Red.png",
+        "orange": "Orange.png",
+        "yellow": "Yellow.png",
+        "green": "Green.png",
+        "turquoise": "Turquoise.png",
+        "navy": "Navy.png",
+        "purple": "Purple.png",
+        "magenta": "Magenta.png",
+        "coral": "Coral.png",
+        "evergreen": "Evergreen.png",
+        "accesspooint": "AccessPoint.png",
+        "sensitivearea": "SensitiveArea.png",
     }
 
 # Color hex codes for Interest Zones
     config_info['COLOR_HEX'] = {
-        "Red": "#F40000",
-        "Orange": "#FF9955",
-        "Yellow": "#FFDD55",
-        "Green": "#00B100",
-        "Turquoise": "#00E3E3",
-        "Navy": "#002B66",
-        "Purple": "#EAB8F5",
-        "Magenta": "#CC0077",
-        "Coral": "#FF393D",
-        "Evergreen": "#006666",
-        "Access Point": "#606800",
-        "Sensitive Area": "#A7001E"
+        "red": "#F40000",
+        "orange": "#FF9955",
+        "yellow": "#FFDD55",
+        "green": "#00B100",
+        "turquoise": "#00E3E3",
+        "navy": "#002B66",
+        "purple": "#EAB8F5",
+        "magenta": "#CC0077",
+        "coral": "#FF393D",
+        "evergreen": "#006666",
+        "accesspoint": "#606800",
+        "sensitivearea": "#A7001E"
     }
 
 # Color names for representation in drop down menu on admin end
@@ -69,6 +69,9 @@ def get_config_info():
         "accesspoint": "Access Point",
         "sensitivearea": "Sensitive Area",
     }
+
+# Colors stored in the database
+    config_info['REVERSE_COLOR_REP'] = utils.reverse_dict(config_info['COLOR_REP'])
 
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
