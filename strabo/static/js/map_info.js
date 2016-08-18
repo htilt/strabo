@@ -15,6 +15,7 @@ var ColorIcon = L.Icon.extend({
         popupAnchor:  [-3, -50]
     }
 });
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 var icon_objs = function(){
@@ -30,7 +31,6 @@ var icon_objs = function(){
 // leaflet map object
 function make_map(map_cont){
     var map = L.map(map_cont, {}).setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
-
     return map;
 }
 function add_tile_to(map){
@@ -51,13 +51,16 @@ function set_styles(all_layers_group){
     zones.forEach(function(zone){
         zone.setStyle({
               weight: 1,
-              color: 'red', ///////////////////////////////////
+              color: straboconfig["COLOR_HEX"][zone.feature.properties.style], ///////////////////////////////////
               dashArray: '',
               fillOpacity: 0.3
         });
     });
+
     points.forEach(function(point){
-        point.setIcon(icon_objs[point.feature.properties.color]);/////////////////
+        point.setIcon(straboconfig["COLOR_ICON"][point.feature.properties.style])
+        //hi = straboconfig["COLOR_ICON"][point.feature.properties.style];
+        //point.setIcon(icon_objs[hi]);/////////////////
     })
 }
 

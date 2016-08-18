@@ -60,39 +60,19 @@
              <p id="layer-form-issue" class="form-error" hidden>Required</p>
           </div><br>
 
-
-
-
-
-
-<!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-
-
           <div class="form-group">
              <!-- to make this look better, use bootstrap-select library. -->
             <label for="style"> Style:</label><br>
             <select class="form-control style-menu" name="style">
                 <option>Select One</option>
-
                 {% for color in COLOR_REP %}
                     <option {%if color == interest_point.style%}selected{%endif%}>
-
-
                         {{COLOR_REP[color]}}
                     </option>
                 {% endfor %}
-
               </select>
              <p id="style-form-issue" class="form-error" hidden>Required</p>
           </div><br>
-
-
-<!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-
-
-
-
-
 
             <div class="form-group">
               <label for="description">Interest Point Description:</label><br>

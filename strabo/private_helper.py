@@ -28,11 +28,7 @@ def make_interest_point(form_ip_id,images,form_title,form_body,form_geo_obj,form
     ip.descrip_body = form_body
     ip.geojson_object = form_geo_obj
     ip.layer = straboconfig["REVERSE_LAYER_FIELDS"][form_layer]
-##################################################################################################################
-    print("E")
     ip.style = form_style
-    print("D")
-##################################################################################################################
     ip.images = images
 
     return ip

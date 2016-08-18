@@ -4,9 +4,6 @@ from strabo import utils
 def get_config_info():
     config_info = dict()
 
-    #
-    #
-    #
     ###### The following variables require configuration.
     # set the latitude and longitude for the center of the map
     config_info['LAT_SETTING'] = 45.481851
@@ -23,16 +20,14 @@ def get_config_info():
     }
     config_info['REVERSE_LAYER_FIELDS'] = utils.reverse_dict(config_info['LAYER_FIELDS'])
 
-
 ###########################################################################################################
     config_info['STRABO_ABS_PATH'] = strabo_abs_path = os.path.dirname(os.path.abspath(__file__))
     # Finds the location of the /strabo/static file
     config_info['MAP_ICONS'] = [fname for fname in os.listdir(os.path.join(strabo_abs_path,"strabo/static/map_icons/"))]
 
-
 # Color Icons for Interest Points
     config_info['COLOR_ICON'] = {
-        "red": "Red.png",
+        "Red": "Red",
         "orange": "Orange.png",
         "yellow": "Yellow.png",
         "green": "Green.png",
@@ -43,23 +38,25 @@ def get_config_info():
         "coral": "Coral.png",
         "evergreen": "Evergreen.png",
         "accesspoint": "AccessPoint.png",
-        "sensitivearea": "SensitiveArea.png",
+        "Sensitive Area": "SensitiveArea.png",
     }
+
+###########################################################################################################
 
 # Color hex codes for Interest Zones
     config_info['COLOR_HEX'] = {
-        "red": "#F40000",
-        "orange": "#FF9955",
-        "yellow": "#FFDD55",
-        "green": "#00B100",
-        "turquoise": "#00E3E3",
-        "navy": "#002B66",
-        "purple": "#EAB8F5",
-        "magenta": "#CC0077",
-        "coral": "#FF393D",
-        "evergreen": "#006666",
-        "accesspoint": "#A7001E",
-        "sensitivearea": "#606800"
+        "Red": "#F40000",
+        "Orange": "#FF9955",
+        "Yellow": "#FFDD55",
+        "Green": "#00B100",
+        "Turquoise": "#00E3E3",
+        "Navy": "#002B66",
+        "Purple": "#EAB8F5",
+        "Magenta": "#CC0077",
+        "Coral": "#FF393D",
+        "Evergreen": "#006666",
+        "Access Point": "#A7001E",
+        "Sensitive Area": "#606800"
     }
 
 # Color names for representation in drop down menu on admin end
@@ -74,16 +71,12 @@ def get_config_info():
         "magenta": "Magenta",
         "coral": "Coral",
         "evergreen": "Evergreen",
-        "accesspoint": "AccessPoint",
-        "sensitivearea": "SensitiveArea",
+        "accesspoint": "Access Point",
+        "sensitivearea": "Sensitive Area",
     }
 
-##################################################################################################################
-
-    #
     ##### set preferred styles, website title, and headings
     ##### "About" page ("about.html") must be edited directly.
-
 
     config_info['BASE_CSS'] = "canyon_base.css"
     config_info['HEADER_CSS'] = "header.css"
