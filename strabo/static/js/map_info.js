@@ -27,13 +27,13 @@ var icon_objs = function(){
 // leaflet map object
 function make_map(map_cont){
     var map = L.map(map_cont, {}).setView([straboconfig["LAT_SETTING"], straboconfig["LONG_SETTING"]], straboconfig["INITIAL_ZOOM"]);
-
     return map;
 }
 function add_tile_to(map){
     L.tileLayer(straboconfig["MAP_TILE_SRC"],straboconfig["LEAFLET_ATTRIBUTES"]).addTo(map);
 }
-// sets icon object for points and styling for zones
+
+// Set icon object for points and color for zones
 function set_styles(all_layers_group){
     var all_layers = all_layers_group.getLayers();
 
@@ -52,6 +52,7 @@ function set_styles(all_layers_group){
         point.setIcon(icon_objs[point.feature.properties.icon]);
     })
 }
+
 // Set layers and add toggle control menu for each layer
 function place_overlays_on(all_layers_group,map){
     var all_layers = all_layers_group.getLayers();
@@ -65,7 +66,8 @@ function place_overlays_on(all_layers_group,map){
     }
     L.control.layers(null, overlays).addTo(map);
 }
-//makes it so that popups appear when clicked with the interest point database id
+
+// Popups with the name of the interest point appear when clicked
 function bind_popups(all_layers_group){
     var all_layers = all_layers_group.getLayers();
     all_layers.forEach(function(layer){

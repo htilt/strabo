@@ -12,10 +12,12 @@ td {
 }
 
 #description {
-	width: 400px; /* non responsive */
+	min-width: 400px; /* non responsive */
+	max-width: 800px;
+	white-space: pre-wrap;
 }
 
-.td #images {
-	display: inline;
+.images {
+	display:table-cell;
+	padding: 0.5em;
 }
-

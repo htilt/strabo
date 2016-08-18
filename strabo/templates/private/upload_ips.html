@@ -53,6 +53,7 @@
             <label for="layer">Layer:</label><br>
             <select class="form-control" name="layer">
                 <option>Select One</option>
+                
                 {% for layer_num,layer_name in LAYER_FIELDS.items() %}
                 <option {%if layer_num == interest_point.layer%}selected{%endif%}>{{layer_name}}</option>
                 {% endfor %}
