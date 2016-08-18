@@ -124,7 +124,7 @@ def get_config_info():
 
     config_info['ALLOWED_EXTENSIONS'] = ['png','PNG','jpg', 'jpeg', 'JPG', 'JPEG']
 
-    config_info["MAP_TILE_SRC"] = 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
+    config_info["MAP_TILE_SRC"] = 'https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png'
     config_info['LEAFLET_ATTRIBUTES'] = {
         "attribution":'Thunderforest tiles, OpenStreetMap data',
         "minZoom": 14,

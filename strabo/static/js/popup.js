@@ -24,30 +24,30 @@ function get_shrunk_dim(img,max_dim){
 }
 //this function generates the flickity cell corresponding to
 //the specific image object passed in
-function get_carosel_html(img){
+function get_carousel_html(img){
     var html = '<div class="carousel-cell padded-pic">';
     dim  = get_shrunk_dim(img,straboconfig["THUMBNAIL_MAX_SIZE"]);
     html += '<div class="vertical-center">';
-    html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
+    html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="/static/thumbnails/' + img.filename + '"/>';
     html += '</div>';
     html += '</div>';
     return html;
 }
-function remove_all_carosel_entries(){
+function remove_all_carousel_entries(){
     flkty.remove(flkty.getCellElements());
 }
-//adds all the imag data to the garosel in the odersrc
-function add_carosel_entries(imgs){
+//adds all the image data to the carousel
+function add_carousel_entries(imgs){
     var carousel_html = "";
     imgs.forEach(function(img){
-        var $cellElems = $(get_carosel_html(img));
+        var $cellElems = $(get_carousel_html(img));
         flkty.append($cellElems);
     });
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
 //brings up popup associated with feature ip
 function ip_clicked(db_id) {
-    //sends a request to the server tp return the information associated with the
+    //sends a request to the server to return the information associated with the
     // database feature id
     $.post(
         "/map/post",
@@ -56,13 +56,12 @@ function ip_clicked(db_id) {
             imgs = data.images;
             var ip_descrip = data.description;
             var ip_title = data.title;
-
+            if (data.images.length != 0){
             //renders the popup
             show_popup();
+            remove_all_carousel_entries();
 
-            remove_all_carosel_entries();
-
-            add_carosel_entries(imgs);
+            add_carousel_entries(imgs);
 
             $("#ip_description").text(ip_descrip);
             $("#ip_title").text(ip_title);
@@ -71,10 +70,13 @@ function ip_clicked(db_id) {
             flkty.resize();
             flkty.reposition();
         }
+        }
     );
 
 }
-function set_flickity_click(){
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+function set_flickity_click(){ 
     /*
     Purpose:
     When Flickity cell is clicked, a photoswipe gallery is pulled up displaying a larger version of the same image.
@@ -93,6 +95,8 @@ function set_flickity_click(){
     var SECS_PER_MILSEC = 1000;
 
     var photoswipe_fetched = false;
+
+
     flkty.on( 'staticClick', function( event, pointer, cellElement, cellIndex ) {
         if (cellElement && !photoswipe_fetched) {
             photoswipe_fetched = true;
@@ -103,6 +107,7 @@ function set_flickity_click(){
         }
     });
 }
+
 
 function make_photoswipe(pic_index){
     // execute above function
@@ -183,6 +188,8 @@ function set_flickity_img_title(){
     })
 }
 
+
+
 function flickity_init(){
     flkty = new Flickity(document.getElementById("carouselholder"),
         {imagesLoaded: true,
@@ -192,6 +199,7 @@ function flickity_init(){
     set_flickity_img_title();
     set_flickity_click();
 }
+
 
 
 
@@ -210,4 +218,3 @@ $(document).mouseup(function(e){
             hide_popup();
         }
 });
-

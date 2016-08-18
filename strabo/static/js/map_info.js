@@ -72,7 +72,8 @@ function place_overlays_on(all_layers_group,map){
     }
     L.control.layers(null, overlays).addTo(map);
 }
-//makes it so that popups appear when clicked with the interest point database id
+
+// Popups with the name of the interest point appear when clicked
 function bind_popups(all_layers_group){
     var all_layers = all_layers_group.getLayers();
 
