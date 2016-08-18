@@ -28,7 +28,7 @@ function get_carosel_html(img){
     var html = '<div class="carousel-cell padded-pic">';
     dim  = get_shrunk_dim(img,straboconfig["THUMBNAIL_MAX_SIZE"]);
     html += '<div class="vertical-center">';
-    html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="static/thumbnails/' + img.filename + '"/>';
+    html += '<img style="width:'+dim.width+'px;height:'+dim.height+'px;" src="/static/thumbnails/' + img.filename + '"/>';
     html += '</div>';
     html += '</div>';
     return html;
@@ -210,4 +210,3 @@ $(document).mouseup(function(e){
             hide_popup();
         }
 });
-
